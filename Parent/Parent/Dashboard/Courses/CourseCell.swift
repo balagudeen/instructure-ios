@@ -23,8 +23,9 @@ class CourseCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var codeLabel: UILabel!
     @IBOutlet weak var gradeLabel: UILabel!
+    @IBOutlet weak var gradeLockedImageView: UIImageView!
 
-    var highlightColor = UIColor.white
+    @objc var highlightColor = UIColor.white
 
     override func awakeFromNib() {
         super.awakeFromNib()

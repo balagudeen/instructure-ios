@@ -22,7 +22,7 @@ import UIKit
 let QuestionDescriptionCellReuseID = "QuizDescriptionCell"
 
 class QuestionDescriptionCell : WhizzyWigTableViewCell {
-    init() {
+    @objc init() {
         super.init(style: .default, reuseIdentifier: QuestionDescriptionCellReuseID)
     }
 

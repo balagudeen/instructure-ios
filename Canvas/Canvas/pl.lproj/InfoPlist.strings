@@ -1,15 +1,15 @@
-/* (No Comment) */
+/* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "Załącz zdjęcia i filmy do wiadomości oraz postów do dyskusji lub przekaż je jako materiały do zadania.";
 
-/* (No Comment) */
+/* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "Pomóż nam odnaleźć szkoły w pobliżu.";
 
-/* (No Comment) */
+/* Privacy - Microphone Usage Description */
 "NSMicrophoneUsageDescription" = "Załącz nagrania audio do wiadomości oraz postów do dyskusji lub przekaż je jako materiały do zadania.";
 
-/* (No Comment) */
+/* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Załącz zdjęcia i filmy do wiadomości oraz postów do dyskusji lub przekaż je jako materiały do zadania.";
 
-/* (No Comment) */
+/* Privacy - Photo Library Usage Description */
 "NSPhotoLibraryUsageDescription" = "Załącz zdjęcia i filmy do wiadomości oraz postów do dyskusji lub przekaż je jako materiały do zadania.";
 

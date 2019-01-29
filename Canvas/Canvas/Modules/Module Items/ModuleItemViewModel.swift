@@ -26,7 +26,7 @@ extension Notification.Name {
 
 class ModuleItemViewModel: NSObject {
     // Input
-    let session: Session
+    @objc let session: Session
 
     // Output
     let title: Property<String?>
@@ -52,9 +52,17 @@ class ModuleItemViewModel: NSObject {
                     webView.load(source: .url(url))
                     return CanvasWebViewController(webView: webView, showDoneButton: false, showShareButton: true)
                 case .externalTool(_, _):
-                    if let url = url {
-                        return LTIViewController(toolName: "", courseID: courseID, launchURL: url, in: self.session, fallbackURL: htmlURL.flatMap(URL.init))
+                    guard let launchURL = url else {
+                        return nil
                     }
+                    var components = URLComponents.parse(launchURL)
+                    components.queryItems = components.queryItems ?? []
+                    components.queryItems?.append(URLQueryItem(name: "launch_type", value: "module_item"))
+                    components.queryItems?.append(URLQueryItem(name: "module_item_id", value: moduleItemID))
+                    guard let url = components.url else {
+                        return nil
+                    }
+                    return LTIViewController(toolName: "", courseID: courseID, launchURL: url, in: self.session, fallbackURL: htmlURL.flatMap(URL.init))
                 case .masteryPaths:
                     if let moduleItemID = moduleItemID, let moduleID = moduleID {
                         return try! MasteryPathSelectOptionViewController(session: self.session, moduleID: moduleID, itemIDWithMasteryPaths: moduleItemID)
@@ -177,9 +185,9 @@ class ModuleItemViewModel: NSObject {
                 }
                 return fontStyle
             }
-        vm.titleTextColor <~ self.locked.producer.map { $0 && type != .assignment ? .lightGray : .black }
+        vm.titleTextColor <~ self.locked.producer.map { $0 && type != .assignment && type != .discussion ? .lightGray : .black }
         vm.indentationLevel <~ self.moduleItem.producer.map { $0?.indent ?? 0 }.map { Int($0) }
-        vm.selectionEnabled <~ self.locked.producer.map { !$0 || type == .assignment }
+        vm.selectionEnabled <~ self.locked.producer.map { !$0 || type == .assignment || type == .discussion }
         vm.setSelected <~ self.selected
 
         let contentType = self.moduleItem.producer.map { $0?.contentType.accessibilityLabel }
@@ -189,13 +197,13 @@ class ModuleItemViewModel: NSObject {
                 let incompleteStatus = NSLocalizedString("Status: Incomplete", comment: "Label read aloud when item status is incomplete.")
                 let lockedStatus = NSLocalizedString("Status: Locked", comment: "Label read aloud when item status is locked.")
                 let status = locked ? lockedStatus : completed.flatMap { $0 ? completedStatus : incompleteStatus }
-                return [title, detail, content, status].flatMap { $0 }.filter { !$0.isEmpty }.joined(separator: ". ")
+                return [title, detail, content, status].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: ". ")
             }
 
         return vm
     }()
 
-    init(session: Session, moduleItemID: String) throws {
+    @objc init(session: Session, moduleItemID: String) throws {
         self.session = session
 
         observer = try ModuleItem.observer(session, moduleItemID: moduleItemID)
@@ -293,7 +301,7 @@ class ModuleItemViewModel: NSObject {
         beginObservingLockedStatus()
     }
 
-    convenience init(session: Session, moduleItem: ModuleItem) throws {
+    @objc convenience init(session: Session, moduleItem: ModuleItem) throws {
         try self.init(session: session, moduleItemID: moduleItem.id)
     }
 
@@ -308,13 +316,13 @@ class ModuleItemViewModel: NSObject {
         return Property(initial: false, then: canFulfill)
     }
 
-    func moduleItemBecameActive(_ notification: NSNotification) {
+    @objc func moduleItemBecameActive(_ notification: NSNotification) {
         if let moduleItem = moduleItem.value, let id = notification.userInfo?["moduleItemID"] as? String {
             selected.value = moduleItem.id == id
         }
     }
 
-    func moduleItemBecameActive() {
+    @objc func moduleItemBecameActive() {
         if let id = moduleItem.value?.id {
             NotificationCenter.default.post(name: .moduleItemBecameActive, object: nil, userInfo: ["moduleItemID": id])
         }
@@ -351,24 +359,24 @@ class ModuleItemViewModel: NSObject {
 
 // MARK: - TableViewCellViewModel
 extension ModuleItemViewModel: TableViewCellViewModel {
-    static func tableViewDidLoad(_ tableView: UITableView) {
+    @objc static func tableViewDidLoad(_ tableView: UITableView) {
         ColorfulViewModel.tableViewDidLoad(tableView)
     }
 
-    func cellForTableView(_ tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+    @objc func cellForTableView(_ tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         return colorfulViewModel.cellForTableView(tableView, indexPath: indexPath)
     }
 }
 
 
 extension ModuleItem {
-    static let mustScoreNumberFormatter: NumberFormatter = {
+    @objc static let mustScoreNumberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .none
         return formatter
     }()
 
-    var icon: UIImage? {
+    @objc var icon: UIImage? {
         guard let content = content else { return nil }
         switch content {
         case .assignment:   return .icon(.assignment)
@@ -383,7 +391,7 @@ extension ModuleItem {
         }
     }
 
-    var detailText: String {
+    @objc var detailText: String {
         guard let completionRequirement = completionRequirement else { return "" }
         switch completionRequirement {
         case .mustView:         return NSLocalizedString("Must view", comment: "user must view item to complete requirement")

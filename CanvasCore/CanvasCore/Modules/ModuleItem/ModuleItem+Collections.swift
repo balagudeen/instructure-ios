@@ -22,11 +22,11 @@ import CoreData
 
 
 extension ModuleItem {
-    public static func predicate(forItemsIn moduleID: String) -> NSPredicate {
+    @objc public static func predicate(forItemsIn moduleID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "moduleID", moduleID)
     }
 
-    public static func predicateWithCompletionRequirement() -> NSPredicate {
+    @objc public static func predicateWithCompletionRequirement() -> NSPredicate {
         return NSPredicate(format: "%K != nil && %K != %@", "completionRequirement", "completionRequirement", ModuleItem.CompletionRequirement.mustChoose.rawValue)
     }
 
@@ -35,7 +35,7 @@ extension ModuleItem {
         return try FetchedCollection(frc: context.fetchedResults(predicate(forItemsIn: moduleID), sortDescriptors: ["position".ascending]), titleForSectionTitle: titleForSectionTitle)
     }
 
-    public static func withCompletionRequirement(_ session: Session, moduleID: String) throws -> [ModuleItem] {
+    @objc public static func withCompletionRequirement(_ session: Session, moduleID: String) throws -> [ModuleItem] {
         let predicate = NSPredicate(format: "%K == %@, %K != nil && %K != %@", "moduleID", moduleID, "completionRequirement", "completionRequirement", ModuleItem.CompletionRequirement.mustChoose.rawValue)
         return try session.soEdventurousManagedObjectContext().findAll(matchingPredicate: predicate)
     }

@@ -17,10 +17,10 @@
 import UIKit
 
 class DatePickerDateCell: UICollectionViewCell {
-    let label = UILabel()
-    let highlightView = UIView()
+    @objc let label = UILabel()
+    @objc let highlightView = UIView()
     
-    var isToday = false
+    @objc var isToday = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,7 +47,7 @@ class DatePickerDateCell: UICollectionViewCell {
         ])
     }
     
-    func setIsHighlighted(_ highlighted: Bool) {
+    @objc func setIsHighlighted(_ highlighted: Bool) {
         if highlighted {
             highlightView.isHidden = false
             label.textColor = .white
@@ -63,9 +63,9 @@ class DatePickerDateCell: UICollectionViewCell {
 }
 
 class DatePickerMonthHeaderView: UICollectionReusableView {
-    let stack = UIStackView()
-    let yearLabel = UILabel()
-    let monthLabel = UILabel()
+    @objc let stack = UIStackView()
+    @objc let yearLabel = UILabel()
+    @objc let monthLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -79,11 +79,11 @@ class DatePickerMonthHeaderView: UICollectionReusableView {
         stack.addArrangedSubview(yearLabel)
         stack.addArrangedSubview(monthLabel)
         
-        yearLabel.font = UIFont.systemFont(ofSize: 34, weight: UIFontWeightBold)
+        yearLabel.font = UIFont.systemFont(ofSize: 34, weight: UIFont.Weight.bold)
         yearLabel.textColor = #colorLiteral(red: 0.1764705882, green: 0.231372549, blue: 0.2705882353, alpha: 1)
         yearLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        monthLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightSemibold)
+        monthLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.semibold)
         monthLabel.textColor = #colorLiteral(red: 0.1764705882, green: 0.231372549, blue: 0.2705882353, alpha: 1)
         monthLabel.translatesAutoresizingMaskIntoConstraints = false
         

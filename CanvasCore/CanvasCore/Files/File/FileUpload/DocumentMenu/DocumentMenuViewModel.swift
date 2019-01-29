@@ -35,7 +35,7 @@ public protocol DocumentMenuViewModelOutputs {
     var showDocumentMenu: Signal<([DocumentOption], [String]), NoError> { get }
 
     /// Emits source type and media types for image picker controller.
-    var showImagePicker: Signal<(UIImagePickerControllerSourceType, [String]), NoError> { get }
+    var showImagePicker: Signal<(UIImagePickerController.SourceType, [String]), NoError> { get }
 
     /// Emits complete button title when user is ready to record audio.
     var showAudioRecorder: Signal<String, NoError> { get }
@@ -97,7 +97,7 @@ public class DocumentMenuViewModel: DocumentMenuViewModelType, DocumentMenuViewM
             }
 
         self.showImagePicker = tappedDocumentOption
-            .map { option -> (UIImagePickerControllerSourceType, [String])? in
+            .map { option -> (UIImagePickerController.SourceType, [String])? in
                 switch option {
                 case let .camera(allowsPhotos: allowsPhotos, allowsVideos: allowsVideos):
                     return (.camera, mediaTypes(allowsPhotos: allowsPhotos, allowsVideos: allowsVideos))
@@ -161,14 +161,14 @@ public class DocumentMenuViewModel: DocumentMenuViewModelType, DocumentMenuViewM
         pickedDocumentAtURLProperty.value = url
     }
 
-    private let showDocumentMenuButtonTappedProperty = MutableProperty()
+    private let showDocumentMenuButtonTappedProperty = MutableProperty(())
     public func showDocumentMenuButtonTapped() {
         showDocumentMenuButtonTappedProperty.value = ()
     }
 
     public let showDocumentMenu: Signal<([DocumentOption], [String]), NoError>
     public let showAudioRecorder: Signal<String, NoError>
-    public let showImagePicker: Signal<(UIImagePickerControllerSourceType, [String]), NoError>
+    public let showImagePicker: Signal<(UIImagePickerController.SourceType, [String]), NoError>
     public let showDocumentPicker: Signal<UIDocumentPickerViewController, NoError>
     public let uploadable: Signal<Uploadable, NoError>
     public let errors: Signal<NSError, NoError>
@@ -207,7 +207,7 @@ private func mediaTypes(allowsPhotos: Bool, allowsVideos: Bool) -> [String] {
 
 private func uploadable(for info: [String: Any]) -> SignalProducer<Uploadable, NSError> {
     return SignalProducer { observer, _ in
-        if let assetURL = info[UIImagePickerControllerReferenceURL] as? URL,
+        if let assetURL = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.referenceURL)] as? URL,
             let asset = PHAsset.fetchAssets(withALAssetURLs: [assetURL], options: nil).firstObject {
                 Asset.fromCameraRoll(asset: asset) { result in
                     if let uploadable = result.value {
@@ -217,11 +217,11 @@ private func uploadable(for info: [String: Any]) -> SignalProducer<Uploadable, N
                     }
                     observer.sendCompleted()
                 }
-        } else if let image = info[UIImagePickerControllerOriginalImage] as? UIImage, let data = UIImagePNGRepresentation(image) {
+        } else if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage, let data = image.pngData() {
             let uploadable = NewFileUpload(kind: .photo(image), data: data)
             observer.send(value: uploadable)
             observer.sendCompleted()
-        } else if let videoURL = info[UIImagePickerControllerMediaURL] as? URL, let data = try? Data(contentsOf: videoURL) {
+        } else if let videoURL = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.mediaURL)] as? URL, let data = try? Data(contentsOf: videoURL) {
             let uploadable = NewFileUpload(kind: .videoURL(videoURL), data: data)
             observer.send(value: uploadable)
             observer.sendCompleted()
@@ -243,4 +243,9 @@ private func uploadableFile(from url: URL) -> SignalProducer<Uploadable, NSError
         NewFileUpload(kind: .fileURL(url), data: try Data(contentsOf: url))
     }
     .mapError { _ in dataError }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

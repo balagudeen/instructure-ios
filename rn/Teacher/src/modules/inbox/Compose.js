@@ -62,6 +62,7 @@ type ComposeProps = {
   onlySendIndividualMessages: boolean,
   includedMessages?: Array<ConversationMessage>,
   navBarTitle?: string,
+  instructorQuestion?: boolean,
 }
 
 type ComposeState = {
@@ -77,7 +78,7 @@ type ComposeState = {
 }
 
 export class Compose extends PureComponent<ComposeProps & OwnProps, ComposeState> {
-  scrollView: KeyboardAwareScrollView
+  scrollView: ?KeyboardAwareScrollView
 
   static defaultProps = {
     canAddRecipients: true,
@@ -112,7 +113,12 @@ export class Compose extends PureComponent<ComposeProps & OwnProps, ComposeState
           this.props.navigator.pop()
           const contextName = course.name
           const contextCode = `course_${course.id}`
-          this.setStateAndUpdate({ contextName, contextCode, recipients: [] })
+          let recipients = []
+          if (this.props.instructorQuestion) {
+            const teachers = { id: `course_${course.id}_teachers`, name: i18n('Teachers') }
+            recipients = [teachers]
+          }
+          this.setStateAndUpdate({ contextName, contextCode, recipients })
         },
       }
     )
@@ -198,7 +204,7 @@ export class Compose extends PureComponent<ComposeProps & OwnProps, ComposeState
 
   adjust = throttle((e: any) => {
     const element = ReactNative.findNodeHandle(e.target)
-    this.scrollView.scrollToFocusedInput(element)
+    this.scrollView && this.scrollView.scrollToFocusedInput(element)
   }, 250)
 
   scrollToEnd = (e: any) => {
@@ -251,7 +257,7 @@ export class Compose extends PureComponent<ComposeProps & OwnProps, ComposeState
             style: 'done',
           },
           {
-            image: Images.attachmentLarge,
+            image: Images.paperclip,
             testID: 'compose-message.attach',
             action: this.editAttachments,
             accessibilityLabel: i18n('Edit attachments ({count})', { count: this.state.attachments.length }),
@@ -291,7 +297,14 @@ export class Compose extends PureComponent<ComposeProps & OwnProps, ComposeState
                 }
                 <View style={styles.tokenContainer}>
                   {this.state.recipients.map((r) => {
-                    return (<AddressBookToken key={r.id} item={r} delete={this._deleteRecipient} />)
+                    return (
+                      <AddressBookToken
+                        key={r.id}
+                        item={r}
+                        delete={this._deleteRecipient}
+                        canDelete={!this.props.instructorQuestion}
+                      />
+                    )
                   })}
                 </View>
                 { this.props.canAddRecipients &&
@@ -311,7 +324,7 @@ export class Compose extends PureComponent<ComposeProps & OwnProps, ComposeState
                 editable={this.props.canEditSubject}
               />
             </View>
-            { !this.props.onlySendIndividualMessages && !this.props.conversationID &&
+            { !this.props.onlySendIndividualMessages && !this.props.conversationID && !this.props.instructorQuestion &&
               <RowWithSwitch
                 border='bottom'
                 title={i18n('Send individual message to each recipient')}

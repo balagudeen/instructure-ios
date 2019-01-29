@@ -101,8 +101,9 @@
     [super viewDidLoad];
     [self configureWebView];
 
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     if ([self presentingViewController] || self.browserWillDismissBlock) {
-        self.doneButton.title = NSLocalizedString(@"Close", @"Close the window");
+        self.doneButton.title = NSLocalizedStringFromTableInBundle(@"Close", nil, bundle, @"Close the window");
     } else {
         self.navigationItem.leftBarButtonItems = @[];
     }
@@ -117,7 +118,7 @@
     for (UIBarButtonItem *item in reloadBarItems) {
         if (item == refreshButton) {
             if (! stopButton) {
-                stopButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop",@"Stop loading button for webview") style:UIBarButtonItemStylePlain target:self action:@selector(stopButtonTapped:)];
+                stopButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Stop", nil, bundle, @"Stop loading button for webview") style:UIBarButtonItemStylePlain target:self action:@selector(stopButtonTapped:)];
             }
             [tempButtons addObject:stopButton];
         }
@@ -128,8 +129,8 @@
     stopBarItems = tempButtons;
     
     // Set up the error action sheet
-    openInErrorSheet = [[CKActionSheetWithBlocks alloc] initWithTitle:NSLocalizedString(@"No installed apps support opening this file", @"Error message")];
-    [openInErrorSheet addButtonWithTitle:NSLocalizedString(@"OK", nil)];
+    openInErrorSheet = [[CKActionSheetWithBlocks alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"No installed apps support opening this file", nil, bundle, @"Error message")];
+    [openInErrorSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"OK", nil, bundle, nil)];
     
     if (self.request) {
         [self.request loadRequestInWebView:self.webView];
@@ -264,6 +265,7 @@
 
 - (IBAction)actionButtonTapped:(id)sender
 {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     if ([optionsActionSheet isVisible]) {
         [optionsActionSheet dismissWithClickedButtonIndex:[optionsActionSheet cancelButtonIndex] animated:NO];
     }
@@ -280,7 +282,7 @@
         // 1. Open in Safari
         NSURL *theURL = [NSURL URLWithString:self.fullURL]; // Copy to a local variable to avoid a retain cycle
         if (self.request.canOpenInSafari) {
-            [optionsActionSheet addButtonWithTitle:NSLocalizedString(@"Open in Safari", @"Open a document in the application Safari") handler:^{
+            [optionsActionSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Open in Safari", nil, bundle, @"Open a document in the application Safari") handler:^{
                 [[UIApplication sharedApplication] openURL:theURL options:@{} completionHandler:nil];
             }];
             addedAtLeastOneButton = YES;
@@ -293,7 +295,7 @@
             dic = [UIDocumentInteractionController interactionControllerWithURL:self.fileURLPath];
             dic.delegate = self;
             __weak UIDocumentInteractionController *weakDic = dic;
-            [optionsActionSheet addButtonWithTitle:NSLocalizedString(@"Open in...", @"Open file in another application") handler:^{
+            [optionsActionSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Open in...", nil, bundle, @"Open file in another application") handler:^{
                 // Dismiss this action sheet and generate an OpenIn DIC display.
                 // If there are no apps to handle the URL, display an action sheet that says, "Nothing supports this document". This is required to be in the App Store.
                 BOOL presentedOpenInMenu = [weakDic presentOpenInMenuFromBarButtonItem:sender animated:YES];
@@ -309,10 +311,10 @@
         // 4. Make a sandwich
         // 5. Sudo make a sandwich
         // 6. Cancel
-        [optionsActionSheet addCancelButtonWithTitle:NSLocalizedString(@"Cancel", nil)];;
+        [optionsActionSheet addCancelButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, nil)];;
 
         if (addedAtLeastOneButton == NO) {
-            optionsActionSheet.title = NSLocalizedString(@"There are no actions for this item", @"Error message");
+            optionsActionSheet.title = NSLocalizedStringFromTableInBundle(@"There are no actions for this item", nil, bundle, @"Error message");
         }
 
         [optionsActionSheet showFromBarButtonItem:sender animated:YES];
@@ -382,7 +384,7 @@
             //    MBL-5318 - If Penn State return an actual HTTP error code instead of swallowing the error then we can reload the page with the referrer for them - nlambson
             return;
         } else {
-            NSString *localizedMessage = NSLocalizedString(@"There was an error loading the document.", @"Web browser error handling message");
+            NSString *localizedMessage = NSLocalizedStringFromTableInBundle(@"There was an error loading the document.", nil, [NSBundle bundleForClass:self.class], @"Web browser error handling message");
             
             NSString *htmlMessage = [NSString stringWithFormat:@"<html><body style=\"font-family:sans-serif;font-size:30px;text-align:center;color:#555;padding:5px;\">%@</body></html>", localizedMessage];
             
@@ -437,7 +439,8 @@
 
     [webView evaluateJavaScript:@"document.body.innerHTML" completionHandler:^(id _Nullable html, NSError *_Nullable error) {
         if ([html isEqualToString:@"Could not find download URL"]) {
-            [UIAlertController showAlertWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"There was an error loading your content. If it is an audio or video upload it may still be processing.", nil) handler:^{
+            NSBundle *bundle = [NSBundle bundleForClass:self.class];
+            [UIAlertController showAlertWithTitle:NSLocalizedStringFromTableInBundle(@"Error", nil, bundle, nil) message:NSLocalizedStringFromTableInBundle(@"There was an error loading your content. If it is an audio or video upload it may still be processing.", nil, bundle, nil) handler:^{
                 [self dismissViewControllerAnimated:YES completion:nil];
             }];
         }

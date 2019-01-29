@@ -43,16 +43,20 @@ typedef NS_ENUM(NSInteger, sectionType) {
 - (id)init
 {
     self = [super init];
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     if (self) {
         NSCalendar *current = [NSCalendar currentCalendar];
-        self.viewControllerTitle = NSLocalizedString(@"Syllabus", @"Title for Syllabus screen");
+        self.viewControllerTitle = NSLocalizedStringFromTableInBundle(@"Syllabus", nil, bundle, @"Title for Syllabus screen");
         self.collectionController = [MLVCCollectionController collectionControllerGroupingByBlock:^(id viewModel){
             NSString *class = NSStringFromClass([viewModel class]);
             NSDate *syllabusDate = nil;
             NSString *name = @"";
 
-            if ([class isEqualToString:@"CBISyllabusViewModel"] ||
-                [class isEqualToString:@"CBICalendarEventViewModel"] ||
+            if ([class isEqualToString:@"CBISyllabusViewModel"]) {
+                return @(SyllabusSection);
+            }
+
+            if ([class isEqualToString:@"CBICalendarEventViewModel"] ||
                 [class isEqualToString:@"CBIAssignmentViewModel"]){
                 
                 syllabusDate = [viewModel syllabusDate];
@@ -61,10 +65,6 @@ typedef NS_ENUM(NSInteger, sectionType) {
             
             if (!syllabusDate){
                 return @(NoDateSection);
-            }
-            
-            if ([name caseInsensitiveCompare:@"Syllabus"] == NSOrderedSame){
-                return @(SyllabusSection);
             }
             
             NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
@@ -97,12 +97,16 @@ typedef NS_ENUM(NSInteger, sectionType) {
             }
             return @(FutureSection);
         }groupTitleBlock:^(id viewModel){
+            NSBundle *bundle = [NSBundle bundleForClass:self.class];
             NSString *class = NSStringFromClass([viewModel class]);
             NSDate *syllabusDate = nil;
             NSString *name = @"";
-            
-            if ([class isEqualToString:@"CBISyllabusViewModel"] ||
-                [class isEqualToString:@"CBICalendarEventViewModel"] ||
+
+            if ([class isEqualToString:@"CBISyllabusViewModel"]) {
+                return NSLocalizedStringFromTableInBundle(@"Course Syllabus", nil, bundle, @"");
+            }
+
+            if ([class isEqualToString:@"CBICalendarEventViewModel"] ||
                 [class isEqualToString:@"CBIAssignmentViewModel"]){
                 
                 syllabusDate = [viewModel syllabusDate];
@@ -110,11 +114,11 @@ typedef NS_ENUM(NSInteger, sectionType) {
             }
             
             if (!syllabusDate){
-                return NSLocalizedString(@"No Date", nil);
+                return NSLocalizedStringFromTableInBundle(@"No Date", nil, bundle, nil);
             }
             
             if ([name caseInsensitiveCompare:@"Syllabus"] == NSOrderedSame){
-                return NSLocalizedString(@"Course Syllabus", nil);;
+                return NSLocalizedStringFromTableInBundle(@"Course Syllabus", nil, bundle, nil);;
             }
             
             NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
@@ -139,14 +143,14 @@ typedef NS_ENUM(NSInteger, sectionType) {
 
             
             if([syllabusDateWithoutTime compare:todaysDateWithoutTime] == NSOrderedAscending){
-                return NSLocalizedString(@"Past", nil);
+                return NSLocalizedStringFromTableInBundle(@"Past", nil, bundle, nil);
             }else if([syllabusDateWithoutTime compare:todaysDateWithoutTime] == NSOrderedSame){
-                return NSLocalizedString(@"Today", nil);
+                return NSLocalizedStringFromTableInBundle(@"Today", nil, bundle, nil);
             }else if([syllabusDateWithoutTime compare:todaysDateWithoutTime] == NSOrderedDescending && [syllabusDateWithoutTime compare:weekFromTodayDateWithoutTime] == NSOrderedAscending){
-                return NSLocalizedString(@"Next 7 Days", nil);
+                return NSLocalizedStringFromTableInBundle(@"Next 7 Days", nil, bundle, nil);
             }
             
-            return NSLocalizedString(@"Future", nil);
+            return NSLocalizedStringFromTableInBundle(@"Future", nil, bundle, nil);
         }sortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"syllabusDate" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:true]]];
         self.syllabusItemsByID = [NSMutableDictionary dictionary];
     }

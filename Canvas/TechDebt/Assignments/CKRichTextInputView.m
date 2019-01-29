@@ -102,14 +102,16 @@ UIColor *CKPostButtonDisabledColor() {
 - (void)setup
 {
     [self loadNib];
+
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     
     [self.webView setIsAccessibilityElement:YES];
-    self.webView.accessibilityLabel = NSLocalizedString(@"Add comment", nil);
+    self.webView.accessibilityLabel = NSLocalizedStringFromTableInBundle(@"Add comment", nil, bundle, nil);
     [self.sendButton setIsAccessibilityElement:YES];
-    self.sendButton.accessibilityLabel = NSLocalizedString(@"Post comment", nil);
-    [self.sendButton setTitle:NSLocalizedString(@"Post", nil) forState:UIControlStateNormal];
+    self.sendButton.accessibilityLabel = NSLocalizedStringFromTableInBundle(@"Post comment", nil, bundle, nil);
+    [self.sendButton setTitle:NSLocalizedStringFromTableInBundle(@"Post", nil, bundle, nil) forState:UIControlStateNormal];
     [self.addAttachmentButton setIsAccessibilityElement:YES];
-    self.addAttachmentButton.accessibilityLabel = NSLocalizedString(@"Add attachment", nil);
+    self.addAttachmentButton.accessibilityLabel = NSLocalizedStringFromTableInBundle(@"Add attachment", nil, bundle, nil);
     [self.webView setKeyboardDisplayRequiresUserAction:NO];
     
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
@@ -386,7 +388,7 @@ UIColor *CKPostButtonDisabledColor() {
 - (NSString *)attachmentSheetTitle
 {
     if (_attachmentSheetTitle == nil) {
-        _attachmentSheetTitle = NSLocalizedString(@"Add attachment", @"Title for attachment action sheet from rich text view");
+        _attachmentSheetTitle = NSLocalizedStringFromTableInBundle(@"Add attachment", nil, [NSBundle bundleForClass:self.class], @"Title for attachment action sheet from rich text view");
     }
     return _attachmentSheetTitle;
 }
@@ -430,7 +432,7 @@ UIColor *CKPostButtonDisabledColor() {
         }];
         
         CKURLPreviewViewController *previewController = [[CKURLPreviewViewController alloc] init];
-        previewController.title = NSLocalizedString(@"Attachment", @"An item for attaching to a discussion");
+        previewController.title = NSLocalizedStringFromTableInBundle(@"Attachment", nil, [NSBundle bundleForClass:self.class], @"An item for attaching to a discussion");
         previewController.url = attachment.url;
         previewController.modalBarStyle = UIBarStyleBlack;
         

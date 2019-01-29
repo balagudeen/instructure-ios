@@ -23,7 +23,7 @@ import CoreData
 import CanvasCore
 
 extension AlertThreshold {
-    static func studentPredicate(_ studentID: String) -> NSPredicate {
+    @objc static func studentPredicate(_ studentID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "studentID", studentID)
     }
 }

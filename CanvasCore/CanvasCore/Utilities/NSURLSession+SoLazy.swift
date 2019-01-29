@@ -19,7 +19,7 @@
 import Foundation
 
 extension URLSession {
-    public func getAllTheTasksWithCompletionHandler(_ completionHandler: @escaping ([URLSessionTask])->Void) {
+    @objc public func getAllTheTasksWithCompletionHandler(_ completionHandler: @escaping ([URLSessionTask])->Void) {
         if #available(iOS 9, *) {
             getAllTasks(completionHandler: completionHandler)
             return

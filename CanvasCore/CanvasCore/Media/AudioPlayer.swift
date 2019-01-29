@@ -25,7 +25,7 @@ protocol AudioPlayerDelegate {
 }
 
 class AudioPlayer: NSObject {
-    let audioFileURL: URL
+    @objc let audioFileURL: URL
     fileprivate let meterTable: MeterTable
     fileprivate var player: AVAudioPlayer?
     
@@ -37,13 +37,13 @@ class AudioPlayer: NSObject {
         }
     }
     
-    init(audioFileURL: URL, ticks: Int) throws {
+    @objc init(audioFileURL: URL, ticks: Int) throws {
         self.audioFileURL = audioFileURL
         self.meterTable = MeterTable(meterTicks: ticks)
         
         super.init()
         
-        try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+        try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
         try AVAudioSession.sharedInstance().setActive(true)
         
         
@@ -67,25 +67,25 @@ class AudioPlayer: NSObject {
         }
     }
     
-    func play() {
+    @objc func play() {
         player?.play()
         
         timer = CADisplayLink(target: self, selector: #selector(AudioPlayer.timerFired(_:)))
-        timer?.add(to: RunLoop.main, forMode: RunLoopMode.commonModes)
+        timer?.add(to: RunLoop.main, forMode: RunLoop.Mode.common)
     }
     
-    func pause() {
+    @objc func pause() {
         player?.pause()
         sendUpdate()
         ceaseUpdates()
     }
     
-    func ceaseUpdates() {
+    @objc func ceaseUpdates() {
         timer?.invalidate()
         timer = nil
     }
     
-    var currentTime: TimeInterval {
+    @objc var currentTime: TimeInterval {
         get {
             return player?.currentTime ?? 0.0
         } set {
@@ -93,7 +93,7 @@ class AudioPlayer: NSObject {
         }
     }
     
-    var duration: TimeInterval {
+    @objc var duration: TimeInterval {
         return player?.duration ?? 0.0
     }
 }
@@ -125,7 +125,7 @@ extension AudioPlayer {
         }
     }
     
-    func timerFired(_ timer: CADisplayLink) {
+    @objc func timerFired(_ timer: CADisplayLink) {
         sendUpdate()
     }
 }

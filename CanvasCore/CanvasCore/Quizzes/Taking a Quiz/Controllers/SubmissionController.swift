@@ -100,14 +100,14 @@ class SubmissionController {
         
         // For folks who are running under an MDM or a configurator and want to lock the device down...
         // This is a fire and forget cuz well, some folks care, others don't
-        UIAccessibilityRequestGuidedAccessSession(true) { _ in }
+        UIAccessibility.requestGuidedAccessSession(enabled: true) { _ in }
     }
 
     func submit(_ completed: @escaping (QuizSubmissionResult)->()) {
         if let sub = submission {
             // For folks who are running under an MDM or a configurator and want to unlock the device now...
             // This is a fire and forget cuz well, some folks care, others don't
-            UIAccessibilityRequestGuidedAccessSession(false) { _ in }
+            UIAccessibility.requestGuidedAccessSession(enabled: false) { _ in }
             service.completeSubmission(sub, completed: completed)
         } else {
             completed(Result(error: NSError.quizErrorWithMessage("You don't appear to be taking a quiz.")))

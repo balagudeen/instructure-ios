@@ -65,7 +65,7 @@ export class SubmissionSettings extends PureComponent<SubmissionSettingsProps> {
     return (
       <Screen
         title={i18n('Submission Settings')}
-        navBarButtonColor={branding.primaryButtonColor}
+        navBarButtonColor={branding.link}
       >
         <ScrollView style={style.container}>
           <RowSeparator />

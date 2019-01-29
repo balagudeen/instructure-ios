@@ -65,7 +65,7 @@ class AttendanceStatusController {
             timerExpired()
         })
         
-        RunLoop.main.add(timer, forMode: .defaultRunLoopMode)
+        RunLoop.main.add(timer, forMode: RunLoop.Mode.default)
         self.timer = timer
     }
     

@@ -31,12 +31,12 @@ public final class RubricCriterionRating: NSManagedObject {
 }
 
 extension RubricCriterionRating {
-    public static func uniquePredicateForObject(_ criterionID: String, assignmentID: String, json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ criterionID: String, assignmentID: String, json: JSONObject) throws -> NSPredicate {
         let id : String = (try json <| "id") ?? ""
         return NSPredicate(format: "%K == %@ && %K == %@ && %K.%K == %@", "id", id, "assignmentID", assignmentID, "criterion", "id", criterionID)
     }
     
-    public func updateValues(_ json: JSONObject, assignmentID: String, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, assignmentID: String, inContext context: NSManagedObjectContext) throws {
             id = (try json <| "id") ?? ""
             points = try json <| "points"
             ratingDescription = try json <| "description"

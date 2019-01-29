@@ -86,6 +86,9 @@
   "all_4321c3a1": {
     "message": "Todos"
   },
+  "all_annotations_saved_c0c650ab": {
+    "message": "Todas as anotações guardadas."
+  },
   "all_courses_a7dbb853": {
     "message": "Todas as disciplinas"
   },
@@ -130,9 +133,6 @@
   },
   "anonymous_grading_3083dc0": {
     "message": "Classificação anónima"
-  },
-  "anonymous_grading_ccb5045c": {
-    "message": "Classificação Anónima"
   },
   "anyone_5b8fdf9f": {
     "message": "Qualquer pessoa"
@@ -551,11 +551,11 @@
   "edit_quiz_details_72cd055": {
     "message": "Editar Detalhes do Teste"
   },
-  "email_contact_e095f380": {
-    "message": "Contato por e-mail"
-  },
   "enjoy_your_day_a4cb2c1": {
     "message": "Desfrute seu dia!"
+  },
+  "enter_a_search_term_with_three_or_more_characters_1577ec2": {
+    "message": "Digite um termo de pesquisa com três ou mais caracteres."
   },
   "enter_code_c7ab5104": {
     "message": "Inserir código"
@@ -565,6 +565,9 @@
   },
   "error_saving_grade_367dd920": {
     "message": "Erro ao Guardar Nota"
+  },
+  "error_saving_tap_to_retry_a66b9c5f": {
+    "message": "Erro ao guardar. Toque para tentar novamente."
   },
   "everyone_854554dd": {
     "message": "Todos"
@@ -947,6 +950,9 @@
   "no_results_f36777ee": {
     "message": "Nenhum resultado"
   },
+  "no_results_found_2ace1494": {
+    "message": "Nenhum resultado encontrado"
+  },
   "no_starred_messages_e1b28bca": {
     "message": "Sem mensagens com estrela"
   },
@@ -1031,6 +1037,9 @@
   "only_teachers_1628d9b9": {
     "message": "Apenas professores"
   },
+  "oops_we_couldn_t_find_that_page_7474fec6": {
+    "message": "Opa, não conseguimos encontrar essa página."
+  },
   "open_coursename_user_preferences_430b877e": {
     "message": "Abra as { courseName } preferências do utilizador"
   },
@@ -1051,6 +1060,9 @@
   },
   "page_details_847e35e6": {
     "message": "Detalhes da página"
+  },
+  "page_not_found_683da852": {
+    "message": "Página não encontrada"
   },
   "pages_e5414c2c": {
     "message": "Páginas"
@@ -1108,6 +1120,9 @@
   },
   "previewing_this_file_type_is_not_supported_7df9231": {
     "message": "A pré-visualização deste tipo de ficheiro não é suportada"
+  },
+  "profile_6bd2baed": {
+    "message": "Perfil"
   },
   "profile_menu_a688027e": {
     "message": "Menu do perfil"
@@ -1184,6 +1199,9 @@
   "reply_389d6fb9": {
     "message": "Responder"
   },
+  "reply_all_b864cd0e": {
+    "message": "Responder a todos"
+  },
   "report_a_problem_4d48624a": {
     "message": "Denunciar um problema"
   },
@@ -1244,6 +1262,12 @@
   "search_280d00bd": {
     "message": "Pesquisar"
   },
+  "search_files_7e8153fd": {
+    "message": "Pesquisar ficheiros"
+  },
+  "searching_f330d682": {
+    "message": "A pesquisar..."
+  },
   "seconds_plural_one_second_other_seconds_d33cf6e3": {
     "message": "{ seconds, plural,    one {# segundo} other {# segundos}}"
   },
@@ -1267,6 +1291,9 @@
   },
   "send_individual_message_to_each_recipient_4fdfc1e5": {
     "message": "Enviar uma mensagem individual para cada destinatário"
+  },
+  "send_message_a371a974": {
+    "message": "Enviar mensagem"
   },
   "send_recording_82e5a550": {
     "message": "Enviar gravação"
@@ -1391,6 +1418,9 @@
   "teacher_5a73b637": {
     "message": "Professor"
   },
+  "teachers_52e2423f": {
+    "message": "Professores"
+  },
   "teachers_and_students_ba2db3e4": {
     "message": "Professores e alunos"
   },
@@ -1511,11 +1541,14 @@
   "this_assignment_only_allows_on_paper_submissions_f478408a": {
     "message": "Esta tarefa só permite submissões em papel."
   },
+  "this_criterion_will_not_impact_the_score_94adf77b": {
+    "message": "Este critério não afetará a pontuação."
+  },
   "this_file_must_have_usage_rights_set_before_it_can_e4bf8bae": {
     "message": "Este ficheiro deve ter direitos de uso definidos antes de ser publicado."
   },
-  "this_folder_is_empty_14af41c": {
-    "message": "Esta pasta está vazia."
+  "this_folder_is_empty_89c70e89": {
+    "message": "Esta pasta está vazia"
   },
   "this_group_does_not_have_a_submission_for_this_ass_ca275999": {
     "message": "Este grupo não possui uma submissão para essa tarefa."
@@ -1528,9 +1561,6 @@
   },
   "this_submission_is_a_url_to_an_external_page_we_ve_9993d2fd": {
     "message": "Este envio é um URL para uma página externa. Nós incluímos um snapshot da página quando foi submetida."
-  },
-  "this_will_anonymize_each_student_and_shuffle_the_s_127956c7": {
-    "message": "Isso anonimizará cada aluno e embaralhará a lista de submissão."
   },
   "this_will_remove_the_due_date_and_all_of_the_assoc_56d1ea8": {
     "message": "Isso eliminará a data de vencimento e todos os cessionários associados."

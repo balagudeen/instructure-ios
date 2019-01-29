@@ -27,11 +27,7 @@ exports[`PageEdit renders 1`] = `
   >
     <KeyboardAwareScrollView
       enableAutoAutomaticScroll={false}
-      enableResetScrollToCoords={true}
-      extraHeight={75}
-      extraScrollHeight={0}
       keyboardDismissMode="on-drag"
-      keyboardOpeningTime={250}
       keyboardShouldPersistTaps="handled"
       style={
         Object {

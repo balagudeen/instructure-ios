@@ -25,14 +25,14 @@ open class CalendarSplitMonthViewController: UIViewController {
     // MARK: - Instance Variables
     // ---------------------------------------------
     // External Closures
-    open var dateSelected: DateSelected!
-    open var routeToURL: RouteToURL!
-    open var colorForContextID: ColorForContextID!
+    @objc open var dateSelected: DateSelected!
+    @objc open var routeToURL: RouteToURL!
+    @objc open var colorForContextID: ColorForContextID!
     fileprivate var session: Session!
     
     fileprivate lazy var todayButtonAction: UIBarButtonItemAction = {
         return { url in
-            self.monthViewController.calendarView?.scrollToToday(true)
+            self.monthViewController.calendarView?.scrollToToday(true, andSelectIt: true)
         }
         }()
     
@@ -79,13 +79,13 @@ open class CalendarSplitMonthViewController: UIViewController {
         }()
     
     // Segue IDs
-    let EmbedDayListSegueID = "EmbedDayListSegueID"
-    let EmbedMonthSegueID = "EmbedMonthSegueID"
+    @objc let EmbedDayListSegueID = "EmbedDayListSegueID"
+    @objc let EmbedMonthSegueID = "EmbedMonthSegueID"
     
     // ---------------------------------------------
     // MARK: - Lifecycle
     // ---------------------------------------------
-    open static func new(_ session: Session, dateSelected: DateSelected? = nil, colorForContextID: ColorForContextID? = nil, routeToURL: RouteToURL? = nil) -> CalendarSplitMonthViewController {
+    @objc open static func new(_ session: Session, dateSelected: DateSelected? = nil, colorForContextID: ColorForContextID? = nil, routeToURL: RouteToURL? = nil) -> CalendarSplitMonthViewController {
         let controller = UIStoryboard(name: "CalendarSplitMonthViewController", bundle: CalendarSplitMonthViewController.bundle).instantiateInitialViewController() as! CalendarSplitMonthViewController
         controller.session = session
         
@@ -101,7 +101,7 @@ open class CalendarSplitMonthViewController: UIViewController {
         
         
         controller.monthViewController = CalendarMonthViewController.new(session, dateSelected: dateSelected, colorForContextID: colorForContextID, routeToURL: routeToURL)
-        controller.addChildViewController(controller.monthViewController)
+        controller.addChild(controller.monthViewController)
         
         controller.monthViewController.dateSelected = controller.dateSelected
         controller.monthViewController.didFinishRefreshing = { [weak controller] in
@@ -134,26 +134,26 @@ open class CalendarSplitMonthViewController: UIViewController {
         view.addSubview(dayListHolder)
         dateView.backgroundColor = dayListHolder.backgroundColor
         view.backgroundColor = .lightGray
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][list]|", options: NSLayoutFormatOptions(), metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][date][day]|", options: NSLayoutFormatOptions(), metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[list]-1-[day]|", options: NSLayoutFormatOptions(), metrics: nil, views: views))
-        view.addConstraint(NSLayoutConstraint(item: monthViewController.view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: dayListHolder, attribute: NSLayoutAttribute.width, multiplier: 1.5, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: dayListHolder, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: dateView, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: dayListHolder, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: dateView, attribute: NSLayoutAttribute.left, multiplier: 1.0, constant: 0))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][list]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][date][day]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[list]-1-[day]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: views))
+        view.addConstraint(NSLayoutConstraint(item: monthViewController.view, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: dayListHolder, attribute: NSLayoutConstraint.Attribute.width, multiplier: 1.5, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: dayListHolder, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: dateView, attribute: NSLayoutConstraint.Attribute.width, multiplier: 1.0, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: dayListHolder, attribute: NSLayoutConstraint.Attribute.left, relatedBy: NSLayoutConstraint.Relation.equal, toItem: dateView, attribute: NSLayoutConstraint.Attribute.left, multiplier: 1.0, constant: 0))
     }
     
     fileprivate func buildListForDate() {
         if let dayListController = dayListViewController {
             dayListController.view.removeFromSuperview()
-            dayListController.removeFromParentViewController()
+            dayListController.removeFromParent()
         }
         dayListViewController = CalendarDayListViewController.new(session, date: date, routeToURL: routeToURL, colorForContextID: colorForContextID)
         dateView.backgroundColor = dayListViewController.view.backgroundColor
         dayListViewController.view.translatesAutoresizingMaskIntoConstraints = false
         dayListHolder.addSubview(dayListViewController.view)
-        dayListHolder.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[list]", options: NSLayoutFormatOptions(), metrics: nil, views: ["list": dayListViewController.view]))
+        dayListHolder.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[list]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["list": dayListViewController.view]))
         view.addConstraint(NSLayoutConstraint(item: dayListViewController.view, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
-        dayListHolder.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[list]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["list": dayListViewController.view]))
+        dayListHolder.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[list]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["list": dayListViewController.view]))
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -192,14 +192,14 @@ open class CalendarSplitMonthViewController: UIViewController {
         var navigationButtons = [UIBarButtonItem]()
         // Navigation Buttons
         let refreshImage = UIImage.icon(.refresh).withRenderingMode(.alwaysTemplate)
-        let refreshButton = UIBarButtonItem(image: refreshImage, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CalendarSplitMonthViewController.refreshButtonPressed(_:)))
+        let refreshButton = UIBarButtonItem(image: refreshImage, style: UIBarButtonItem.Style.plain, target: self, action: #selector(CalendarSplitMonthViewController.refreshButtonPressed(_:)))
         refreshButton.accessibilityLabel = NSLocalizedString("Refresh Button", comment: "")
         refreshButton.accessibilityHint = NSLocalizedString("Refreshes the calendar content", comment: "")
         navigationButtons.append(refreshButton)
         
         if let todayView = IconTodayView.instantiateFromNib(Date(), tintColor: self.navigationController?.navigationBar.tintColor, target: self, action: #selector(CalendarSplitMonthViewController.todayButtonPressed(_:))) {
             todayView.translatesAutoresizingMaskIntoConstraints = true
-            todayView.autoresizingMask = UIViewAutoresizing()
+            todayView.autoresizingMask = UIView.AutoresizingMask()
             let todayButton = UIBarButtonItem(customView: todayView)
             // it's weird that it had to be done this way but... ¯\_(ツ)_/¯
             todayView.lblDayOfMonth.accessibilityLabel = NSLocalizedString("Today Button", comment: "")
@@ -227,12 +227,12 @@ open class CalendarSplitMonthViewController: UIViewController {
         lblDayOfMonth.text = dayOfMonthDateFormatter.string(from: date)
     }
     
-    open func reloadData(_ forceUpdate: Bool = false) {
+    @objc open func reloadData(_ forceUpdate: Bool = false) {
         monthViewController?.reloadData(forceUpdate)
         // day list view is reloaded in the completion callback for monthVC?.reloadData()
     }
     
-    open func scrollToToday(_ animated: Bool) {
+    @objc open func scrollToToday(_ animated: Bool) {
         monthViewController?.calendarView?.scrollToToday(animated)
     }
     

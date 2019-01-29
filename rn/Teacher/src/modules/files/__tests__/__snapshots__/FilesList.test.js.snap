@@ -3,8 +3,10 @@
 exports[`FilesList progress function should update the UI correctly 1`] = `
 <Screen
   customPageViewPath={null}
-  navBarColor={undefined}
+  navBarButtonColor="#374A59"
+  navBarColor="#374A59"
   navBarStyle="light"
+  navBarTitleColor="#374A59"
   onTraitCollectionChange={[Function]}
   rightBarButtons={
     Array [
@@ -18,6 +20,7 @@ exports[`FilesList progress function should update the UI correctly 1`] = `
       },
     ]
   }
+  statusBarStyle="light"
   title="Files"
 >
   <DropView
@@ -242,21 +245,25 @@ exports[`FilesList progress function should update the UI correctly 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -480,21 +487,25 @@ exports[`FilesList progress function should update the UI correctly 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -718,21 +729,25 @@ exports[`FilesList progress function should update the UI correctly 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -777,8 +792,10 @@ exports[`FilesList progress function should update the UI correctly 1`] = `
 exports[`FilesList progress function should update the UI correctly 2`] = `
 <Screen
   customPageViewPath={null}
-  navBarColor={undefined}
+  navBarButtonColor="#374A59"
+  navBarColor="#374A59"
   navBarStyle="light"
+  navBarTitleColor="#374A59"
   onTraitCollectionChange={[Function]}
   rightBarButtons={
     Array [
@@ -792,6 +809,7 @@ exports[`FilesList progress function should update the UI correctly 2`] = `
       },
     ]
   }
+  statusBarStyle="light"
   title="Files"
 >
   <DropView
@@ -1016,21 +1034,25 @@ exports[`FilesList progress function should update the UI correctly 2`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -1254,21 +1276,25 @@ exports[`FilesList progress function should update the UI correctly 2`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -1492,21 +1518,25 @@ exports[`FilesList progress function should update the UI correctly 2`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -1551,8 +1581,10 @@ exports[`FilesList progress function should update the UI correctly 2`] = `
 exports[`FilesList progress function should update the UI correctly 3`] = `
 <Screen
   customPageViewPath={null}
-  navBarColor={undefined}
+  navBarButtonColor="#374A59"
+  navBarColor="#374A59"
   navBarStyle="light"
+  navBarTitleColor="#374A59"
   onTraitCollectionChange={[Function]}
   rightBarButtons={
     Array [
@@ -1566,6 +1598,7 @@ exports[`FilesList progress function should update the UI correctly 3`] = `
       },
     ]
   }
+  statusBarStyle="light"
   title="Files"
 >
   <DropView
@@ -1790,21 +1823,25 @@ exports[`FilesList progress function should update the UI correctly 3`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -2028,21 +2065,25 @@ exports[`FilesList progress function should update the UI correctly 3`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -2266,21 +2307,25 @@ exports[`FilesList progress function should update the UI correctly 3`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -2325,8 +2370,10 @@ exports[`FilesList progress function should update the UI correctly 3`] = `
 exports[`FilesList sending weird data into the progress update function should not break all the things 1`] = `
 <Screen
   customPageViewPath={null}
-  navBarColor={undefined}
+  navBarButtonColor="#374A59"
+  navBarColor="#374A59"
   navBarStyle="light"
+  navBarTitleColor="#374A59"
   onTraitCollectionChange={[Function]}
   rightBarButtons={
     Array [
@@ -2340,6 +2387,7 @@ exports[`FilesList sending weird data into the progress update function should n
       },
     ]
   }
+  statusBarStyle="light"
   title="Files"
 >
   <DropView
@@ -2564,21 +2612,25 @@ exports[`FilesList sending weird data into the progress update function should n
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -2802,21 +2854,25 @@ exports[`FilesList sending weird data into the progress update function should n
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -3040,21 +3096,25 @@ exports[`FilesList sending weird data into the progress update function should n
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -3099,8 +3159,10 @@ exports[`FilesList sending weird data into the progress update function should n
 exports[`FilesList should render 1`] = `
 <Screen
   customPageViewPath={null}
-  navBarColor={undefined}
+  navBarButtonColor="#374A59"
+  navBarColor="#374A59"
   navBarStyle="light"
+  navBarTitleColor="#374A59"
   onTraitCollectionChange={[Function]}
   rightBarButtons={
     Array [
@@ -3114,6 +3176,7 @@ exports[`FilesList should render 1`] = `
       },
     ]
   }
+  statusBarStyle="light"
   title="Files"
 >
   <DropView
@@ -3338,21 +3401,25 @@ exports[`FilesList should render 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -3576,21 +3643,25 @@ exports[`FilesList should render 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -3814,21 +3885,25 @@ exports[`FilesList should render 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -3873,8 +3948,10 @@ exports[`FilesList should render 1`] = `
 exports[`FilesList should render for course files 1`] = `
 <Screen
   customPageViewPath={null}
+  navBarButtonColor="white"
   navBarColor="red"
   navBarStyle="dark"
+  navBarTitleColor="white"
   onTraitCollectionChange={[Function]}
   rightBarButtons={
     Array [
@@ -3888,6 +3965,7 @@ exports[`FilesList should render for course files 1`] = `
       },
     ]
   }
+  statusBarStyle="light"
   title="Files"
 >
   <DropView
@@ -4112,21 +4190,25 @@ exports[`FilesList should render for course files 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -4350,21 +4432,25 @@ exports[`FilesList should render for course files 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -4588,21 +4674,25 @@ exports[`FilesList should render for course files 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -4647,8 +4737,10 @@ exports[`FilesList should render for course files 1`] = `
 exports[`FilesList should render for user files 1`] = `
 <Screen
   customPageViewPath={null}
-  navBarColor={undefined}
+  navBarButtonColor="#374A59"
+  navBarColor="#374A59"
   navBarStyle="light"
+  navBarTitleColor="#374A59"
   onTraitCollectionChange={[Function]}
   rightBarButtons={
     Array [
@@ -4662,6 +4754,7 @@ exports[`FilesList should render for user files 1`] = `
       },
     ]
   }
+  statusBarStyle="light"
   title="Files"
 >
   <DropView
@@ -4886,21 +4979,25 @@ exports[`FilesList should render for user files 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -5124,21 +5221,25 @@ exports[`FilesList should render for user files 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -5362,21 +5463,25 @@ exports[`FilesList should render for user files 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -5421,8 +5526,10 @@ exports[`FilesList should render for user files 1`] = `
 exports[`FilesList should render with folders 1`] = `
 <Screen
   customPageViewPath={null}
-  navBarColor={undefined}
+  navBarButtonColor="#374A59"
+  navBarColor="#374A59"
   navBarStyle="light"
+  navBarTitleColor="#374A59"
   onTraitCollectionChange={[Function]}
   rightBarButtons={
     Array [
@@ -5436,6 +5543,7 @@ exports[`FilesList should render with folders 1`] = `
       },
     ]
   }
+  statusBarStyle="light"
   title="Files"
 >
   <DropView
@@ -5660,21 +5768,25 @@ exports[`FilesList should render with folders 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -5898,21 +6010,25 @@ exports[`FilesList should render with folders 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -6136,21 +6252,25 @@ exports[`FilesList should render with folders 1`] = `
                   >
                     <View
                       style={
-                        Object {
-                          "alignSelf": "center",
-                          "backgroundColor": "transparent",
-                          "borderColor": "#c7c7cc",
-                          "borderRightWidth": 2,
-                          "borderTopWidth": 2,
-                          "height": 10,
-                          "marginLeft": 7,
-                          "transform": Array [
-                            Object {
-                              "rotate": "45deg",
-                            },
-                          ],
-                          "width": 10,
-                        }
+                        Array [
+                          Object {
+                            "alignSelf": "center",
+                            "backgroundColor": "transparent",
+                            "borderColor": "#c7c7cc",
+                            "borderRightWidth": 2,
+                            "borderTopWidth": 2,
+                            "height": 10,
+                            "marginLeft": 7,
+                            "width": 10,
+                          },
+                          Object {
+                            "transform": Array [
+                              Object {
+                                "rotate": "45deg",
+                              },
+                            ],
+                          },
+                        ]
                       }
                     />
                   </View>
@@ -6195,8 +6315,10 @@ exports[`FilesList should render with folders 1`] = `
 exports[`FilesList should render with no data at all 1`] = `
 <Screen
   customPageViewPath={null}
-  navBarColor={undefined}
+  navBarButtonColor="#374A59"
+  navBarColor="#374A59"
   navBarStyle="light"
+  navBarTitleColor="#374A59"
   onTraitCollectionChange={[Function]}
   rightBarButtons={
     Array [
@@ -6210,6 +6332,7 @@ exports[`FilesList should render with no data at all 1`] = `
       },
     ]
   }
+  statusBarStyle="light"
   title="Files"
 >
   <DropView
@@ -6219,7 +6342,11 @@ exports[`FilesList should render with no data at all 1`] = `
       }
     }
   >
-    <list />
+    <list>
+      <ListEmptyComponent
+        title="This folder is empty"
+      />
+    </list>
     <AttachmentPicker
       fileTypes={
         Array [

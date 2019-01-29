@@ -22,7 +22,8 @@ typedef enum {
 } SupportTicketType;
 
 @interface SupportTicketViewController : UIViewController
-+ (SupportTicketViewController *)presentFromViewController:(UIViewController *)presenter supportTicketType:(SupportTicketType)type;
++ (SupportTicketViewController *)presentFromViewController:(UIViewController *)presenter supportTicketType:(SupportTicketType)type defaultSubject:(NSString* _Nullable) defaultSubject;
 @property (nonatomic) SupportTicketType ticketType;
+@property (nonatomic, nullable) NSString * defaultSubject;
 @property (nonatomic) NSError *reportedError;
 @end

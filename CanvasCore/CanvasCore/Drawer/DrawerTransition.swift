@@ -22,7 +22,7 @@ let DimmerTag = 12345
 
 public class DrawerOpenTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
     
-    func installDimmer(view: UIView) -> UIView? {
+    @objc func installDimmer(view: UIView) -> UIView? {
         let dimmer = UIView()
         dimmer.backgroundColor = UIColor(red:0.18, green:0.23, blue:0.27, alpha:0.9)
         dimmer.alpha = 0.0
@@ -49,16 +49,17 @@ public class DrawerOpenTransitioning: NSObject, UIViewControllerAnimatedTransiti
         let dimmer = installDimmer(view: fromVC.view)
         let containerView = transitionContext.containerView
         containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
+        let isRTL = UIView.userInterfaceLayoutDirection(for: fromVC.view.semanticContentAttribute) == .rightToLeft
         var frame = toVC.view.frame
         frame.size.width = DrawerWidth
-        frame.origin.x = -DrawerWidth
+        frame.origin.x = isRTL ? fromVC.view.frame.size.width : -DrawerWidth
         toVC.view.frame = frame
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
             var frame = toVC.view.frame
-            frame.origin.x = 0
+            frame.origin.x = isRTL ? (fromVC.view.frame.size.width - DrawerWidth) : 0
             toVC.view.frame = frame
-            fromVC.view.center.x += DrawerWidth
+            fromVC.view.frame.origin.x += isRTL ? -DrawerWidth : DrawerWidth
             dimmer?.alpha = 1.0
         }) { _ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
@@ -82,9 +83,10 @@ class DrawerCloseTransitioning : NSObject, UIViewControllerAnimatedTransitioning
             else {
                 return
         }
+        let isRTL = UIView.userInterfaceLayoutDirection(for: fromVC.view.semanticContentAttribute) == .rightToLeft
         let dimmer = toVC.view.viewWithTag(DimmerTag)
         var fromFrame = fromVC.view.frame
-        fromFrame.origin.x = -fromFrame.width
+        fromFrame.origin.x = isRTL ? toVC.view.frame.width : -fromFrame.width
         var toFrame = toVC.view.frame
         toFrame.origin.x = 0.0
         
@@ -107,7 +109,7 @@ class DrawerCloseTransitioning : NSObject, UIViewControllerAnimatedTransitioning
 
 public class DrawerPresentationController: UIPresentationController {
     
-    var installedGestures = false
+    @objc var installedGestures = false
     
     public override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
@@ -115,8 +117,12 @@ public class DrawerPresentationController: UIPresentationController {
     
     public override var frameOfPresentedViewInContainerView: CGRect {
         guard let container = containerView else { return .zero }
+        let isRTL = UIView.userInterfaceLayoutDirection(for: container.semanticContentAttribute) == .rightToLeft
         var frame = container.frame
         frame.size.width = DrawerWidth
+        if isRTL {
+            frame.origin.x = container.frame.size.width - DrawerWidth
+        }
         return frame
     }
     
@@ -130,10 +136,14 @@ public class DrawerPresentationController: UIPresentationController {
         }
         var frame = container.frame
         frame.size.width = DrawerWidth
+        let isRTL = UIView.userInterfaceLayoutDirection(for: container.semanticContentAttribute) == .rightToLeft
+        if isRTL {
+            frame.origin.x = container.frame.size.width - DrawerWidth
+        }
         presentedViewController.view.frame = frame
     }
     
-    func tapped(gesture: UITapGestureRecognizer) {
+    @objc func tapped(gesture: UITapGestureRecognizer) {
         guard let container = containerView else { return }
         let location = gesture.location(in: container)
         if !presentedViewController.view.frame.contains(location) {

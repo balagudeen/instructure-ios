@@ -30,7 +30,7 @@ extension Enrollment {
             .flatMap(.merge, transform: session.emptyResponseSignalProducer)
     }
     
-    public static func arcLTIToolID(courseID: String, callback: @escaping (String?) -> Void) {
+    @objc public static func arcLTIToolID(courseID: String, callback: @escaping (String?) -> Void) {
         APIBridge.shared().call("getExternalTools", args: [courseID, ["include_parents": true]], callback: { (result, error) in
             guard let jsonLTITools = result as? [JSONObject] else {
                 callback(nil)
@@ -41,7 +41,7 @@ extension Enrollment {
                     guard let domain: String = (try? json <| "domain") else { return false }
                     return domain.contains("arc.instructure.com")
                 }
-                .flatMap { json in
+                .compactMap { json in
                     return try? json.stringID("id")
                 }
                 .first ?? ""
@@ -59,7 +59,7 @@ extension Enrollment {
                     return domain == "gauge.instructure.com"
                 }
             
-                .flatMap { json in
+                .compactMap { json in
                     guard let url: String = (try? json <| "placements.global_navigation.url") else { return nil }
                     return URL(string: url)
                 }

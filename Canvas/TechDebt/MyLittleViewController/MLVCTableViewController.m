@@ -338,7 +338,7 @@ CGFloat tableViewHeightForRowAtIndexPath(MLVCTableViewController *self, SEL _cmd
     if ([cellViewModel respondsToSelector:@selector(tableViewController:titleForDeleteConfirmationButtonForRowAtIndexPath:)]) {
         return [cellViewModel tableViewController:self titleForDeleteConfirmationButtonForRowAtIndexPath:indexPath];
     }
-    return NSLocalizedString(@"Delete", @"Default delete button MLVC");
+    return NSLocalizedStringFromTableInBundle(@"Delete", nil, [NSBundle bundleForClass:self.class], @"Default delete button MLVC");
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -359,19 +359,19 @@ CGFloat tableViewHeightForRowAtIndexPath(MLVCTableViewController *self, SEL _cmd
 #pragma mark - Error Handling
 - (void)refreshFailed:(NSError *)error {
     NSInteger unauthorizedCode = -1011;
-    NSString *title = NSLocalizedString(@"Failed to load", @"Error title for refresh failing on an MLVC tableview controller");
+    NSString *title = NSLocalizedStringFromTableInBundle(@"Failed to load", nil, [NSBundle bundleForClass:self.class], @"Error title for refresh failing on an MLVC tableview controller");
     NSString *message = error.localizedDescription;
     
     if (error.code == unauthorizedCode) {
-        title = NSLocalizedString(@"Unauthorized", @"Error message for refresh failing on an MLVC tableview controller");
-        message = NSLocalizedString(@"This can happen if your course hasn't started yet or you don't have permission to access this page.", @"Error message for refresh failing with an unauthorized code");
+        title = NSLocalizedStringFromTableInBundle(@"Unauthorized", nil, [NSBundle bundleForClass:self.class], @"Error message for refresh failing on an MLVC tableview controller");
+        message = NSLocalizedStringFromTableInBundle(@"This can happen if your course hasn't started yet or you don't have permission to access this page.", nil, [NSBundle bundleForClass:self.class], @"Error message for refresh failing with an unauthorized code");
     }
     
     UIAlertController *controller = [UIAlertController alertControllerWithTitle: title
                                                                         message: message
                                                                  preferredStyle: UIAlertControllerStyleAlert];
     
-    UIAlertAction *alertAction = [UIAlertAction actionWithTitle: NSLocalizedString(@"Dismiss", @"uialertaction button name for dismissing the failed refresh error message")
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle: NSLocalizedStringFromTableInBundle(@"Dismiss", nil, [NSBundle bundleForClass:self.class], @"uialertaction button name for dismissing the failed refresh error message")
                                                           style: UIAlertActionStyleDestructive
                                                         handler: ^(UIAlertAction *action) {
                                                             NSLog(@"failed refresh error has been dismissed.");

@@ -65,7 +65,7 @@ public final class File: FileNode {
         return network.map({ _ in () }).concat(local)
     }
     
-    public static func uploadIdentifier (_ folderID: String?) -> String {
+    @objc public static func uploadIdentifier (_ folderID: String?) -> String {
         if let folderID = folderID {
             return "file-upload-\(folderID)"
         } else {
@@ -79,12 +79,12 @@ import Marshal
 
 extension File: SynchronizedModel {
     
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("id")
         return NSPredicate(format: "%K == %@", "id", id)
     }
     
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         isFolder = false
         id = try json.stringID("id")
         try name = json <| "display_name"

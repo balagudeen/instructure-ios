@@ -30,13 +30,19 @@ class QuizDetailsViewController: UITableViewController {
             quizUpdated()
         }
     }
+
+    var submission: QuizSubmission? {
+        didSet {
+            quizUpdated()
+        }
+    }
     
     // other properties
     
     fileprivate let baseURL: URL
     fileprivate var details: [(String, String)] = []
 
-    let descriptionCell = WhizzyWigTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "WhoCares")
+    let descriptionCell = WhizzyWigTableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "WhoCares")
 
     // initialization
 
@@ -67,7 +73,7 @@ class QuizDetailsViewController: UITableViewController {
     
     fileprivate func prepareTable() {
         tableView.separatorStyle = .none
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 20+44+20)) // padding for scrolling above the page indicator, TODO: make constants
         tableView.register(QuizDetailCell.Nib, forCellReuseIdentifier: QuizDetailCell.ReuseID)
@@ -106,10 +112,17 @@ class QuizDetailsViewController: UITableViewController {
         
         // TODO: add availability
         let _ = NSLocalizedString("Available Until", tableName: "Localizable", bundle: .core, value: "", comment: "label for quiz availability date")
-        
+
         let TimeLimitLabel = NSLocalizedString("Time Limit", tableName: "Localizable", bundle: .core, value: "", comment: "label for the time limit")
-        deets.append((TimeLimitLabel, self.quiz?.timeLimit.description ?? ""))
-        
+        switch self.quiz?.timeLimit {
+        case .some(.minutes(let limit)):
+            let extraTime = self.submission?.extraTime ?? 0
+            let newLimit = Quiz.TimeLimit(minutes: extraTime + limit)
+            deets.append((TimeLimitLabel, newLimit.description))
+        default:
+            deets.append((TimeLimitLabel, ""))
+        }
+
         let AttemptsLabel = NSLocalizedString("Allowed Attempts", tableName: "Localizable", bundle: .core, value: "", comment: "label for number of attempts that are allowed")
         let allowed = self.quiz?.attemptLimit.description ?? ""
         deets.append((AttemptsLabel, allowed))
@@ -168,7 +181,7 @@ extension QuizDetailsViewController {
         if indexPath.section == 0 {
             var cell = tableView.dequeueReusableCell(withIdentifier: "QuizTitleCell") 
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "QuizTitleCell")
+                cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "QuizTitleCell")
                 cell?.textLabel?.textAlignment = .center
                 cell?.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
                 cell?.textLabel?.numberOfLines = 0

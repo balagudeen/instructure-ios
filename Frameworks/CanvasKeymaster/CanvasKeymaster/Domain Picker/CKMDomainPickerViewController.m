@@ -44,6 +44,7 @@ static BOOL PerformedStartupAnimation = NO;
 @property (nonatomic, weak) IBOutlet UIView *bottomContainer;
 @property (nonatomic, weak) IBOutlet UIButton *customLoginButton;
 @property (nonatomic, strong) UIView *backgroundView;
+@property (weak, nonatomic) IBOutlet UIButton *parentNeedsHelpButton;
 
 // Signal Stuff
 @property (nonatomic, strong) RACSubject *domainSubject;
@@ -95,10 +96,7 @@ static BOOL PerformedStartupAnimation = NO;
     if (PerformedStartupAnimation) {
         [self skipLaunchAnimations];
     }
-    
-    // Start getting all the accounts
-    [[CKMLocationSchoolSuggester shared] fetchSchools];
-    
+        
     NSURL *preloadedAccountInfoURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"preload-account-info" withExtension:@"plist"];
     if (preloadedAccountInfoURL) {
         self.preloadedAccountInfo = [NSDictionary dictionaryWithContentsOfURL:preloadedAccountInfoURL];
@@ -129,11 +127,12 @@ static BOOL PerformedStartupAnimation = NO;
 - (void)setupForceCanvasLoginLabel
 {
     RAC(self, forceCanvasLoginLabel.text) = [RACObserve(self, authenticationMethod) map:^id(NSNumber *authMethodNumber) {
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
         switch (authMethodNumber.unsignedIntegerValue) {
             case CKIAuthenticationMethodForcedCanvasLogin:
-                return NSLocalizedString(@"Canvas Login", @"Label displayed when forcing canvas login");
+                return NSLocalizedStringFromTableInBundle(@"Canvas Login", nil, bundle, @"Label displayed when forcing canvas login");
             case CKIAuthenticationMethodSiteAdmin:
-                return NSLocalizedString(@"Site Admin Login", @"Label displayed when logging in as site admin");
+                return NSLocalizedStringFromTableInBundle(@"Site Admin Login", nil, bundle, @"Label displayed when logging in as site admin");
         }
         return @"";
     }];
@@ -206,9 +205,11 @@ static BOOL PerformedStartupAnimation = NO;
     
     switch (myStatus) {
         case NotReachable: {
-            NSString *alertTitle = @"Whoops!";
-            NSString *alertMessage = @"We can't connect to Canvas. Have you checked your internet connection?";
-            NSString *alertCloseButtonText = @"Close";
+            NSBundle *bundle = [NSBundle bundleForClass:self.class];
+
+            NSString *alertTitle = NSLocalizedStringFromTableInBundle(@"Whoops!", nil, bundle, @"Connectivity alert title");
+            NSString *alertMessage = NSLocalizedStringFromTableInBundle(@"We can't connect to Canvas. Have you checked your internet connection?", nil, bundle, @"Connectivity alert message");
+            NSString *alertCloseButtonText = NSLocalizedStringFromTableInBundle(@"Close", nil, bundle, @"Connectivity alert close text");
             
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle
                                                                                      message:alertMessage
@@ -219,7 +220,7 @@ static BOOL PerformedStartupAnimation = NO;
             [alertController addAction:actionOk];
             [self presentViewController:alertController animated:YES completion:nil];
             break;
-            }
+        }
         case ReachableViaWWAN:
         case ReachableViaWiFi: {
             [self.domainSubject sendNext:domain];
@@ -267,6 +268,11 @@ static BOOL PerformedStartupAnimation = NO;
     self.findSchoolButton.alpha = 1.0;
     self.canvasNetworkButton.alpha = 1.0;
     self.whatsNewContainer.alpha = 1.0;
+
+    NSString *bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleIdentifierKey];
+    if ([bundleID isEqualToString:@"com.instructure.parentapp"]) {
+        self.parentNeedsHelpButton.alpha = 1.0;
+    }
 }
 
 - (void)animationStepThree {
@@ -342,6 +348,11 @@ static NSString *const CanvasNetworkDomain = @"learn.canvas.net";
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (IBAction)actionParentNeedsHelp:(id)sender {
+    NSString *subject = [NSString stringWithFormat:@"[Parent Login Issue] %@", NSLocalizedString(@"Trouble logging in", @"")];
+    [SupportTicketViewController presentFromViewController:self supportTicketType:SupportTicketTypeProblem defaultSubject:subject];
 }
 
 @end

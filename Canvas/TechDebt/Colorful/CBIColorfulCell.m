@@ -37,12 +37,22 @@
     [super awakeFromNib];
     
     @weakify(self);
+    UIImage *image = [[UIImage techDebtImageNamed:@"icon_arrow_right"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    image = [image imageFlippedForRightToLeftLayoutDirection];
     if (self.highlightedAccessoryView == nil) {
-        UIImageView *disclosure = [[UIImageView alloc] initWithImage:[[UIImage techDebtImageNamed:@"icon_arrow_right"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        UIImageView *disclosure = [[UIImageView alloc] initWithImage:image];
         disclosure.frame = CGRectMake(0, 0, 14, disclosure.frame.size.height);
         disclosure.contentMode = UIViewContentModeScaleAspectFill;
         disclosure.tintColor = [UIColor whiteColor];
         self.highlightedAccessoryView = disclosure;
+    }
+
+    if (self.nonHighlightedAccessoryView == nil) {
+        UIImageView *disclosure = [[UIImageView alloc] initWithImage:image];
+        disclosure.frame = CGRectMake(0, 0, 14, disclosure.frame.size.height);
+        disclosure.contentMode = UIViewContentModeScaleAspectFill;
+        disclosure.tintColor = [UIColor prettyLightGray];
+        self.nonHighlightedAccessoryView = disclosure;
     }
     
     RAC(self, courseTintColor) = RACObserve(self, viewModel.tintColor);

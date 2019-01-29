@@ -19,8 +19,8 @@ import CanvasCore
 import ReactiveSwift
 
 fileprivate class EventRow: UIView {
-    let imageView = UIImageView()
-    let label = UILabel()
+    @objc let imageView = UIImageView()
+    @objc let label = UILabel()
     
     init(icon: Icon) {
         super.init(frame: .zero)
@@ -84,9 +84,9 @@ class CalendarEventDetailViewController: UIViewController {
         return f
     }()
     
-    let route: (UIViewController, URL) -> Void
+    @objc let route: (UIViewController, URL) -> Void
     
-    init(forEventWithID eventID: String, in session: Session, route: @escaping (UIViewController, URL) -> Void) throws {
+    @objc init(forEventWithID eventID: String, in session: Session, route: @escaping (UIViewController, URL) -> Void) throws {
         self.observer = try CalendarEvent.observer(session, calendarEventID: eventID)
         self.refresher = try CalendarEvent.refresher(session, calendarEventID: eventID)
         self.enrollments = session.enrollmentsDataSource
@@ -138,6 +138,11 @@ class CalendarEventDetailViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("not supported")
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refresher.refresh(false)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,8 +152,8 @@ class CalendarEventDetailViewController: UIViewController {
         scrollView.bottomAnchor.constraint(equalTo: details.bottomAnchor).isActive = true
 
         details.topAnchor.constraint(equalTo: stack.bottomAnchor).isActive = true
-        details.leadingAnchor.constraint(equalTo: stack.leadingAnchor).isActive = true
-        details.trailingAnchor.constraint(equalTo: stack.trailingAnchor).isActive = true
+        details.leadingAnchor.constraint(equalTo: stack.leadingAnchor, constant: -16).isActive = true
+        details.trailingAnchor.constraint(equalTo: stack.trailingAnchor, constant: 16).isActive = true
         detailsHeightConstraint = NSLayoutConstraint.constraints(withVisualFormat: "V:[view(0)]", options: [], metrics: nil, views: ["view": self.details]).first
         if let detailsHeightConstraint = detailsHeightConstraint {
             details.addConstraint(detailsHeightConstraint)
@@ -160,7 +165,7 @@ class CalendarEventDetailViewController: UIViewController {
             }
         }
     }
-    
+
     override func loadView() {
         let spacing = CGFloat(16)
         

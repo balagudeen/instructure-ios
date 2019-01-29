@@ -28,7 +28,7 @@ import UIKit
 
 open class WhizzyWigViewController: UIViewController {
 
-    open let whizzyWigView = WhizzyWigView(frame: CGRect(x: 0, y: 0, width: 320, height: 43))
+    @objc open let whizzyWigView = WhizzyWigView(frame: CGRect(x: 0, y: 0, width: 320, height: 43))
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
@@ -48,7 +48,7 @@ open class WhizzyWigViewController: UIViewController {
         makeConstraints()
     }
 
-    func makeConstraints() {
+    @objc func makeConstraints() {
         view.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "|[whizzy]|",
             options: [],
@@ -61,7 +61,7 @@ open class WhizzyWigViewController: UIViewController {
             views: ["whizzy": whizzyWigView]))
     }
 
-    func done() {
+    @objc func done() {
         self.dismiss(animated: true, completion: nil)
     }
 }

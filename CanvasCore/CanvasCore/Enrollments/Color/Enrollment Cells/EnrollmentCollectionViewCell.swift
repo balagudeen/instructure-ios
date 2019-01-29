@@ -37,7 +37,7 @@ open class EnrollmentCollectionViewCell: PrettyCardsCell {
             })
     }
 
-    open func colorUpdated(_ color: UIColor) {
+    @objc open func colorUpdated(_ color: UIColor) {
         self.backgroundColor = color
     }
 

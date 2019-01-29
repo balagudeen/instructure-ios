@@ -56,13 +56,13 @@ open class FileUploadsViewController: FetchedTableViewController<FileUpload>, UI
         return self.viewModel.outputs.showDocumentMenu
     }()
 
-    open lazy var doneButton: UIBarButtonItem = {
+    @objc open lazy var doneButton: UIBarButtonItem = {
         let title = NSLocalizedString("Done", tableName: "Localizable", bundle: .core, value: "", comment: "")
         let btn = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(done))
         return btn
     }()
 
-    open lazy var cancelButton: UIBarButtonItem = {
+    @objc open lazy var cancelButton: UIBarButtonItem = {
         let btn = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         return btn
     }()
@@ -82,15 +82,15 @@ open class FileUploadsViewController: FetchedTableViewController<FileUpload>, UI
         return me
     }
     
-    open func addFile() {
+    @objc open func addFile() {
         self.viewModel.inputs.tappedAddFile()
     }
 
-    open func cancel() {
+    @objc open func cancel() {
         self.viewModel.inputs.tappedCancel()
     }
 
-    open func done() {
+    @objc open func done() {
         self.viewModel.inputs.tappedDone()
     }
 
@@ -98,7 +98,7 @@ open class FileUploadsViewController: FetchedTableViewController<FileUpload>, UI
         super.viewDidLoad()
         title = NSLocalizedString("File Uploads", tableName: "Localizable", bundle: .core, value: "", comment: "File uploads screen title")
 
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 48.0
         tableView.allowsSelection = false
         tableView.separatorInset = .zero
@@ -158,7 +158,7 @@ open class FileUploadsViewController: FetchedTableViewController<FileUpload>, UI
         return true
     }
 
-    override open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         // Need this for delete edit action.
     }
 
@@ -171,11 +171,11 @@ open class FileUploadsViewController: FetchedTableViewController<FileUpload>, UI
 
     // MARK: - DocumentMenuController
 
-    public func documentMenuFinished(error: NSError) {
+    @objc public func documentMenuFinished(error: NSError) {
         self.show(error: error.localizedDescription)
     }
 
-    public func documentMenuFinished(uploadable: Uploadable) {
+    @objc public func documentMenuFinished(uploadable: Uploadable) {
         self.viewModel.inputs.add(uploadable: uploadable)
     }
 
@@ -189,7 +189,10 @@ open class FileUploadsViewController: FetchedTableViewController<FileUpload>, UI
         self.documentMenuViewModel.inputs.tappedDocumentPicker(documentPicker)
     }
 
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         picker.dismiss(animated: true) {
             self.documentMenuViewModel.inputs.pickedMedia(with: info)
         }
@@ -197,7 +200,12 @@ open class FileUploadsViewController: FetchedTableViewController<FileUpload>, UI
 
     // MARK: - FileUploadTableViewCellDelegate
 
-    func fileUploadTableViewCell(_ cell: FileUploadTableViewCell, needsToDisplay errorMessage: String) {
+    @objc func fileUploadTableViewCell(_ cell: FileUploadTableViewCell, needsToDisplay errorMessage: String) {
         self.show(error: errorMessage)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }

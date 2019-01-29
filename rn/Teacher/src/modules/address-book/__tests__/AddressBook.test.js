@@ -79,7 +79,7 @@ describe('AddressBook', () => {
       permissions: { permission: true },
     }
     shallow(<AddressBook {...newProps} />)
-    expect(newProps.getCoursePermissions).not.toHaveBeenCalled()
+    expect(newProps.getCoursePermissions).toHaveBeenCalledWith('1') // no longer use the permissions from cache
   })
 
   it('renders "All in" row', () => {
@@ -134,6 +134,7 @@ describe('AddressBook', () => {
         onSelect: expect.any(Function),
         context: 'course_1_teachers',
         name: 'Teachers',
+        courseID: '1',
       },
     )
   })
@@ -238,6 +239,15 @@ describe('map state to props', () => {
     }
     let appState = templates.appState()
     appState.entities.sections['421'] = templates.section({ course_id: '1' })
+    expect(mapStateToProps(appState, ownProps).courseID).toEqual('1')
+  })
+
+  it('uses the courseID instead of the context id to derive the course ID', () => {
+    let ownProps = {
+      context: 'section_421',
+      courseID: '1',
+    }
+    let appState = templates.appState()
     expect(mapStateToProps(appState, ownProps).courseID).toEqual('1')
   })
 

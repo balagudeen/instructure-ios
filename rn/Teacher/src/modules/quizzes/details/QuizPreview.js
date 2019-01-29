@@ -78,6 +78,13 @@ export class QuizPreview extends Component<LocalProps, any> {
         results.scrollIntoView(true)
       } else if (button) {
         button.click()
+        var dialogue = document.getElementById('js-sequential-warning-dialogue')
+        if (dialogue) {
+          var accept = dialogue.querySelector('button')
+          if (accept) {
+            accept.click()
+          }
+        }
       } else if (login) {
         window.webkit.messageHandlers.canvas.postMessage('login')
       } else if (instructions) {

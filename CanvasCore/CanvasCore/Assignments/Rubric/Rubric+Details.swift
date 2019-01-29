@@ -24,11 +24,11 @@ import ReactiveSwift
 
 extension Rubric {
     
-    public static func detailsCacheKey(_ context: NSManagedObjectContext, courseID: String, assignmentID: String) -> String {
+    @objc public static func detailsCacheKey(_ context: NSManagedObjectContext, courseID: String, assignmentID: String) -> String {
         return cacheKey(context, [courseID, assignmentID])
     }
     
-    public static func predicate(_ courseID: String, assignmentID: String) -> NSPredicate {
+    @objc public static func predicate(_ courseID: String, assignmentID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@ && %K == %@", "courseID", courseID, "assignmentID", assignmentID)
     }
 

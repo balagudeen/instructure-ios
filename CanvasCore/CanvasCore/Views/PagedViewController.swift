@@ -74,7 +74,7 @@ open class PagedViewController: UIViewController {
             if nav?.isToolbarHidden == false {
                 bottom += nav?.toolbar.bounds.height ?? 0.0
             }
-            for scroll in pages.flatMap({ $0.controller.view.mainScrollView }) {
+            for scroll in pages.compactMap({ $0.controller.view.mainScrollView }) {
                 scroll.contentInset = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
                 scroll.scrollIndicatorInsets = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
             }
@@ -91,7 +91,7 @@ open class PagedViewController: UIViewController {
         self.segControl = segControl
     }
     
-    func updateNavigationItem(_ pageIndex: Int) {
+    @objc func updateNavigationItem(_ pageIndex: Int) {
         guard pageIndex < pages.count else {
             return
         }
@@ -99,7 +99,7 @@ open class PagedViewController: UIViewController {
         navigationItem.rightBarButtonItems = page.controller.navigationItem.rightBarButtonItems
     }
     
-    open func segPressed(_ control: UISegmentedControl) {
+    @objc open func segPressed(_ control: UISegmentedControl) {
         let newOffset = CGFloat(segControl.selectedSegmentIndex) * view.frame.size.width
         scrollView.setContentOffset(CGPoint(x: newOffset, y: 0), animated: true)
         
@@ -156,8 +156,8 @@ open class PagedViewController: UIViewController {
                 page.width == parent.width
             }
 
-            addChildViewController(page.controller)
-            page.controller.didMove(toParentViewController: self)
+            addChild(page.controller)
+            page.controller.didMove(toParent: self)
         }
         let lastPage = pages.last!.controller.view
         constrain(scrollView, lastPage!) { scrollView, lastPage in

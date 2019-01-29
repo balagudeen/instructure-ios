@@ -23,26 +23,26 @@ class MatchAnswerCell: UITableViewCell {
 
     @IBOutlet var answerLabel: UILabel!
     @IBOutlet var matchLabel: UILabel!
-    var hiddenTextField: UITextField = UITextField()
+    @objc var hiddenTextField: UITextField = UITextField()
 
-    var pickerView: UIPickerView = UIPickerView()
-    var pickerItems: [String] = []
+    @objc var pickerView: UIPickerView = UIPickerView()
+    @objc var pickerItems: [String] = []
 
-    var donePicking: (Int)->() = { _ in }
+    @objc var donePicking: (Int)->() = { _ in }
 
-    class var ReuseID: String {
+    @objc class var ReuseID: String {
         return "MatchAnswerCellReuseID"
     }
 
-    class var Nib: UINib {
+    @objc class var Nib: UINib {
         return UINib(nibName: "MatchAnswerCell", bundle: Bundle(for: self.classForCoder()))
     }
 
-    class var font: UIFont {
-        return UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+    @objc class var font: UIFont {
+        return UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
     }
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
@@ -82,7 +82,7 @@ class MatchAnswerCell: UITableViewCell {
         hiddenTextField.inputAccessoryView = toolbar
     }
 
-    class func heightWithAnswerText(_ answerText: String, matchText: String, boundsWidth width: CGFloat) -> CGFloat {
+    @objc class func heightWithAnswerText(_ answerText: String, matchText: String, boundsWidth width: CGFloat) -> CGFloat {
         let horizontalPadding: CGFloat = 30.0
         let verticalPadding: CGFloat = 18.0
         let maxLabelWidth = width - (2 * horizontalPadding)
@@ -92,13 +92,13 @@ class MatchAnswerCell: UITableViewCell {
         return height
     }
 
-    func doneButtonSelected() {
+    @objc func doneButtonSelected() {
         let row = pickerView.selectedRow(inComponent: 0)
         hiddenTextField.resignFirstResponder()
         donePicking(row)
     }
 
-    func cancelButtonSelected() {
+    @objc func cancelButtonSelected() {
         hiddenTextField.resignFirstResponder()
     }
 

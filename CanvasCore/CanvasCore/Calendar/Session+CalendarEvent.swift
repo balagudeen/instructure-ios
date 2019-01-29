@@ -29,7 +29,7 @@ let calendarKitFailedToLoadErrorDescription = "Failed to load \(calendarKitModel
 let calendarKitDBFailedToLoadErrorDescription = NSLocalizedString("There was a problem loading the CalendarKit database file.", tableName: "Localizable", bundle: .core, value: "", comment: "CalendarKit Database Load Failure Message")
 
 extension Session {
-    public func calendarEventsManagedObjectContext(_ scope: String? = nil) throws -> NSManagedObjectContext {
+    @objc public func calendarEventsManagedObjectContext(_ scope: String? = nil) throws -> NSManagedObjectContext {
         guard let model = NSManagedObjectModel(named: calendarKitModelName, inBundle: Bundle(for: CalendarEvent.self))?.mutableCopy() as? NSManagedObjectModel else {
             throw NSError(subdomain: calendarKitSubdomain, code: calendarKitFailedToLoadErrorCode, title: calendarKitFailedToLoadErrorDescription, description: calendarKitFailedToLoadErrorDescription)
         }

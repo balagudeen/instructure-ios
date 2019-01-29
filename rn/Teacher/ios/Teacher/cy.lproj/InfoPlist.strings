@@ -1,12 +1,12 @@
-/* (No Comment) */
+/* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "Atodwch luniau a fideos ar gyfer sylwadau ar gyflwyniad.";
 
-/* (No Comment) */
+/* Privacy - Microphone Usage Description */
 "NSMicrophoneUsageDescription" = "Atodwch recordiadau sain ar gyfer sylwadau ar gyflwyniadau.";
 
-/* (No Comment) */
+/* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Atodwch luniau a fideos ar gyfer sylwadau ar gyflwyniad.";
 
-/* (No Comment) */
+/* Privacy - Photo Library Usage Description */
 "NSPhotoLibraryUsageDescription" = "Llwytho cynnwys i fyny ar gyfer cyrsiau.";
 

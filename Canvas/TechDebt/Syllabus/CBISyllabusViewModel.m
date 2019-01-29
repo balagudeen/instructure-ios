@@ -35,7 +35,7 @@
 {
     self = [super init];
     if (self) {
-        self.name = NSLocalizedString(@"Syllabus", @"Title for Syllabus screen");
+        self.name = NSLocalizedStringFromTableInBundle(@"Syllabus", nil, [NSBundle bundleForClass:self.class], @"Title for Syllabus screen");
         self.icon = [self imageForTypeName:nil];
         self.syllabusDate = [NSDate date];
         self.viewControllerTitle = self.name;

@@ -16,6 +16,9 @@
 /* Confirmations alerting user of unanswered questions */
 "%d questions not answered" = "%d لم يتم إجابة الأسئلة";
 
+/* web content failed to load */
+"⚠️ Error Loading Content" = "⚠️ خطأ في تحميل المحتوى";
+
 /* Accessiblity hint for question drawer button */
 "0 Questions Answered" = "تم الرد على 0 أسئلة";
 
@@ -38,14 +41,14 @@
 /* option to view results for all grading periods */
 "All Grading Periods" = "جميع فترات تقييم الدرجات";
 
-/* all pages segmented control title */
-"All Pages" = "جميع الصفحات";
-
 /* No comment provided by engineer. */
 "All notifications are currently disabled." = "كافة الإعلامات معطلة في الوقت الحالي.";
 
 /* No comment provided by engineer. */
 "All notifications are currently enabled." = "كافة الإعلامات ممكّنة في الوقت الحالي.";
+
+/* all pages segmented control title */
+"All Pages" = "جميع الصفحات";
 
 /* No comment provided by engineer. */
 "Allow Notifications in Settings" = "السماح بالإعلامات في الإعدادات";
@@ -56,8 +59,14 @@
 /* Default error message displayed when a file fails to upload */
 "An error occured, please try again." = "حدث خطأ، يُرجى إعادة المحاولة.";
 
+/* No comment provided by engineer. */
+"An unexpected error has occurred." = "حدث خطأ غير متوقع.";
+
 /* an unknown error's message */
 "An unknown error has occurred." = "حدث خطأ غير معروف.";
+
+/* No comment provided by engineer. */
+"Answers will not be submitted while offline." = "لن يتم إرسال الأجوبة أثناء عدم الاتصال بالإنترنت.";
 
 /* Question to confirm user wants to navigate away from a quiz. */
 "Are you sure you want to leave this quiz?" = "هل تريد حقاً الخروج من هذا الاختبار؟";
@@ -67,6 +76,9 @@
 
 /* No comment provided by engineer. */
 "Are you sure you would like to delete this comment?" = "هل أنت متأكد من أنك تود حذف هذا التعليق؟";
+
+/* label to be read for visually impaired users with assignment types */
+"assignment" = "المهمة";
 
 /* No comment provided by engineer. */
 "Attendance" = "الحضور";
@@ -104,9 +116,6 @@
 /* Description for Chat communication channel */
 "Chat" = "Chat";
 
-/* No comment provided by engineer. */
-"Choose Date" = "اختيار تاريخ";
-
 /* Choose a file */
 "Choose a File" = "اختيار ملف";
 
@@ -122,8 +131,11 @@
 /* Pick a video from library */
 "Choose a Video" = "اختيار فيديو";
 
-/* Label indicating that the question is a multiple dropdown answer question and answer must be chosen. */
-"Choose your answers below" = "اختر إجاباتك أدناه";
+/* No comment provided by engineer. */
+"Choose Date" = "اختيار تاريخ";
+
+/* No comment provided by engineer. */
+"Close App" = "إغلاق التطبيق";
 
 /* No comment provided by engineer. */
 "Collapse" = "طي";
@@ -186,8 +198,8 @@
 /* message for delete dialog of audio recorder */
 "Delete recording?" = "حذف التسجيل؟";
 
-/* Designer role */
-"Designer" = "مصمم";
+/* label to be read for visually impaired users with discusstion topic assignment types */
+"discussion topic" = "موضوع المناقشة";
 
 /* Notification display name for discussions group */
 "Discussions" = "النقاشات";
@@ -214,26 +226,29 @@
 /* Data encoding error title */
 "Encoding Error" = "خطأ في الترميز";
 
+/* No comment provided by engineer. */
+"End Act as User" = "إنهاء التصرف كمستخدم";
+
+/* Default text for essay cell */
+"Enter answer..." = "إدخال الإجابة...";
+
 /* Text submission option */
 "Enter Text" = "إدخال نص";
 
 /* Placeholder for URL */
 "Enter URL..." = "إدخال عنوان URL...";
 
-/* Default text for essay cell */
-"Enter answer..." = "إدخال الإجابة...";
-
 /* Prompt for text upload */
 "Enter your submission..." = "أدخل الإرسال الخاص بك...";
 
-/* Title for quiz loading error */
-"Error Loading Quiz" = "خطأ في تحميل الاختبار الموجز";
-
-/* Error title for parsing assignment data from server */
-"Error Updating Assignment" = "حدث خطأ أثناء تحديث المهمة";
+/* No comment provided by engineer. */
+"Error" = "خطأ";
 
 /* error message for when the cache management database fails to load */
 "Error loading cache management database." = "حدث خطأ أثناء تحميل قاعدة بيانات إدارة ذاكرة التخزين المؤقت.";
+
+/* Title for quiz loading error */
+"Error Loading Quiz" = "خطأ في تحميل الاختبار الموجز";
 
 /* No comment provided by engineer. */
 "Error parsing the Roll Call response. Expected (e), received (a)" = "خطأ أثناء تحليل استجابة Roll Call. متوقع (e)، متلقى (a)";
@@ -250,6 +265,9 @@
 /* No comment provided by engineer. */
 "Error retrieving tool launch URL" = "خطأ أثناء استرداد عنوان URL لتشغيل الأداة";
 
+/* Error title for parsing assignment data from server */
+"Error Updating Assignment" = "حدث خطأ أثناء تحديث المهمة";
+
 /* rollcall status error */
 "Error: No data returned from the rollcall api." = "خطأ: لا توجد بيانات عائدة من rollcall api.";
 
@@ -262,17 +280,20 @@
 /* Error message when the server returns a invalid response */
 "Expected a response in the 200-299 range. Got %@" = "توقع استجابة في النطاق 200-299. حصل %@";
 
+/* label to be read for visually impaired users with external tool assignment types */
+"external tool" = "أداة خارجية";
+
 /* File upload failed */
 "Failed" = "فشل";
-
-/* Error when submitting an assignment */
-"Failed to Submit" = "تعذر الإرسال";
 
 /* No comment provided by engineer. */
 "Failed to find image at path" = "فشل العثور على صورة في المسار";
 
 /* Error Message when the app can't load an object model from the database */
 "Failed to load (discussionKitModelName) NSManagedObjectModel" = "تعذر تحميل (discussionKitModelName) NSManagedObjectModel";
+
+/* Error when submitting an assignment */
+"Failed to Submit" = "تعذر الإرسال";
 
 /* No comment provided by engineer. */
 "Failed to write image" = "فشل كتابة صورة";
@@ -316,6 +337,12 @@
 /* Indigo course color button */
 "Indigo" = "نيلي";
 
+/* No comment provided by engineer. */
+"Internet Connection Offline" = "الإنترنت غير متصل";
+
+/* No comment provided by engineer. */
+"Invalid date received from API." = "تم تلقي تاريخ غير صالح من API.";
+
 /* Mark student late
    Student is present in class */
 "Late" = "متأخر";
@@ -336,13 +363,15 @@
 "LightPink" = "LightPink";
 
 /* Label indicating that the quiz lock date was reached and the quiz is auto submitting */
-"Lock Date Reached\nSubmitting" = "تم الوصول إلى تاريخ التأمين\nإرسال";
-
-/* Title for when another tool called Lockdown Browser is required to take a quiz */
-"Lockdown Browser Required" = "مطلوب متصفح Lockdown";
+"Lock Date Reached
+Submitting" = "تم الوصول إلى موعد الإغلاق
+إرسال";
 
 /* Detail label for when a tool called Lockdown Browser is required to take the quiz */
 "Lockdown Browser is required for viewing your results. Please open the quiz in Lockdown Browser to continue." = "مطلوب متصفح Lockdown لعرض النتائج الخاصة بك. يُرجى فتح الاختبار في متصفح Lockdown للمتابعة";
+
+/* Title for when another tool called Lockdown Browser is required to take a quiz */
+"Lockdown Browser Required" = "مطلوب متصفح Lockdown";
 
 /* No comment provided by engineer. */
 "Mark All as Present" = "وضع علامة حاضر للجميع";
@@ -392,9 +421,6 @@
 
 /* OK Button Title */
 "OK" = "موافق";
-
-/* Observer role */
-"Observer" = "المراقب";
 
 /* No comment provided by engineer. */
 "Open in Safari" = "الفتح في Safari";
@@ -460,17 +486,20 @@
 /* accessibility label for a quiz question */
 "Question" = "السؤال";
 
-/* Shows question position */
-"Question %@" = "السؤال %@";
-
 /* state for a question that has been flagged */
 "Question (number) Flagged" = "تم وضع علامة على السؤال (رقم)";
 
 /* state for unflagged question */
 "Question (number) Unflagged" = "تم إزالة العلامة من السؤال (رقم)";
 
+/* Shows question position */
+"Question %@" = "السؤال %@";
+
 /* label for the number of questions */
 "Questions" = "الأسئلة";
+
+/* label to be read for visually impaired users with quiz assignment types */
+"quiz" = "الاختبار";
 
 /* Title for alert that shows when a quiz hits the due date */
 "Quiz Due" = "موعد استحقاق الاختبار";
@@ -535,17 +564,14 @@
 /* button for retaking quiz */
 "Retake Quiz" = "إعادة الاختبار";
 
-/* Description for SMS communication channel */
-"SMS" = "رسالة SMS";
-
 /* Notification display name for scheduling group */
 "Scheduling" = "الجدولة";
 
-/* Indicates that a matching quiz question needs to have an answer selected */
-"Select Answer" = "اختيار جواب";
-
 /* Label indicating that the question is a multiple answer question and more than 1 answer can be correct */
 "Select all that apply" = "اختيار كل ما ينطبق";
+
+/* Indicates that a matching quiz question needs to have an answer selected */
+"Select Answer" = "اختيار جواب";
 
 /* No comment provided by engineer. */
 "Select to change the roll call date" = "التحديد لتغيير تاريخ roll call.";
@@ -562,6 +588,9 @@
 /* Text for a button that toggles to show a timer for a timed quiz */
 "Show Timer" = "عرض المؤقت";
 
+/* Description for SMS communication channel */
+"SMS" = "رسالة SMS";
+
 /* Error message displayed when the file is unrecognized. */
 "Something went wrong. Check the file format and try again." = "حدث خطأ ما. تحقق من تنسيق الملف وأعد المحاولة.";
 
@@ -574,11 +603,11 @@
 /* stop recording button a11y label */
 "Stop" = "إيقاف";
 
+/* No comment provided by engineer. */
+"Stop acting as..." = "إيقاف التصرف باعتبارك...";
+
 /* File upload was stopped */
 "Stopped" = "تم الإيقاف";
-
-/* Student role */
-"Student" = "طالب";
 
 /* No comment provided by engineer. */
 "Style" = "نمط";
@@ -600,8 +629,11 @@
 /* Label for indication of submitting quiz */
 "Submitting Quiz" = "جارٍ إرسال الاختبار الموجز";
 
-/* TA role */
-"TA" = "مساعد المعلم";
+/* Take a photo submission choice */
+"Take a Photo" = "التقاط صورة";
+
+/* Take a video submission choice */
+"Take a Video" = "التقاط فيديو";
 
 /* Take a photo or video submission choice */
 "Take Photo or Video" = "التقاط صورة أو فيديو";
@@ -609,23 +641,17 @@
 /* Button for taking the quiz */
 "Take Quiz" = "إجراء الاختبار";
 
-/* Take a photo submission choice */
-"Take a Photo" = "التقاط صورة";
-
-/* Take a video submission choice */
-"Take a Video" = "التقاط فيديو";
-
-/* Teacher role */
-"Teacher" = "المعلم";
-
 /* Teal course color button */
 "Teal" = "أزرق مخضر";
 
-/* This shouldn't ever happen. */
-"The Pages are gone!? Why are the pages always gone?" = "هل اختفت الصفحات!؟ لماذا تختفي الصفحات دائمًا؟";
+/* No comment provided by engineer. */
+"The app needs to restart to use the new language settings. Please relaunch the app." = "يحتاج التطبيق لإعادة التشغيل لاستخدام إعدادات اللغة الجديدة. يرجى إعادة تشغيل التطبيق.";
 
 /* Error message for a file missing */
 "The file does not exist." = "الملف غير موجود.";
+
+/* This shouldn't ever happen. */
+"The Pages are gone!? Why are the pages always gone?" = "هل اختفت الصفحات!؟ لماذا تختفي الصفحات دائمًا؟";
 
 /* Description for alert that shows when the quiz hits the due date */
 "The quiz is due in 1 minute. Would you like to submit now and be on time or continue taking the quiz and possibly be late?" = "الاختبار الموجز مستحق خلال 1 دقيقة. هل تريد الإرسال الآن والتسليم في الموعد أم تريد الاستمرار في تلقي الاختبار الموجز مع احتمالية التأخير؟";
@@ -720,6 +746,9 @@
 /* Message when telling the user they can't take the quiz because the quiz is locked */
 "This quiz is locked." = "هذا الاختبار مؤمّن.";
 
+/* No comment provided by engineer. */
+"This quiz is not available offline." = "هذا الاختبار الموجز غير متاح دون اتصال بالإنترنت.";
+
 /* label for the time limit */
 "Time Limit" = "الحد الزمني";
 
@@ -771,11 +800,17 @@
 /* Upcoming assignments */
 "Upcoming" = "القادمة";
 
+/* No comment provided by engineer. */
+"Updated Language Settings" = "إعدادات اللغة المحدثة";
+
 /* File upload submission option */
 "Upload File" = "تحميل ملف";
 
 /* Message displayed while a file is being uploaded */
 "Uploading file..." = "جارٍ تحميل الملف...";
+
+/* File upload in progress */
+"uploading..." = "جارٍ التحميل...";
 
 /* permission denied button a11y hint */
 "User has denied record permission" = "رفض المستخدم منح الإذن للتسجيل";
@@ -807,24 +842,12 @@
 /* permission was rejected */
 "You must grant (appName) Microphone access in the Settings app in order to record audio." = "يجب أن تمنح (appName) حق الوصول إلى الميكروفون عبر إعدادات التطبيق من أجل تسجيل الصوت.";
 
+/* No comment provided by engineer. */
+"You will stop acting as %@ and return to your account." = "ستتوقف عن التصرف باعتبارك %@ وستعود إلى حسابك.";
+
+/* No comment provided by engineer. */
+"You will stop acting as this user and return to your account." = "ستتوقف عن التصرف باعتبارك هذا المستخدم وستعود إلى حسابك.";
+
 /* Error description for file out of space */
 "Your device is out of storage space. Please free up space and try again." = "لا توجد سعة تخزينية على جهازك. الرجاء تحرير مساحة ثم إعادة المحاولة.";
-
-/* label to be read for visually impaired users with assignment types */
-"assignment" = "المهمة";
-
-/* label to be read for visually impaired users with discusstion topic assignment types */
-"discussion topic" = "موضوع المناقشة";
-
-/* label to be read for visually impaired users with external tool assignment types */
-"external tool" = "أداة خارجية";
-
-/* label to be read for visually impaired users with quiz assignment types */
-"quiz" = "الاختبار";
-
-/* File upload in progress */
-"uploading..." = "جارٍ التحميل...";
-
-/* web content failed to load */
-"⚠️ Error Loading Content" = "⚠️ خطأ في تحميل المحتوى";
 

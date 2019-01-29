@@ -35,7 +35,8 @@ typedef enum {
     CKAssignmentScoringTypePoints,
     CKAssignmentScoringTypePercentage,
     CKAssignmentScoringTypePassFail,
-    CKAssignmentScoringTypeLetter
+    CKAssignmentScoringTypeLetter,
+    CKAssignmentScoringTypeGPA
 } CKAssignmentScoringType;
 
 @class CKCanvasAPI, CKCourse, CKSubmission, CKStudent, CKRubric, CKDiscussionTopic;

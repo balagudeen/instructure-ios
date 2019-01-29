@@ -18,8 +18,8 @@ import Foundation
 import React
 
 public class Adjustable: RCTView {
-    public var onAccessibilityIncrement: RCTDirectEventBlock?
-    public var onAccessibilityDecrement: RCTDirectEventBlock?
+    @objc public var onAccessibilityIncrement: RCTDirectEventBlock?
+    @objc public var onAccessibilityDecrement: RCTDirectEventBlock?
     
     public override func accessibilityIncrement() {
         if let onAccessibilityIncrement = self.onAccessibilityIncrement {

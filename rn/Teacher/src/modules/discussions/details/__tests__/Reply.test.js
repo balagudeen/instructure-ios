@@ -20,7 +20,6 @@ import { shallow } from 'enzyme'
 import React from 'react'
 import { ActionSheetIOS } from 'react-native'
 import Reply, { type Props } from '../Reply'
-import httpClient from '../../../../canvas-api/httpClient'
 import * as template from '../../../../__templates__'
 
 jest.mock('ActionSheetIOS', () => ({
@@ -55,12 +54,17 @@ describe('DiscussionReplies', () => {
       rateEntry: jest.fn(),
       isLastReply: false,
       isAnnouncement: false,
+      userCanReply: true,
     }
     jest.clearAllMocks()
   })
 
   it('renders', () => {
     expect(shallow(<Reply {...props}/>)).toMatchSnapshot()
+  })
+
+  it('renders without the reply button when the user cant reply', () => {
+    expect(shallow(<Reply {...props} userCanReply={false} />)).toMatchSnapshot()
   })
 
   it('renders deleted', () => {
@@ -207,50 +211,14 @@ describe('DiscussionReplies', () => {
       expect(rating.props().children).toEqual(['(', '2 likes', ')'])
     })
 
-    it('renders rating after user rates for first time', () => {
+    it('calls rateEntry when the button is pushed', () => {
       props.showRating = true
       props.canRate = true
       props.rating = null
       const view = shallow(<Reply {...props }/>)
       const rateBtn = view.find('[testID="discussion.reply.rate-btn"]')
       rateBtn.simulate('Press')
-      view.update()
-      expect(view).toMatchSnapshot()
-    })
-
-    it('renders rating after user updates rating', () => {
-      props.showRating = true
-      props.canRate = true
-      props.rating = 1
-      const view = shallow(<Reply {...props }/>)
-      const rateBtn = view.find('[testID="discussion.reply.rate-btn"]')
-      rateBtn.simulate('Press')
-      view.update()
-      expect(view).toMatchSnapshot()
-    })
-
-    it('fixes unverified urls', async () => {
-      const evaluateJavaScript = jest.fn()
-      const url = 'https://canvas.instructure.com/files/1/preview?verifier=1234'
-      const promise = Promise.resolve({ data: template.file({ url }) })
-      httpClient.get = jest.fn(() => promise)
-      let imageReply = template.discussionReply({ id: '1', message: `<img src="${url}" />` })
-
-      const screen = shallow(<Reply {...props} reply={imageReply} />)
-      const webView = screen.find('CanvasWebView')
-      webView.getElement().ref({ evaluateJavaScript })
-
-      webView.prop('onFinishedLoading')()
-      expect(evaluateJavaScript).toHaveBeenCalled()
-      expect(evaluateJavaScript.mock.calls).toMatchSnapshot()
-
-      evaluateJavaScript.mockClear()
-
-      const message = { type: 'BROKEN_IMAGES', data: ['api-url'] }
-      webView.prop('onMessage')({ body: JSON.stringify(message) })
-      await promise
-      expect(evaluateJavaScript).toHaveBeenCalled()
-      expect(evaluateJavaScript.mock.calls).toMatchSnapshot()
+      expect(props.rateEntry).toHaveBeenCalledWith(props.context, props.contextID, props.discussionID, props.reply.id, 1, [0])
     })
   })
 })

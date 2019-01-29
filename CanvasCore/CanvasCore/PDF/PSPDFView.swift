@@ -34,15 +34,15 @@ extension UIView {
 
 public class PSPDFView: UIView {
     
-    weak var pdfViewController: PSPDFViewController?
+    @objc weak var pdfViewController: PSPDFViewController?
     
-    var config: NSDictionary = [:] {
+    @objc var config: NSDictionary = [:] {
         didSet {
             setNeedsLayout()
         }
     }
     
-    var documentURL: URL? {
+    @objc var documentURL: URL? {
         if let url = config["documentURL"] as? String {
             return URL(fileURLWithPath: url)
         }
@@ -73,10 +73,10 @@ public class PSPDFView: UIView {
         
         let doc = PSPDFDocument(url: documentURL)
         let vc = PSPDFViewController(document: doc)
-        parentVC.addChildViewController(vc)
+        parentVC.addChild(vc)
         addSubview(vc.view)
         vc.view.frame = bounds
-        vc.didMove(toParentViewController: parentVC)
+        vc.didMove(toParent: parentVC)
         self.pdfViewController = vc
     }
 }

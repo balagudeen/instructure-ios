@@ -86,6 +86,9 @@
   "all_4321c3a1": {
     "message": "全部"
   },
+  "all_annotations_saved_c0c650ab": {
+    "message": "所有注释已保存。"
+  },
   "all_courses_a7dbb853": {
     "message": "所有课程"
   },
@@ -129,9 +132,6 @@
     "message": "通告"
   },
   "anonymous_grading_3083dc0": {
-    "message": "匿名评分"
-  },
-  "anonymous_grading_ccb5045c": {
     "message": "匿名评分"
   },
   "anyone_5b8fdf9f": {
@@ -551,11 +551,11 @@
   "edit_quiz_details_72cd055": {
     "message": "编辑测验详情"
   },
-  "email_contact_e095f380": {
-    "message": "电子邮件联系人"
-  },
   "enjoy_your_day_a4cb2c1": {
     "message": "享受您的一天！"
+  },
+  "enter_a_search_term_with_three_or_more_characters_1577ec2": {
+    "message": "输入一个三个或以上字符的搜索词。"
   },
   "enter_code_c7ab5104": {
     "message": "输入代码"
@@ -565,6 +565,9 @@
   },
   "error_saving_grade_367dd920": {
     "message": "保存评分时出错"
+  },
+  "error_saving_tap_to_retry_a66b9c5f": {
+    "message": "保存时出错。点击以重试。"
   },
   "everyone_854554dd": {
     "message": "所有人"
@@ -947,6 +950,9 @@
   "no_results_f36777ee": {
     "message": "无结果"
   },
+  "no_results_found_2ace1494": {
+    "message": "未找到结果"
+  },
   "no_starred_messages_e1b28bca": {
     "message": "未对消息标记星号"
   },
@@ -1031,6 +1037,9 @@
   "only_teachers_1628d9b9": {
     "message": "仅教师"
   },
+  "oops_we_couldn_t_find_that_page_7474fec6": {
+    "message": "糟糕，我们找不到该页面。"
+  },
   "open_coursename_user_preferences_430b877e": {
     "message": "打开{ courseName }用户首选项"
   },
@@ -1051,6 +1060,9 @@
   },
   "page_details_847e35e6": {
     "message": "页面详细信息"
+  },
+  "page_not_found_683da852": {
+    "message": "页面未找到"
   },
   "pages_e5414c2c": {
     "message": "页面"
@@ -1108,6 +1120,9 @@
   },
   "previewing_this_file_type_is_not_supported_7df9231": {
     "message": "此文件类型不支持预览"
+  },
+  "profile_6bd2baed": {
+    "message": "个人资料"
   },
   "profile_menu_a688027e": {
     "message": "个人资料菜单"
@@ -1184,6 +1199,9 @@
   "reply_389d6fb9": {
     "message": "回复"
   },
+  "reply_all_b864cd0e": {
+    "message": "回复所有人"
+  },
   "report_a_problem_4d48624a": {
     "message": "报告一个问题"
   },
@@ -1244,6 +1262,12 @@
   "search_280d00bd": {
     "message": "搜索"
   },
+  "search_files_7e8153fd": {
+    "message": "搜索文件"
+  },
+  "searching_f330d682": {
+    "message": "正在搜索..."
+  },
   "seconds_plural_one_second_other_seconds_d33cf6e3": {
     "message": "{ seconds, plural,    other {#秒}}"
   },
@@ -1267,6 +1291,9 @@
   },
   "send_individual_message_to_each_recipient_4fdfc1e5": {
     "message": "给每位接收人单独发送消息"
+  },
+  "send_message_a371a974": {
+    "message": "发送消息"
   },
   "send_recording_82e5a550": {
     "message": "发送录制文件"
@@ -1391,6 +1418,9 @@
   "teacher_5a73b637": {
     "message": "教师"
   },
+  "teachers_52e2423f": {
+    "message": "教师"
+  },
   "teachers_and_students_ba2db3e4": {
     "message": "教师和学生"
   },
@@ -1511,11 +1541,14 @@
   "this_assignment_only_allows_on_paper_submissions_f478408a": {
     "message": "此作业仅允许纸上提交。"
   },
+  "this_criterion_will_not_impact_the_score_94adf77b": {
+    "message": "此标准不会影响分数。"
+  },
   "this_file_must_have_usage_rights_set_before_it_can_e4bf8bae": {
     "message": "此文件必须先设置使用权限后才能发布。"
   },
-  "this_folder_is_empty_14af41c": {
-    "message": "此文件夹为空。"
+  "this_folder_is_empty_89c70e89": {
+    "message": "此文件夹为空"
   },
   "this_group_does_not_have_a_submission_for_this_ass_ca275999": {
     "message": "此组没有此作业的提交项。"
@@ -1528,9 +1561,6 @@
   },
   "this_submission_is_a_url_to_an_external_page_we_ve_9993d2fd": {
     "message": "此提交项是一个外部页面的 URL。我们已包含被提交时的页面看起来像什么的快照。"
-  },
-  "this_will_anonymize_each_student_and_shuffle_the_s_127956c7": {
-    "message": "这将使每位学生匿名并随机排列提交项列表。"
   },
   "this_will_remove_the_due_date_and_all_of_the_assoc_56d1ea8": {
     "message": "这将删除截止日期和所有关联的指定人员。"

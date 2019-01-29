@@ -22,7 +22,7 @@ import AVFoundation
 
 class RecordButton: UIButton {
     enum State {
-        case denied(AVAudioSessionRecordPermission)
+        case denied(AVAudioSession.RecordPermission)
         case record, stop, play, pause
     }
     
@@ -32,7 +32,7 @@ class RecordButton: UIButton {
         }
     }
     
-    lazy var recordShape: CAShapeLayer = {
+    @objc lazy var recordShape: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.fillColor = UIColor.red.withAlphaComponent(0.65).cgColor
         layer.borderWidth = 0.0
@@ -59,7 +59,7 @@ class RecordButton: UIButton {
         updateRecordShape()
         let bg = UIColor(red: 57.0/255.0, green: 57.0/255.0, blue: 56.0/255.0, alpha: 1.0)
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
-        setTitleColor(bg, for: UIControlState())
+        setTitleColor(bg, for: UIControl.State())
     }
     
     override var tintColor: UIColor! {
@@ -132,7 +132,7 @@ class RecordButton: UIButton {
         
         recordShape.path = path.cgPath
         recordShape.fillColor = color.cgColor
-        setTitle(title, for: UIControlState())
+        setTitle(title, for: UIControl.State())
         accessibilityIdentifier = a11y
         accessibilityLabel = a11y
         accessibilityHint = a11yHint

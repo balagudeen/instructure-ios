@@ -17,14 +17,14 @@
 import UIKit
 
 class SafariActivity: UIActivity {
-    var url: URL?
+    @objc var url: URL?
 
     override var activityTitle: String? {
         return NSLocalizedString("Open in Safari", tableName: "Localizable", bundle: .core, value: "", comment: "")
     }
 
-    override var activityType: UIActivityType? {
-        return UIActivityType(rawValue: "SafariActivity")
+    override var activityType: UIActivity.ActivityType? {
+        return UIActivity.ActivityType(rawValue: "SafariActivity")
     }
 
     override var activityImage: UIImage? {

@@ -19,9 +19,6 @@
 import UIKit
 import Cartography
 
-
-
-
 class QuizPresentingViewController: UIViewController {
     
     let quizController: QuizController
@@ -46,7 +43,7 @@ class QuizPresentingViewController: UIViewController {
             }
         }
     }
-    var quizSubmissionTimerController: QuizSubmissionTimerController?
+    @objc var quizSubmissionTimerController: QuizSubmissionTimerController?
     
     fileprivate let flaggedCountLabel = UILabel()
     fileprivate let flaggedButton = UIButton()
@@ -147,7 +144,7 @@ class QuizPresentingViewController: UIViewController {
                 let flagView = UIView(frame: CGRect(x: 0, y: 0, width: flagImage?.size.width ?? 0, height: 34))
 
                 flaggedButton.frame = flagView.bounds
-                flaggedButton.setImage(flagImage?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+                flaggedButton.setImage(flagImage?.withRenderingMode(.alwaysTemplate), for: UIControl.State())
                 flaggedButton.addTarget(self, action: #selector(QuizPresentingViewController.openDrawer(_:)), for: .touchUpInside)
                 flaggedButton.accessibilityHint = NSLocalizedString("0 Questions Answered", tableName: "Localizable", bundle: .core, value: "", comment: "Accessiblity hint for question drawer button")
                 flagView.addSubview(flaggedButton)
@@ -178,9 +175,9 @@ class QuizPresentingViewController: UIViewController {
             }
         }
         
-        addChildViewController(submissionViewController!)
+        addChild(submissionViewController!)
         view.addSubview(submissionViewController!.view)
-        submissionViewController!.didMove(toParentViewController: self)
+        submissionViewController!.didMove(toParent: self)
         
         constrain(submissionViewController!.view) { submissionView in
             submissionView.edges == submissionView.superview!.edges; return
@@ -198,9 +195,9 @@ class QuizPresentingViewController: UIViewController {
             }
         }
         
-        addChildViewController(questionDrawerViewController)
+        addChild(questionDrawerViewController)
         view.addSubview(questionDrawerViewController.view)
-        questionDrawerViewController.didMove(toParentViewController: self)
+        questionDrawerViewController.didMove(toParent: self)
         
         constrain(questionDrawerViewController.view) { drawerView in
             drawerView.top      == drawerView.superview!.top
@@ -226,7 +223,7 @@ class QuizPresentingViewController: UIViewController {
         
         timerLabel.frame = CGRect(x: 0, y: 0, width: 300, height: 40)
         timerLabel.textAlignment = .center
-        timerLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)
+        timerLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
         timerLabel.text = ""
         timerLabel.isUserInteractionEnabled = true
         
@@ -250,7 +247,7 @@ class QuizPresentingViewController: UIViewController {
             
             timerToastView.addSubview(timerToastLabel)
             timerToastLabel.textColor = UIColor.white
-            timerToastLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+            timerToastLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
             timerToastLabel.textAlignment = .center
             constrain(timerToastLabel) { timerToastLabel in
                 timerToastLabel.left    == timerToastLabel.superview!.left + 20
@@ -260,7 +257,7 @@ class QuizPresentingViewController: UIViewController {
             }
         }
     }
-    
+
     fileprivate func reportError(_ err: NSError) {
         let title = NSLocalizedString("Quiz Error", tableName: "Localizable", bundle: .core, value: "", comment: "Title for quiz error")
         let dismiss = NSLocalizedString("Dismiss", tableName: "Localizable", bundle: .core, value: "", comment: "Dismiss button for error alert")
@@ -300,7 +297,7 @@ class QuizPresentingViewController: UIViewController {
     
     // MARK: - Actions
     
-    func openDrawer(_ button: UIBarButtonItem?) {
+    @objc func openDrawer(_ button: UIBarButtonItem?) {
         questionDrawerActive = !questionDrawerActive
         if questionDrawerActive {
             setQuestionDrawerOnscreen(true, animated: true)
@@ -309,12 +306,12 @@ class QuizPresentingViewController: UIViewController {
         }
     }
     
-    func closeDrawer() {
+    @objc func closeDrawer() {
         questionDrawerActive = false
         setQuestionDrawerOnscreen(false, animated: true)
     }
     
-    func exitQuiz(_ button: UIBarButtonItem?) {
+    @objc func exitQuiz(_ button: UIBarButtonItem?) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -352,7 +349,7 @@ class QuizPresentingViewController: UIViewController {
                 if !onscreen {
                     self.contentOverlay.isHidden = true
                 }
-                UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil)
+                UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: nil)
             })
         } else {
             setOverlayAlpa()
@@ -363,7 +360,7 @@ class QuizPresentingViewController: UIViewController {
         }
     }
     
-    func toggleTimer() {
+    @objc func toggleTimer() {
         timerVisible = !timerVisible
         
         if timerVisible {
@@ -406,7 +403,7 @@ class QuizPresentingViewController: UIViewController {
 // MARK - QuizSubmission
 
 extension QuizPresentingViewController {
-    func confirmSubmission(onConfirm: @escaping ()->()) {
+    @objc func confirmSubmission(onConfirm: @escaping ()->()) {
         if questionsController == nil {
             return
         }
@@ -445,7 +442,7 @@ extension QuizPresentingViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func goAheadAndSubmit(_ customLoadingText: String? = nil) {
+    @objc func goAheadAndSubmit(_ customLoadingText: String? = nil) {
         submissionViewController.answerUnsubmittedQuestions() { [weak self] in
             guard let me = self, let submission = me.submissionController.submission else { return }
 

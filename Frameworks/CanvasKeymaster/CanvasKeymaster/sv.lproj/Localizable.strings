@@ -25,17 +25,26 @@
 /* No comment provided by engineer. */
 "Choose One" = "Välj en";
 
+/* Connectivity alert close text */
+"Close" = "Stäng";
+
 /* No comment provided by engineer. */
 "Continue Editing" = "Fortsätt redigera";
 
 /* No comment provided by engineer. */
 "Describe the feature here" = "Beskriv funktionen här";
 
+/* No comment provided by engineer. */
+"describe your problem" = "beskriv ditt problem";
+
 /* Dismiss login expired/revoked alert button */
 "Dismiss" = "Avfärda";
 
 /* No comment provided by engineer. */
 "Emergency" = "Nödläge";
+
+/* No comment provided by engineer. */
+"enter a subject" = "skriv in ett ämne";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "Skriv in biljettbeskrining";
@@ -53,7 +62,7 @@
 "How do I find my school?" = "Hur hittar jag min skola?";
 
 /* No comment provided by engineer. */
-"I am stuck and can't get things done" = "Jag sitter fast och kan inte få saker gjorda\t";
+"I am stuck and can't get things done" = "Jag sitter fast och kan inte få saker gjorda	";
 
 /* No comment provided by engineer. */
 "I can't get things done until I hear back from you" = "Jag kan inte utföra saker innan jag hör från dig";
@@ -76,14 +85,20 @@
 /* No comment provided by engineer. */
 "OK" = "OK";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "ta bort användare";
+
 /* No comment provided by engineer. */
 "Report a Problem" = "Rapportera ett problem";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "Begär en funktion";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "Begäran misslyckades!";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "Begär en funktion";
+"select the impact" = "välj inverkan";
 
 /* Button to select the severity of the ticket */
 "Select ticket impact level" = "Välj biljettbetydelse nivå";
@@ -106,18 +121,15 @@
 /* No comment provided by engineer. */
 "Thanks, your request was received!" = "Tack, din förfrågan har tagits emot!";
 
+/* No comment provided by engineer. */
+"Trouble logging in" = "Inloggningsproblem";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "Det går inte att ansluta till Canvas. Har du kontrollerat internetanslutningen?";
+
+/* Connectivity alert title */
+"Whoops!" = "Oooj!";
+
 /* when the access token has been revoked */
 "Your login has expired or has been removed by the server. Please log in again." = "Din inloggning har utgått eller tagits bort från servern. Vänligen logga in igen ";
-
-/* No comment provided by engineer. */
-"describe your problem" = "beskriv ditt problem";
-
-/* No comment provided by engineer. */
-"enter a subject" = "skriv in ett ämne";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "ta bort användare";
-
-/* No comment provided by engineer. */
-"select the impact" = "välj inverkan";
 

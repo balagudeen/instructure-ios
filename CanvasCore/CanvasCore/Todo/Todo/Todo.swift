@@ -94,12 +94,12 @@ public final class Todo: NSManagedObject {
 // MARK: - Core Data
 extension Todo: SynchronizedModel {
 
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let assignmentID: String = try json.stringID("assignment.id")
         return NSPredicate(format: "%K == %@", "assignmentID", assignmentID)
     }
 
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
 
         id                  = try json.stringID("assignment.id")
         type                = try json <| "type"
@@ -131,7 +131,7 @@ extension Todo: SynchronizedModel {
         contextID = context
     }
 
-    public var routingURL: String {
+    @objc public var routingURL: String {
         return assignmentHtmlURL
     }
 

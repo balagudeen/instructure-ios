@@ -44,21 +44,21 @@ import ReactiveSwift
 
 open class SignalProducerRefresher<SP: SignalProducerProtocol>: NSObject, Refresher where SP.Error == NSError {
 
-    open let refreshControl = UIRefreshControl()
+    @objc open let refreshControl = UIRefreshControl()
     let signalProducer: SP
     var disposable: Disposable?
 
-    open let cacheKey: String
-    weak var scope: RefreshScope?
-    let ttl: TimeInterval
+    @objc open let cacheKey: String
+    @objc weak var scope: RefreshScope?
+    @objc let ttl: TimeInterval
 
-    fileprivate (set) open var isRefreshing: Bool = false
+    @objc fileprivate (set) open var isRefreshing: Bool = false
     open var refreshingBegan: Signal<(), NoError>
     var refreshingBeganObserver: Observer<(), NoError>
     open var refreshingCompleted: Signal<NSError?, NoError>
     var refreshingCompletedObserver: Observer<NSError?, NoError>
 
-    open var shouldRefresh: Bool {
+    @objc open var shouldRefresh: Bool {
         if let scope = scope, scope.shouldRefreshCache(cacheKey, ttl: ttl) {
             return true
         }
@@ -89,7 +89,7 @@ open class SignalProducerRefresher<SP: SignalProducerProtocol>: NSObject, Refres
         scope.register(self)
     }
 
-    open func makeRefreshable(_ viewController: UIViewController) {
+    @objc open func makeRefreshable(_ viewController: UIViewController) {
         guard viewController.isViewLoaded else { return }
         refreshControl.addTarget(self, action: #selector(beginRefresh(_:)), for: .valueChanged)
         if let tv = viewController as? UITableViewController {
@@ -106,7 +106,7 @@ open class SignalProducerRefresher<SP: SignalProducerProtocol>: NSObject, Refres
         refreshControl.layoutIfNeeded()
     }
 
-    open func refresh(_ forced: Bool) {
+    @objc open func refresh(_ forced: Bool) {
         guard forced || shouldRefresh else { return }
 
         refreshControl.beginRefreshing()
@@ -118,7 +118,7 @@ open class SignalProducerRefresher<SP: SignalProducerProtocol>: NSObject, Refres
         beginRefresh(refreshControl)
     }
 
-    open func cancel() {
+    @objc open func cancel() {
         disposable?.dispose()
     }
 
@@ -132,7 +132,7 @@ open class SignalProducerRefresher<SP: SignalProducerProtocol>: NSObject, Refres
         disposable?.dispose()
     }
 
-    func beginRefresh(_ control: UIRefreshControl) {
+    @objc func beginRefresh(_ control: UIRefreshControl) {
         guard let scope = self.scope else { return }
 
         isRefreshing = true
@@ -163,7 +163,7 @@ open class SignalProducerRefresher<SP: SignalProducerProtocol>: NSObject, Refres
         }
     }
     
-    func endRefreshing(error: NSError? = nil) {
+    @objc func endRefreshing(error: NSError? = nil) {
         isRefreshing = false
         refreshControl.endRefreshing()
         refreshingCompletedObserver.send(value: error)

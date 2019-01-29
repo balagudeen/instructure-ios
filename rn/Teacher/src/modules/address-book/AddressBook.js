@@ -19,8 +19,8 @@
 import React, { Component } from 'react'
 import {
   View,
-  FlatList,
   StyleSheet,
+  FlatList,
 } from 'react-native'
 import { connect } from 'react-redux'
 import Screen from '../../routing/Screen'
@@ -41,6 +41,7 @@ export type Props = {
   onSelect: (selected: AddressBookResult[]) => void,
   context: string,
   name: string,
+  courseID?: string,
 }
 
 export type AddressBookProps =
@@ -73,7 +74,7 @@ export class AddressBook extends Component<AddressBookProps, State> {
   }
 
   componentDidMount () {
-    if (!(this.props.permissions && Object.keys(this.props.permissions).length) && this.props.courseID) {
+    if (this.props.courseID) {
       this.props.getCoursePermissions(this.props.courseID)
     }
   }
@@ -227,6 +228,7 @@ export class AddressBook extends Component<AddressBookProps, State> {
       onSelect: this.props.onSelect,
       context: item.id,
       name: item.name,
+      courseID: this.props.courseID,
     })
   }
 }
@@ -244,7 +246,10 @@ const styles = StyleSheet.create({
 
 export function mapStateToProps (state: AppState, ownProps: Props) {
   let [ contextType, courseID ] = ownProps.context.split('_')
-  if (contextType === 'course') {
+
+  if (ownProps.courseID) {
+    courseID = ownProps.courseID
+  } else if (contextType === 'course') {
     // courseID is already set correctly
   } else if (contextType === 'section') {
     let sectionData = state.entities.sections[courseID]

@@ -13,6 +13,9 @@
 /* Class = "UITextField"; placeholder = "user@example.com"; ObjectID = "Dfu-ki-tj3"; */
 "Dfu-ki-tj3.placeholder" = "user@example.com";
 
+/* Class = "UITextField"; placeholder = "Fix all the things"; ObjectID = "iNZ-xc-hnX"; */
+"iNZ-xc-hnX.placeholder" = "Correction de toutes les choses";
+
 /* Class = "UIBarButtonItem"; title = "Send"; ObjectID = "IXk-9a-lZr"; */
 "IXk-9a-lZr.title" = "Envoyer";
 
@@ -25,12 +28,6 @@
 /* Class = "UILabel"; text = "I need help but it's not urgent"; ObjectID = "Mzb-Ip-AeR"; */
 "Mzb-Ip-AeR.text" = "J'ai besoin d'aide, mais ce n'est pas urgent";
 
-/* Class = "UINavigationItem"; title = "Impact Level"; ObjectID = "WJ3-te-MeT"; */
-"WJ3-te-MeT.title" = "Niveau d'impact";
-
-/* Class = "UITextField"; placeholder = "Fix all the things"; ObjectID = "iNZ-xc-hnX"; */
-"iNZ-xc-hnX.placeholder" = "Correction de toutes les choses";
-
 /* Class = "UILabel"; text = "Something is broken but I can work around it"; ObjectID = "noj-Yi-xpa"; */
 "noj-Yi-xpa.text" = "Quelquechose ne fonctionne plus mais je peux quand même travailler sans";
 
@@ -39,6 +36,9 @@
 
 /* Class = "UILabel"; text = "Extremely critical emergency"; ObjectID = "wHQ-Tn-kQn"; */
 "wHQ-Tn-kQn.text" = "État d'urgence extrêmement critique";
+
+/* Class = "UINavigationItem"; title = "Impact Level"; ObjectID = "WJ3-te-MeT"; */
+"WJ3-te-MeT.title" = "Niveau d'impact";
 
 /* Class = "UILabel"; text = "Impact:"; ObjectID = "zHJ-ya-AKU"; */
 "zHJ-ya-AKU.text" = "Impact :";

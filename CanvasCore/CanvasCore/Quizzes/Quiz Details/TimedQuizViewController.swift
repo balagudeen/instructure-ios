@@ -20,7 +20,7 @@ import UIKit
 
 class TimedQuizViewController: UIViewController {
     
-    var minuteLimit: Int = 0 {
+    @objc var minuteLimit: Int = 0 {
         didSet {
             let template = NSLocalizedString("You have %d minutes.", tableName: "Localizable", bundle: .core, value: "", comment: "Shows time limit on a quiz")
             timeLimitLabel?.text = String.localizedStringWithFormat(template, minuteLimit)

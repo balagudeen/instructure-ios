@@ -19,7 +19,7 @@
 import UIKit
 
 extension UIImage {
-    class func rectImage(frame: CGRect, color: UIColor, scale: CGFloat) -> UIImage {
+    @objc class func rectImage(frame: CGRect, color: UIColor, scale: CGFloat) -> UIImage {
         
         UIGraphicsBeginImageContextWithOptions(frame.size, false, scale)
         let context = UIGraphicsGetCurrentContext()
@@ -31,7 +31,7 @@ extension UIImage {
         return image!
     }
     
-    class func circleImage(frame: CGRect, color: UIColor, scale: CGFloat) -> UIImage {
+    @objc class func circleImage(frame: CGRect, color: UIColor, scale: CGFloat) -> UIImage {
         
         UIGraphicsBeginImageContextWithOptions(frame.size, false, scale)
         let context = UIGraphicsGetCurrentContext()

@@ -28,7 +28,7 @@ public protocol TableViewCellViewModel {
 }
 
 open class TableViewController: UITableViewController {
-    open var dataSource: TableViewDataSource? {
+    @objc open var dataSource: TableViewDataSource? {
         didSet {
             if isViewLoaded {
                 dataSource?.viewDidLoad(self)
@@ -53,9 +53,9 @@ open class TableViewController: UITableViewController {
     
     private var refreshDisposable: Disposable? = nil
 
-    open var didSelectItemAtIndexPath: ((IndexPath)->())? = nil
+    @objc open var didSelectItemAtIndexPath: ((IndexPath)->())? = nil
 
-    open var emptyView: UIView? {
+    @objc open var emptyView: UIView? {
         didSet {
             self.updateEmptyView()
         }
@@ -69,11 +69,11 @@ open class TableViewController: UITableViewController {
         refreshDisposable?.dispose()
     }
 
-    public override init(style: UITableViewStyle) {
+    public override init(style: UITableView.Style) {
         super.init(style: style)
     }
 
-    public init(dataSource: TableViewDataSource, refresher: Refresher? = nil, style: UITableViewStyle = .plain) {
+    public init(dataSource: TableViewDataSource, refresher: Refresher? = nil, style: UITableView.Style = .plain) {
         self.dataSource = dataSource
         self.refresher = refresher
         super.init(style: style)
@@ -138,7 +138,7 @@ open class TableViewController: UITableViewController {
 
      Override if you wish to handle the error yourself
      */
-    open func handleError(_ error: NSError) {
+    @objc open func handleError(_ error: NSError) {
         ErrorReporter.reportError(error, from: self)
     }
 }

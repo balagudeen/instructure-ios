@@ -33,7 +33,7 @@ public struct ColorfulViewModel: TableViewCellViewModel {
     public let rightDetail = MutableProperty("")
     public let icon = MutableProperty<UIImage?>(nil)
     public let accessoryView = MutableProperty<UIView?>(nil)
-    public let accessoryType = MutableProperty<UITableViewCellAccessoryType>(.none)
+    public let accessoryType = MutableProperty<UITableViewCell.AccessoryType>(.none)
     public let tokenViewText = MutableProperty("")
     public let indentationLevel = MutableProperty(0)
     public let selectionEnabled = MutableProperty(true)
@@ -100,7 +100,7 @@ public struct ColorfulViewModel: TableViewCellViewModel {
 }
 
 public class ColorfulTableViewCell: UITableViewCell {
-    let padding = CGFloat(12.0)
+    @objc let padding = CGFloat(12.0)
 
     public struct Features: OptionSet {
         public let rawValue: Int
@@ -115,17 +115,17 @@ public class ColorfulTableViewCell: UITableViewCell {
     // MARK: views
     private let stack = UIStackView()
     
-    public let titleLabel: UILabel = {
+    @objc public let titleLabel: UILabel = {
         let title = UILabel()
         title.font = UIFont.preferredFont(forTextStyle: .body)
         title.numberOfLines = 0
         return title
     }()
     
-    private(set) public weak var iconView: UIImageView?
-    private(set) public weak var subtitleLabel: UILabel?
-    private(set) public weak var rightDetailLabel: UILabel?
-    private(set) public weak var tokenView: TokenView?
+    @objc private(set) public weak var iconView: UIImageView?
+    @objc private(set) public weak var subtitleLabel: UILabel?
+    @objc private(set) public weak var rightDetailLabel: UILabel?
+    @objc private(set) public weak var tokenView: TokenView?
 
     fileprivate var disposable = CompositeDisposable()
     
@@ -133,7 +133,7 @@ public class ColorfulTableViewCell: UITableViewCell {
         disposable.dispose()
     }
     
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         stack.alignment = .center

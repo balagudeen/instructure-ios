@@ -37,6 +37,7 @@ export type Folder = {
   locked: boolean,
   locked_for_user: boolean,
   for_submissions: boolean,
+  can_upload?: boolean,
 }
 
 export type NewFolder = {

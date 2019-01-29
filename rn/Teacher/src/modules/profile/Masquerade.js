@@ -126,6 +126,7 @@ export default class Masquerade extends Component<*, any> {
     })
     return (<Screen
       title={i18n('Act as User')}
+      navBarButtonColor={colors.link}
     >
       <KeyboardAwareScrollView extraScrollHeight={16}>
         <View style={styles.container}>

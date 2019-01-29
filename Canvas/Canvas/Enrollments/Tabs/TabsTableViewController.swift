@@ -22,7 +22,7 @@ import CanvasCore
 import TechDebt
 
 extension Tab {
-    func routingURL(_ session: Session) -> URL? {
+    @objc func routingURL(_ session: Session) -> URL? {
         if isHome {
             guard let enrollment = session.enrollmentsDataSource[contextID] else { return url }
             return URL(string: enrollment.defaultViewPath)
@@ -44,11 +44,11 @@ extension ColorfulViewModel {
 }
 
 class TabsTableViewController: FetchedTableViewController<Tab>, PageViewEventViewControllerLoggingProtocol {
-    let route: (UIViewController, URL)->()
-    let session: Session
+    @objc let route: (UIViewController, URL)->()
+    @objc let session: Session
     let contextID: ContextID
 
-    var selectedTabURL: URL?
+    @objc var selectedTabURL: URL?
     
     init(session: Session, contextID: ContextID, route: @escaping (UIViewController, URL)->()) throws {
         self.session = session

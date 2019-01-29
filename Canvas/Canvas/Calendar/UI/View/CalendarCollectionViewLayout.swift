@@ -20,10 +20,10 @@ import UIKit
 
 open class CalendarCollectionViewLayout: UICollectionViewFlowLayout {
 
-    let daysInWeek = (Calendar.current as NSCalendar).maximumRange(of: .weekday).length
+    @objc let daysInWeek = (Calendar.current as NSCalendar).maximumRange(of: .weekday).length
     
-    let selfMinimumLineSpacing: CGFloat = 2.0
-    let selfMinimumInteritemSpacing: CGFloat = 2.0
+    @objc let selfMinimumLineSpacing: CGFloat = 2.0
+    @objc let selfMinimumInteritemSpacing: CGFloat = 2.0
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
@@ -35,25 +35,25 @@ open class CalendarCollectionViewLayout: UICollectionViewFlowLayout {
         initialize()
     }
     
-    func initialize() {
+    @objc func initialize() {
         self.minimumLineSpacing = self.selfMinimumLineSpacing
         self.minimumInteritemSpacing = self.selfMinimumInteritemSpacing
     }
     
-    func updateItemSize() {
+    @objc func updateItemSize() {
         let totalIteritemSpacing: CGFloat = floor(self.selfMinimumInteritemSpacing * (CGFloat(daysInWeek) - 1))
         let itemWidth: CGFloat = floor((self.collectionView!.frame.width - totalIteritemSpacing) / CGFloat(daysInWeek))
         let itemHeight: CGFloat = isPad() ? 100.0 : 62.0
         self.itemSize = CGSize(width: itemWidth, height: itemHeight)
     }
     
-    func updateHeaderSize() {
+    @objc func updateHeaderSize() {
         let headerWidth = self.collectionView!.frame.width
         let headerHeight: CGFloat = isPad() ? 64.0 : 34.0
         self.headerReferenceSize = CGSize(width: headerWidth, height: headerHeight)
     }
     
-    func isPad() -> Bool {
+    @objc func isPad() -> Bool {
         return UIDevice.current.userInterfaceIdiom == .pad
     }
 }

@@ -20,7 +20,7 @@ import Foundation
 import CoreData
 
 extension Activity {
-    var daySectionTitle: String {
+    @objc var daySectionTitle: String {
         return Activity.sectionTitleDateFormatter.string(from: updatedAt as Date)
     }
 

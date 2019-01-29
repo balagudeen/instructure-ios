@@ -126,6 +126,7 @@ NativeModules.TabBarBadgeCounts = {
 
 NativeModules.CanvasWebViewManager = {
   evaluateJavaScript: jest.fn(() => Promise.resolve()),
+  stopRefreshing: jest.fn(),
 }
 
 NativeModules.WebViewHacker = {
@@ -141,6 +142,8 @@ NativeModules.AppStoreReview = {
   handleSuccessfulSubmit: jest.fn(),
   handleNavigateToAssignment: jest.fn(),
   handleNavigateFromAssignment: jest.fn(),
+  handleUserFeedbackOnDashboard: jest.fn(),
+  setState: jest.fn(),
 }
 
 NativeModules.CanvasAnalytics = {
@@ -259,6 +262,7 @@ NativeModules.NativeFileSystem = {
 
 NativeModules.ModuleItemsProgress = {
   viewedDiscussion: jest.fn(),
+  viewedPage: jest.fn(),
 }
 
 import './../../src/common/global-style'
@@ -276,6 +280,26 @@ jest.mock('../../src/canvas-api/httpClient')
 
 // makes tree.find('FlatList').dive() useful
 jest.mock('FlatList', () => function FlatList (props: Object) {
+  const empty = (
+    typeof props.ListEmptyComponent === 'function' && <props.ListEmptyComponent /> ||
+    props.ListEmptyComponent || null
+  )
+  return (
+    <list>
+      {props.data && props.data.length > 0
+        ? props.data.map((item, index) =>
+          <item key={item.key || props.keyExtractor(item, index)}>
+            {props.renderItem({ item, index })}
+          </item>
+        )
+        : empty
+      }
+    </list>
+  )
+})
+
+// makes tree.find('KeyboardAwareFlatList').dive() useful
+jest.mock('react-native-keyboard-aware-scroll-view/lib/KeyboardAwareFlatList', () => function KeyboardAwareFlatList (props: Object) {
   const empty = (
     typeof props.ListEmptyComponent === 'function' && <props.ListEmptyComponent /> ||
     props.ListEmptyComponent || null
@@ -318,3 +342,10 @@ jest.mock('SectionList', () => function SectionList (props: Object) {
     </list>
   )
 })
+
+// makes tree.find('KeyboardAwareScrollView').getELement().ref possible
+jest.mock('react-native-keyboard-aware-scroll-view/lib/KeyboardAwareScrollView', () => 'KeyboardAwareScrollView')
+
+jest.mock('I18nManager', () => ({
+  isRTL: false,
+}))

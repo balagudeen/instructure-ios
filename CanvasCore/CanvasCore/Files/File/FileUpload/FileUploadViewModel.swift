@@ -142,17 +142,17 @@ public final class FileUploadViewModel: FileUploadViewModelType, FileUploadViewM
         self.fileUploadSession.value = (fileUpload, session)
     }
 
-    private let tappedDeleteUploadProperty = MutableProperty()
+    private let tappedDeleteUploadProperty = MutableProperty(())
     public func tappedDeleteUpload() {
         self.tappedDeleteUploadProperty.value = ()
     }
 
-    private let tappedErrorInfoButtonProperty = MutableProperty()
+    private let tappedErrorInfoButtonProperty = MutableProperty(())
     public func tappedErrorInfoButton() {
         self.tappedErrorInfoButtonProperty.value = ()
     }
 
-    private let tappedStatusButtonProperty = MutableProperty()
+    private let tappedStatusButtonProperty = MutableProperty(())
     public func tappedStatusButton() {
         self.tappedStatusButtonProperty.value = ()
     }
@@ -256,7 +256,7 @@ private func graphic(for contentType: String) -> Graphic {
 }
 
 extension FileUpload {
-    var isImage: Bool {
+    @objc var isImage: Bool {
         return contentType == "image/jpeg"
     }
 }

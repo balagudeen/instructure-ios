@@ -181,7 +181,7 @@ typedef enum CBISubmissionState : NSUInteger {
     self.tableView.backgroundColor = [UIColor prettyLightGray];
     
     if (self.viewModel.forTeacher) {
-        self.addCommentButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Add Comment", @"add comment button") style:UIBarButtonItemStylePlain target:self action:@selector(tappedAdComment:)];
+        self.addCommentButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Add Comment", nil, [NSBundle bundleForClass:self.class], @"add comment button") style:UIBarButtonItemStylePlain target:self action:@selector(tappedAdComment:)];
         self.navigationItem.rightBarButtonItem = self.addCommentButton;
     } else {
         [self addFloatingActionBar];
@@ -250,15 +250,16 @@ typedef enum CBISubmissionState : NSUInteger {
 
 - (void)addFloatingActionBar {
     [[UINib nibWithNibName:@"CBIFloatingActionBar" bundle:[NSBundle bundleForClass:[self class]]] instantiateWithOwner:self options:nil];
-    
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+
     @weakify(self)
     RAC(self, turnInButton.title) = [RACSignal combineLatest:@[RACObserve(self, viewModel.model.submissionTypes), RACObserve(self, viewModel.record.submissionHistory)] reduce:^id(NSArray *types, NSArray *history) {
         if ([types containsObject:CKISubmissionTypeExternalTool]) {
-            return NSLocalizedString(@"Launch External Tool", @"title for submission button");
+            return NSLocalizedStringFromTableInBundle(@"Launch External Tool", nil, bundle, @"title for submission button");
         } else if ([types containsObject:CKISubmissionTypeDiscussion]) {
-            return NSLocalizedString(@"Go To Discussion", @"title for discussion assignment submission button");
+            return NSLocalizedStringFromTableInBundle(@"Go To Discussion", nil, bundle, @"title for discussion assignment submission button");
         } else if ([types containsObject:CKISubmissionTypeQuiz]) {
-            return NSLocalizedString(@"Show Quiz", @"title for quiz assignment submission button");
+            return NSLocalizedStringFromTableInBundle(@"Show Quiz", nil, bundle, @"title for quiz assignment submission button");
         } else if ([types containsObject:CKISubmissionTypePaper]) {
             @strongify(self)
             self.turnInButton.enabled = NO;
@@ -266,9 +267,9 @@ typedef enum CBISubmissionState : NSUInteger {
         } else if ([history.rac_sequence filter:^BOOL(CKISubmission *submission) {
             return submission.id != nil && submission.attempt > 0;
         }].array.count > 0) {
-            return NSLocalizedString(@"Turn In Again", @"title for re-submitting an assignment");
+            return NSLocalizedStringFromTableInBundle(@"Turn In Again", nil, bundle, @"title for re-submitting an assignment");
         } else {
-            return NSLocalizedString(@"Turn In", @"title for assignment submission button");
+            return NSLocalizedStringFromTableInBundle(@"Turn In", nil, bundle, @"title for assignment submission button");
         }
     }];
     
@@ -310,8 +311,9 @@ typedef enum CBISubmissionState : NSUInteger {
 }
 
 - (void)postUploadError {
-    NSString *title = NSLocalizedString(@"Submission Error", @"Title for file submission error");
-    NSString *message = NSLocalizedString(@"There was a network problem while attempting to upload your submission", @"message for failed submission upload");
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    NSString *title = NSLocalizedStringFromTableInBundle(@"Submission Error", nil, bundle, @"Title for file submission error");
+    NSString *message = NSLocalizedStringFromTableInBundle(@"There was a network problem while attempting to upload your submission", nil, bundle, @"message for failed submission upload");
     [UIAlertController showAlertWithTitle:title message:message];
 }
 
@@ -343,7 +345,7 @@ typedef enum CBISubmissionState : NSUInteger {
     controller.uploadCompleteBlock = ^(CKSubmission * _Nullable submission, NSError *error) {
         @strongify(self);
         if (error) {
-            [self postUploadError];
+            progressView.progress = 0;
         }
         else {
             progressView.progress = 0.9;
@@ -452,10 +454,11 @@ typedef enum CBISubmissionState : NSUInteger {
 #pragma mark - comment
 
 - (void)updateActions {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     if (self.userIsCommenting) {
-        self.addCommentButton.title = NSLocalizedString(@"Cancel Message", @"Cancel button title");
+        self.addCommentButton.title = NSLocalizedStringFromTableInBundle(@"Cancel Message", nil, bundle, @"Cancel button title");
     } else {
-        self.addCommentButton.title = self.isTeacherOrTA ? NSLocalizedString(@"Comment", @"Add message button for teacher or ta") : NSLocalizedString(@"Message Instructor", @"Add message button");
+        self.addCommentButton.title = self.isTeacherOrTA ? NSLocalizedStringFromTableInBundle(@"Comment", nil, bundle, @"Add message button for teacher or ta") : NSLocalizedStringFromTableInBundle(@"Message Instructor", nil, bundle, @"Add message button");
     }
 
     if (!self.floatingActionBar) {
@@ -517,11 +520,12 @@ typedef enum CBISubmissionState : NSUInteger {
 
 
 - (void)chooseMediaComment:(UIButton *)sender {
-    NSString *recordVideo = NSLocalizedString(@"Record Video", @"Record video submission comment option");
-    NSString *chooseVideo = NSLocalizedString(@"Choose Video", @"Choose a video to send as a comment");
-    NSString *recordAudio = NSLocalizedString(@"Record Audio", @"Record audio submission comment");
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    NSString *recordVideo = NSLocalizedStringFromTableInBundle(@"Record Video", nil, bundle, @"Record video submission comment option");
+    NSString *chooseVideo = NSLocalizedStringFromTableInBundle(@"Choose Video", nil, bundle, @"Choose a video to send as a comment");
+    NSString *recordAudio = NSLocalizedStringFromTableInBundle(@"Record Audio", nil, bundle, @"Record audio submission comment");
     
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button title") destructiveButtonTitle:nil otherButtonTitles:recordVideo, chooseVideo, recordAudio, nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, @"Cancel button title") destructiveButtonTitle:nil otherButtonTitles:recordVideo, chooseVideo, recordAudio, nil];
 
     CGRect r = sender.bounds;
     r = [self.view convertRect:r fromView:sender];
@@ -576,8 +580,9 @@ typedef enum CBISubmissionState : NSUInteger {
         [progress removeFromSuperview];
         progress = nil;
         if (error) {
-            NSString *title = NSLocalizedString(@"Comment Error", @"title for media comment upload failure");
-            NSString *message = NSLocalizedString(@"There was a network error posting your comment.", @"message for media comment upload failure");
+            NSBundle *bundle = [NSBundle bundleForClass:self.class];
+            NSString *title = NSLocalizedStringFromTableInBundle(@"Comment Error", nil, bundle, @"title for media comment upload failure");
+            NSString *message = NSLocalizedStringFromTableInBundle(@"There was a network error posting your comment.", nil, bundle, @"message for media comment upload failure");
             [UIAlertController showAlertWithTitle:title message:message];
         }
         else {
@@ -617,12 +622,13 @@ typedef enum CBISubmissionState : NSUInteger {
     
     CKOverlayViewController *overlay = [[CKOverlayViewController alloc] initWithView:audioRecorder];
     UIViewController *rootController = self.view.window.rootViewController;
-    
-    [audioRecorder.leftButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+
+    [audioRecorder.leftButton setTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, nil) forState:UIControlStateNormal];
     audioRecorder.leftButton.hidden = NO;
     [audioRecorder.leftButton addTarget:rootController action:@selector(dismissOverlayController) forControlEvents:UIControlEventTouchUpInside];
     
-    [audioRecorder.rightButton setTitle:NSLocalizedString(@"Use", nil) forState:UIControlStateNormal];
+    [audioRecorder.rightButton setTitle:NSLocalizedStringFromTableInBundle(@"Use", nil, bundle, nil) forState:UIControlStateNormal];
     audioRecorder.rightButton.hidden = NO;
     [audioRecorder.rightButton addTarget:self action:@selector(postAudioCommentFromAudioRecorder) forControlEvents:UIControlEventTouchUpInside];
     

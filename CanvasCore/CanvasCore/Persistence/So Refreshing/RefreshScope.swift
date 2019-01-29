@@ -29,9 +29,9 @@ final class Refresh: NSManagedObject {
 
 open class RefreshScope: NSObject {
     fileprivate let context: NSManagedObjectContext
-    fileprivate var refreshers: [String: Refresher] = [:]
+    fileprivate var refreshers = NSMutableDictionary()
     
-    init(context: NSManagedObjectContext) {
+    @objc init(context: NSManagedObjectContext) {
         self.context = context
     }
     
@@ -50,7 +50,7 @@ open class RefreshScope: NSObject {
         }
     }
     
-    open static var global = RefreshScope()
+    @objc open static var global = RefreshScope()
 
     fileprivate enum Associated {
         static var lastRefresh = "SoRefreshingLastRefresh"
@@ -85,19 +85,19 @@ open class RefreshScope: NSObject {
         }
     }
     
-    internal func shouldRefreshCache(_ key: String, ttl: TimeInterval) -> Bool {
+    @objc internal func shouldRefreshCache(_ key: String, ttl: TimeInterval) -> Bool {
         return synchronized { _ in
             return (self.lastCacheRefresh(key) + ttl) < Date()
         }
     }
     
-    internal func lastCacheRefresh(_ key: String) -> Date {
+    @objc internal func lastCacheRefresh(_ key: String) -> Date {
         return synchronized { _ in
             return (self.refreshesByKey[key] as? Refresh)?.date ?? Date(timeIntervalSince1970: 0)
         }
     }
     
-    internal func setCacheRefreshed(_ key: String, date: Date = Date()) {
+    @objc internal func setCacheRefreshed(_ key: String, date: Date = Date()) {
         synchronized { context in
             let refresh = (self.refreshesByKey[key] as? Refresh)
                 ?? Refresh(inContext: context)
@@ -108,10 +108,10 @@ open class RefreshScope: NSObject {
         }
     }
     
-    open func invalidateCache(_ key: String, refresh: Bool = true) {
+    @objc open func invalidateCache(_ key: String, refresh: Bool = true) {
         setCacheRefreshed(key, date: Date(timeIntervalSince1970: 0) - 100.yearsComponents) // old and crusty
 
-        if let refresher = refreshers[key], refresh {
+        if let refresher = refreshers[key] as? Refresher, refresh {
             // The parameter here is whether or not this was a forced refresh. The param passed into this above function is different,
             // whether or not to actually refresh. Let's keep them disjointed!
             refresher.refresh(false)
@@ -124,10 +124,10 @@ open class RefreshScope: NSObject {
     }
     
     open func unregister(_ refresher: Refresher) {
-        refreshers[refresher.cacheKey] = nil
+        refreshers.removeObject(forKey: refresher.cacheKey)
     }
     
-    internal func invalidateAllCaches() {
+    @objc internal func invalidateAllCaches() {
         let allRefreshes = NSFetchRequest<NSFetchRequestResult>(entityName: "Refresh")
         if #available(iOSApplicationExtension 9.0, *) {
             let batchDelete = NSBatchDeleteRequest(fetchRequest: allRefreshes)
@@ -140,11 +140,11 @@ open class RefreshScope: NSObject {
                 try? context.saveFRD()
             }
         }
-        
+
         refreshesByKey.removeAllObjects()
-        
+
         for (_, refresher) in refreshers {
-            refresher.refresh(false)
+            (refresher as? Refresher)?.refresh(false)
         }
     }
 }

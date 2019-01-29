@@ -1,17 +1,23 @@
 /* <String> <Int> of <Int> */
 "%@ %d of %d" = "%1$@ %2$d o %3$d";
 
-/* Something to Something */
-"%@ to %@" = "%1$@ ki %2$@";
+/* No comment provided by engineer. */
+"%@ is due at %@" = "%1$@ ka tae i te wā ī %2$@";
+
+/* No comment provided by engineer. */
+"%@ to %@" = "%1$@ kī %2$@";
+
+/* No comment provided by engineer. */
+"%@ will begin at %@" = "%1$@ ka timata ī %2$@";
 
 /* Percentage field placeholder */
 "1-100%" = "1-100%";
 
 /* Server Error Message */
-"A server error has occurred.  Please try again." = "Kua puta tētahi hapa tūmau. Koa ngana anō.";
+"A server error has occurred.  Please try again." = "Kua puta tētahi hapa tūmau. Tēnā koa ngana anō.";
 
 /* Label for button that allows admin to Act as User */
-"Act as User" = "Mahi rite ki te kaiwhakamahi";
+"Act as User" = "Mahi rite kaiwhakamahi";
 
 /* Label displayed when logged in as an admin */
 "Admin" = "Whakahaere";
@@ -20,25 +26,31 @@
 "Alert me when:" = "Matohi ahau ina:";
 
 /* Alerts Tab */
-"Alerts" = "Ngā Matohi";
+"Alerts" = "He whakamatāra";
 
 /* No comment provided by engineer. */
-"An Error Occurred" = "I puta tetahi Hapa";
+"An Error Occurred" = "I puta tētahi Hapa";
 
 /* Generic Network Error Message */
-"An unexpected error occurred.  Please try again." = "He hapa ohorere. Koa ngana anō.";
+"An unexpected error occurred.  Please try again." = "He hapa ohorere. Tēnā koa ngana anō.";
 
 /* No comment provided by engineer. */
 "Announcement" = "Pānui";
 
+/* No comment provided by engineer. */
+"Assignment" = "Whakataunga";
+
 /* Assignment Grade High On Description */
-"Assignment grade above" = "kōeke Taumahi runga";
+"Assignment grade above" = "kōeke whakataunga runga";
 
 /* Assignment Grade Low On Description */
-"Assignment grade below" = "kōeke Taumahi raro";
+"Assignment grade below" = "kōeke whakataunga raro";
 
 /* Assignment Missing Description */
-"Assignment missing" = "e ngaro ana Taumahi";
+"Assignment missing" = "e ngaro ana whakataunga";
+
+/* No comment provided by engineer. */
+"Assignment reminder" = "Whakataunga whakamaharatanga";
 
 /* No comment provided by engineer. */
 "Cache cleared" = "whakawāteatia Keteroki";
@@ -47,28 +59,28 @@
 "Cancel" = "Whakakore";
 
 /* Percent value is over 100 */
-"Cannot use percent that is higher than 100" = "Kāore e taea te whakamahi i ōrau e tiketike ake ana i te 100";
+"Cannot use percent that is higher than 100" = "Kāore e taea te whakamahi te ōrau e tiketike ake ana i te 100";
 
 /* Percent value is under 0 */
-"Cannot use percent that is less than 0" = "Kāore e taea te whakamahi i ōrau e he iti iho i te 0";
+"Cannot use percent that is less than 0" = "Kāore e taea te whakamahi te ōrau e he iti iho i te 0";
 
 /* Cancel the question/suggestion form */
-"Casual question or suggestion" = "pātai causal mana'o ranei";
+"Casual question or suggestion" = "pātai tūao whakāro puaki rānei ";
 
 /* Empty Alerts Text */
 "Caught up on Alerts" = "Mau ake i runga i Matohi";
 
-/* title for status selection field */
-"Choose One" = "Kowhiri kotahi";
-
 /* No comment provided by engineer. */
 "Choose a student" = "Tīpako he ākonga";
+
+/* title for status selection field */
+"Choose One" = "Kōwhiria Kotahi";
 
 /* Close Button Title */
 "Close" = "Katia";
 
 /* Course Announcement Description */
-"Course announcements" = "mau faaararaa akoranga";
+"Course announcements" = "Kōrerorero akoranga";
 
 /* Course Grade High On Description */
 "Course grade above" = "kōeke akoranga i runga";
@@ -77,43 +89,55 @@
 "Course grade below" = "kōeke akoranga i raro";
 
 /* Courses Tab */
-"Courses" = "Ngā akoranga";
-
-/* Title for field */
-"Describe your problem" = "Whakaahuatia koutou raruraru";
+"Courses" = "Akoranga";
 
 /* No comment provided by engineer. */
-"Dismiss" = "Tonoa";
+"Current student: %@, tap to switch students" = "Ākonga o ināianei: %@, pātō ki te huri ngā ākonga";
+
+/* Title for field */
+"Describe your problem" = "Whakāhuatia tō raruraru";
+
+/* No comment provided by engineer. */
+"Discussion" = "Kōrerorero";
+
+/* No comment provided by engineer. */
+"Dismiss" = "Pana";
 
 /* No comment provided by engineer. */
 "Error" = "Hapa";
 
 /* No comment provided by engineer. */
-"Excused" = "Tukua";
+"Event" = "Tauwhāinga";
+
+/* No comment provided by engineer. */
+"Event reminder" = "Tauwhāinga whakamaharatanga";
+
+/* No comment provided by engineer. */
+"Excused" = "Whakawātea";
 
 /* Status level for issue being reported */
 "Extremely critical emergency" = "whawhati tata tino nui";
 
 /* High Assignment Grade too Low */
-"High assignment grade cannot be lower than low assignment grade" = "e kore e taea e ohipa teitei kōeke e raro atu kōeke taumahi iti";
+"High assignment grade cannot be lower than low assignment grade" = "e kore e taea te whakataunga teitei kōeke e raro atu kōeke whakatuanga iti";
 
 /* High Course Grade too Low */
-"High course grade cannot be lower than low course grade" = "e kore e taea e kōeke akoranga tiketike e raro atu kōeke akoranga iti";
+"High course grade cannot be lower than low course grade" = "e kore e taea te kōeke akoranga tiketike e raro atu kōeke akoranga iti";
 
 /* Status level for issue being reported */
-"I can't get things done until fixed" = "Ka taea e kore kia mea mahi ahau tae noa ki pūmau";
+"I can't get things done until fixed" = "Kaore e taea te  whakamahi e ahau kiia oti rānō";
 
 /* Status level for issue being reported */
-"I need help but it's not urgent" = "Me ahau te tauturu engari e kore te mea kōhukihuki";
+"I need help but it's not urgent" = "E hiahia āwhina ana ahau ēngari kaore kōhukihuki";
 
 /* Impact Title */
 "Impact:" = "pānga:";
 
 /* No comment provided by engineer. */
-"In-Class" = "I roto i te-Class";
+"In-Class" = "I roto i te-Akomanga";
 
 /* Institution Announcement Description */
-"Institution announcements" = "mau faaararaa MoE";
+"Institution announcements" = "Whare huinga kōrerorero";
 
 /* Title for an alert view */
 "Invalid Input" = "Tāuru muhu";
@@ -125,19 +149,19 @@
 "Last Week" = "Wiki Whakamutunga";
 
 /* No comment provided by engineer. */
-"Late" = "Te mutunga";
+"Late" = "Tūreiti";
 
 /* No comment provided by engineer. */
 "Late: %@" = "Te mutunga: %@";
 
 /* No comment provided by engineer. */
-"Late: %@ (%@/%@)" = "Late: %1$@ (%2$@/%3$@)";
+"Late: %@ (%@/%@)" = "Tūreiti: %1$@ (%2$@/%3$@)";
 
 /* Low Assignment Grade too High */
-"Low assignment grade cannot be higher than high assignment grade" = "e kore e taea e Nana taumahi kōeke e tiketike ake kōeke taumahi teitei";
+"Low assignment grade cannot be higher than high assignment grade" = "e kore e taea raro iho te whakataunga kōeke e tiketike ake te whakataunga kōeke teitei";
 
 /* Low Course Grade too High */
-"Low course grade cannot be higher than high course grade" = "e kore e taea e kōeke akoranga iti kia tiketike ake kōeke akoranga tiketike";
+"Low course grade cannot be higher than high course grade" = "e kore e taea raro iho te kōeke akoranga kia tiketike ake kōeke akoranga teitei";
 
 /* Title of the manage children screen. This screen is used to add/remove children that a parent is observing. */
 "Manage Children" = "Whakahaere ngā tamariki";
@@ -155,28 +179,28 @@
 "Next Week" = "Wiki Muri";
 
 /* Empty Courses Text */
-"No Courses" = "Kāore he Kōhi";
+"No Courses" = "Kāore he Akoranga";
 
 /* Title for label when no grade has been assigned to the course */
-"No Grade" = "Kahore Kōeke";
-
-/* Empty Students Text */
-"No Students" = "Kāore he ākonga";
+"No Grade" = "Kaore he Kōeke";
 
 /* Error message */
 "No installed apps support opening this file" = "No taupānga tāutatia tautoko te whakatuwhera i tēnei kōnae";
 
+/* Empty Students Text */
+"No Students" = "Kāore he ākonga";
+
 /* Not Authorized Error Title */
-"Not Authorized" = "Kaore i whakamanahia";
+"Not Authorized" = "Manakore";
 
 /* Not Found Error Title */
 "Not Found" = "Kaore i kitea";
 
 /* Empty Calendar Events Text */
-"Nothing this week" = "Kahore tenei wiki";
+"Nothing this week" = "Kahore tēnei wiki";
 
 /* OK Button Title */
-"OK" = "Ok";
+"OK" = "Ae";
 
 /* Open a url in the application Safari */
 "Open in Safari" = "Tuwhera i roto i te Safari";
@@ -184,11 +208,17 @@
 /* Open file in another application */
 "Open in..." = "Tuwhera i roto i ...";
 
+/* No comment provided by engineer. */
+"Permission Needed" = "E hiahiatia ana he whakāetanga";
+
+/* No comment provided by engineer. */
+"Quiz" = "Quiz";
+
 /* Support Ticket Creation Failed */
 "Request Failed!  Check network and try again!" = "I rāhua te tono!  Tirohia te whatunga ka ngana anō!";
 
 /* Not Found Error Message */
-"Resource not found.  Please try again." = "Rauemi kore i kitea. Koa ngana anō.";
+"Resource not found.  Please try again." = "Rauemi kore i kitea. Tēnā koa ngana anō.";
 
 /* Select Impact Placeholder */
 "Select Impact" = "Tīpako Pānga";
@@ -196,17 +226,20 @@
 /* Server Error Title */
 "Server Error" = "Hapa Tūmau";
 
+/* No comment provided by engineer. */
+"Settings" = "Ngā Tautuhinga";
+
 /* Status level for issue being reported */
-"Something is broken but I can work around it" = "pakaru te tahi mea te engari ka taea e ahau te mahi a tawhio noa te reira";
+"Something is broken but I can work around it" = "Kua pakaru tētahi mea ēngari ka taea e ahau te mahi a tawhio noa ";
 
 /* Title for the subject field */
 "Subject" = "Kaupapa";
 
 /* No comment provided by engineer. */
-"Submitted" = "Tukuna";
+"Submitted" = "Kua tukuna";
 
 /* No comment provided by engineer. */
-"Submitted: %@" = "Tukuna: %@";
+"Submitted: %@" = "Kua tukuna %@";
 
 /* No comment provided by engineer. */
 "Submitted: %@ (%@/%@)" = "Tukuna: %1$@ (%2$@/%3$@)";
@@ -218,28 +251,37 @@
 "Tap to start viewing Canvas as another person." = "Patopato ki te tīmata ki te tiro Canvas he tangata atu kē.";
 
 /* Support Ticket Created Successfully */
-"Thanks, your request was received!" = "Mihi, ka riro koutou tono!";
+"Thanks, your request was received!" = "Ngā Mihi, kua tae mai tō tono!";
 
 /* Error message */
-"There are no actions for this item" = "Kāore he mahi hoki tenei tūemi";
+"There are no actions for this item" = "Kāore he mahi hoki mo tēnei tūemi";
 
 /* AlertKit Database Load Failure Message */
-"There was a problem loading the AlertKit database file." = "He raruraru i te wā e uta ana i te AlertKit kōnae pātengi rarunga.";
+"There was a problem loading the AlertKit database file." = "He raruraru i te wā e uta ana i te AlertKit Matāra kōnae pātengi rarunga.";
 
 /* Airwolf database error message */
-"There was a problem loading the database." = "He raruraru i te wā e uta ana i tepātengi raraunga.";
+"There was a problem loading the database." = "He raruraru i te wā e uta ana i te pātengi raraunga.";
 
 /* No comment provided by engineer. */
-"There was an error loading your content. If it  is an audio or video upload it may still be processing." = "He ko he hapa uta koutou ihirangi. Ki te mea he ororongo ataata ranei tukuake ai tonu te tukatuka i te reira.";
+"There was an error loading your content. If it  is an audio or video upload it may still be processing." = "He hapa i te wā e uta ana i tō ihirangi. Ki te mea he ororongo ataata rānei tukuake ai tonu te tukatuka ";
+
+/* No comment provided by engineer. */
+"This announcement has expired." = "Kua pau te wā o tēnei pānuitanga";
+
+/* No comment provided by engineer. */
+"This student's courses may not be published yet." = "Kaore e pānuitia ngā akoranga a tēnei ākonga i tēnei wā.";
 
 /* Unknown T`hreshold Description */
-"Unknown" = "unknown";
+"Unknown" = "Kaore e mōhiotia";
 
 /* Default name given a user until we find their real name */
 "Unknown User" = "Kaiwhakamahi kaore e mōhiotia";
 
 /* Default user name, the computer-friendly version of their name, until we find their real user name */
 "Unknown User Name" = "Ingoa Kaiwhakamahi tē mōhiotia";
+
+/* No comment provided by engineer. */
+"Unread" = "kia pānuitia";
 
 /* Calendar Tab */
 "Week" = "Wiki";
@@ -248,10 +290,13 @@
 "Welcome!" = "Nau Mai!";
 
 /* Title for field */
-"What can we do better?" = "Me pēhea e whakapiki ake ai te mahi ei mātou";
+"What can we do better?" = "Me pēhea e whakapiki ake ai te mahi e mātou";
 
 /* Not Authorized Error Message */
-"You are unauthorized to access this information.  Check your user permissions and try again." = "He kāore i ki te uru i tēnei mōhiohio e koe. Tirohia koutou whakaaetanga kaiwhakamahi, me te ngana anō.";
+"You are unauthorized to access this information.  Check your user permissions and try again." = "Kaore koe e manahia ki te uru i tēnei mōhiohio. Tirohia tō whakāetanga kaiwhakamahi, me te ngana anō.";
+
+/* No comment provided by engineer. */
+"You must allow notifications in Settings to set reminders." = "Me tukua e koe ngā whakamōhiotanga i roto i ngā Tautuhinga ki te whakatau ngā whakamaharatanga.";
 
 /* Title for the email field */
 "Your Email" = "Tō īmēra";

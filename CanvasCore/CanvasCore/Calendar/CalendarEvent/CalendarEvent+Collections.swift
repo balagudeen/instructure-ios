@@ -27,12 +27,12 @@ import CoreData
 // MARK: - Calendar Events collection for current user
 // ---------------------------------------------
 extension CalendarEvent {
-    public static func predicate(_ startDate: Date, endDate: Date, contextCodes: [String]) -> NSPredicate {
+    @objc public static func predicate(_ startDate: Date, endDate: Date, contextCodes: [String]) -> NSPredicate {
         let contextCodesPredicate = NSPredicate(format: "%K IN %@ OR %K IN %@", "effectiveContextCode", contextCodes, "contextCode", contextCodes)
         let personalCalendarPredicate = NSPredicate(format: "%K CONTAINS %@ OR %K CONTAINS %@", "effectiveContextCode", "user_", "contextCode", "user_")
         let contextsPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [contextCodesPredicate, personalCalendarPredicate])
 
-        let datesPredicate = NSPredicate(format: "%K < %@ AND %@ <= %K", "startAt", endDate as CVarArg, startDate as CVarArg, "endAt")
+        let datesPredicate = NSPredicate(format: "%K < %@ AND %@ < %K", "startAt", endDate as CVarArg, startDate as CVarArg, "endAt")
         let hiddenPredicate = NSPredicate(format: "%K != %@", "hidden", NSNumber(value: true as Bool))
 
         return NSCompoundPredicate(andPredicateWithSubpredicates: [contextsPredicate, datesPredicate, hiddenPredicate])

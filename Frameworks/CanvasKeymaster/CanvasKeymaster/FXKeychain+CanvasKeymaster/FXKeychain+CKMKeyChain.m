@@ -36,6 +36,10 @@ static const NSString *CBIKeychainClients = @"CBIKeychainClients";
     dictionary[@"accessToken"] = self.accessToken;
     dictionary[@"baseURL"] = self.baseURL.absoluteString;
     dictionary[@"currentUser"] = [self.currentUser JSONDictionary];
+
+    if (self.effectiveLocale) {
+        dictionary[@"effectiveLocale"] = self.effectiveLocale;
+    }
     
     if (self.branding) {
         dictionary[@"branding"] = [self.branding JSONDictionary];
@@ -51,6 +55,7 @@ static const NSString *CBIKeychainClients = @"CBIKeychainClients";
 {
     NSString *accessToken = dictionary[@"accessToken"];
     NSString *baseURLString = dictionary[@"baseURL"];
+    NSString *effectiveLocale = dictionary[@"effectiveLocale"];
     NSURL *baseURL = [NSURL URLWithString:baseURLString];
     NSDictionary *userDictionary = dictionary[@"currentUser"];
     NSDictionary *brandingDictionary = dictionary[@"branding"];
@@ -60,6 +65,7 @@ static const NSString *CBIKeychainClients = @"CBIKeychainClients";
     CKIClient *client = [[CKIClient alloc] initWithBaseURL:baseURL];
     [client setValue:accessToken forKey:@"accessToken"];
     [client setValue:user forKey:@"currentUser"];
+    [client setValue:effectiveLocale forKey:@"effectiveLocale"];
     client.actAsUserID = actAsUserID;
 
     if (brandingDictionary) {
@@ -88,7 +94,7 @@ static const NSString *CBIKeychainClients = @"CBIKeychainClients";
     return [[FXKeychain alloc] initWithService:CBIKeychainServiceID accessGroup:CBIKeychainAccessGroup accessibility:FXKeychainAccessibleAfterFirstUnlock];
 }
 
-- (NSArray *)clients
+- (NSArray<CKIClient *> *)clients
 {
     NSArray *clientDictionaries = [self clientDictionariesFromKeychain];
     NSArray *clients = [[clientDictionaries.rac_sequence map:^id(NSDictionary *dictionary) {

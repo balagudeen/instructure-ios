@@ -35,10 +35,10 @@ open class Upload: NSManagedObject {
     @NSManaged open internal(set) var terminatedAt: Date?
     @NSManaged open internal(set) var errorMessage: String?
 
-    open var hasStarted: Bool { return startedAt != nil }
-    open var isInProgress: Bool { return hasStarted && terminatedAt == nil }
-    open var hasCompleted: Bool { return completedAt != nil }
-    open var hasTerminated: Bool { return terminatedAt != nil }
+    @objc open var hasStarted: Bool { return startedAt != nil }
+    @objc open var isInProgress: Bool { return hasStarted && terminatedAt == nil }
+    @objc open var hasCompleted: Bool { return completedAt != nil }
+    @objc open var hasTerminated: Bool { return terminatedAt != nil }
 
     @NSManaged open fileprivate(set) var sent: Int64
     @NSManaged open fileprivate(set) var total: Int64
@@ -48,19 +48,19 @@ open class Upload: NSManagedObject {
         id = UUID().uuidString
     }
 
-    open func startWithTask(_ task: URLSessionTask) {
+    @objc open func startWithTask(_ task: URLSessionTask) {
         taskIdentifier = task.taskIdentifier as NSNumber?
         start()
     }
 
-    open func start() {
+    @objc open func start() {
         if hasTerminated {
             reset()
         }
         startedAt = Date()
     }
 
-    open func reset() {
+    @objc open func reset() {
         startedAt = nil
         completedAt = nil
         terminatedAt = nil
@@ -71,21 +71,21 @@ open class Upload: NSManagedObject {
         total = 0
     }
 
-    open func complete() {
+    @objc open func complete() {
         guard completedAt == nil && isInProgress else { return }
         completedAt = Date()
         terminate()
     }
 
-    open func failWithError(_ error: NSError) {
+    @objc open func failWithError(_ error: NSError) {
         guard failedAt == nil && !hasTerminated else { return }
         self.startedAt = startedAt ?? Date()
-        self.errorMessage = [error.localizedDescription, error.localizedFailureReason].flatMap { $0 }.joined(separator: ": ")
+        self.errorMessage = [error.localizedDescription, error.localizedFailureReason].compactMap { $0 }.joined(separator: ": ")
         self.failedAt = Date()
         self.terminate()
     }
 
-    open func cancel() {
+    @objc open func cancel() {
         guard canceledAt == nil && isInProgress else { return }
         self.canceledAt = Date()
         self.terminate()
@@ -97,7 +97,7 @@ open class Upload: NSManagedObject {
 }
 
 extension Upload {
-    open func process(sent: Int64, of total: Int64) {
+    @objc open func process(sent: Int64, of total: Int64) {
         self.sent = sent
         self.total = total
     }

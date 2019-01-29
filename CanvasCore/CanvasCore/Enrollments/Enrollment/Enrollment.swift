@@ -41,7 +41,7 @@ open class Enrollment: NSManagedObject {
         color.value = .prettyGray()
     }
     
-    var faves: String {
+    @objc var faves: String {
         let favorites = NSLocalizedString("Favorites", tableName: "Localizable", bundle: .core, value: "", comment: "favorite courses or groups")
         let hidden = NSLocalizedString("Hidden", tableName: "Localizable", bundle: .core, value: "", comment: "Non favorite hidden courses or groups")
         return isFavorite ? favorites : hidden
@@ -53,15 +53,15 @@ open class Enrollment: NSManagedObject {
     
     open var contextID: ContextID { ❨╯°□°❩╯⌢"Enrollment is abstract, yo. This gots to be overrid" }
     
-    open var hasGrades: Bool { return false }
+    @objc open var hasGrades: Bool { return false }
     
-    open var visibleGrade: String? { return nil }
+    @objc open var visibleGrade: String? { return nil }
     
-    open var visibleScore: String? { return nil }
+    @objc open var visibleScore: String? { return nil }
     
     open var roles: EnrollmentRoles? { return nil }
     
-    open var shortName: String { return "" }
+    @objc open var shortName: String { return "" }
 
     open func markAsFavorite(_ favorite: Bool, session: Session) -> SignalProducer<Void, NSError> {
         return attemptProducer {
@@ -70,7 +70,7 @@ open class Enrollment: NSManagedObject {
         }
     }
     
-    open var defaultViewPath: String {
+    @objc open var defaultViewPath: String {
         return contextID.htmlPath / "activity_stream"
     }
 }

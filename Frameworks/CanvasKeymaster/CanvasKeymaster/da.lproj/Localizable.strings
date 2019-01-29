@@ -25,17 +25,26 @@
 /* No comment provided by engineer. */
 "Choose One" = "Vælg en";
 
+/* Connectivity alert close text */
+"Close" = "Luk";
+
 /* No comment provided by engineer. */
 "Continue Editing" = "Fortsæt redigering";
 
 /* No comment provided by engineer. */
 "Describe the feature here" = "Beskriv funktionen her";
 
+/* No comment provided by engineer. */
+"describe your problem" = "beskriv dit problem";
+
 /* Dismiss login expired/revoked alert button */
 "Dismiss" = "Afvis";
 
 /* No comment provided by engineer. */
 "Emergency" = "Nødsituation";
+
+/* No comment provided by engineer. */
+"enter a subject" = "indtast et emne";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "Indtast billettens beskrivelse";
@@ -76,14 +85,20 @@
 /* No comment provided by engineer. */
 "OK" = "OK";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "fjern bruger";
+
 /* No comment provided by engineer. */
 "Report a Problem" = "Indberet et problem";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "Anmod om en funktion";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "Forespørgsel mislykkedes!";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "Anmod om en funktion";
+"select the impact" = "vælg betydning";
 
 /* Button to select the severity of the ticket */
 "Select ticket impact level" = "Vælg billettens betydningsniveau";
@@ -106,18 +121,15 @@
 /* No comment provided by engineer. */
 "Thanks, your request was received!" = "Tak, din anmodning er modtaget!";
 
+/* No comment provided by engineer. */
+"Trouble logging in" = "Problemer med at logge ind";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "Vi kan ikke oprette forbindelse til Canvas. Har du tjekket din internetforbindelse?";
+
+/* Connectivity alert title */
+"Whoops!" = "Ups!";
+
 /* when the access token has been revoked */
 "Your login has expired or has been removed by the server. Please log in again." = "Dit login er udløbet eller er blevet fjernet af serveren. Log ind igen.";
-
-/* No comment provided by engineer. */
-"describe your problem" = "beskriv dit problem";
-
-/* No comment provided by engineer. */
-"enter a subject" = "indtast et emne";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "fjern bruger";
-
-/* No comment provided by engineer. */
-"select the impact" = "vælg betydning";
 

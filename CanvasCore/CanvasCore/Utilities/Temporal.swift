@@ -65,11 +65,11 @@ public extension Date {
 }
 
 public extension DateFormatter {
-    public static var LongStyleDateFormatter: DateFormatter { return _LongStyleDateFormatter }
-    public static var MediumStyleDateTimeFormatter: DateFormatter { return _MediumStyleDateTimeFormatter }
-    public static var yyyyMMdd: DateFormatter { return _yyyyMMdd }
-    public static var relativeShortDateAndTime: DateFormatter { return _relativeShortDateAndTime }
-    public static var relativeShortDate: DateFormatter { return _relativeShortDate }
+    @objc public static var LongStyleDateFormatter: DateFormatter { return _LongStyleDateFormatter }
+    @objc public static var MediumStyleDateTimeFormatter: DateFormatter { return _MediumStyleDateTimeFormatter }
+    @objc public static var yyyyMMdd: DateFormatter { return _yyyyMMdd }
+    @objc public static var relativeShortDateAndTime: DateFormatter { return _relativeShortDateAndTime }
+    @objc public static var relativeShortDate: DateFormatter { return _relativeShortDate }
 }
 
 public extension DateComponents {

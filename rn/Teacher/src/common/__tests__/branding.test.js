@@ -32,6 +32,7 @@ describe('setupBrandingFromNativeBrandingInfo', () => {
 
   it('parses native branding info', () => {
     let expected = {
+      link: 'linkColor',
       navBarColor: 'navBarColor',
       primaryButtonTextColor: 'primaryButtonTextColor',
       primaryButtonColor: 'primaryButtonColor',
@@ -43,6 +44,7 @@ describe('setupBrandingFromNativeBrandingInfo', () => {
     }
 
     let input = {
+      'ic-link-color': 'linkColor',
       'ic-brand-global-nav-bgd': 'navBarColor',
       'ic-brand-button--primary-text': 'primaryButtonTextColor',
       'ic-brand-button--primary-bgd': 'primaryButtonColor',

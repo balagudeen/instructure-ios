@@ -17,9 +17,7 @@
     
 
 import UIKit
-
 import DeviceKit
-
 import CanvasCore
 
 public enum ImpactLevel: String {
@@ -136,15 +134,14 @@ open class SupportTicket {
 
     fileprivate func environmentBody() -> Dictionary<String, Any> {
         var dictionary = Dictionary<String, Any>()
-        let domainString = requesterDomain.absoluteString
 
-        if Secrets.featureEnabled(.protectedUserInformation, domain: domainString) == false {
+        if requesterDomain.host?.hasSuffix(".ca") == false {
             dictionary["User"] = requesterUsername
             dictionary["Email"] = requesterEmail
         }
 
         let device = Device()
-        dictionary["Hostname"] = domainString
+        dictionary["Hostname"] = requesterDomain.absoluteString
         dictionary["App Version"] = appVersionString()
         dictionary["Platform"] = device.description
         dictionary["OS Version"] = UIDevice.current.systemVersion

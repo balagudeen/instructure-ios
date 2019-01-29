@@ -20,7 +20,7 @@ extension UITabBarController {
     
     // Call this whenever you really want to get to the root of the specified view controller
     // Will only reset the view controller if it's current selected
-    public func resetViewControllerIfSelected(_ viewController: UIViewController) {
+    @objc public func resetViewControllerIfSelected(_ viewController: UIViewController) {
         guard selectedViewController == viewController else { return }
         viewController.dismiss(animated: false, completion: nil)
         if let navigationController = viewController as? UINavigationController {
@@ -40,7 +40,7 @@ extension UITabBarController {
         }
     }
     
-    public func resetSelectedViewController() {
+    @objc public func resetSelectedViewController() {
         guard let selected = selectedViewController else { return }
         resetViewControllerIfSelected(selected)
     }

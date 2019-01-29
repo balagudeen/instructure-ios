@@ -196,9 +196,10 @@ NSInteger const GRADE_TAB_INDEX = 2;
 
 - (void)setTitles
 {
-    [self.segmentedControl setTitle:NSLocalizedString(@"Detail", nil) forSegmentAtIndex:0];
-    [self.segmentedControl setTitle:NSLocalizedString(@"Submission", nil) forSegmentAtIndex:1];
-    [self.segmentedControl setTitle:NSLocalizedString(@"Grade", nil) forSegmentAtIndex:2];
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    [self.segmentedControl setTitle:NSLocalizedStringFromTableInBundle(@"Detail", nil, bundle, nil) forSegmentAtIndex:0];
+    [self.segmentedControl setTitle:NSLocalizedStringFromTableInBundle(@"Submission", nil, bundle, nil) forSegmentAtIndex:1];
+    [self.segmentedControl setTitle:NSLocalizedStringFromTableInBundle(@"Grade", nil, bundle, nil) forSegmentAtIndex:2];
 }
 
 - (void)setSegmentImages
@@ -366,12 +367,13 @@ NSInteger const GRADE_TAB_INDEX = 2;
 }
 
 - (void)showAssignmentNotificationSheet:(UIBarButtonItem *)alarmButton {
-    NSString *fiveMinutes = NSLocalizedString(@"5 minutes", @"five minutes");
-    NSString *oneHour = NSLocalizedString(@"1 hour", @"one hour");
-    NSString *oneDay = NSLocalizedString(@"1 day", @"one day");
-    NSString *threeDays = NSLocalizedString(@"3 days", @"three days");
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    NSString *fiveMinutes = NSLocalizedStringFromTableInBundle(@"5 minutes", nil, bundle, @"five minutes");
+    NSString *oneHour = NSLocalizedStringFromTableInBundle(@"1 hour", nil, bundle, @"one hour");
+    NSString *oneDay = NSLocalizedStringFromTableInBundle(@"1 day", nil, bundle, @"one day");
+    NSString *threeDays = NSLocalizedStringFromTableInBundle(@"3 days", nil, bundle, @"three days");
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Schedule Notification", @"Title for Assignment Notifications Sheet") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", "Cancel button title")  destructiveButtonTitle:nil otherButtonTitles:fiveMinutes, oneHour, oneDay, threeDays, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Schedule Notification", nil, bundle, @"Title for Assignment Notifications Sheet") delegate:self cancelButtonTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, "Cancel button title")  destructiveButtonTitle:nil otherButtonTitles:fiveMinutes, oneHour, oneDay, threeDays, nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [actionSheet showFromBarButtonItem:alarmButton animated:YES];
@@ -427,7 +429,7 @@ NSInteger const GRADE_TAB_INDEX = 2;
     CGFloat textPadding = 20;
     UIView *messageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
-    NSString *message = NSLocalizedString(@"Sorry, we couldn't find the assignment. This assignment may have been deleted.", @"404 Error for missing assignment");
+    NSString *message = NSLocalizedStringFromTableInBundle(@"Sorry, we couldn't find the assignment. This assignment may have been deleted.", nil, [NSBundle bundleForClass:self.class], @"404 Error for missing assignment");
     UIFont *font = [UIFont fontWithName:@"HelveticaNeue" size:16];
     NSDictionary *attributes = @{NSFontAttributeName: font};
     CGRect rect = [message boundingRectWithSize:CGSizeMake(messageView.frame.size.width - textPadding, messageView.frame.size.height)

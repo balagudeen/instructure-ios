@@ -18,7 +18,7 @@ import UIKit
 import CanvasCore
 
 extension Student {
-    static func refreshForAccessRemoved(session: Session, from currentViewController: UIViewController) {
+    @objc static func refreshForAccessRemoved(session: Session, from currentViewController: UIViewController) {
         do {
             let refresher = try Student.observedStudentsRefresher(session)
             refresher.refresh(true)

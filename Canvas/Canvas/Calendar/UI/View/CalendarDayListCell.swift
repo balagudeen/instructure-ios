@@ -27,7 +27,7 @@ class CalendarDayListCell: UITableViewCell
     @IBOutlet weak var typeImage: UIImageView!
     @IBOutlet weak var containerView: UIView!
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String!)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String!)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
@@ -38,11 +38,11 @@ class CalendarDayListCell: UITableViewCell
         self.contentView.backgroundColor = UIColor.calendarDayDetailBackgroundColor
     }
     
-    class var Nib: UINib {
+    @objc class var Nib: UINib {
         return UINib(nibName: "CalendarDayListCell", bundle: CalendarDayCell.bundle)
     }
     
-    class var ReuseID: String {
+    @objc class var ReuseID: String {
         return "CalendarDayListCell"
     }
 }

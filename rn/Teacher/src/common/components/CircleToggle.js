@@ -29,9 +29,10 @@ type Props = {
   on: boolean,
   children?: any,
   style?: any,
+  itemID?: string,
   value: any,
   onPress: Function,
-  onLongPress?: (value: any, buttonFrame: { x: number, y: number, width: number, height: number }) => void,
+  onLongPress?: (itemID: string, buttonFrame: { x: number, y: number, width: number, height: number }) => void,
   accessibilityLabel?: string,
 }
 
@@ -48,8 +49,8 @@ export default class CircleToggle extends PureComponent<Props> {
     }
 
     this.buttonViewRef.measure((vx: number, vy: number, width: number, height: number, x: number, y: number) => {
-      if (this.props.value != null && this.props.onLongPress) {
-        this.props.onLongPress(this.props.value, { x, y, width, height })
+      if (this.props.itemID && this.props.onLongPress) {
+        this.props.onLongPress(this.props.itemID, { x, y, width, height })
       }
     })
   }

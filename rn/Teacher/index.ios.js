@@ -30,7 +30,7 @@ import {
 } from 'react-native'
 import store from './src/redux/store'
 import setupI18n from './i18n/setup'
-import { setSession, compareSessions, getSessionUnsafe, httpCache } from './src/canvas-api'
+import { setSession, compareSessions, getSessionUnsafe, httpCache, getUser } from './src/canvas-api'
 import { registerScreens } from './src/routing/register-screens'
 import { setupBrandingFromNativeBrandingInfo } from './src/common/branding'
 import logoutAction from './src/redux/logout-action'
@@ -39,32 +39,16 @@ import { hydrateStoreFromPersistedState } from './src/redux/middleware/persist'
 import hydrate from './src/redux/hydrate-action'
 import { beginUpdatingBadgeCounts, stopUpdatingBadgeCounts, updateBadgeCounts } from './src/modules/tabbar/badge-counts'
 import App, { type AppId } from './src/modules/app'
-import device from 'react-native-device-info'
 import Navigator from './src/routing/Navigator'
 import { featureFlagSetup } from './src/common/feature-flags'
 import APIBridge from './src/canvas-api/APIBridge'
+import { Crashlytics } from './src/common/CanvasCrashlytics'
 
-import { Client, Configuration } from 'bugsnag-react-native'
-let shouldLogUserInfo = false
-const configuration = new Configuration()
-configuration.notifyReleaseStages = ['testflight', 'production']
-configuration.appVersion = `${device.getVersion()}-${device.getBuildNumber()}`
-
-configuration.beforeSendCallbacks.push((report) => {
-  const session = getSessionUnsafe()
-  if (shouldLogUserInfo && session) {
-    report.addMetadata('user', 'id', session.user.id)
-    report.addMetadata('user', 'baseURL', session.baseURL)
-  }
-  return true
-})
-
-global.crashReporter = new Client(configuration)
+global.crashReporter = Crashlytics
 
 // Useful for demos when you don't want that annoying yellow box showing up all over the place
 // such as, when demoing
 console.disableYellowBox = true
-setupI18n(NativeModules.SettingsManager.settings.AppleLocale)
 
 const {
   NativeLogin,
@@ -86,6 +70,7 @@ const loginHandler = async ({
   actAsUserID,
   skipHydrate,
   countryCode,
+  locale,
 }: {
   appId: AppId,
   authToken: string,
@@ -95,7 +80,9 @@ const loginHandler = async ({
   actAsUserID: ?string,
   skipHydrate: boolean,
   countryCode: string,
+  locale: string,
 }) => {
+  setupI18n(locale || NativeModules.SettingsManager.settings.AppleLocale)
   App.setCurrentApp(appId)
   stopUpdatingBadgeCounts()
 
@@ -118,11 +105,6 @@ const loginHandler = async ({
     logout()
   }
 
-  if (countryCode !== 'CA') {
-    global.crashReporter.setUser(user.id)
-    shouldLogUserInfo = true
-  }
-
   PushNotificationIOS.addEventListener('notification', (notification) => {
     const navigator = new Navigator('')
     navigator.showNotification(notification)
@@ -139,6 +121,15 @@ const loginHandler = async ({
   })
 
   setSession(session)
+
+  try {
+    await getUser('self')
+  } catch (err) {
+    if (err.response && err.response.status === 401) {
+      return NativeLogin.logout()
+    }
+  }
+
   if (!skipHydrate) {
     await hydrateStoreFromPersistedState(store)
     await httpCache.hydrate()
@@ -153,7 +144,6 @@ const loginHandler = async ({
 }
 
 if (NativeLogin.isTesting) {
-  require('./test/helpers/xhr-recorder')
   const loginInfo = NativeLogin.loginInformation()
   if (loginInfo) {
     loginHandler(loginInfo)

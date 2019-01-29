@@ -46,6 +46,7 @@ exports[`RubricItem changes the currently selected value when a circle is presse
   >
     <CircleToggle
       accessibilityLabel="10 — Full Credit"
+      itemID="3"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -63,6 +64,7 @@ exports[`RubricItem changes the currently selected value when a circle is presse
     </CircleToggle>
     <CircleToggle
       accessibilityLabel="5 — Partial Credit"
+      itemID="2"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -80,6 +82,7 @@ exports[`RubricItem changes the currently selected value when a circle is presse
     </CircleToggle>
     <CircleToggle
       accessibilityLabel="0 — No Credit"
+      itemID="1"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -227,6 +230,7 @@ exports[`RubricItem renders 1`] = `
   >
     <CircleToggle
       accessibilityLabel="10 — Full Credit"
+      itemID="3"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -244,6 +248,7 @@ exports[`RubricItem renders 1`] = `
     </CircleToggle>
     <CircleToggle
       accessibilityLabel="5 — Partial Credit"
+      itemID="2"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -261,6 +266,7 @@ exports[`RubricItem renders 1`] = `
     </CircleToggle>
     <CircleToggle
       accessibilityLabel="0 — No Credit"
+      itemID="1"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -408,6 +414,7 @@ exports[`RubricItem renders an already selected grade 1`] = `
   >
     <CircleToggle
       accessibilityLabel="10 — Full Credit"
+      itemID="3"
       on={true}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -425,6 +432,7 @@ exports[`RubricItem renders an already selected grade 1`] = `
     </CircleToggle>
     <CircleToggle
       accessibilityLabel="5 — Partial Credit"
+      itemID="2"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -442,6 +450,7 @@ exports[`RubricItem renders an already selected grade 1`] = `
     </CircleToggle>
     <CircleToggle
       accessibilityLabel="0 — No Credit"
+      itemID="1"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -589,6 +598,7 @@ exports[`RubricItem renders the selected custom grade 1`] = `
   >
     <CircleToggle
       accessibilityLabel="10 — Full Credit"
+      itemID="3"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -606,6 +616,7 @@ exports[`RubricItem renders the selected custom grade 1`] = `
     </CircleToggle>
     <CircleToggle
       accessibilityLabel="5 — Partial Credit"
+      itemID="2"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -623,6 +634,7 @@ exports[`RubricItem renders the selected custom grade 1`] = `
     </CircleToggle>
     <CircleToggle
       accessibilityLabel="0 — No Credit"
+      itemID="1"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -964,6 +976,7 @@ exports[`RubricItem will not show the add comment button and will show the comme
   >
     <CircleToggle
       accessibilityLabel="10 — Full Credit"
+      itemID="3"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -981,6 +994,7 @@ exports[`RubricItem will not show the add comment button and will show the comme
     </CircleToggle>
     <CircleToggle
       accessibilityLabel="5 — Partial Credit"
+      itemID="2"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}
@@ -998,6 +1012,7 @@ exports[`RubricItem will not show the add comment button and will show the comme
     </CircleToggle>
     <CircleToggle
       accessibilityLabel="0 — No Credit"
+      itemID="1"
       on={false}
       onLongPress={[Function]}
       onPress={[Function]}

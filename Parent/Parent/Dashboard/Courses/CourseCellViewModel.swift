@@ -28,7 +28,7 @@ struct CourseCellViewModel: TableViewCellViewModel {
 
     var gradeLabelText: String {
         let grades: String = [course.visibleGrade, course.visibleScore]
-            .flatMap( { $0 } )
+            .compactMap( { $0 } )
             .joined(separator: "   ")
 
         if grades != "" {
@@ -44,7 +44,7 @@ struct CourseCellViewModel: TableViewCellViewModel {
     }
     
     static func tableViewDidLoad(_ tableView: UITableView) {
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 107
         tableView.register(UINib(nibName: "CourseCell", bundle: Bundle(for: ParentAppDelegate.self)), forCellReuseIdentifier: "CourseCell")
     }
@@ -63,6 +63,9 @@ struct CourseCellViewModel: TableViewCellViewModel {
         cell.titleLabel.text = course.name
         cell.codeLabel.text = course.code
         cell.gradeLabel.text = gradeLabelText
+        cell.gradeLabel.isHidden = !course.gradesAreVisible
+        cell.gradeLockedImageView.isHidden = course.gradesAreVisible
+        cell.gradeLockedImageView.tintColor = UIColor.colorFromHexString("#1D2D8D")
 
         return cell
     }

@@ -19,7 +19,7 @@
 import Foundation
 
 public extension NSObject {
-    class var bundle: Bundle? {
+    @objc class var bundle: Bundle? {
         return Bundle(for: self.classForCoder())
     }
 }

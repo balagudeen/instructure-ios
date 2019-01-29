@@ -19,9 +19,9 @@
 import i18n from 'format-message'
 import React, { Component } from 'react'
 import {
-  StyleSheet,
   ActionSheetIOS,
   Alert,
+  NativeModules,
 } from 'react-native'
 import { alertError } from '../../../redux/middleware/error-handler'
 import {
@@ -31,11 +31,11 @@ import {
   CourseModel,
 } from '../../../canvas-api/model-api'
 import CanvasWebView from '../../../common/components/CanvasWebView'
-import { RefreshableScrollView } from '../../../common/components/RefreshableList'
 import Screen from '../../../routing/Screen'
 import Images from '../../../images'
-import { Heading1 } from '../../../common/text'
-import { isTeacher } from '../../app'
+import { isTeacher, isStudent } from '../../app'
+
+const { ModuleItemsProgress } = NativeModules
 
 type Props = {
   location: URL,
@@ -47,13 +47,33 @@ type Props = {
   courseColor: string,
   api: API,
   isLoading: boolean,
-  loadError: ?Error,
+  loadError: ?ApiPromiseRejection,
   refresh: () => void,
 }
 
 export class PageDetails extends Component<Props> {
-  componentWillReceiveProps ({ loadError }: Props) {
-    if (loadError && loadError !== this.props.loadError) alertError(loadError)
+  webView: ?CanvasWebView
+
+  constructor (props: Props) {
+    super(props)
+
+    if (isStudent) {
+      ModuleItemsProgress.viewedPage(props.courseID, props.url)
+    }
+  }
+
+  componentWillReceiveProps (nextProps: Props) {
+    const { isLoading, loadError } = nextProps
+    if (loadError && loadError !== this.props.loadError) {
+      if (loadError.response && loadError.response.status === 404) {
+        alertError(i18n('Oops, we couldn’t find that page.'), i18n('Page Not Found'))
+      } else {
+        alertError(loadError)
+      }
+    }
+    if (!isLoading) {
+      this.webView && this.webView.stopRefreshing()
+    }
   }
 
   render () {
@@ -64,7 +84,7 @@ export class PageDetails extends Component<Props> {
         {...customPageViewPath}
         navBarColor={courseColor}
         navBarStyle='dark'
-        title={i18n('Page Details')}
+        title={this.props.page ? this.props.page.title : i18n('Page Details')}
         subtitle={course && course.name || undefined}
         rightBarButtons={isTeacher() && [
           {
@@ -75,22 +95,16 @@ export class PageDetails extends Component<Props> {
           },
         ]}
       >
-        <RefreshableScrollView
-          style={styles.container}
+        <CanvasWebView
+          ref={this.captureWebView}
+          style={{ flex: 1 }}
+          source={{
+            html: page && page.body != null ? page.body : '',
+            baseURL: page ? page.htmlUrl + location.hash : '',
+          }}
+          navigator={this.props.navigator}
           onRefresh={this.props.refresh}
-          refreshing={this.props.isLoading}
-        >
-          <Heading1 style={styles.header}>{page ? page.title : ''}</Heading1>
-          <CanvasWebView
-            automaticallySetHeight
-            style={{ flex: 1 }}
-            source={{
-              html: page ? page.body : '',
-              baseURL: page ? page.htmlUrl + location.hash : '',
-            }}
-            navigator={this.props.navigator}
-          />
-        </RefreshableScrollView>
+        />
       </Screen>
     )
   }
@@ -105,6 +119,10 @@ export class PageDetails extends Component<Props> {
     }, {
       onChange: this.handleChanged,
     })
+  }
+
+  captureWebView = (ref: ?CanvasWebView) => {
+    this.webView = ref
   }
 
   handleChanged = (changed: PageModel) => {
@@ -163,16 +181,6 @@ export class PageDetails extends Component<Props> {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: global.style.defaultPadding,
-  },
-  header: {
-    paddingBottom: 17,
-  },
-})
 
 export default fetchPropsFor(PageDetails, ({ courseID, url }, api) => {
   let pageApi

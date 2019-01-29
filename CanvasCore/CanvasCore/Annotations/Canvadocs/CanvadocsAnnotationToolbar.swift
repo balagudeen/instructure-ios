@@ -20,8 +20,8 @@ import PSPDFKitUI
 
 public class CanvadocsAnnotationToolbar: PSPDFAnnotationToolbar {
     
-    public var showDoneButton: Bool = true
-    
+    @objc public var showDoneButton: Bool = true
+
     override public var doneButton: UIButton? {
         return showDoneButton ? super.doneButton : nil
     }
@@ -49,7 +49,7 @@ public class CanvadocsAnnotationToolbar: PSPDFAnnotationToolbar {
         })
         let strikeoutGroup = PSPDFAnnotationGroup(items: [strikeoutGroupItem])
         
-        let inkGroupItem = PSPDFAnnotationGroupItem(type: .ink, variant: .inkVariantPen) { (item, container, tintColor) in
+        let inkGroupItem = PSPDFAnnotationGroupItem(type: .ink, variant: nil) { (item, container, tintColor) in
             return UIImage(named: "draw", in: Bundle(for: CanvadocsAnnotationToolbar.self), compatibleWith: nil)!.withRenderingMode(.alwaysTemplate)
         }
         let inkGroup = PSPDFAnnotationGroup(items: [inkGroupItem])
@@ -58,7 +58,10 @@ public class CanvadocsAnnotationToolbar: PSPDFAnnotationToolbar {
             return UIImage(named: "rectangle", in: Bundle(for: CanvadocsAnnotationToolbar.self), compatibleWith: nil)!.withRenderingMode(.alwaysTemplate)
         }
         let boxGroup = PSPDFAnnotationGroup(items: [boxGroupItem])
+
+        let eraserGroupItem = PSPDFAnnotationGroupItem(type: .eraser, variant: nil)
+        let eraserGroup = PSPDFAnnotationGroup(items: [eraserGroupItem])
         
-        self.configurations = [PSPDFAnnotationToolbarConfiguration(annotationGroups: [commentGroup, highlightGroup, freeTextGroup, strikeoutGroup, inkGroup, boxGroup])]
+        self.configurations = [PSPDFAnnotationToolbarConfiguration(annotationGroups: [commentGroup, highlightGroup, freeTextGroup, strikeoutGroup, boxGroup, inkGroup, eraserGroup])]
     }
 }

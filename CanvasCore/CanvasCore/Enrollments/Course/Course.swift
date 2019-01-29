@@ -85,11 +85,11 @@ public final class Course: Enrollment {
         return multipleGradingPeriodsEnabled && currentGradingPeriodID == nil
     }
 
-    fileprivate var gradesAreVisible: Bool {
+    @objc public var gradesAreVisible: Bool {
         return !inMGPLimbo || totalForAllGradingPeriodsEnabled
     }
 
-    public var currentGrade: Grade? {
+    @objc public var currentGrade: Grade? {
         return grades.filter { $0.gradingPeriodID == currentGradingPeriodID }.first
     }
 
@@ -103,11 +103,11 @@ public final class Course: Enrollment {
         return visibleGradingPeriodScore(currentGradingPeriodID)
     }
 
-    public func visibleGradingPeriodGrade(_ gradingPeriodID: String?) -> String? {
+    @objc public func visibleGradingPeriodGrade(_ gradingPeriodID: String?) -> String? {
         return grades.filter { $0.gradingPeriodID == gradingPeriodID }.first?.currentGrade
     }
 
-    public func visibleGradingPeriodScore(_ gradingPeriodID: String?) -> String? {
+    @objc public func visibleGradingPeriodScore(_ gradingPeriodID: String?) -> String? {
         return grades.filter { $0.gradingPeriodID == gradingPeriodID }.first?.currentScore.flatMap {
             percentageFormatter.string(from: $0)
         }
@@ -155,12 +155,12 @@ public final class Course: Enrollment {
 }
 
 extension Course: SynchronizedModel {
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("id")
         return NSPredicate(format: "%K == %@", "id", id)
     }
 
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         id              = try json.stringID("id")
         name            = try json <| "name"
         originalName    = try json <| "original_name"
@@ -187,7 +187,7 @@ extension Course: SynchronizedModel {
                 grade.gradingPeriodID = currentGradingPeriodID
 
                 if multipleGradingPeriodsEnabled {
-                    totalForAllGradingPeriodsEnabled = try eJSON <| "totals_for_all_grading_periods_option"
+                    totalForAllGradingPeriodsEnabled = (try eJSON <| "totals_for_all_grading_periods_option") ?? false
                 }
                 if multipleGradingPeriodsEnabled && currentGradingPeriodID != nil {
                     grade.currentGrade = try eJSON <| "current_period_computed_current_grade"

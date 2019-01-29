@@ -19,10 +19,11 @@
 
 @implementation CKIClient (CKIAccountDomain)
 
-+ (RACSignal *)fetchAccountDomains {
++ (RACSignal *)fetchAccountDomains:(NSString *)query {
     CKIClient *tempClient = [[CKIClient alloc] initWithBaseURL:[NSURL URLWithString:@"https://canvas.instructure.com"]];
     NSString *path = @"api/v1/accounts/search";
-    return [tempClient fetchResponseAtPath:path parameters:nil modelClass:[CKIAccountDomain class] context:nil];
+    NSDictionary *params = @{ @"search_term": query };
+    return [tempClient fetchResponseAtPath:path parameters:params modelClass:[CKIAccountDomain class] context:nil exhaust:NO];
 }
 
 @end

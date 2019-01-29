@@ -28,21 +28,21 @@ internal class BackdropCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(imageView)
         let metrics = ["in": cellInset]
-        self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-in-[image]-in-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["image": imageView]))
-        self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-in-[image]-in-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["image": imageView]))
+        self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-in-[image]-in-|", options: NSLayoutConstraint.FormatOptions(), metrics: metrics, views: ["image": imageView]))
+        self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-in-[image]-in-|", options: NSLayoutConstraint.FormatOptions(), metrics: metrics, views: ["image": imageView]))
         return imageView
     }()
     lazy fileprivate var progressView: UIProgressView = {
-        let progressView = UIProgressView(progressViewStyle: UIProgressViewStyle.bar)
+        let progressView = UIProgressView(progressViewStyle: UIProgressView.Style.bar)
         progressView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(progressView)
         let metrics = ["in": cellInset, "border": borderWidth]
-        self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-in-[progress]", options: NSLayoutFormatOptions(), metrics: metrics, views: ["progress": progressView]))
-        self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-in-[progress]-in-|", options: NSLayoutFormatOptions(), metrics: metrics, views: ["progress": progressView]))
+        self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-in-[progress]", options: NSLayoutConstraint.FormatOptions(), metrics: metrics, views: ["progress": progressView]))
+        self.contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-in-[progress]-in-|", options: NSLayoutConstraint.FormatOptions(), metrics: metrics, views: ["progress": progressView]))
         return progressView
     }()
     
-    var image: UIImage? {
+    @objc var image: UIImage? {
         set {
             self.imageView.isHidden = false
             self.progressView.isHidden = true
@@ -53,7 +53,7 @@ internal class BackdropCell: UICollectionViewCell {
         }
     }
 
-    var progress: Float {
+    @objc var progress: Float {
         set {
             self.imageView.image = nil
             self.progressView.isHidden = false

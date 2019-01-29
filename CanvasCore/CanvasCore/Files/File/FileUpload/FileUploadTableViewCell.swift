@@ -33,16 +33,16 @@ class FileUploadTableViewCell: UITableViewCell {
     weak var delegate: FileUploadTableViewCellDelegate?
 
     // Icon
-    let iconImageView = UIImageView()
+    @objc let iconImageView = UIImageView()
 
     // Labels
-    let nameLabel = UILabel()
-    let statusLabel: UILabel = {
+    @objc let nameLabel = UILabel()
+    @objc let statusLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
         return label
     }()
-    lazy var labelStack: UIStackView = {
+    @objc lazy var labelStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 1
@@ -54,13 +54,13 @@ class FileUploadTableViewCell: UITableViewCell {
     }()
 
     // Actions
-    let errorInfoButton = UIButton(type: .infoLight)
-    let statusButton: UIButton = {
+    @objc let errorInfoButton = UIButton(type: .infoLight)
+    @objc let statusButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setContentHuggingPriority(1000, for: .horizontal)
+        btn.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
         return btn
     }()
-    lazy var actionStack: UIStackView = {
+    @objc lazy var actionStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.spacing = 12
@@ -72,7 +72,7 @@ class FileUploadTableViewCell: UITableViewCell {
     }()
 
     // Progress
-    let progressView: GradientView = {
+    @objc let progressView: GradientView = {
         let view = GradientView()
         let left = UIColor(r: 0, g: 142, b: 226)
         let right = UIColor(r: 0, g: 193, b: 243)
@@ -80,14 +80,14 @@ class FileUploadTableViewCell: UITableViewCell {
         view.direction = (CGPoint(x: 0, y: 0.5), CGPoint(x: 1, y: 0.5))
         return view
     }()
-    var progressWidthConstraint: NSLayoutConstraint!
+    @objc var progressWidthConstraint: NSLayoutConstraint!
 
     // Constants
-    let iconSize: CGFloat = 24
-    let progressHeight: CGFloat = 4
-    let minimumProgress = 5
+    @objc let iconSize: CGFloat = 24
+    @objc let progressHeight: CGFloat = 4
+    @objc let minimumProgress = 5
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         layoutViews()
@@ -98,7 +98,7 @@ class FileUploadTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bindViewModel() {
+    @objc func bindViewModel() {
         self.nameLabel.reactive.text <~ self.viewModel.outputs.fileName.observe(on: UIScheduler())
 
         self.statusLabel.rac_text <~ self.viewModel.outputs.statusText.observe(on: UIScheduler())
@@ -148,7 +148,7 @@ class FileUploadTableViewCell: UITableViewCell {
             }
     }
 
-    func layoutViews() {
+    @objc func layoutViews() {
         // Progress
         contentView.addSubview(progressView)
         progressView.heightAnchor.constraint(equalToConstant: progressHeight).isActive = true
@@ -189,15 +189,15 @@ class FileUploadTableViewCell: UITableViewCell {
         }
     }
 
-    func configureWith(fileUpload: FileUpload, session: Session) {
+    @objc func configureWith(fileUpload: FileUpload, session: Session) {
         viewModel.inputs.fileUpload(fileUpload, session: session)
     }
 
-    func deleteUpload() {
+    @objc func deleteUpload() {
         viewModel.inputs.tappedDeleteUpload()
     }
 
-    func update(progress: Double) {
+    @objc func update(progress: Double) {
         self.progressWidthConstraint.constant = CGFloat(progress) * self.contentView.frame.size.width / 100
     }
 }

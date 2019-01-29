@@ -69,7 +69,8 @@
         if ([message isKindOfClass:[NSString class]] && [message isEqualToString:@"Invalid access token."]) {
             if (!_showedAccessTokenError) {
                 // Bad access token error
-                [UIAlertController showAlertWithTitle:NSLocalizedString(@"Authentication error", @"Title for an error popup") message:NSLocalizedString(@"Could not authenticate with server", nil) handler:^{
+                NSBundle *bundle = [NSBundle bundleForClass:self.class];
+                [UIAlertController showAlertWithTitle:NSLocalizedStringFromTableInBundle(@"Authentication error", nil, bundle, @"Title for an error popup") message:NSLocalizedStringFromTableInBundle(@"Could not authenticate with server", nil, bundle, nil) handler:^{
                     _showedAccessTokenError = NO;
                 }];
                 _showedAccessTokenError = YES;
@@ -89,6 +90,7 @@
         //Makes sure we only display errors we haven't just displayed.
         NSString *errorMessage = [error localizedDescription];
         NSDictionary *errorUserInfo = [error userInfo];
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
         
         if (errorUserInfo[@"errors"]) {
             errorMessage = [NSString stringWithFormat:@"%@",
@@ -96,11 +98,11 @@
         } else if (errorUserInfo[@"message"]) {
             errorMessage = errorUserInfo[@"message"];
         } else if ([error code] == 401) {
-            errorMessage = NSLocalizedString(@"Access denied. Please check your permissions for the action you're trying to complete.", @"Error handling message when a network request has been denied by a server. Specifically with the HTTP 401 error code.");
+            errorMessage = NSLocalizedStringFromTableInBundle(@"Access denied. Please check your permissions for the action you're trying to complete.", nil, bundle, @"Error handling message when a network request has been denied by a server. Specifically with the HTTP 401 error code.");
         }
         
         if ([errorMessage length] == 0 && [[error domain] isEqualToString:CKCanvasErrorDomain]) {
-            errorMessage = NSLocalizedString(@"Canvas appears to be unavailable. Please try again later.", nil);
+            errorMessage = NSLocalizedStringFromTableInBundle(@"Canvas appears to be unavailable. Please try again later.", nil, bundle, nil);
         }
         
         NSDate * timeStamp = [NSDate date];
@@ -115,7 +117,7 @@
             // Supressing two errors that appear to have no impact but are sometimes returned
             if (!invalidAccessTokenMessageReturned && !unsupportedUrlMessageReturned)
             {
-                [UIAlertController showAlertWithTitle:NSLocalizedString(@"Error", @"Title for an error popup") message:errorMessage];
+                [UIAlertController showAlertWithTitle:NSLocalizedStringFromTableInBundle(@"Error", nil, bundle, @"Title for an error popup") message:errorMessage];
             }
         }
     }

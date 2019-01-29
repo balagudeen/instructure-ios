@@ -86,6 +86,9 @@
   "all_4321c3a1": {
     "message": "すべて"
   },
+  "all_annotations_saved_c0c650ab": {
+    "message": "すべての注釈が保存されました。"
+  },
   "all_courses_a7dbb853": {
     "message": "すべてのコース"
   },
@@ -129,9 +132,6 @@
     "message": "アナウンスメント"
   },
   "anonymous_grading_3083dc0": {
-    "message": "匿名での採点"
-  },
-  "anonymous_grading_ccb5045c": {
     "message": "匿名での採点"
   },
   "anyone_5b8fdf9f": {
@@ -551,11 +551,11 @@
   "edit_quiz_details_72cd055": {
     "message": "クイズ詳細を編集"
   },
-  "email_contact_e095f380": {
-    "message": "Eメール連絡先"
-  },
   "enjoy_your_day_a4cb2c1": {
     "message": "よい一日を！"
+  },
+  "enter_a_search_term_with_three_or_more_characters_1577ec2": {
+    "message": "3文字以上の検索語を入力してください。"
   },
   "enter_code_c7ab5104": {
     "message": "コードを入力する"
@@ -565,6 +565,9 @@
   },
   "error_saving_grade_367dd920": {
     "message": "成績保存中エラー"
+  },
+  "error_saving_tap_to_retry_a66b9c5f": {
+    "message": "エラーの保存。タップして再試行してください。"
   },
   "everyone_854554dd": {
     "message": "全員"
@@ -947,6 +950,9 @@
   "no_results_f36777ee": {
     "message": "結果なし"
   },
+  "no_results_found_2ace1494": {
+    "message": "一致するものが見つかりませんでした"
+  },
   "no_starred_messages_e1b28bca": {
     "message": "スターありメッセージはありません"
   },
@@ -1031,6 +1037,9 @@
   "only_teachers_1628d9b9": {
     "message": "講師のみ"
   },
+  "oops_we_couldn_t_find_that_page_7474fec6": {
+    "message": "残念！ページが見つかりません。"
+  },
   "open_coursename_user_preferences_430b877e": {
     "message": "{ courseName } ユーザー設定を開く"
   },
@@ -1051,6 +1060,9 @@
   },
   "page_details_847e35e6": {
     "message": "ページ詳細"
+  },
+  "page_not_found_683da852": {
+    "message": "ページが見つかりません"
   },
   "pages_e5414c2c": {
     "message": "ページ"
@@ -1108,6 +1120,9 @@
   },
   "previewing_this_file_type_is_not_supported_7df9231": {
     "message": "このファイルタイプのプレビューはサポートされていません"
+  },
+  "profile_6bd2baed": {
+    "message": "プロフィール"
   },
   "profile_menu_a688027e": {
     "message": "プロフィールメニュー"
@@ -1184,6 +1199,9 @@
   "reply_389d6fb9": {
     "message": "返信"
   },
+  "reply_all_b864cd0e": {
+    "message": "すべてに返信"
+  },
   "report_a_problem_4d48624a": {
     "message": "問題を報告する"
   },
@@ -1244,6 +1262,12 @@
   "search_280d00bd": {
     "message": "検索"
   },
+  "search_files_7e8153fd": {
+    "message": "ファイルを検索する"
+  },
+  "searching_f330d682": {
+    "message": "検索しています..."
+  },
   "seconds_plural_one_second_other_seconds_d33cf6e3": {
     "message": "{ seconds, plural,    other {# 秒}}"
   },
@@ -1267,6 +1291,9 @@
   },
   "send_individual_message_to_each_recipient_4fdfc1e5": {
     "message": "各受信者に個別のメッセージを送信する"
+  },
+  "send_message_a371a974": {
+    "message": "メッセージを送信"
   },
   "send_recording_82e5a550": {
     "message": "録画を送信する"
@@ -1391,6 +1418,9 @@
   "teacher_5a73b637": {
     "message": "講師"
   },
+  "teachers_52e2423f": {
+    "message": "講師"
+  },
   "teachers_and_students_ba2db3e4": {
     "message": "講師と受講生"
   },
@@ -1511,11 +1541,14 @@
   "this_assignment_only_allows_on_paper_submissions_f478408a": {
     "message": "この課題は、論文の提出のみを許可します。"
   },
+  "this_criterion_will_not_impact_the_score_94adf77b": {
+    "message": "この基準はスコアに影響を与えません。"
+  },
   "this_file_must_have_usage_rights_set_before_it_can_e4bf8bae": {
     "message": "このファイルは、公開する前に使用権が設定されていなければなりません。"
   },
-  "this_folder_is_empty_14af41c": {
-    "message": "フォルダが空白です"
+  "this_folder_is_empty_89c70e89": {
+    "message": "このフォルダは空です"
   },
   "this_group_does_not_have_a_submission_for_this_ass_ca275999": {
     "message": "このグループには、この課題の提出はありません。"
@@ -1528,9 +1561,6 @@
   },
   "this_submission_is_a_url_to_an_external_page_we_ve_9993d2fd": {
     "message": "この提出は、外部ページへのURLです。提出された時点のページの内容をスナップショットにして含めてあります。"
-  },
-  "this_will_anonymize_each_student_and_shuffle_the_s_127956c7": {
-    "message": "これは、各受講者を匿名化し、提出リストをシャッフルします。"
   },
   "this_will_remove_the_due_date_and_all_of_the_assoc_56d1ea8": {
     "message": "これにより、期日と関連するすべての課題対象者が削除されます。"

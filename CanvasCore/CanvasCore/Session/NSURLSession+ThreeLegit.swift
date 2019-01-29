@@ -26,7 +26,7 @@ private let networkErrorTitle = NSLocalizedString("Network Error", tableName: "L
 
 
 extension NSError {
-    public static func invalidResponseError(_ url: URL?, _ file: String = #file, _ line: UInt = #line) -> NSError {
+    @objc public static func invalidResponseError(_ url: URL?, _ file: String = #file, _ line: UInt = #line) -> NSError {
         let desc = NSLocalizedString("Unexpected response type", tableName: "Localizable", bundle: .core, value: "", comment: "Unexpected response type")
         return NSError(subdomain: "TooLegit", apiURL: url, title: networkErrorTitle, description: desc, file: file, line: line)
     }
@@ -235,5 +235,31 @@ extension Session {
     public func paginatedJSONSignalProducer(_ request: URLRequest, keypath: String? = nil) -> SignalProducer<[JSONObject], NSError> {
         return paginatedJSONSignalProducerAnyObject(request, keypath: keypath)
             .flatMap(.concat, transform: asArray(keypath))
+    }
+
+    @discardableResult
+    public func makeRequest<T>(_ request: URLRequest, callback: @escaping (Result<T, NSError>) -> Void) -> URLSessionTask where T: Decodable {
+        let task = URLSession.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                callback(.failure(error as NSError))
+                return
+            }
+
+            guard let data = data else {
+                callback(.failure(.invalidResponseError(request.url)))
+                return
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(T.self, from: data)
+                callback(.success(result))
+            } catch {
+                callback(.failure(error as NSError))
+            }
+        }
+
+        task.resume()
+        return task
     }
 }

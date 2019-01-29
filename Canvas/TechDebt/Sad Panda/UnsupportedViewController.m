@@ -39,7 +39,8 @@
 {
     [super viewDidLoad];
     [self.unsupportedLabel setText:[self messageForTab]];
-    [self.openInSafariButton setTitle:NSLocalizedString(@"Open in Safari", nil) forState:UIControlStateNormal];
+    [self.openInSafariButton setTitle:NSLocalizedStringFromTableInBundle(@"Open in Safari", nil, [NSBundle bundleForClass:self.class], nil) forState:UIControlStateNormal];
+    [self.openInSafariButton setTitleColor:Brand.current.linkColor forState:UIControlStateNormal];
 }
 
 - (IBAction)openInSafarButtonTouched:(id)sender
@@ -65,18 +66,20 @@
         }];
         
     } else {
-        [UIAlertController showAlertWithTitle:NSLocalizedString(@"Whoops!", "Error Title") message:NSLocalizedString(@"There was a problem launching Safari", nil)];
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
+        [UIAlertController showAlertWithTitle:NSLocalizedStringFromTableInBundle(@"Whoops!", nil, bundle, "Error Title") message:NSLocalizedStringFromTableInBundle(@"There was a problem launching Safari", nil, bundle, nil)];
     }
 }
 
 - (NSString *)messageForTab
 {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     NSString *message;
-    
+
     if ([self.tabName isEqualToString:@"Quizzes"] || [self.tabName isEqualToString:@"People"] || [self.tabName isEqualToString:@"External"] || [self.tabName isEqualToString:@"Modules"]) {
-        message = [NSString stringWithFormat:NSLocalizedString(@"%@ is coming soon!", @"Message for unsupported tab coming soon"), self.tabName];
+        message = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%@ is coming soon!", nil, bundle, @"Message for unsupported tab coming soon"), self.tabName];
     } else {
-        message = [NSString stringWithFormat:NSLocalizedString(@"%@ is not currently supported.", @"Message for unsupported tab"), self.tabName];
+        message = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%@ is not currently supported.", nil, bundle, @"Message for unsupported tab"), self.tabName];
     }
     
     return message;

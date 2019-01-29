@@ -23,26 +23,27 @@ import TechDebt
 
 
 class ModuleItemDetailViewController: UIViewController {
-    let session: Session
-    let courseID: String
-    let viewModel: ModuleItemViewModel
+    @objc let session: Session
+    @objc let courseID: String
+    @objc let viewModel: ModuleItemViewModel
     let refresher: Refresher
-    let route: (UIViewController, URL) -> Void
-    var embeddedVC: UIViewController?
-    var rightBarButtons: [UIBarButtonItem]?
+    @objc let route: (UIViewController, URL) -> Void
+    @objc var embeddedVC: UIViewController?
+    @objc var rightBarButtons: [UIBarButtonItem]?
 
-    lazy var toolbar: UIToolbar = {
+    @objc lazy var toolbar: UIToolbar = {
         let toolbar = UIToolbar()
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(toolbar)
-        self.view.addConstraint(NSLayoutConstraint(item: toolbar, attribute: .bottom, relatedBy: .equal, toItem: self.bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
+        toolbar.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[toolbar]|", options: [], metrics: nil, views: ["toolbar": toolbar]))
         return toolbar
     }()
-    lazy var nextButton: UIBarButtonItem = {
+    @objc lazy var nextButton: UIBarButtonItem = {
         let title = NSLocalizedString("Next", comment: "Button title for next module item.")
         let btn = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
         btn.accessibilityIdentifier = "next_module_item_button"
+        btn.tintColor = Brand.current.linkColor
 
         let nextAction = self.viewModel.nextAction
         btn.reactive.pressed = CocoaAction(nextAction)
@@ -50,10 +51,11 @@ class ModuleItemDetailViewController: UIViewController {
         
         return btn
     }()
-    lazy var previousButton: UIBarButtonItem = {
+    @objc lazy var previousButton: UIBarButtonItem = {
         let title = NSLocalizedString("Previous", comment: "Button title for previous module item.")
         let btn = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
         btn.accessibilityIdentifier = "previous_module_item_button"
+        btn.tintColor = Brand.current.linkColor
         
         let previousAction = self.viewModel.previousAction
         btn.reactive.pressed = CocoaAction(previousAction)
@@ -61,7 +63,7 @@ class ModuleItemDetailViewController: UIViewController {
         
         return btn
     }()
-    lazy var markDoneButton: UIBarButtonItem = {
+    @objc lazy var markDoneButton: UIBarButtonItem = {
         let title = NSLocalizedString("Mark as Done", comment: "Button title for mark as done.")
         let btn = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
         btn.accessibilityIdentifier = "mark_module_item_done_button"
@@ -72,9 +74,23 @@ class ModuleItemDetailViewController: UIViewController {
         
         return btn
     }()
+    @objc lazy var emptyLabel: UILabel = {
+        let message = NSLocalizedString("Module Item Not Found", comment: "")
+        let label = UILabel()
+        label.text = message
+        label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)
+        label.textColor = UIColor(hexString: "#ACACAC")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
+        return label
+    }()
 
 
-    init(session: Session, courseID: String, moduleItemID: String, route: @escaping (UIViewController, URL) -> Void) throws {
+    @objc init(session: Session, courseID: String, moduleItemID: String, route: @escaping (UIViewController, URL) -> Void) throws {
         self.session = session
         viewModel = try ModuleItemViewModel(session: session, moduleItemID: moduleItemID)
         refresher = try ModuleItem.refresher(session: session, courseID: courseID, moduleItemID: moduleItemID)
@@ -107,9 +123,11 @@ class ModuleItemDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        automaticallyAdjustsScrollViewInsets = false
         rac_title <~ viewModel.title
         rightBarButtons = navigationItem.rightBarButtonItems
+
+        /// empty message
+        emptyLabel.isHidden = true
 
         /// toolbar
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -128,23 +146,26 @@ class ModuleItemDetailViewController: UIViewController {
         }
     }
 
-    func embed(_ old: UIViewController?, _ new: UIViewController?) {
+    @objc func embed(_ old: UIViewController?, _ new: UIViewController?) {
         if let current = old {
-            current.willMove(toParentViewController: nil)
+            current.willMove(toParent: nil)
             current.view.removeFromSuperview()
-            current.removeFromParentViewController()
+            current.removeFromParent()
         }
 
         if let vc = new {
-            vc.willMove(toParentViewController: self)
-            addChildViewController(vc)
+            vc.willMove(toParent: self)
+            addChild(vc)
             view.insertSubview(vc.view, belowSubview: toolbar)
-            vc.didMove(toParentViewController: self)
+            vc.didMove(toParent: self)
 
             vc.view.translatesAutoresizingMaskIntoConstraints = false
-            view.addConstraint(NSLayoutConstraint(item: vc.view, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
-            view.addConstraint(NSLayoutConstraint(item: vc.view, attribute: .bottom, relatedBy: .equal, toItem: toolbar, attribute: .top, multiplier: 1, constant: 0))
-            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "|[childView]|", options: [], metrics: nil, views: ["childView": vc.view]))
+            NSLayoutConstraint.activate([
+                vc.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                vc.view.bottomAnchor.constraint(equalTo: toolbar.topAnchor),
+                vc.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                vc.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ])
 
             if let moduleProtocol = vc as? ModuleItemEmbeddedProtocol {
                 moduleProtocol.moduleItemID = self.viewModel.moduleItemID.value
@@ -155,10 +176,12 @@ class ModuleItemDetailViewController: UIViewController {
             toolbarItems = vc.toolbarItems
 
             embeddedVC = vc
+        } else {
+            emptyLabel.isHidden = false
         }
     }
 
-    func updateNavigationBarButtonItems(_ embeddedViewController: UIViewController) {
+    @objc func updateNavigationBarButtonItems(_ embeddedViewController: UIViewController) {
         var items = embeddedViewController.navigationItem.rightBarButtonItems ?? []
 
         // Don't override buttons possibly set by presenters or the system (like `Done`)
@@ -173,7 +196,7 @@ class ModuleItemDetailViewController: UIViewController {
         navigationItem.rightBarButtonItems = items
     }
 
-    func handleBarButtonsChange(sender: Any) {
+    @objc func handleBarButtonsChange(sender: Any) {
         if let current = embeddedVC {
             updateNavigationBarButtonItems(current)
         }

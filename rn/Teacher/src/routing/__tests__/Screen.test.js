@@ -41,6 +41,9 @@ jest.mock('react-native', () => ({
     propTypes: {},
   },
   StyleSheet: { create: jest.fn() },
+  I18nManager: () => ({
+    isRTL: false,
+  }),
 }))
 
 describe('Screen component', () => {

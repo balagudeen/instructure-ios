@@ -20,7 +20,7 @@ import ReactiveSwift
 import CanvasCore
 
 extension Student {
-    public static func predicate(withStudentID studentID: String) -> NSPredicate {
+    @objc public static func predicate(withStudentID studentID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "id", studentID)
     }
 

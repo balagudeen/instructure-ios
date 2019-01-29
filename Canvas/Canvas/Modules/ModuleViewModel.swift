@@ -83,7 +83,7 @@ class ModuleViewModel {
                 default:
                     status = nil
                 }
-                return [title, detail, status].flatMap { $0 }.filter { !$0.isEmpty }.joined(separator: ". ")
+                return [title, detail, status].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: ". ")
             }
 
         return vm

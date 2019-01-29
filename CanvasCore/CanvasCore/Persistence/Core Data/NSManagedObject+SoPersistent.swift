@@ -26,7 +26,7 @@ private let errorDesc = NSLocalizedString("There was a problem reading cached da
 private let errorTitle = NSLocalizedString("Read Error", tableName: "Localizable", bundle: .core, value: "", comment: "tile for error reading cache")
 
 extension NSManagedObject {
-    public convenience init(inContext context: NSManagedObjectContext) {
+    @objc public convenience init(inContext context: NSManagedObjectContext) {
         let entityName = type(of: self).entityName(context)
         let entity = NSEntityDescription.entity(forEntityName: entityName, in: context)!
         self.init(entity: entity, insertInto: context)
@@ -37,8 +37,8 @@ extension NSManagedObject {
         return entity
     }
 
-    public static func entityName(_ context: NSManagedObjectContext) -> String {
-        let className = NSStringFromClass(object_getClass(self))
+    @objc public static func entityName(_ context: NSManagedObjectContext) -> String {
+        let className = NSStringFromClass(object_getClass(self)!)
         guard let entityName = className.components(separatedBy: ".").last else { ❨╯°□°❩╯⌢"ObjC runtime has failed us. Just give up and go home." }
         
         let model = context.persistentStoreCoordinatorFRD.managedObjectModel
@@ -51,7 +51,7 @@ extension NSManagedObject {
         }
     }
 
-    public func delete(inContext context: NSManagedObjectContext) {
+    @objc public func delete(inContext context: NSManagedObjectContext) {
         context.delete(self)
     }
 }

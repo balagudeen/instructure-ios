@@ -19,11 +19,11 @@ import Result
 
 
 class FileUploadAnswerCell: UITableViewCell {
-    static var ReuseID: String {
+    @objc static var ReuseID: String {
         return "FileUploadAnswerCellReuseID"
     }
 
-    lazy var removeFileButton: UIButton = {
+    @objc lazy var removeFileButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(.icon(.cancel), for: .normal)
         button.addTarget(self, action: #selector(removeFile), for: .touchUpInside)
@@ -32,7 +32,7 @@ class FileUploadAnswerCell: UITableViewCell {
         return button
     }()
 
-    var fileName: String? {
+    @objc var fileName: String? {
         didSet {
             textLabel?.text = fileName ?? NSLocalizedString("Choose a File", tableName: "Localizable", bundle: .core, value: "", comment: "Choose a file")
             if fileName == nil {
@@ -43,9 +43,9 @@ class FileUploadAnswerCell: UITableViewCell {
         }
     }
 
-    var removeFileAction: (()->())?
+    @objc var removeFileAction: (()->())?
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: FileUploadAnswerCell.ReuseID)
     }
     
@@ -53,7 +53,7 @@ class FileUploadAnswerCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func removeFile() {
+    @objc func removeFile() {
         removeFileAction?()
     }
 }

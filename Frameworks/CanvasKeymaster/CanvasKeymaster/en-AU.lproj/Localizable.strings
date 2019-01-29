@@ -25,17 +25,26 @@
 /* No comment provided by engineer. */
 "Choose One" = "Choose One";
 
+/* Connectivity alert close text */
+"Close" = "Close";
+
 /* No comment provided by engineer. */
 "Continue Editing" = "Continue Editing";
 
 /* No comment provided by engineer. */
 "Describe the feature here" = "Describe the feature here";
 
+/* No comment provided by engineer. */
+"describe your problem" = "describe your problem";
+
 /* Dismiss login expired/revoked alert button */
 "Dismiss" = "Dismiss";
 
 /* No comment provided by engineer. */
 "Emergency" = "Emergency";
+
+/* No comment provided by engineer. */
+"enter a subject" = "enter a subject";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "Enter ticket description";
@@ -76,14 +85,20 @@
 /* No comment provided by engineer. */
 "OK" = "OK";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "remove user";
+
 /* No comment provided by engineer. */
 "Report a Problem" = "Report a Problem";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "Request a Feature";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "Request Failed!";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "Request a Feature";
+"select the impact" = "select the impact";
 
 /* Button to select the severity of the ticket */
 "Select ticket impact level" = "Select ticket impact level";
@@ -106,18 +121,15 @@
 /* No comment provided by engineer. */
 "Thanks, your request was received!" = "Thanks, your request was received!";
 
+/* No comment provided by engineer. */
+"Trouble logging in" = "Trouble logging in";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "We can't connect to Canvas. Have you checked your internet connection?";
+
+/* Connectivity alert title */
+"Whoops!" = "Whoops!";
+
 /* when the access token has been revoked */
 "Your login has expired or has been removed by the server. Please log in again." = "Your login has expired or has been removed by the server. Please log in again.";
-
-/* No comment provided by engineer. */
-"describe your problem" = "describe your problem";
-
-/* No comment provided by engineer. */
-"enter a subject" = "enter a subject";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "remove user";
-
-/* No comment provided by engineer. */
-"select the impact" = "select the impact";
 

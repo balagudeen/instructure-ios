@@ -18,7 +18,7 @@ import UIKit
 
 class CalendarMonthHeaderView: UICollectionReusableView {
     
-    var dateLabel = UILabel()
+    @objc var dateLabel = UILabel()
     var date = CalendarDate()
     var currentMonth: Bool? {
         didSet {
@@ -45,13 +45,13 @@ class CalendarMonthHeaderView: UICollectionReusableView {
         sizeLabel()
     }
     
-    func sizeLabel() {
+    @objc func sizeLabel() {
         dateLabel.sizeToFit()
         dateLabel.frame = dateLabel.frame.clamp(self.frame.size, inset: 2.0)
         dateLabel.center = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
     }
     
-    func initialize() {
+    @objc func initialize() {
         backgroundColor = UIColor.clear
         dateLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         dateLabel.isOpaque = false

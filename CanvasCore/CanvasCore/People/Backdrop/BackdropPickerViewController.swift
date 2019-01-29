@@ -31,10 +31,10 @@ open class BackdropPickerViewController: UIViewController, UICollectionViewDeleg
     fileprivate var shapeOffset: CGFloat = 0
     fileprivate var photoOffset: CGFloat = 0
     
-    open var imageSelected: ((_ image: UIImage) -> ())
+    @objc open var imageSelected: ((_ image: UIImage) -> ())
     
-    var collectionView: UICollectionView?
-    var segControl: UISegmentedControl = UISegmentedControl()
+    @objc var collectionView: UICollectionView?
+    @objc var segControl: UISegmentedControl = UISegmentedControl()
     
     fileprivate let session: Session
     fileprivate var tintColor: UIColor?
@@ -49,7 +49,7 @@ open class BackdropPickerViewController: UIViewController, UICollectionViewDeleg
     // ---------------------------------------------
     // MARK: - Lifecycle
     // ---------------------------------------------
-    public init(session: Session, imageSelected: @escaping (UIImage) -> ()) {
+    @objc public init(session: Session, imageSelected: @escaping (UIImage) -> ()) {
         self.session = session
         self.imageSelected = imageSelected
         self.highlightedFile = session.backdropFile
@@ -123,7 +123,7 @@ open class BackdropPickerViewController: UIViewController, UICollectionViewDeleg
             return item.description
         }
         segControl = UISegmentedControl(items: items)
-        segControl.addTarget(self, action: #selector(segPressed(_:)), for: UIControlEvents.valueChanged)
+        segControl.addTarget(self, action: #selector(segPressed(_:)), for: UIControl.Event.valueChanged)
         segControl.translatesAutoresizingMaskIntoConstraints = false
         
         segHolder.addSubview(segControl)
@@ -174,7 +174,7 @@ open class BackdropPickerViewController: UIViewController, UICollectionViewDeleg
             segControl.selectedSegmentIndex = highlightedFile.type.rawValue
             segPressed(segControl)
             if let path = pathForFile(highlightedFile) {
-                collectionView?.scrollToItem(at: path, at: UICollectionViewScrollPosition.centeredVertically, animated: false)
+                collectionView?.scrollToItem(at: path, at: UICollectionView.ScrollPosition.centeredVertically, animated: false)
             }
         }
     }
@@ -184,7 +184,7 @@ open class BackdropPickerViewController: UIViewController, UICollectionViewDeleg
     // ---------------------------------------------
     // MARK: - Button Targets
     // ---------------------------------------------
-    func cancelled() {
+    @objc func cancelled() {
         if imageUpdatedFromServer {
             if let highlightedFile = highlightedFile, let image = highlightedFile.localFile {
                 imageSelected(image)
@@ -193,7 +193,7 @@ open class BackdropPickerViewController: UIViewController, UICollectionViewDeleg
         let _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func segPressed(_ segControl: UISegmentedControl) {
+    @objc func segPressed(_ segControl: UISegmentedControl) {
         if segControl.selectedSegmentIndex == ImageType.photos.rawValue {
             shapeOffset = collectionView!.contentOffset.y
         } else {

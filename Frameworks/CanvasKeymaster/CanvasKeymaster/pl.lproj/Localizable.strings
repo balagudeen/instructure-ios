@@ -25,17 +25,26 @@
 /* No comment provided by engineer. */
 "Choose One" = "Wybierz jeden";
 
+/* Connectivity alert close text */
+"Close" = "Zamknij";
+
 /* No comment provided by engineer. */
 "Continue Editing" = "Kontynuuj edytowanie";
 
 /* No comment provided by engineer. */
 "Describe the feature here" = "Tutaj opisz funkcję";
 
+/* No comment provided by engineer. */
+"describe your problem" = "opisz swój problem";
+
 /* Dismiss login expired/revoked alert button */
 "Dismiss" = "Odwołaj";
 
 /* No comment provided by engineer. */
 "Emergency" = "Sytuacja awaryjna";
+
+/* No comment provided by engineer. */
+"enter a subject" = "wpisz temat";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "Wpisz opis zgłoszenia";
@@ -76,14 +85,20 @@
 /* No comment provided by engineer. */
 "OK" = "OK";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "usuń użytkownika";
+
 /* No comment provided by engineer. */
 "Report a Problem" = "Zgłoś problem";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "Zażądaj funkcji";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "Niepowodzenie żądania!";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "Zażądaj funkcji";
+"select the impact" = "wybierz istotność";
 
 /* Button to select the severity of the ticket */
 "Select ticket impact level" = "Wybierz poziom istotności zgłoszenia";
@@ -106,18 +121,15 @@
 /* No comment provided by engineer. */
 "Thanks, your request was received!" = "Dziękujemy, Twoja prośba została odebrana!";
 
+/* No comment provided by engineer. */
+"Trouble logging in" = "Problem z logowaniem";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "Nie można nawiązać połączenia z Canvas. Sprawdź połączenie internetowe.";
+
+/* Connectivity alert title */
+"Whoops!" = "Ups!";
+
 /* when the access token has been revoked */
 "Your login has expired or has been removed by the server. Please log in again." = "Twój login już wygasł lub został usunięty z serwera. Zaloguj się ponownie.";
-
-/* No comment provided by engineer. */
-"describe your problem" = "opisz swój problem";
-
-/* No comment provided by engineer. */
-"enter a subject" = "wpisz temat";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "usuń użytkownika";
-
-/* No comment provided by engineer. */
-"select the impact" = "wybierz istotność";
 

@@ -48,6 +48,7 @@ import ActivityIndicatorView from '../../common/components/ActivityIndicatorView
 import ListEmptyComponent from '../../common/components/ListEmptyComponent'
 import { getGradesForGradingPeriod } from '../../canvas-api'
 import { logEvent } from '../../common/CanvasAnalytics'
+import { featureFlagEnabled } from '../../common/feature-flags'
 
 type State = {
   currentFilter: {
@@ -138,7 +139,7 @@ export class AssignmentList extends Component<AssignmentListProps, State> {
   selectFirstListItemIfNecessary () {
     let assignment = null
     const isModal = this.props.navigator.isModal
-    if (!this.didSelectFirstItem && this.isRegularScreenDisplayMode && !isModal && (assignment = this.firstAssignmentInList())) {
+    if (!this.props.doNotSelectFirstItem && !this.didSelectFirstItem && this.isRegularScreenDisplayMode && !isModal && (assignment = this.firstAssignmentInList())) {
       this.selectedAssignment(assignment)
       this.didSelectFirstItem = true
     }
@@ -195,7 +196,7 @@ export class AssignmentList extends Component<AssignmentListProps, State> {
     logEvent('assignment_selected')
     this.props.updateCourseDetailsSelectedTabSelectedRow(assignment.id)
     this.setState({ selectedRowID: assignment.id })
-    if (assignment.quiz_id) {
+    if (assignment.quiz_id && !featureFlagEnabled('newStudentAssignmentView')) {
       this.props.navigator.show(`/courses/${assignment.course_id}/quizzes/${assignment.quiz_id}`)
     } else if (assignment.discussion_topic && isTeacher()) {
       this.props.navigator.show(`/courses/${assignment.course_id}/discussion_topics/${assignment.discussion_topic.id}`)
@@ -237,7 +238,7 @@ export class AssignmentList extends Component<AssignmentListProps, State> {
     if (index === this.props.gradingPeriods.length) return
 
     // always get assignment info for grading period, since it might be shared
-    this.props.refreshAssignmentList(this.props.courseID, this.props.gradingPeriods[index].id)
+    this.props.refreshAssignmentList(this.props.courseID, this.props.gradingPeriods[index].id, true)
 
     // get the grade for the current grading period
     if (this.props.showTotalScore) {
@@ -311,7 +312,7 @@ export class AssignmentList extends Component<AssignmentListProps, State> {
             renderItem={this.renderRow}
             renderSectionHeader={this.renderSectionHeader}
             refreshing={this.props.refreshing}
-            onRefresh={this.props.refresh}
+            onRefresh={this.refresh}
             keyExtractor={(item, index) => item.id}
             ListEmptyComponent={
               <ListEmptyComponent title={i18n('There are no assignments to display.')} />
@@ -320,6 +321,16 @@ export class AssignmentList extends Component<AssignmentListProps, State> {
         </View>
       </Screen>
     )
+  }
+
+  refresh = () => {
+    if (this.state.currentFilter.index != null) {
+      // Refresh total for selected grading period
+      const gradingPeriod = this.props.gradingPeriods[this.state.currentFilter.index]
+      this.updateGradeForGradingPeriod(gradingPeriod)
+    }
+
+    this.props.refresh()
   }
 }
 

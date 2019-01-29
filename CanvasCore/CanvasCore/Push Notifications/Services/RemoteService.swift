@@ -98,7 +98,7 @@ open class RemoteService {
     open func getUserCommunicationChannels(_ completion: @escaping (Result<[CommunicationChannel], NSError>) -> ()) {
         requestForUserCommunicationChannels()
             .flatMap(.merge, transform: { self.session.paginatedJSONSignalProducer($0) } )
-            .map { $0.flatMap(CommunicationChannel.create) }
+            .map { $0.compactMap(CommunicationChannel.create) }
             .on(value: { completion(Result(value: $0)) })
             .startWithFailed { err in completion(Result(error: err)) }
     }
@@ -127,7 +127,7 @@ open class RemoteService {
     open func getNotificationPreferences(_ channelID: String, completion: @escaping (Result<[NotificationPreference], NSError>) -> ()) {
         requestForNotificationPreferences(channelID)
             .flatMap(.concat, transform: { self.session.paginatedJSONSignalProducer($0, keypath: "notification_preferences") } )
-            .map { $0.flatMap(NotificationPreference.create) }
+            .map { $0.compactMap(NotificationPreference.create) }
             .on(value: { completion(Result(value: $0)) })
             .startWithFailed { err in completion(Result(error: err)) }
     }

@@ -26,7 +26,7 @@ exports[`Compose renders 1`] = `
         "action": [Function],
         "badge": false,
         "image": Object {
-          "testUri": "../../../src/images/attachment-large.png",
+          "testUri": "../../../src/images/paperclip-icon.png",
         },
         "testID": "compose-message.attach",
       },
@@ -60,11 +60,6 @@ exports[`Compose renders 1`] = `
           "paddingBottom": 16,
         }
       }
-      enableAutoAutomaticScroll={true}
-      enableResetScrollToCoords={true}
-      extraHeight={75}
-      extraScrollHeight={0}
-      keyboardOpeningTime={250}
       style={
         Object {
           "flex": 1,
@@ -218,7 +213,7 @@ exports[`Compose renders after picking a course 1`] = `
         "action": [Function],
         "badge": false,
         "image": Object {
-          "testUri": "../../../src/images/attachment-large.png",
+          "testUri": "../../../src/images/paperclip-icon.png",
         },
         "testID": "compose-message.attach",
       },
@@ -252,11 +247,6 @@ exports[`Compose renders after picking a course 1`] = `
           "paddingBottom": 16,
         }
       }
-      enableAutoAutomaticScroll={true}
-      enableResetScrollToCoords={true}
-      extraHeight={75}
-      extraScrollHeight={0}
-      keyboardOpeningTime={250}
       style={
         Object {
           "flex": 1,
@@ -410,7 +400,7 @@ exports[`Compose renders reply 1`] = `
         "action": [Function],
         "badge": false,
         "image": Object {
-          "testUri": "../../../src/images/attachment-large.png",
+          "testUri": "../../../src/images/paperclip-icon.png",
         },
         "testID": "compose-message.attach",
       },
@@ -444,11 +434,6 @@ exports[`Compose renders reply 1`] = `
           "paddingBottom": 16,
         }
       }
-      enableAutoAutomaticScroll={true}
-      enableResetScrollToCoords={true}
-      extraHeight={75}
-      extraScrollHeight={0}
-      keyboardOpeningTime={250}
       style={
         Object {
           "flex": 1,
@@ -681,7 +666,7 @@ exports[`Compose renders with passed in recipients 1`] = `
         "action": [Function],
         "badge": false,
         "image": Object {
-          "testUri": "../../../src/images/attachment-large.png",
+          "testUri": "../../../src/images/paperclip-icon.png",
         },
         "testID": "compose-message.attach",
       },
@@ -715,11 +700,6 @@ exports[`Compose renders with passed in recipients 1`] = `
           "paddingBottom": 16,
         }
       }
-      enableAutoAutomaticScroll={true}
-      enableResetScrollToCoords={true}
-      extraHeight={75}
-      extraScrollHeight={0}
-      keyboardOpeningTime={250}
       style={
         Object {
           "flex": 1,

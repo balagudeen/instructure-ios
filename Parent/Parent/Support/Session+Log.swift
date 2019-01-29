@@ -18,7 +18,7 @@ import Foundation
 import CanvasCore
 
 extension Session {
-    public func logFilePath() -> URL? {
+    @objc public func logFilePath() -> URL? {
         let files = try! FileManager.default.contentsOfDirectory(at: logDirectoryURL, includingPropertiesForKeys: [URLResourceKey.contentModificationDateKey], options: .skipsHiddenFiles).sorted(by: { file1URL, file2URL -> Bool in
             do {
                 let file1URLModifiedDate = try file1URL.resourceValues(forKeys: [URLResourceKey.contentModificationDateKey]).contentModificationDate

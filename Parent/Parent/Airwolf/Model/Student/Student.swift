@@ -33,12 +33,12 @@ public final class Student: NSManagedObject {
 }
 
 extension Student: SynchronizedModel {
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("student_id")
         return NSPredicate(format: "%K == %@", "id", id)
     }
 
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         id              = try json.stringID("student_id")
         parentID        = try json.stringID("parent_id")
         name            = try json <| "student_name"

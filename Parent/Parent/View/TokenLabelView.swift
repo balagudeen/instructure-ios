@@ -13,10 +13,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-    
-    
 
 import Foundation
+import UIKit
 
 class TokenLabelView: UIView {
     
@@ -25,7 +24,7 @@ class TokenLabelView: UIView {
 
     fileprivate let label = UILabel()
 
-    var text = ""  {
+    @objc var text = ""  {
         didSet {
             guard !text.isEmpty else {
                 removeConstraints(horizontalConstraints)
@@ -40,10 +39,11 @@ class TokenLabelView: UIView {
             label.text = text
             updateViewConstraints()
             sizeToFit()
+            label.sizeToFit()
         }
     }
 
-    var insets = UIEdgeInsets(top: 2, left: 10, bottom: 2, right: 10) {
+    @objc var insets = UIEdgeInsets(top: 2, left: 10, bottom: 2, right: 10) {
         didSet {
             updateViewConstraints()
         }
@@ -67,7 +67,7 @@ class TokenLabelView: UIView {
         layer.cornerRadius = frame.height/2
     }
 
-    func setup() {
+    @objc func setup() {
         clipsToBounds = true
 
         label.font = UIFont.systemFont(ofSize: 13.0)
@@ -78,12 +78,12 @@ class TokenLabelView: UIView {
         updateViewConstraints()
     }
 
-    func updateViewConstraints() {
+    @objc func updateViewConstraints() {
         removeConstraints(horizontalConstraints)
         removeConstraints(verticalConstraints)
 
-        horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-leftMargin-[subview]-rightMargin-|", options: NSLayoutFormatOptions(), metrics: ["leftMargin": insets.left, "rightMargin": insets.right], views: ["subview": label])
-        verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-topMargin-[subview]-bottomMargin-|", options: NSLayoutFormatOptions(), metrics: ["topMargin": insets.top, "bottomMargin": insets.bottom], views: ["subview": label])
+        horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-leftMargin-[subview]-rightMargin-|", options: NSLayoutConstraint.FormatOptions(), metrics: ["leftMargin": insets.left, "rightMargin": insets.right], views: ["subview": label])
+        verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-topMargin-[subview]-bottomMargin-|", options: NSLayoutConstraint.FormatOptions(), metrics: ["topMargin": insets.top, "bottomMargin": insets.bottom], views: ["subview": label])
 
         addConstraints(horizontalConstraints)
         addConstraints(verticalConstraints)

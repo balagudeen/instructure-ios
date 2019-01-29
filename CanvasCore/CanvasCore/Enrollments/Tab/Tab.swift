@@ -39,7 +39,7 @@ public final class Tab: NSManagedObject {
         }
     }
 
-    public var icon: UIImage {
+    @objc public var icon: UIImage {
         switch id {
         case "announcements":   return .icon(.announcement)
         case "application":     return .icon(.lti)
@@ -64,7 +64,7 @@ public final class Tab: NSManagedObject {
         }
     }
 
-    public var shortcutIcon: UIImage {
+    @objc public var shortcutIcon: UIImage {
         guard ShortcutTabIDs.contains(id) else { ❨╯°□°❩╯⌢"Not a valid shortcut!" }
         // don't add new shortcuts without telling me
         assert(ShortcutTabIDs.count == 4)
@@ -79,15 +79,15 @@ public final class Tab: NSManagedObject {
         return .icon(shortcut)
     }
 
-    public var isPages: Bool {
+    @objc public var isPages: Bool {
         return id == "wiki" || id == "pages"
     }
 
-    public var isHome: Bool {
+    @objc public var isHome: Bool {
         return id == "home"
     }
 
-    public var isPage: Bool {
+    @objc public var isPage: Bool {
         return id == "wiki"
     }
 }
@@ -101,7 +101,7 @@ private let contextIDErrorMessage = NSLocalizedString("There was an error associ
 private let contextIDFailureReason = "Could not parse context id from URL"
 
 extension Tab: SynchronizedModel {
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let url: URL = try json <| "full_url"
         guard let context = ContextID(url: url) else {
             throw NSError(subdomain: "Enrollments", code: 0, sessionID: nil, apiURL: URL(string: "/api/v1/context/tabs"), title: nil, description: contextIDErrorMessage, failureReason: contextIDFailureReason)
@@ -112,7 +112,7 @@ extension Tab: SynchronizedModel {
         return NSPredicate(format: "%K == %@ && %K == %@", "id", id, "rawContextID", context.canvasContextID)
     }
 
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
 
         url         = try (try json <| "url")
             ?? (try json <| "full_url")

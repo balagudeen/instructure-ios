@@ -27,7 +27,7 @@ extension Session {
         fileprivate static var refreshScope: UInt8 = 1
     }
     
-    public var refreshScope: RefreshScope {
+    @objc public var refreshScope: RefreshScope {
         if let scope: RefreshScope = getAssociatedObject(&Associated.refreshScope) {
             return scope
         }

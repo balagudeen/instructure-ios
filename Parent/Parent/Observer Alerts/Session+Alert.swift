@@ -32,7 +32,7 @@ let alertKitDBFailedToLoadErrorDescription = NSLocalizedString("There was a prob
 // MARK: - Session for current alert context
 // ---------------------------------------------
 extension Session {
-    func alertsManagedObjectContext() throws -> NSManagedObjectContext {
+    @objc func alertsManagedObjectContext() throws -> NSManagedObjectContext {
         guard let model = NSManagedObjectModel(named: alertKitModelName, inBundle: Bundle(for: Alert.self))?.mutableCopy() as? NSManagedObjectModel else {
             throw NSError(subdomain: alertKitSubdomain, code: alertKitFailedToLoadErrorCode, title: alertKitFailedToLoadErrorDescription, description: alertKitFailedToLoadErrorDescription)
         }

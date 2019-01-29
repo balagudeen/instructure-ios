@@ -20,7 +20,7 @@ import UIKit
 import CanvasCore
 
 class CalendarDaysOfWeekView : UIView {
-    let stack = UIStackView()
+    @objc let stack = UIStackView()
     
     fileprivate lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -30,7 +30,7 @@ class CalendarDaysOfWeekView : UIView {
     }()
     
     fileprivate lazy var symbols: [String] = {
-        if UIDeviceOrientationIsPortrait(UIDevice.current.orientation) &&
+        if UIDevice.current.orientation.isPortrait &&
             UIDevice.current.userInterfaceIdiom == .phone {
             return self.dateFormatter.veryShortStandaloneWeekdaySymbols
         }
@@ -47,7 +47,7 @@ class CalendarDaysOfWeekView : UIView {
         fatalError("Not supported")
     }
     
-    func initialize() {
+    @objc func initialize() {
         let borderView = UIView()
         borderView.translatesAutoresizingMaskIntoConstraints = false
         borderView.backgroundColor = .white
@@ -76,7 +76,7 @@ class CalendarDaysOfWeekView : UIView {
         initLabels()
     }
     
-    func initLabels() {
+    @objc func initLabels() {
         
         for (index, weekdaySymbol) in symbols.enumerated() {
             let weekdayLabel = UILabel()

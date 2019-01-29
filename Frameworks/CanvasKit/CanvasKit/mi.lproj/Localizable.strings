@@ -1,24 +1,24 @@
 /* No comment provided by engineer. */
 "An error occurred" = "He hapa i puta";
 
-/* (No Comment) */
+/* Help label when user can't find their school. */
 "Can't find your school?" = "Kaore e taea te kimi i tō kura?";
 
 /* No comment provided by engineer. */
 "Cancel" = "Whakakore";
 
 /* No comment provided by engineer. */
-"Login" = "Takiuru";
+"Login" = "takiuru";
 
 /* No comment provided by engineer. */
-"OK" = "OK";
+"OK" = "Ae";
 
 /* No comment provided by engineer. */
 "Password" = "Kupuhipa";
 
 /* No comment provided by engineer. */
-"Username" = "Ingoa kaiwhakamahi";
+"Username" = "Ingoa rēhita";
 
 /* No comment provided by engineer. */
-"You are not authorized to perform this action." = "Kaore koe e whakamanahia ki te whakamahi i tēnei mahi..";
+"You are not authorized to perform this action." = "Kaore koe e whakamanahia ki te whakamahi i tēnei mahi.";
 

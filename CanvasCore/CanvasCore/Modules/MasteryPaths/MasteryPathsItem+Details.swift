@@ -19,7 +19,7 @@ import CoreData
 
 
 extension MasteryPathsItem {
-    public static func predicateForMasteryPathsItem(inModule moduleID: String, fromItemWithMasteryPaths moduleItemID: String) -> NSPredicate {
+    @objc public static func predicateForMasteryPathsItem(inModule moduleID: String, fromItemWithMasteryPaths moduleItemID: String) -> NSPredicate {
         return NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "%K == %@", "moduleID", moduleID), NSPredicate(format: "%K == %@", "moduleItemID", moduleItemID)])
     }
 }

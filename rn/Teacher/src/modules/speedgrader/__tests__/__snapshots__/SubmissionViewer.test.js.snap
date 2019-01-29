@@ -19,6 +19,7 @@ exports[`SubmissionViewer renders a discussion_topic submission 1`] = `
       }
     }
     navigator={undefined}
+    openLinksInSafari={true}
     source={
       Object {
         "uri": "https://google.com",
@@ -182,6 +183,7 @@ exports[`SubmissionViewer renders an online_quiz submission 1`] = `
       }
     }
     navigator={undefined}
+    openLinksInSafari={true}
     source={
       Object {
         "uri": "https://google.com",

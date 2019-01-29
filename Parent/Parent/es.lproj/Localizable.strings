@@ -1,8 +1,14 @@
 /* <String> <Int> of <Int> */
 "%@ %d of %d" = "%1$@ %2$d de %3$d";
 
-/* Something to Something */
+/* No comment provided by engineer. */
+"%@ is due at %@" = "%1$@ vence el %2$@";
+
+/* No comment provided by engineer. */
 "%@ to %@" = "%1$@ a %2$@";
+
+/* No comment provided by engineer. */
+"%@ will begin at %@" = "%1$@ comenzará el %2$@";
 
 /* Percentage field placeholder */
 "1-100%" = "1-100%";
@@ -31,6 +37,9 @@
 /* No comment provided by engineer. */
 "Announcement" = "Anuncio";
 
+/* No comment provided by engineer. */
+"Assignment" = "Tarea";
+
 /* Assignment Grade High On Description */
 "Assignment grade above" = "Calificación de la tarea superior a";
 
@@ -39,6 +48,9 @@
 
 /* Assignment Missing Description */
 "Assignment missing" = "Falta la tarea";
+
+/* No comment provided by engineer. */
+"Assignment reminder" = "Recordatorio de la tarea";
 
 /* No comment provided by engineer. */
 "Cache cleared" = "Caché borrado";
@@ -58,11 +70,11 @@
 /* Empty Alerts Text */
 "Caught up on Alerts" = "Al día en las alertas";
 
-/* title for status selection field */
-"Choose One" = "Elija uno";
-
 /* No comment provided by engineer. */
 "Choose a student" = "Elegir un alumno";
+
+/* title for status selection field */
+"Choose One" = "Elija uno";
 
 /* Close Button Title */
 "Close" = "Cerrar";
@@ -79,14 +91,26 @@
 /* Courses Tab */
 "Courses" = "Cursos";
 
+/* No comment provided by engineer. */
+"Current student: %@, tap to switch students" = "AñAlumno actual: %@, toque para cambiar entre alumnos";
+
 /* Title for field */
 "Describe your problem" = "Describa su problema";
+
+/* No comment provided by engineer. */
+"Discussion" = "Foro";
 
 /* No comment provided by engineer. */
 "Dismiss" = "Descartar";
 
 /* No comment provided by engineer. */
 "Error" = "Error";
+
+/* No comment provided by engineer. */
+"Event" = "Evento";
+
+/* No comment provided by engineer. */
+"Event reminder" = "Recordatorio del evento";
 
 /* No comment provided by engineer. */
 "Excused" = "Excusado";
@@ -160,11 +184,11 @@
 /* Title for label when no grade has been assigned to the course */
 "No Grade" = "Sin calificación";
 
-/* Empty Students Text */
-"No Students" = "Sin estudiantes";
-
 /* Error message */
 "No installed apps support opening this file" = "Ninguna aplicación instalada es compatible para abrir este archivo";
+
+/* Empty Students Text */
+"No Students" = "Sin estudiantes";
 
 /* Not Authorized Error Title */
 "Not Authorized" = "No autorizado";
@@ -184,6 +208,12 @@
 /* Open file in another application */
 "Open in..." = "Abrir en...";
 
+/* No comment provided by engineer. */
+"Permission Needed" = "Se necesita permiso";
+
+/* No comment provided by engineer. */
+"Quiz" = "Evaluación";
+
 /* Support Ticket Creation Failed */
 "Request Failed!  Check network and try again!" = "¡La solicitud ha fallado!  ¡Compruebe la red y vuelva a intentarlo!";
 
@@ -195,6 +225,9 @@
 
 /* Server Error Title */
 "Server Error" = "Error del servidor";
+
+/* No comment provided by engineer. */
+"Settings" = "Configuraciones";
 
 /* Status level for issue being reported */
 "Something is broken but I can work around it" = "Algo no funciona, pero puedo trabajar de todas maneras";
@@ -232,6 +265,12 @@
 /* No comment provided by engineer. */
 "There was an error loading your content. If it  is an audio or video upload it may still be processing." = "Hubo un error al cargar su contenido. Si se trata de un proceso de carga de audio o video puede que aún se esté procesando.";
 
+/* No comment provided by engineer. */
+"This announcement has expired." = "Este anuncio ha caducado.";
+
+/* No comment provided by engineer. */
+"This student's courses may not be published yet." = "Los cursos de este alumno no pueden publicarse todavía.";
+
 /* Unknown T`hreshold Description */
 "Unknown" = "Desconocido";
 
@@ -240,6 +279,9 @@
 
 /* Default user name, the computer-friendly version of their name, until we find their real user name */
 "Unknown User Name" = "Nombre de usuario desconocido";
+
+/* No comment provided by engineer. */
+"Unread" = "No leído";
 
 /* Calendar Tab */
 "Week" = "Semana";
@@ -252,6 +294,9 @@
 
 /* Not Authorized Error Message */
 "You are unauthorized to access this information.  Check your user permissions and try again." = "Usted no está autorizado a acceder a esta información. Revise sus permisos de usuario y vuelva a intentarlo.";
+
+/* No comment provided by engineer. */
+"You must allow notifications in Settings to set reminders." = "Debe habilitar las notificaciones en Configuraciones para poder configurar recordatorios.";
 
 /* Title for the email field */
 "Your Email" = "Su correo electrónico";

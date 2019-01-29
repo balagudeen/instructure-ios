@@ -25,7 +25,7 @@ public enum Orientation {
 
 open class HairlineView: UIView {
     
-    open var color = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.2) {
+    @objc open var color = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.2) {
         didSet {
             CATransaction.begin()
             CATransaction.setDisableActions(true)
@@ -40,7 +40,7 @@ open class HairlineView: UIView {
         }
     }
     
-    lazy var lineLayer: CAShapeLayer = {
+    @objc lazy var lineLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.fillColor = self.color.cgColor
         self.layer.addSublayer(layer)

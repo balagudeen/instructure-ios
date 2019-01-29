@@ -73,12 +73,12 @@ import Marshal
 
 
 extension Activity: SynchronizedModel {
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("id")
         return NSPredicate(format: "%K == %@", "id", id)
     }
     
-    public func updateValues(_ json: JSONObject, inContext moc: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext moc: NSManagedObjectContext) throws {
         
         id          = try json.stringID("id")
         title       = try (json <| "title") ?? ""

@@ -146,8 +146,16 @@ export default class DeveloperMenu extends Component<DeveloperMenuProps, any> {
     this.props.navigator.show('/page-view-events')
   }
 
+  viewLogs = () => {
+    this.props.navigator.show('/logs')
+  }
+
   viewFeatureFlags = () => {
     this.props.navigator.show('/feature-flags')
+  }
+
+  pickLanguage = () => {
+    this.props.navigator.show('/language-picker')
   }
 
   viewRouteHistory = () => {
@@ -188,7 +196,8 @@ export default class DeveloperMenu extends Component<DeveloperMenuProps, any> {
 
   route = async (route: any) => {
     await this.props.navigator.dismiss()
-    this.props.navigator.show(route.url, route.options, route.props)
+    const modal = this.state.selectedRouteMethod === 'Modal'
+    this.props.navigator.show(route.url, { ...route.options, modal }, route.props)
   }
 
   render () {
@@ -234,7 +243,11 @@ export default class DeveloperMenu extends Component<DeveloperMenuProps, any> {
             <RowSeparator />
             <Row title='View Page Views' disclosureIndicator onPress={this.viewPageViews} />
             <RowSeparator />
+            <Row title='View Logs' disclosureIndicator onPress={this.viewLogs} />
+            <RowSeparator />
             <Row title='View Feature Flags' disclosureIndicator onPress={this.viewFeatureFlags} />
+            <RowSeparator />
+            <Row title='Language Picker' disclosureIndicator onPress={this.pickLanguage} />
             <RowSeparator />
             <Row title='Manage Rating Request' disclosureIndicator onPress={this.manageRatingRequest} />
             <RowSeparator />

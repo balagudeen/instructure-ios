@@ -20,10 +20,10 @@ import Cartography
 
 class NonNativeQuizTakingViewController: UIViewController {
     
-    let session: Session
+    @objc let session: Session
     let contextID: ContextID
     let quiz: Quiz
-    let baseURL: URL
+    @objc let baseURL: URL
     
     fileprivate let webView: UIWebView = UIWebView()
     fileprivate var quizHostName = ""
@@ -72,7 +72,7 @@ class NonNativeQuizTakingViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Exit", tableName: "Localizable", bundle: .core, value: "", comment: "Exit button to leave the quiz"), style: .plain, target: self, action: #selector(NonNativeQuizTakingViewController.exitQuiz(_:)))
     }
     
-    func beginTakingQuiz() {
+    @objc func beginTakingQuiz() {
         if let host = urlForTakingQuiz.host {
             quizHostName = host
         }
@@ -87,7 +87,7 @@ class NonNativeQuizTakingViewController: UIViewController {
         }
     }
     
-    func exitQuiz(_ button: UIBarButtonItem?) {
+    @objc func exitQuiz(_ button: UIBarButtonItem?) {
         if webView.request?.url?.path.range(of: "/take") != nil {
             let areYouSure = NSLocalizedString("Are you sure you want to leave this quiz?", tableName: "Localizable", bundle: .core, value: "", comment: "Question to confirm user wants to navigate away from a quiz.")
             let stay = NSLocalizedString("Stay", tableName: "Localizable", bundle: .core, value: "", comment: "Stay on the quiz view")
@@ -163,7 +163,7 @@ extension NonNativeQuizTakingViewController: UIWebViewDelegate {
         }
     }
     
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
         let currentRequestHost = request.url?.host
         let currentRequestPath = request.url?.path
         let queryString = request.url?.query
@@ -182,7 +182,7 @@ extension NonNativeQuizTakingViewController: UIWebViewDelegate {
         } else if navigationType == .linkClicked {
             // TODO: maybe open a native in app browser?
             if let URL = request.url {
-                UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+                UIApplication.shared.open(URL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             }
             return false
         }
@@ -193,7 +193,7 @@ extension NonNativeQuizTakingViewController: UIWebViewDelegate {
             return false
         }
         
-        let isIframedOrOtherInternalContent = navigationType == UIWebViewNavigationType.other && quizHostName != currentRequestHost!
+        let isIframedOrOtherInternalContent = navigationType == UIWebView.NavigationType.other && quizHostName != currentRequestHost!
         if loggingIn || queryString?.range(of: "persist_headless=1") != nil || isIframedOrOtherInternalContent {
             return true
         }
@@ -203,4 +203,9 @@ extension NonNativeQuizTakingViewController: UIWebViewDelegate {
         
         return false
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

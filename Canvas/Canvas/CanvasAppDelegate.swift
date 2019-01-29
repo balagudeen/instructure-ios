@@ -22,21 +22,34 @@ import CanvasKeymaster
 import Crashlytics
 import CanvasCore
 import ReactiveSwift
-import BugsnagReactNative
 import UserNotifications
 //import Firebase
+import Core
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    let loginConfig = LoginConfiguration(mobileVerifyName: "iCanvas", logo: UIImage(named: "student-logomark")!, fullLogo: UIImage(named: "student-logo")!)
-    var session: Session?
+class AppDelegate: UIResponder, UIApplicationDelegate, AppEnvironmentDelegate {
+    @objc let loginConfig = LoginConfiguration(mobileVerifyName: "iCanvas", logo: UIImage(named: "student-logomark")!, fullLogo: UIImage(named: "student-logo")!)
+    @objc var session: Session?
     var window: UIWindow?
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        if (uiTesting) {
-            BuddyBuildSDK.setup()
-        } else {
-            configureBugSnag()
+
+    var appID: String {
+        return Bundle.main.bundleIdentifier ?? "com.instructure.icanvas"
+    }
+
+    var appGroup: String {
+        return "group.com.instructure.icanvas"
+    }
+
+    lazy var environment: AppEnvironment = {
+        let env = AppEnvironment.shared
+        env.router = Router.shared()
+        env.backgroundAPIManager.eventsHandler = self
+        return env
+    }()
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        environment.logger.log(#function)
+        if !uiTesting {
             setupCrashlytics()
         }
         
@@ -57,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func showLoadingState() {
+    @objc func showLoadingState() {
         guard let window = self.window else { return }
         if let root = window.rootViewController, let tag = root.tag, tag == "LaunchScreenPlaceholder" { return }
         let placeholder = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateViewController(withIdentifier: "LaunchScreen")
@@ -76,29 +89,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return self.application(application, handleOpen: url)
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return openCanvasURL(url)
     }
-    
-    func configureBugSnag() {
-        let configuration = BugsnagConfiguration()
-        configuration.add { (data, report) -> Bool in
-            var user = Dictionary<String, String>()
-            let region = Locale.current.regionCode
-            if let session = self.session, region != "CA" {
-                user["baseURL"] = session.baseURL.absoluteString
-                user["id"] = session.user.id
-                report.addMetadata(user, toTabWithName: "user")
-            }
-            return true
-        }
-        BugsnagReactNative.start(with: configuration)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FakeCrash"), object: nil, queue: nil) { _  in
-            let exception = NSException(name:NSExceptionName(rawValue: "FakeException"),
-                                        reason:"The red coats are coming, the red coats are coming!",
-                                        userInfo:nil)
-            Bugsnag.notify(exception)
-        }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        AppStoreReview.handleLaunch()
+        CoreWebView.keepCookieAlive(for: environment)
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        environment.logger.log(#function)
+        CoreWebView.stopCookieKeepAlive()
+        CanvasCore.LocalizationManager.closed()
     }
 }
 
@@ -122,6 +125,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 let url = URL(string: assignmentURL) {
                 self?.openCanvasURL(url)
                 return
+            } else if let routerURL = userInfo[NotificationManager.RouteURLKey] as? String,
+                let url = URL(string: routerURL) {
+                self?.openCanvasURL(url)
+                return
             }
 
             // Must be a push notification
@@ -133,7 +140,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([.alert, .sound])
     }
 
-    func handlePushNotificationRegistrationError(_ error: NSError) {
+    @objc func handlePushNotificationRegistrationError(_ error: NSError) {
         Crashlytics.sharedInstance().recordError(error, withAdditionalUserInfo: ["source": "push_notification_registration"])
     }
 }
@@ -141,7 +148,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 // MARK: Post launch setup
 extension AppDelegate {
     
-    func postLaunchSetup() {
+    @objc func postLaunchSetup() {
         PSPDFKit.license()
         prepareReactNative()
         NetworkMonitor.engage()
@@ -163,14 +170,14 @@ extension AppDelegate: CanvasAnalyticsHandler {
 // MARK: Logging in/out
 extension AppDelegate {
     
-    func addClearCacheGesture(_ view: UIView) {
+    @objc func addClearCacheGesture(_ view: UIView) {
         let clearCacheGesture = UITapGestureRecognizer(target: self, action: #selector(clearCache))
         clearCacheGesture.numberOfTapsRequired = 3
         clearCacheGesture.numberOfTouchesRequired = 4
         view.addGestureRecognizer(clearCacheGesture)
     }
     
-    func clearCache() {
+    @objc func clearCache() {
         URLCache.shared.removeAllCachedResponses()
         let alert = UIAlertController(title: NSLocalizedString("Cache cleared", comment: ""), message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "OK Button Title"), style: .default, handler: nil))
@@ -181,12 +188,12 @@ extension AppDelegate {
 // MARK: SoErroneous
 extension AppDelegate {
     
-    func alertUser(of error: NSError, from presentingViewController: UIViewController?) {
+    @objc func alertUser(of error: NSError, from presentingViewController: UIViewController?) {
         guard let presentFrom = presentingViewController else { return }
         
         DispatchQueue.main.async {
             let alertDetails = error.alertDetails(reportAction: {
-                let support = SupportTicketViewController.present(from: presentingViewController, supportTicketType: SupportTicketTypeProblem)
+                let support = SupportTicketViewController.present(from: presentingViewController, supportTicketType: SupportTicketTypeProblem, defaultSubject: nil)
                 support?.reportedError = error
             })
             
@@ -198,7 +205,7 @@ extension AppDelegate {
         }
     }
     
-    func setupDefaultErrorHandling() {
+    @objc func setupDefaultErrorHandling() {
         CanvasCore.ErrorReporter.setErrorHandler({ error, presentingViewController in
             self.alertUser(of: error, from: presentingViewController)
             
@@ -208,7 +215,7 @@ extension AppDelegate {
         })
     }
     
-    var visibleController: UIViewController {
+    @objc var visibleController: UIViewController {
         guard var vc = window?.rootViewController else { ❨╯°□°❩╯⌢"No root view controller?!" }
         
         while vc.presentedViewController != nil {
@@ -217,7 +224,7 @@ extension AppDelegate {
         return vc
     }
     
-    func handleError(_ error: NSError) {
+    @objc func handleError(_ error: NSError) {
         DispatchQueue.main.async {
             ErrorReporter.reportError(error, from: self.window?.rootViewController)
         }
@@ -227,20 +234,21 @@ extension AppDelegate {
 // MARK: Crashlytics
 extension AppDelegate {
     
-    func setupCrashlytics() {
+    @objc func setupCrashlytics() {
         guard let _ = Bundle.main.object(forInfoDictionaryKey: "Fabric") else {
             NSLog("WARNING: Crashlytics was not properly initialized.");
             return
         }
         
         //Fabric.with([Crashlytics.self])
+        CanvasCrashlytics.setupForReactNative()
     }
 }
 
 
 // MARK: Launching URLS
 extension AppDelegate {
-    @discardableResult func openCanvasURL(_ url: URL) -> Bool {
+    @objc @discardableResult func openCanvasURL(_ url: URL) -> Bool {
         if TheKeymaster.numberOfClients == 0, let host = url.host {
             TheKeymaster.login(withSuggestedDomain: host)
         }
@@ -297,6 +305,7 @@ extension AppDelegate {
 
 extension AppDelegate: NativeLoginManagerDelegate {
     func willLogout() {
+        CoreWebView.stopCookieKeepAlive()
         PageViewEventController.instance.userDidChange()
     }
     
@@ -309,9 +318,30 @@ extension AppDelegate: NativeLoginManagerDelegate {
         CKCanvasAPI.updateCurrentAPI()
        // Analytics.setUserID(client.currentUser.id)
        // Analytics.setUserProperty(client.baseURL?.absoluteString, forName: "base_url")
-        
+        if let entry = client.keychainEntry {
+            // TODO: Persist this keychain entry
+            Keychain.currentSession = entry
+            environment.userDidLogin(session: entry)
+            CoreWebView.keepCookieAlive(for: environment)
+        }
+
         if let brandingInfo = client.branding?.jsonDictionary() as? [String: Any] {
             Brand.setCurrent(Brand(webPayload: brandingInfo), applyInWindow: window)
+            // copy to new Core.Brand
+            if let data = try? JSONSerialization.data(withJSONObject: brandingInfo) {
+                let response = try! JSONDecoder().decode(APIBrandVariables.self, from: data)
+                Core.Brand.shared = Core.Brand(response: response)
+            }
+        }
+
+        if let locale = client.effectiveLocale {
+            CanvasCore.LocalizationManager.setCurrentLocale(locale)
+		}
+
+        let countryCode: String? = Locale.current.regionCode
+        if countryCode != "CA" {
+            let crashlyticsUserId = "\(session.user.id)@\(session.baseURL.host ?? session.baseURL.absoluteString)"
+            Crashlytics.sharedInstance().setUserIdentifier(crashlyticsUserId)
         }
     }
     
@@ -323,5 +353,31 @@ extension AppDelegate: NativeLoginManagerDelegate {
         UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
             window.rootViewController = controller
         }, completion:nil)
+    }
+}
+
+extension AppDelegate: BackgroundURLSessionDelegateEventHandler {
+    func urlSessionDidFinishEvent(forBackgroundURLSession session: URLSession) {
+        environment.logger.log(#function)
+        if let userID = TheKeymaster.currentClient?.currentUser?.id {
+            let createSubmissions = CreateFileSubmissions(env: environment, userID: userID)
+            environment.queue.addOperation(createSubmissions)
+        }
+    }
+
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        environment.logger.log("app delegate \(#function)")
+        let operation = OperationSet()
+        for client in FXKeychain.shared().clients() {
+            guard let entry = client.keychainEntry else {
+                continue
+            }
+            let env = AppEnvironment()
+            env.userDidLogin(session: entry)
+            let createSubmissions = CreateFileSubmissions(env: env, userID: entry.userID)
+            operation.addOperation(createSubmissions)
+        }
+        environment.queue.addOperations([operation], waitUntilFinished: true)
+        environment.backgroundAPIManager.complete(session: session)
     }
 }

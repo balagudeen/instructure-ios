@@ -22,7 +22,7 @@ import Reachability
 import CanvasCore
 
 class NetworkMonitor: NSObject {
-    static func engage() {
+    @objc static func engage() {
         NotificationCenter.default.addObserver(sharedMonitor, selector: #selector(networkActivityStarted), name: NSNotification.Name.CKCanvasNetworkRequestStarted, object: nil)
         NotificationCenter.default.addObserver(sharedMonitor, selector: #selector(networkActivityEnded), name: NSNotification.Name.CKCanvasNetworkRequestFinished, object: nil)
         
@@ -32,12 +32,12 @@ class NetworkMonitor: NSObject {
     
     fileprivate var inflightNetworkOps = 0
     
-    func networkActivityStarted() {
+    @objc func networkActivityStarted() {
         inflightNetworkOps += 1
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
-    func networkActivityEnded() {
+    @objc func networkActivityEnded() {
         inflightNetworkOps -= 1
         UIApplication.shared.isNetworkActivityIndicatorVisible = inflightNetworkOps > 0
     }

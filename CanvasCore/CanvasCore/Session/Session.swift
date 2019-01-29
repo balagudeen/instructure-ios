@@ -31,11 +31,11 @@ open class Session: NSObject {
         case Default, AppGroup
     }
 
-    open let user: SessionUser
-    open let baseURL: URL
-    open let masqueradeAsUserID: String?
-    open var URLSession: Foundation.URLSession
-    open var token: String?
+    @objc open let user: SessionUser
+    @objc open let baseURL: URL
+    @objc open let masqueradeAsUserID: String?
+    @objc open var URLSession: Foundation.URLSession
+    @objc open var token: String?
     open let localStoreDirectory: LocalStoreDirectory
 
     public typealias ProgressBlock = (_ bytesSent: Int64, _ totalBytes: Int64)->()
@@ -47,13 +47,13 @@ open class Session: NSObject {
     public typealias BackgroundCompletionHandler = (NSError?)->Void
     open var completionHandlerByBackgroundIdentifier: [String: BackgroundCompletionHandler] = [:]
 
-    open var responseDataByTask: [URLSessionTask: Data] = [:]
+    @objc open var responseDataByTask: [URLSessionTask: Data] = [:]
 
-    open static var unauthenticated: Session {
+    @objc open static var unauthenticated: Session {
         return Session(baseURL: URL(string: "https://canvas.instructure.com/")!, user: SessionUser(id: "", name: ""), token: nil)
     }
 
-    public convenience init(baseURL: URL, user: SessionUser, token: String?, masqueradeAsUserID: String? = nil) {
+    @objc public convenience init(baseURL: URL, user: SessionUser, token: String?, masqueradeAsUserID: String? = nil) {
         self.init(baseURL: baseURL, user: user, token: token, localStoreDirectory: .AppGroup, masqueradeAsUserID: masqueradeAsUserID)
     }
 
@@ -77,7 +77,7 @@ open class Session: NSObject {
         self.URLSession = Foundation.URLSession(configuration: config, delegate: self, delegateQueue:opQ)
     }
     
-    open var sessionID: String {
+    @objc open var sessionID: String {
         let host = baseURL.host ?? "unknown-host"
         let userID = user.id
         var components = [host, userID]
@@ -87,13 +87,13 @@ open class Session: NSObject {
         return components.joined(separator: "-")
     }
     
-    open var isSiteAdmin: Bool {
+    @objc open var isSiteAdmin: Bool {
         guard let host = baseURL.host else { return false }
 
         return host.lowercased().contains("siteadmin")
     }
     
-    open var localStoreDirectoryURL: URL {
+    @objc open var localStoreDirectoryURL: URL {
         let fileURL: URL
 
         switch localStoreDirectory {
@@ -112,7 +112,7 @@ open class Session: NSObject {
         return url
     }
 
-    open var logDirectoryURL: URL {
+    @objc open var logDirectoryURL: URL {
         let fileURL: URL
 
         switch localStoreDirectory {
@@ -134,7 +134,7 @@ open class Session: NSObject {
 
 
 extension Session {
-    public static func fromJSON(_ data: [String: Any]) -> Session? {
+    @objc public static func fromJSON(_ data: [String: Any]) -> Session? {
         let token = data["accessToken"] as? String
         let baseURL = (data["baseURL"] as? String).flatMap { URL(string: $0) }
         let user = (data["currentUser"] as? [String: AnyObject]).flatMap { SessionUser.fromJSON($0) }
@@ -147,7 +147,7 @@ extension Session {
         return nil
     }
     
-    public func dictionaryValue() -> [String: Any] {
+    @objc public func dictionaryValue() -> [String: Any] {
         var dictionary = [String: Any]()
         dictionary["accessToken"] = self.token
         dictionary["baseURL"] = self.baseURL.absoluteString
@@ -159,12 +159,12 @@ extension Session {
         return dictionary
     }
 
-    public func compare(_ session: Session) -> Bool {
+    @objc public func compare(_ session: Session) -> Bool {
         // Same if Token is equal or userID & baseURL are equal
         return (self.token == session.token) || (session.user.id == self.user.id && session.baseURL.absoluteString == self.baseURL.absoluteString)
     }
 
-    public func copyToBackgroundSessionWithIdentifier(_ identifier: String, sharedContainerIdentifier: String?) -> Session {
+    @objc public func copyToBackgroundSessionWithIdentifier(_ identifier: String, sharedContainerIdentifier: String?) -> Session {
         guard let session = Session.fromJSON(self.dictionaryValue()) else {
             fatalError("session couldn't parse itself")
         }

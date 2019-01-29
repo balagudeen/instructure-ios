@@ -54,9 +54,9 @@ public class RollCallSession: NSObject {
         }
     }
     
-    weak public var delegate: RollCallSessionDelegate?
+    @objc weak public var delegate: RollCallSessionDelegate?
 
-    public init(client: CKIClient, initialLaunchURL: URL) {
+    @objc public init(client: CKIClient, initialLaunchURL: URL) {
         self.state = .fetchingLaunchURL
         super.init()
         
@@ -69,7 +69,7 @@ public class RollCallSession: NSObject {
         }
     }
 
-    func launch(url: URL) {
+    @objc func launch(url: URL) {
         guard case .fetchingLaunchURL = state else { return }
 
         let webView = UIWebView(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
@@ -123,8 +123,8 @@ public class RollCallSession: NSObject {
         task?.resume()
     }
 
-    var task: URLSessionTask?
-    public func updateStatus(_ status: Status, completed: @escaping (Int?, Error?) -> Void) -> Void {
+    @objc var task: URLSessionTask?
+    public func updateStatus(_ status: Status, completed: @escaping (String?, Error?) -> Void) -> Void {
         guard case .active(let session) = state else { return }
         
         var url = URL(string: "https://rollcall.instructure.com/statuses")!
@@ -172,7 +172,7 @@ public class RollCallSession: NSObject {
                     return
                 }
                 let statusJSON = try JSONParser.JSONObjectWithData(data)
-                let id: Int? = try statusJSON <| "id"
+                let id: String? = try statusJSON.stringID("id")
                 if let id = id {
                     DispatchQueue.main.async {
                         completed(id, nil)

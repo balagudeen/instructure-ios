@@ -26,10 +26,10 @@ extension String {
 
 open class WhizzyTextInputCell: UITableViewCell, UITextViewDelegate {
     
-    open let placeholder: UILabel
-    open let textView: UITextView
+    @objc open let placeholder: UILabel
+    @objc open let textView: UITextView
     
-    open var inputText: String {
+    @objc open var inputText: String {
         get {
             return textView.text ?? ""
         } set {
@@ -39,16 +39,16 @@ open class WhizzyTextInputCell: UITableViewCell, UITextViewDelegate {
         }
     }
     
-    open var textDidChange: (String)->() = {_ in }
-    open var heightDidChange: (CGFloat)->() = {_ in }
-    open var doneEditing: (String)->() = { _ in }
+    @objc open var textDidChange: (String)->() = {_ in }
+    @objc open var heightDidChange: (CGFloat)->() = {_ in }
+    @objc open var doneEditing: (String)->() = { _ in }
     
     fileprivate var cachedTextViewHeight = CGFloat(0.0)
     fileprivate var cachedCellWidth = CGFloat(0.0)
     
     fileprivate var verticalConstraints: [NSLayoutConstraint] = []
     
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         placeholder = TIC.createPlaceholder()
         textView = TIC.createTextView()
         
@@ -61,10 +61,10 @@ open class WhizzyTextInputCell: UITableViewCell, UITextViewDelegate {
         prepareTextView()
         
         selectionStyle = .none
-        NotificationCenter.default.addObserver(self, selector: #selector(WhizzyTextInputCell.didRotate(_:)), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WhizzyTextInputCell.didRotate(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
-    func didRotate(_ note: Notification) {
+    @objc func didRotate(_ note: Notification) {
         notifyIfHeightDidChange()
     }
     
@@ -72,7 +72,7 @@ open class WhizzyTextInputCell: UITableViewCell, UITextViewDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     
-    open func notifyIfHeightDidChange() {
+    @objc open func notifyIfHeightDidChange() {
         let text = textView.text
         let boundsWidth = bounds.size.width
         
@@ -161,11 +161,11 @@ public extension WhizzyTextInputCell {
         return UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20)
     }
     
-    public class var font: UIFont {
-        return UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+    @objc public class var font: UIFont {
+        return UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
     }
     
-    public class func heightWithText(_ text: String, boundsWidth width: CGFloat) -> CGFloat {
+    @objc public class func heightWithText(_ text: String, boundsWidth width: CGFloat) -> CGFloat {
         
         let textViewBoundsWidth = width - textViewMargins.left - textViewMargins.right
         

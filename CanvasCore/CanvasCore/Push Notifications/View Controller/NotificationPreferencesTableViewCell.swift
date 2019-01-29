@@ -34,7 +34,7 @@ class NotificationPreferencesTableViewCell: UITableViewCell {
     @IBOutlet weak var notificationLabel: UILabel!
     
     var item: GroupItem?
-    var indexPath: IndexPath?
+    @objc var indexPath: IndexPath?
 
     var protocolHandler: ChangeNotificationPreferenceProtocol?
     

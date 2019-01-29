@@ -26,21 +26,21 @@ open class CalendarMonthViewController: UIViewController, CalendarViewDelegate, 
     // MARK: - Instance Variables
     // ---------------------------------------------
     // External Closures
-    open var dateSelected: DateSelected!
-    open var routeToURL: RouteToURL!
-    open var colorForContext: ColorForContextID!
-    var didFinishRefreshing: ()->() = { }
+    @objc open var dateSelected: DateSelected!
+    @objc open var routeToURL: RouteToURL!
+    @objc open var colorForContext: ColorForContextID!
+    @objc var didFinishRefreshing: ()->() = { }
 
     // UI Views
     fileprivate var calendar: Calendar = Calendar.current
-    internal var calendarView: CalendarView!
+    @objc internal var calendarView: CalendarView!
     fileprivate var toastManager: ToastManager?
 
     // Data Variables
     fileprivate var session: Session!
 
-    var allCoursesCollection: FetchedCollection<Course>!
-    var favCoursesCollection: FetchedCollection<Course>!
+    var allCoursesCollection: FetchedCollection<Course>?
+    var favCoursesCollection: FetchedCollection<Course>?
 
     var refresher: Refresher? {
         didSet {
@@ -60,10 +60,10 @@ open class CalendarMonthViewController: UIViewController, CalendarViewDelegate, 
     }
 
     // Instance variables
-    open var shouldHighlightDate: ShouldOperateOnDate = { date in
+    @objc open var shouldHighlightDate: ShouldOperateOnDate = { date in
         return true
     }
-    open var shouldSelectDate: ShouldOperateOnDate = { date in
+    @objc open var shouldSelectDate: ShouldOperateOnDate = { date in
         return true
     }
 
@@ -94,7 +94,7 @@ open class CalendarMonthViewController: UIViewController, CalendarViewDelegate, 
         }
     }()
 
-    open static func new(_ session: Session, dateSelected: DateSelected? = nil, colorForContextID: ColorForContextID? = nil, routeToURL: RouteToURL? = nil) -> CalendarMonthViewController {
+    @objc open static func new(_ session: Session, dateSelected: DateSelected? = nil, colorForContextID: ColorForContextID? = nil, routeToURL: RouteToURL? = nil) -> CalendarMonthViewController {
         let controller = CalendarMonthViewController(nibName: nil, bundle: nil)
         controller.session = session
 
@@ -117,17 +117,17 @@ open class CalendarMonthViewController: UIViewController, CalendarViewDelegate, 
 
         calendarView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(calendarView)
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][view]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view": calendarView, "top" : topLayoutGuide]))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["view": calendarView]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[top][view]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["view": calendarView, "top" : topLayoutGuide]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["view": calendarView]))
 
-        favCoursesCollection = try! Course.favoritesCollection(session)
-        favCoursesDisposable = favCoursesCollection.collectionUpdates
+        favCoursesCollection = try? Course.favoritesCollection(session)
+        favCoursesDisposable = favCoursesCollection?.collectionUpdates
             .observe(on: UIScheduler())
             .observeValues { [weak self] _ in
                 self?.updateCalendarEvents()
             }
 
-        allCoursesCollection = try! Course.allCoursesCollection(session)
+        allCoursesCollection = try? Course.allCoursesCollection(session)
         
         if let nav = navigationController?.navigationBar {
             self.toastManager = ToastManager(navigationBar: nav)
@@ -190,22 +190,22 @@ open class CalendarMonthViewController: UIViewController, CalendarViewDelegate, 
     // ---------------------------------------------
     // MARK: - Selection
     // ---------------------------------------------
-    open func selectDate(_ date: Date) {
+    @objc open func selectDate(_ date: Date) {
         self.calendarView?.selectDate(date)
     }
 
     // ---------------------------------------------
     // MARK: - CalendarViewDelegate
     // ---------------------------------------------
-    open func calendarViewShouldHighlightDate(_ calendarView: CalendarView, date: Date) -> Bool {
+    @objc open func calendarViewShouldHighlightDate(_ calendarView: CalendarView, date: Date) -> Bool {
         return shouldHighlightDate(date)
     }
 
-    open func calendarViewShouldSelectDate(_ calendarView: CalendarView, date: Date) -> Bool {
+    @objc open func calendarViewShouldSelectDate(_ calendarView: CalendarView, date: Date) -> Bool {
         return shouldSelectDate(date)
     }
 
-    open func calendarViewDidSelectDate(_ calendarView: CalendarView, date: Date) {
+    @objc open func calendarViewDidSelectDate(_ calendarView: CalendarView, date: Date) {
         CanvasAnalytics.logEvent("calendar_day_selected")
         dateSelected(date)
     }
@@ -213,18 +213,19 @@ open class CalendarMonthViewController: UIViewController, CalendarViewDelegate, 
     // ---------------------------------------------
     // MARK: - CalendarViewDataSource
     // ---------------------------------------------
-    func calendarViewShouldMarkDate(_ calendarView: CalendarView, date: Date) -> Bool {
+    @objc func calendarViewShouldMarkDate(_ calendarView: CalendarView, date: Date) -> Bool {
         return true
     }
 
-    open func calendarViewNumberOfEventsForDate(_ calendarView: CalendarView, date: Date) -> Int {
+    @objc open func calendarViewNumberOfEventsForDate(_ calendarView: CalendarView, date: Date) -> Int {
         let min = date.dateAtMidnight
         let max = min.addingTimeInterval(24 * 60 * 60)
         do {
             let context = try session.calendarEventsManagedObjectContext()
             let predicate = CalendarEvent.predicate(min, endDate: max, contextCodes: selectedContextCodes())
             let fetch: NSFetchRequest<CalendarEvent> = context.fetch(predicate)
-            return try context.count(for: fetch)
+            let count = try context.count(for: fetch)
+            return count
         } catch {
             return 0
         }
@@ -237,7 +238,7 @@ open class CalendarMonthViewController: UIViewController, CalendarViewDelegate, 
         var navigationButtons = [UIBarButtonItem]()
         // Navigation Buttons
         let refreshImage = UIImage.icon(.refresh).withRenderingMode(.alwaysTemplate)
-        let refreshButton = UIBarButtonItem(image: refreshImage, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CalendarMonthViewController.refreshButtonPressed(_:)))
+        let refreshButton = UIBarButtonItem(image: refreshImage, style: UIBarButtonItem.Style.plain, target: self, action: #selector(CalendarMonthViewController.refreshButtonPressed(_:)))
         refreshButton.accessibilityLabel = NSLocalizedString("Refresh", comment: "Button to refresh the calendar events")
         navigationButtons.append(refreshButton)
 
@@ -252,22 +253,25 @@ open class CalendarMonthViewController: UIViewController, CalendarViewDelegate, 
     // ---------------------------------------------
     // MARK: - Data Functions
     // ---------------------------------------------
-    open func reloadData(_ forced: Bool = false) {
+    @objc open func reloadData(_ forced: Bool = false) {
         self.refresher?.refresh(forced)
     }
 
     fileprivate var eventsDisposable: Disposable?
     
-    func updateCalendarEvents() {
+    @objc func updateCalendarEvents() {
         let startDate = Date() + -365.daysComponents
         let endDate = Date() + 365.daysComponents
 
-        refresher = try! CalendarEvent.refresher(session, startDate: startDate, endDate: endDate, contextCodes: selectedContextCodes())
+        refresher = try? CalendarEvent.refresher(session, startDate: startDate, endDate: endDate, contextCodes: selectedContextCodes())
         refresher?.refresh(false)
     }
 
-    open func selectedContextCodes() -> [String] {
-        guard let collection = (!favCoursesCollection.isEmpty ? favCoursesCollection : allCoursesCollection) else { return [] }
+    @objc open func selectedContextCodes() -> [String] {
+        let anyFavorites = favCoursesCollection?.isEmpty == false
+        guard let collection = (anyFavorites ? favCoursesCollection : allCoursesCollection) else {
+            return []
+        }
         var contextCodes: [String] = []
         for i in 0..<collection.numberOfItemsInSection(0) {
             let indexPath = IndexPath(row: i, section: 0)

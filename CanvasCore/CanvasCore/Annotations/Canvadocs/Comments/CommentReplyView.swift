@@ -24,11 +24,11 @@ class CommentReplyView: UIView {
     @IBOutlet var replyTextView: UITextView!
     @IBOutlet var replyContainerView: UIView!
     
-    var heightConstraint: NSLayoutConstraint?
+    @objc var heightConstraint: NSLayoutConstraint?
     
-    var sendAction: ()->() = { }
+    @objc var sendAction: ()->() = { }
     
-    static func instantiate() -> CommentReplyView {
+    @objc static func instantiate() -> CommentReplyView {
         return Bundle(for: self.classForCoder()).loadNibNamed("CommentReplyView", owner: self, options: nil)!.first! as! CommentReplyView
     }
     
@@ -44,7 +44,7 @@ class CommentReplyView: UIView {
         replyTextView.placeholder = NSLocalizedString("Reply", comment: "")
         replyTextView.placeholderColor = .lightGray
         
-        heightConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 49.0)
+        heightConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1.0, constant: 49.0)
         self.addConstraint(heightConstraint!)
     }
     
@@ -52,12 +52,12 @@ class CommentReplyView: UIView {
         sendAction()
     }
     
-    func clearText() {
+    @objc func clearText() {
         replyTextView.text = ""
         adjustHeight()
     }
     
-    func adjustHeight() {
+    @objc func adjustHeight() {
         let fixedWidth = replyTextView.frame.size.width
         let newSize = replyTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         heightConstraint?.constant = min(newSize.height + 16, 148) // 148 is 6 rows of text

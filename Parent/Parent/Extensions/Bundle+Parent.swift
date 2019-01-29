@@ -17,7 +17,7 @@
 import Foundation
 
 extension Bundle {
-    static var parent: Bundle {
+    @objc static var parent: Bundle {
         return Bundle(for: StudentsListViewController.self)
     }
 }

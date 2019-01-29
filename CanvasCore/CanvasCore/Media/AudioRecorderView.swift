@@ -29,7 +29,7 @@ private let meterTicks = 13
 // this is an abstraction introduced for the purposes of testing
 public protocol AudioRecorderPermissionDelegate {
     func requestRecordPermission(_ response: @escaping AVFoundation.PermissionBlock)
-    func recordPermission() -> AVAudioSessionRecordPermission
+    var recordPermission: AVAudioSession.RecordPermission { get }
 }
 
 extension AVAudioSession: AudioRecorderPermissionDelegate {
@@ -41,7 +41,7 @@ open class AudioRecorderView: UIView {
     fileprivate var state: State = .preRecording(.undetermined)
     var permissionDelegate: AudioRecorderPermissionDelegate = AVAudioSession.sharedInstance() {
         didSet {
-            setState(.preRecording(permissionDelegate.recordPermission()), animated: false)
+            setState(.preRecording(permissionDelegate.recordPermission), animated: false)
         }
     }
     
@@ -51,7 +51,7 @@ open class AudioRecorderView: UIView {
     }
     
     fileprivate enum State {
-        case preRecording(AVAudioSessionRecordPermission)
+        case preRecording(AVAudioSession.RecordPermission)
         case recording(AudioRecorder)
         case playing(AudioPlayer)
         case paused(AudioPlayer)
@@ -60,14 +60,14 @@ open class AudioRecorderView: UIView {
             var disabled = (trash: true, meter: false, done: false)
             
             switch self {
-            case .preRecording(AVAudioSessionRecordPermission.denied):
+            case .preRecording(AVAudioSession.RecordPermission.denied):
                 view.recordButton.recordButtonState = .denied(.denied)
                 view.recordButtonTopConstraint.constant = recordingTopMargin
                 view.playbackBottomConstraint.constant = recordingBottomMargin
                 view.volumeMeterView.level = 0
                 disabled.done = true
                 
-            case .preRecording(AVAudioSessionRecordPermission.undetermined):
+            case .preRecording(AVAudioSession.RecordPermission.undetermined):
                 view.recordButton.recordButtonState = .denied(.undetermined)
                 view.recordButtonTopConstraint.constant = recordingTopMargin
                 view.playbackBottomConstraint.constant = recordingBottomMargin
@@ -126,7 +126,7 @@ open class AudioRecorderView: UIView {
         
         fileprivate func recordButtonTapped(_ view: AudioRecorderView) {
             switch self {
-            case .preRecording(AVAudioSessionRecordPermission.denied):
+            case .preRecording(AVAudioSession.RecordPermission.denied):
                 let title = NSLocalizedString("Not Permitted", tableName: "Localizable", bundle: .core, value: "", comment: "can't record because request for mic access was denied title")
                 
                 let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "Canvas"
@@ -135,7 +135,7 @@ open class AudioRecorderView: UIView {
                 let error = NSError(domain: "com.instructure", code: 0, userInfo: [NSLocalizedDescriptionKey: message])
                 view.notifyUserOfError(error, title: title, dismissToState: .preRecording(.denied))
                 
-            case .preRecording(AVAudioSessionRecordPermission.undetermined):
+            case .preRecording(AVAudioSession.RecordPermission.undetermined):
                 view.permissionDelegate.requestRecordPermission { permissionGranted in
                     if permissionGranted {
                         view.setState(.preRecording(.granted), animated: true)
@@ -165,11 +165,11 @@ open class AudioRecorderView: UIView {
             switch self {
             case .paused(let player):
                 view.confirmDeletionOfFileAtURL(player.audioFileURL as URL) {
-                    view.setState(.preRecording(view.permissionDelegate.recordPermission()), animated: true)
+                    view.setState(.preRecording(view.permissionDelegate.recordPermission), animated: true)
                 }
             case .playing(let player):
                 view.confirmDeletionOfFileAtURL(player.audioFileURL as URL) {
-                    view.setState(.preRecording(view.permissionDelegate.recordPermission()), animated: true)
+                    view.setState(.preRecording(view.permissionDelegate.recordPermission), animated: true)
                 }
                 
             default: break
@@ -221,22 +221,22 @@ open class AudioRecorderView: UIView {
         state.transitionToState(self, animated: false)
     }
     
-    func localizeButtons() {
+    @objc func localizeButtons() {
         cancelButton.setTitle(NSLocalizedString("Cancel", tableName: "Localizable", bundle: .core, value: "", comment: "Cancel Audio recording."), for: .normal)
     }
     
     // MARK: callbacks
 
-    open var didCancel: ()->() = {}
-    open var presentAlert: (UIAlertController)->() = { _ in }
-    open var didFinishRecordingAudioFile: (URL)->() = { _ in }
-    open var completeButtonTitle: String {
+    @objc open var didCancel: ()->() = {}
+    @objc open var presentAlert: (UIAlertController)->() = { _ in }
+    @objc open var didFinishRecordingAudioFile: (URL)->() = { _ in }
+    @objc open var completeButtonTitle: String {
         set {
-            self.doneButton.setTitle(newValue, for: UIControlState())
+            self.doneButton.setTitle(newValue, for: UIControl.State())
             self.doneButton.accessibilityLabel = newValue
             self.doneButton.accessibilityIdentifier = newValue
         } get {
-            return self.doneButton.title(for: UIControlState()) ?? ""
+            return self.doneButton.title(for: UIControl.State()) ?? ""
         }
     }
     
@@ -299,7 +299,7 @@ extension AudioRecorderView {
 private let recordingErrorTitle = NSLocalizedString("Recording Error", tableName: "Localizable", bundle: .core, value: "", comment: "title for a recording error")
 
 extension AudioRecorderView: AudioRecorderDelegate {
-    func startRecording() {
+    @objc func startRecording() {
         let recorder = AudioRecorder(ticks: meterTicks)
         recorder.delegate = self
         
@@ -312,7 +312,7 @@ extension AudioRecorderView: AudioRecorderDelegate {
         }
     }
     
-    func finishRecordingWithRecorder(_ recorder: AudioRecorder) {
+    @objc func finishRecordingWithRecorder(_ recorder: AudioRecorder) {
         recorder.stopRecording()
 
         do {
@@ -329,7 +329,7 @@ extension AudioRecorderView: AudioRecorderDelegate {
         }
     }
     
-    func recorder(_ recorder: AudioRecorder, didFinishRecordingWithError error: NSError?) {
+    @objc func recorder(_ recorder: AudioRecorder, didFinishRecordingWithError error: NSError?) {
         if let error = error {
             notifyUserOfError(error, title: recordingErrorTitle)
         } else {
@@ -337,7 +337,7 @@ extension AudioRecorderView: AudioRecorderDelegate {
         }
     }
     
-    func recorder(_ recorder: AudioRecorder, progressWithTime time: TimeInterval, meter: Int) {
+    @objc func recorder(_ recorder: AudioRecorder, progressWithTime time: TimeInterval, meter: Int) {
         volumeMeterView.level = meter
         durationLabel.text = time.formatted(true)
     }
@@ -347,7 +347,7 @@ extension AudioRecorderView: AudioRecorderDelegate {
 // MARK: Audio Playback
 
 extension AudioRecorderView: AudioPlayerDelegate {
-    func player(_ player: AudioPlayer, finishedWithError error: NSError?) {
+    @objc func player(_ player: AudioPlayer, finishedWithError error: NSError?) {
         if let error = error {
             notifyUserOfError(error, title: NSLocalizedString("Playback Error", tableName: "Localizable", bundle: .core, value: "", comment: "Title for playback error messages"), dismissToState: .paused(player))
         } else {
@@ -355,7 +355,7 @@ extension AudioRecorderView: AudioPlayerDelegate {
         }
     }
     
-    func player(_ player: AudioPlayer, progressUpdatedWithCurrentTime currentTime: TimeInterval, meter: Int) {
+    @objc func player(_ player: AudioPlayer, progressUpdatedWithCurrentTime currentTime: TimeInterval, meter: Int) {
         
         playbackScrubber.update(player.duration, currentTime: player.currentTime)
         
@@ -372,7 +372,7 @@ extension AudioRecorderView: AudioPlayerDelegate {
 // MARK: file management
 
 extension AudioRecorderView {
-    func confirmDeletionOfFileAtURL(_ url: URL, onConfirmation: @escaping ()->()) {
+    @objc func confirmDeletionOfFileAtURL(_ url: URL, onConfirmation: @escaping ()->()) {
         let message = NSLocalizedString("Delete recording?", tableName: "Localizable", bundle: .core, value: "", comment: "message for delete dialog of audio recorder")
         let controller = UIAlertController(title: message, message: nil, preferredStyle: .actionSheet)
         

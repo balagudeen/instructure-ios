@@ -1,12 +1,12 @@
-/* (No Comment) */
+/* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "將照片和影片附加到訊息和討論區中，或將他們變成作業提交項目。";
 
-/* (No Comment) */
+/* Privacy - Microphone Usage Description */
 "NSMicrophoneUsageDescription" = "將錄音附加到訊息和討論區中，或將他們變成作業提交項目。";
 
-/* (No Comment) */
+/* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "將照片和影片附加到訊息和討論區中，或將他們變成作業提交項目。";
 
-/* (No Comment) */
+/* Privacy - Photo Library Usage Description */
 "NSPhotoLibraryUsageDescription" = "將照片和影片附加到訊息和討論區中，或將他們變成作業提交項目。";
 

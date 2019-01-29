@@ -46,20 +46,20 @@ open class CommunicationChannelsViewController: UITableViewController, PageViewE
     open override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = NSLocalizedString("Notification Preferences", tableName: "Localizable", bundle: .core, value: "", comment: "Title for the notification preferences page")
+        self.title = NSLocalizedString("Notification Preferences", bundle: .core, value: "", comment: "Title for the notification preferences page")
         
         tableView.tableFooterView = UIView(frame: CGRect.zero)
 
         refreshControl = UIRefreshControl()
-        refreshControl!.addTarget(self, action: #selector(CommunicationChannelsViewController.refreshDataSource(_:)), for: UIControlEvents.valueChanged)
+        refreshControl!.addTarget(self, action: #selector(CommunicationChannelsViewController.refreshDataSource(_:)), for: UIControl.Event.valueChanged)
         
         refreshControl!.beginRefreshing()
         self.refreshDataSource(refreshControl!)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
-    func appDidBecomeActive() {
+    @objc func appDidBecomeActive() {
         refreshNotificationSettings()
     }
     
@@ -76,7 +76,7 @@ open class CommunicationChannelsViewController: UITableViewController, PageViewE
         stopTrackingTimeOnViewController(eventName: "/profile/communication")
     }
 
-    func refreshNotificationSettings() {
+    @objc func refreshNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings() { [weak self] settings in
             self?.notificationsEnabled = settings.authorizationStatus == .authorized
             DispatchQueue.main.async {
@@ -85,15 +85,15 @@ open class CommunicationChannelsViewController: UITableViewController, PageViewE
         }
     }
     
-    func refreshDataSource(_ sender: AnyObject) {
+    @objc func refreshDataSource(_ sender: AnyObject) {
         self.dataController.getCommunicationChannels { (result) -> () in
             DispatchQueue.main.async {
                 if result.error != nil {
                     self.datasource = []
 
-                    let title = NSLocalizedString("No Communication Channels Found", tableName: "Localizable", bundle: .core, value: "", comment: "Alert title when unable to load communication channels")
-                    let message = NSLocalizedString("Unable to load any Communication Channels at this time.", tableName: "Localizable", bundle: .core, value: "", comment: "Alert message when unable to load communication channels")
-                    let actionText = NSLocalizedString("OK", tableName: "Localizable", bundle: .core, value: "", comment: "OK Button Title")
+                    let title = NSLocalizedString("No Communication Channels Found", bundle: .core, value: "", comment: "Alert title when unable to load communication channels")
+                    let message = NSLocalizedString("Unable to load any Communication Channels at this time.", bundle: .core, value: "", comment: "Alert message when unable to load communication channels")
+                    let actionText = NSLocalizedString("OK", bundle: .core, value: "", comment: "OK Button Title")
 
                     self.showSimpleAlert(title, message: message, actionText: actionText)
 
@@ -103,9 +103,9 @@ open class CommunicationChannelsViewController: UITableViewController, PageViewE
                         self.tableView.reloadData()
                     } else {
 
-                        let title = NSLocalizedString("Can't Display Communication Channels", tableName: "Localizable", bundle: .core, value: "", comment: "Alert title when unable to parse JSON for communication channels")
-                        let message = NSLocalizedString("Unable to display any Communication Channels returned from the server at this time.", tableName: "Localizable", bundle: .core, value: "", comment: "Alert message when unable to parse JSON for communication channels")
-                        let actionText = NSLocalizedString("OK", tableName: "Localizable", bundle: .core, value: "", comment: "OK Button Title")
+                        let title = NSLocalizedString("Can't Display Communication Channels", bundle: .core, value: "", comment: "Alert title when unable to parse JSON for communication channels")
+                        let message = NSLocalizedString("Unable to display any Communication Channels returned from the server at this time.", bundle: .core, value: "", comment: "Alert message when unable to parse JSON for communication channels")
+                        let actionText = NSLocalizedString("OK", bundle: .core, value: "", comment: "OK Button Title")
 
                         self.showSimpleAlert(title, message: message, actionText: actionText)
                     }
@@ -130,7 +130,7 @@ extension CommunicationChannelsViewController {
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-            cell.textLabel?.text = NSLocalizedString("Allow Notifications in Settings", comment: "")
+            cell.textLabel?.text = NSLocalizedString("Allow Notifications in Settings", bundle: .core, comment: "")
             cell.accessoryType = .disclosureIndicator
             return cell
         }
@@ -146,7 +146,7 @@ extension CommunicationChannelsViewController {
     
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            if let url = URL(string: UIApplicationOpenSettingsURLString) {
+            if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
             }
             tableView.deselectRow(at: indexPath, animated: true)
@@ -167,8 +167,8 @@ extension CommunicationChannelsViewController {
             return nil
         }
         return notificationsEnabled
-            ? NSLocalizedString("All notifications are currently enabled.", comment: "")
-            : NSLocalizedString("All notifications are currently disabled.", comment: "")
+            ? NSLocalizedString("All notifications are currently enabled.", bundle: .core, comment: "")
+            : NSLocalizedString("All notifications are currently disabled.", bundle: .core, comment: "")
     }
 }
 

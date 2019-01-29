@@ -48,7 +48,7 @@ extension String : PathComponent {
     }
 }
 
-extension Integer {
+extension BinaryInteger {
     public var pathComponent: String {
         return "\(self)"
     }

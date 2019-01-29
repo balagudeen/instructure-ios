@@ -20,20 +20,20 @@ import SafariServices
 import ReactiveSwift
 
 class ModuleDetailsViewController: CanvasCore.TableViewController, PageViewEventViewControllerLoggingProtocol {
-    let session: Session
-    let courseID: String
+    @objc let session: Session
+    @objc let courseID: String
     let viewModel: ModuleViewModel
-    let route: (UIViewController, URL) -> Void
+    @objc let route: (UIViewController, URL) -> Void
     let disposable = CompositeDisposable()
 
-    init(session: Session, courseID: String, moduleID: String, route: @escaping (UIViewController, URL) -> Void) throws {
+    @objc init(session: Session, courseID: String, moduleID: String, route: @escaping (UIViewController, URL) -> Void) throws {
         self.session = session
         self.courseID = courseID
         self.route = route
         viewModel = try ModuleViewModel(session: session, courseID: courseID, moduleID: moduleID)
         super.init(style: .grouped)
 
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
         
         // Fixes the big header when only has 1 section
@@ -63,7 +63,7 @@ class ModuleDetailsViewController: CanvasCore.TableViewController, PageViewEvent
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
     }
     

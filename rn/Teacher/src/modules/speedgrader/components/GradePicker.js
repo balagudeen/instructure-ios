@@ -80,6 +80,9 @@ export class GradePicker extends Component<GradePickerProps, GradePickerState> {
   }
 
   newCustomGrade = (promptValue: string) => {
+    if (this.props.excused && promptValue === i18n('Excused')) {
+      return
+    }
     if (this.props.gradingType === 'percent') {
       let hasPercentage = promptValue[-1] === '%'
       promptValue = hasPercentage ? promptValue : promptValue + '%'

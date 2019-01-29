@@ -16,7 +16,7 @@
 
 /* @flow */
 
-import 'react-native'
+import { I18nManager } from 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
 
@@ -49,6 +49,20 @@ describe('RichTextToolbar', () => {
         <RichTextToolbar {...defaultProps} />
       ).toJSON()
     ).toMatchSnapshot()
+  })
+
+  it('renders icons in RTL', () => {
+    I18nManager.isRTL = true
+    expect(
+      renderer.create(
+        <RichTextToolbar
+          {...defaultProps}
+          redo={jest.fn()}
+          undo={jest.fn()}
+        />
+      ).toJSON()
+    ).toMatchSnapshot()
+    I18nManager.isRTL = false
   })
 
   it('handles undo', () => {

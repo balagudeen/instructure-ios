@@ -53,7 +53,7 @@ class InfinitePagedImagesView: UIScrollView {
         setup()
     }
 
-    func setup() {
+    @objc func setup() {
         isPagingEnabled = true
         translatesAutoresizingMaskIntoConstraints = false
         showsHorizontalScrollIndicator = false
@@ -67,13 +67,13 @@ class InfinitePagedImagesView: UIScrollView {
         }
     }
 
-    func goToPage(_ page: Int, animated: Bool) {
+    @objc func goToPage(_ page: Int, animated: Bool) {
         let page = page % images.count
         let newOffset = CGPoint(x: CGFloat(page+1)*bounds.size.width, y: 0)
         setContentOffset(newOffset, animated: animated)
     }
 
-    func setImages(_ images: [UIImage]) {
+    @objc func setImages(_ images: [UIImage]) {
         for subview in subviews {
             subview.removeFromSuperview()
         }
@@ -97,22 +97,22 @@ class InfinitePagedImagesView: UIScrollView {
             imageContainer.translatesAutoresizingMaskIntoConstraints = false
             imageContainer.addSubview(imageView)
 
-            imageContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[image]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["image": imageView]))
+            imageContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[image]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["image": imageView]))
             imageContainer.addConstraint(NSLayoutConstraint(item: imageContainer, attribute: .centerX, relatedBy: .equal, toItem: imageView, attribute: .centerX, multiplier: 1.0, constant: 0.0))
-            imageContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=40)-[image]-(>=40)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["image": imageView]))
+            imageContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=40)-[image]-(>=40)-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["image": imageView]))
 
             addSubview(imageContainer)
             addConstraint(NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: imageContainer, attribute: .height, multiplier: 1.0, constant: 0))
             addConstraint(NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: imageContainer, attribute: .width, multiplier: 1.0, constant: 0))
-            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[container]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["container": imageContainer]))
+            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[container]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["container": imageContainer]))
             if let lastView = lastView {
-                addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[last][container]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["last": lastView, "container": imageContainer]))
+                addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[last][container]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["last": lastView, "container": imageContainer]))
             } else {
-                addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[container]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["container": imageContainer]))
+                addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[container]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["container": imageContainer]))
             }
             lastView = imageContainer
         }
 
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[last]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["last": lastView!]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[last]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["last": lastView!]))
     }
 }

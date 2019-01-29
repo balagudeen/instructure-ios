@@ -31,17 +31,17 @@ import Result
 open class FetchedCollection<Model>: NSObject, Collection, Sequence, NSFetchedResultsControllerDelegate where Model: NSManagedObject {
     public typealias Object = Model
     
-    let fetchedResultsController: NSFetchedResultsController<Model>
-    let titleForSectionTitle: (String?)->String?
+    @objc let fetchedResultsController: NSFetchedResultsController<Model>
+    @objc let titleForSectionTitle: (String?)->String?
 
-    open let collectionUpdates: Signal<[CollectionUpdate<Model>], NoError>
+    public let collectionUpdates: Signal<[CollectionUpdate<Model>], NoError>
     internal let updatesObserver: Observer<[CollectionUpdate<Model>], NoError>
     
-    open func reload() {
+    @objc open func reload() {
         
     }
 
-    public init(frc: NSFetchedResultsController<Model>, titleForSectionTitle: @escaping (String?)->String? = { $0 }) throws {
+    @objc public init(frc: NSFetchedResultsController<Model>, titleForSectionTitle: @escaping (String?)->String? = { $0 }) throws {
         self.fetchedResultsController = frc
         self.titleForSectionTitle = titleForSectionTitle
         (collectionUpdates, updatesObserver) = Signal.pipe()
@@ -54,19 +54,19 @@ open class FetchedCollection<Model>: NSObject, Collection, Sequence, NSFetchedRe
         self.fetchedResultsController.delegate = nil
     }
     
-    open var isEmpty: Bool {
+    @objc open var isEmpty: Bool {
         return fetchedResultsController.fetchedObjects?.isEmpty ?? true
     }
 
-    open func numberOfSections() -> Int {
+    @objc open func numberOfSections() -> Int {
         return fetchedResultsController.sections?.count ?? 0
     }
     
-    open func numberOfItemsInSection(_ section: Int) -> Int {
+    @objc open func numberOfItemsInSection(_ section: Int) -> Int {
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
-    open func titleForSection(_ section: Int) -> String? {
+    @objc open func titleForSection(_ section: Int) -> String? {
         return titleForSectionTitle(fetchedResultsController.sections?[section].name)
     }
     
@@ -86,7 +86,7 @@ open class FetchedCollection<Model>: NSObject, Collection, Sequence, NSFetchedRe
         return fetchedResultsController.fetchedObjects?.last
     }
     
-    open var count: Int {
+    @objc open var count: Int {
         return fetchedResultsController.fetchedObjects?.count ?? 0
     }
     

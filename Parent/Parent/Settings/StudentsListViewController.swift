@@ -23,9 +23,9 @@ class StudentsListViewController: FetchedTableViewController<Student> {
 
     fileprivate let session: Session
 
-    var selectStudentAction: StudentsListSelectStudentAction? = nil
+    @objc var selectStudentAction: StudentsListSelectStudentAction? = nil
 
-    init(session: Session) throws {
+    @objc init(session: Session) throws {
         self.session = session
 
         super.init()

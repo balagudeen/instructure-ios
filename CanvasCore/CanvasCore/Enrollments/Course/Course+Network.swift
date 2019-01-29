@@ -21,15 +21,15 @@ import ReactiveSwift
 import Marshal
 
 extension Course {
-    public static var getCoursesParameters: [String: Any] {
+    @objc public static var getCoursesParameters: [String: Any] {
         return ["include": ["needs_grading_count", "syllabus_body", "total_scores", "term", "permissions", "current_grading_period_scores", "favorites", "tabs", "observed_users"]]
     }
     
-    public static var getCourseParameters: [String: Any] {
+    @objc public static var getCourseParameters: [String: Any] {
         return ["include": ["needs_grading_count", "syllabus_body", "total_scores", "term", "permissions", "current_grading_period_scores", "observed_users"]]
     }
 
-    public static func filter(rawCourses: [JSONObject]) -> [JSONObject] {
+    @objc public static func filter(rawCourses: [JSONObject]) -> [JSONObject] {
         return rawCourses
             // filter out restricted courses because their json is too sparse and will cause parsing issues
             .filter { json in

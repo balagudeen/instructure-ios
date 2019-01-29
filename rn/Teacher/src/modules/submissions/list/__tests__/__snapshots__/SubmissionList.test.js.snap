@@ -189,8 +189,8 @@ exports[`SubmissionList loaded 1`] = `
               >
                 <View
                   accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
+                  accessibilityLabel="Profile"
+                  accessibilityTraits="button"
                   accessible={true}
                   hasTVPreferredFocus={undefined}
                   hitSlop={undefined}
@@ -319,21 +319,25 @@ exports[`SubmissionList loaded 1`] = `
               </View>
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -400,8 +404,8 @@ exports[`SubmissionList loaded 1`] = `
               >
                 <View
                   accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
+                  accessibilityLabel="Profile"
+                  accessibilityTraits="button"
                   accessible={true}
                   hasTVPreferredFocus={undefined}
                   hitSlop={undefined}
@@ -561,21 +565,25 @@ exports[`SubmissionList loaded 1`] = `
               </Text>
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -642,8 +650,8 @@ exports[`SubmissionList loaded 1`] = `
               >
                 <View
                   accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
+                  accessibilityLabel="Profile"
+                  accessibilityTraits="button"
                   accessible={true}
                   hasTVPreferredFocus={undefined}
                   hitSlop={undefined}
@@ -817,21 +825,25 @@ exports[`SubmissionList loaded 1`] = `
               </View>
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -898,8 +910,8 @@ exports[`SubmissionList loaded 1`] = `
               >
                 <View
                   accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
+                  accessibilityLabel="Profile"
+                  accessibilityTraits="button"
                   accessible={true}
                   hasTVPreferredFocus={undefined}
                   hitSlop={undefined}
@@ -1059,21 +1071,25 @@ exports[`SubmissionList loaded 1`] = `
               </Text>
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -1439,8 +1455,8 @@ exports[`SubmissionList renders correctly with graded filter 1`] = `
               >
                 <View
                   accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
+                  accessibilityLabel="Profile"
+                  accessibilityTraits="button"
                   accessible={true}
                   hasTVPreferredFocus={undefined}
                   hitSlop={undefined}
@@ -1600,21 +1616,25 @@ exports[`SubmissionList renders correctly with graded filter 1`] = `
               </Text>
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -1681,8 +1701,8 @@ exports[`SubmissionList renders correctly with graded filter 1`] = `
               >
                 <View
                   accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
+                  accessibilityLabel="Profile"
+                  accessibilityTraits="button"
                   accessible={true}
                   hasTVPreferredFocus={undefined}
                   hitSlop={undefined}
@@ -1842,21 +1862,25 @@ exports[`SubmissionList renders correctly with graded filter 1`] = `
               </Text>
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -1923,8 +1947,8 @@ exports[`SubmissionList renders correctly with graded filter 1`] = `
               >
                 <View
                   accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
+                  accessibilityLabel="Profile"
+                  accessibilityTraits="button"
                   accessible={true}
                   hasTVPreferredFocus={undefined}
                   hitSlop={undefined}
@@ -2084,21 +2108,25 @@ exports[`SubmissionList renders correctly with graded filter 1`] = `
               </Text>
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -2299,8 +2327,8 @@ exports[`SubmissionList renders correctly with not_submitted filter 1`] = `
               >
                 <View
                   accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
+                  accessibilityLabel="Profile"
+                  accessibilityTraits="button"
                   accessible={true}
                   hasTVPreferredFocus={undefined}
                   hitSlop={undefined}
@@ -2429,21 +2457,25 @@ exports[`SubmissionList renders correctly with not_submitted filter 1`] = `
               </View>
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -2644,8 +2676,8 @@ exports[`SubmissionList renders correctly with ungraded filter 1`] = `
               >
                 <View
                   accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
+                  accessibilityLabel="Profile"
+                  accessibilityTraits="button"
                   accessible={true}
                   hasTVPreferredFocus={undefined}
                   hitSlop={undefined}
@@ -2819,21 +2851,25 @@ exports[`SubmissionList renders correctly with ungraded filter 1`] = `
               </View>
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>

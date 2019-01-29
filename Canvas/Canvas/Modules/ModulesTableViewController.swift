@@ -18,10 +18,10 @@ import UIKit
 import CanvasCore
 
 class ModulesTableViewController: FetchedTableViewController<Module>, PageViewEventViewControllerLoggingProtocol {
-    let courseID: String
-    let route: (UIViewController, URL) -> Void
+    @objc let courseID: String
+    @objc let route: (UIViewController, URL) -> Void
 
-    init(session: Session, courseID: String, route: @escaping (UIViewController, URL) -> Void) throws {
+    @objc init(session: Session, courseID: String, route: @escaping (UIViewController, URL) -> Void) throws {
         self.courseID = courseID
         self.route = route
         super.init()
@@ -39,7 +39,7 @@ class ModulesTableViewController: FetchedTableViewController<Module>, PageViewEv
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
     }
     

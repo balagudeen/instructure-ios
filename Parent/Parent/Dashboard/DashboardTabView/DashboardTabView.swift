@@ -26,9 +26,9 @@ class DashboardTabView: UIView {
     fileprivate let selectedAlpha: CGFloat = 1.0
     fileprivate let unselectedAlpha: CGFloat = 0.6
     
-    var normalImage: UIImage?
-    var selectedImage: UIImage?
-    var title: String? {
+    @objc var normalImage: UIImage?
+    @objc var selectedImage: UIImage?
+    @objc var title: String? {
         didSet {
             guard let title = title else {
                 titleLabel.attributedText = NSMutableAttributedString(string: "")
@@ -38,16 +38,16 @@ class DashboardTabView: UIView {
             accessibilityLabel = title
 
             let attributedString = NSMutableAttributedString(string: title)
-            attributedString.addAttribute(NSKernAttributeName, value: CGFloat(3), range: NSRange(location: 0, length: attributedString.length))
+            attributedString.addAttribute(NSAttributedString.Key.kern, value: CGFloat(3), range: NSRange(location: 0, length: attributedString.length))
 
             titleLabel.attributedText = attributedString
         }
     }
 
-    let badgeView: BadgeView = BadgeView()
+    @objc let badgeView: BadgeView = BadgeView()
 
-    func color () -> UIColor {
-        if UIAccessibilityIsReduceTransparencyEnabled() {
+    @objc func color () -> UIColor {
+        if UIAccessibility.isReduceTransparencyEnabled {
             return .black
         } else {
             return .white
@@ -64,15 +64,15 @@ class DashboardTabView: UIView {
         iconImageView.addSubview(badgeView)
     }
     
-    func setSelected(_ selected: Bool) {
+    @objc func setSelected(_ selected: Bool) {
         titleLabel.alpha = selected ? selectedAlpha : unselectedAlpha
 
         iconImageView.alpha = selected ? selectedAlpha : unselectedAlpha
         iconImageView.image = selected ? selectedImage : normalImage
         if selected {
-            accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitHeader | UIAccessibilityTraitSelected
+            accessibilityTraits = UIAccessibilityTraits(rawValue: UIAccessibilityTraits.button.rawValue | UIAccessibilityTraits.header.rawValue | UIAccessibilityTraits.selected.rawValue)
         } else {
-            accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitHeader
+            accessibilityTraits = UIAccessibilityTraits(rawValue: UIAccessibilityTraits.button.rawValue | UIAccessibilityTraits.header.rawValue)
         }
     }
 }

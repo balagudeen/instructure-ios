@@ -31,7 +31,8 @@
         self.collectionController = [MLVCCollectionController collectionControllerGroupingByBlock:^id(CBIStudentSubmissionViewModel *submissionViewModel) {
             return @(submissionViewModel.record.attempt > 0);
         } groupTitleBlock:^NSString *(CBIStudentSubmissionViewModel *submissionViewModel) {
-            return submissionViewModel.record.attempt > 0 ? NSLocalizedString(@"Submitted", @"Submitted grouping") : NSLocalizedString(@"No Submission", @"No Submission groupong");
+            NSBundle *bundle = [NSBundle bundleForClass:self.class];
+            return submissionViewModel.record.attempt > 0 ? NSLocalizedStringFromTableInBundle(@"Submitted", nil, bundle, @"Submitted grouping") : NSLocalizedStringFromTableInBundle(@"No Submission", nil, bundle, @"No Submission groupong");
         } sortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"student.sortableName" ascending:YES]]];
     }
     return self;

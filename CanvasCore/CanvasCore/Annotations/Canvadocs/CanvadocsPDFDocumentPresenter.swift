@@ -21,9 +21,8 @@ import PSPDFKit
 import PSPDFKitUI
 
 let DisabledMenuItems: [String] = [
-    PSPDFAnnotationMenuOpacity,
-    PSPDFAnnotationStateVariantIdentifier(AnnotationString.ink, AnnotationString.inkVariantPen).rawValue,
-    PSPDFAnnotationStateVariantIdentifier(AnnotationString.ink, AnnotationString.inkVariantHighlighter).rawValue,
+    PSPDFTextMenu.annotationMenuOpacity.rawValue,
+    PSPDFTextMenu.annotationMenuThickness.rawValue,
 ]
 
 // This class will be the manager for the PSPDFViewController. Any app that wants to display this document will have to:
@@ -34,17 +33,18 @@ let DisabledMenuItems: [String] = [
 // 4. Insert the resulting view controller from `getPDFViewController` into the view heirarchy wherever you want
 
 open class CanvadocsPDFDocumentPresenter: NSObject {
-    var pdfDocument: PSPDFDocument
-    let configuration: PSPDFConfiguration
-
-    var localPDFURL: URL
+    @objc var pdfDocument: PSPDFDocument
+    @objc let configuration: PSPDFConfiguration
+    @objc var onSaveStateChange: RCTDirectEventBlock?
+    
+    @objc var localPDFURL: URL
     var annotations: [CanvadocsAnnotation]
     var metadata: CanvadocsFileMetadata?
-    let service: CanvadocsAnnotationService
-    var annotationProvider: CanvadocsAnnotationProvider?
-    weak var pdfViewController: PSPDFViewController?
+    @objc let service: CanvadocsAnnotationService
+    @objc var annotationProvider: CanvadocsAnnotationProvider?
+    @objc weak var pdfViewController: PSPDFViewController?
 
-    open static func loadPDFViewController(_ sessionURL: URL, with configuration: PSPDFConfiguration, completed: @escaping (UIViewController?, [NSError]?)->()) {
+    @objc public static func loadPDFViewController(_ sessionURL: URL, with configuration: PSPDFConfiguration, showAnnotationBarButton: Bool, onSaveStateChange: RCTDirectEventBlock? = nil, completed: @escaping (UIViewController?, [NSError]?)->()) {
         var metadata: CanvadocsFileMetadata? = nil
         var localPDFURL: URL? = nil
         var canvadocsAnnotations: [CanvadocsAnnotation]? = nil
@@ -103,7 +103,8 @@ open class CanvadocsPDFDocumentPresenter: NSObject {
             if let localPDFURL = localPDFURL, let annotations = canvadocsAnnotations, let metadata = metadata {
                 canvadocsAnnotationService.metadata = metadata
                 let documentPresenter = CanvadocsPDFDocumentPresenter(localPDFURL: localPDFURL, annotations: annotations, metadata: metadata, service: canvadocsAnnotationService, configuration: configuration)
-                let pdfViewController = documentPresenter.getPDFViewController()
+                documentPresenter.onSaveStateChange = onSaveStateChange
+                let pdfViewController = documentPresenter.getPDFViewController(showAnnotationBarButton: showAnnotationBarButton)
                 completed(pdfViewController, nil)
             }
         }
@@ -123,49 +124,66 @@ open class CanvadocsPDFDocumentPresenter: NSObject {
         }
         pdfDocument.didCreateDocumentProviderBlock = { documentProvider in
             let canvadocsAnnotationProvider = CanvadocsAnnotationProvider(documentProvider: documentProvider, annotations: annotations, service: service)
-            canvadocsAnnotationProvider.limitDelegate = self
+            canvadocsAnnotationProvider.canvasDelegate = self
             documentProvider.annotationManager.annotationProviders.insert(canvadocsAnnotationProvider, at: 0)
             self.annotationProvider = canvadocsAnnotationProvider
+            if let metadata = self.metadata {
+                for (pageKey, rawRotation) in metadata.rotations {
+                    if let pageIndex = PageIndex(pageKey), let rotation = Rotation(rawValue: rawRotation) {
+                        documentProvider.setRotationOffset(rotation, forPageAt: pageIndex)
+                    }
+                }
+            }
         }
     }
 
-    func stylePSPDFKit() {
+    @objc func stylePSPDFKit() {
         let styleManager = PSPDFKit.sharedInstance.styleManager
         styleManager.setupDefaultStylesIfNeeded()
 
         let highlightPresets = highlightCanvadocsColors.map { return PSPDFColorPreset(color: $0) }
         let inkPresets = standardCanvadocsColors.map { return PSPDFColorPreset(color: $0) }
         let textPresets = standardCanvadocsColors.map { return PSPDFColorPreset(color: $0, fill: .white, alpha: 1) }
-        styleManager.setPresets(highlightPresets, forKey: .highlight, type: .colorPreset)
-        styleManager.setPresets(inkPresets, forKey: PSPDFAnnotationStateVariantIdentifier(.ink, .inkVariantPen), type: .colorPreset)
-        styleManager.setPresets(inkPresets, forKey: .square, type: .colorPreset)
-        styleManager.setPresets(inkPresets, forKey: .circle, type: .colorPreset)
-        styleManager.setPresets(inkPresets, forKey: .line, type: .colorPreset)
-        styleManager.setPresets(inkPresets, forKey: .strikeOut, type: .colorPreset)
-        styleManager.setPresets(inkPresets, forKey: .stamp, type: .colorPreset)
-        styleManager.setPresets(textPresets, forKey: .freeText, type: .colorPreset)
+        styleManager.setPresets(highlightPresets, forKey: AnnotationStateVariantID(rawValue: AnnotationString.highlight.rawValue), type: AnnotationStyleType.colorPreset)
+        styleManager.setPresets(inkPresets, forKey: AnnotationStateVariantID(rawValue: AnnotationString.ink.rawValue), type: .colorPreset)
+        styleManager.setPresets(inkPresets, forKey: AnnotationStateVariantID(rawValue: AnnotationString.square.rawValue), type: .colorPreset)
+        styleManager.setPresets(inkPresets, forKey: AnnotationStateVariantID(rawValue: AnnotationString.circle.rawValue), type: .colorPreset)
+        styleManager.setPresets(inkPresets, forKey: AnnotationStateVariantID(rawValue: AnnotationString.line.rawValue), type: .colorPreset)
+        styleManager.setPresets(inkPresets, forKey: AnnotationStateVariantID(rawValue: AnnotationString.strikeOut.rawValue), type: .colorPreset)
+        styleManager.setPresets(inkPresets, forKey: AnnotationStateVariantID(rawValue: AnnotationString.stamp.rawValue), type: .colorPreset)
+        styleManager.setPresets(textPresets, forKey: AnnotationStateVariantID(rawValue: AnnotationString.freeText.rawValue), type: .colorPreset)
 
-        styleManager.setLastUsedValue(CanvadocsHighlightColor.yellow.color, forProperty: "color", forKey: .highlight)
-        styleManager.setLastUsedValue(CanvadocsAnnotationColor.red.color, forProperty: "color", forKey: PSPDFAnnotationStateVariantIdentifier(.ink, .inkVariantPen))
-        styleManager.setLastUsedValue(CanvadocsAnnotationColor.red.color, forProperty: "color", forKey: .square)
-        styleManager.setLastUsedValue(CanvadocsAnnotationColor.red.color, forProperty: "color", forKey: .circle)
-        styleManager.setLastUsedValue(CanvadocsAnnotationColor.red.color, forProperty: "color", forKey: .line)
-        styleManager.setLastUsedValue(CanvadocsAnnotationColor.red.color, forProperty: "color", forKey: .strikeOut)
-        styleManager.setLastUsedValue(CanvadocsAnnotationColor.blue.color, forProperty: "color", forKey: .stamp)
-        styleManager.setLastUsedValue(UIColor.black, forProperty: "color", forKey: .freeText)
-        styleManager.setLastUsedValue(UIColor.white, forProperty: "fillColor", forKey: .freeText)
-        styleManager.setLastUsedValue(2.0, forProperty: "lineWidth", forKey: PSPDFAnnotationStateVariantIdentifier(.ink, .inkVariantPen))
-        styleManager.setLastUsedValue(2.0, forProperty: "lineWidth", forKey: .square)
-        styleManager.setLastUsedValue(2.0, forProperty: "lineWidth", forKey: .circle)
-        styleManager.setLastUsedValue(2.0, forProperty: "lineWidth", forKey: .line)
+        styleManager.setLastUsedValue(CanvadocsHighlightColor.yellow.color, forProperty: "color", forKey: AnnotationStateVariantID(rawValue: AnnotationString.highlight.rawValue))
+        styleManager.setLastUsedValue(CanvadocsAnnotationColor.red.color, forProperty: "color", forKey: AnnotationStateVariantID(rawValue: AnnotationString.ink.rawValue))
+        styleManager.setLastUsedValue(CanvadocsAnnotationColor.red.color, forProperty: "color", forKey: AnnotationStateVariantID(rawValue: AnnotationString.square.rawValue))
+        styleManager.setLastUsedValue(CanvadocsAnnotationColor.red.color, forProperty: "color", forKey: AnnotationStateVariantID(rawValue: AnnotationString.circle.rawValue))
+        styleManager.setLastUsedValue(CanvadocsAnnotationColor.red.color, forProperty: "color", forKey: AnnotationStateVariantID(rawValue: AnnotationString.line.rawValue))
+        styleManager.setLastUsedValue(CanvadocsAnnotationColor.red.color, forProperty: "color", forKey: AnnotationStateVariantID(rawValue: AnnotationString.strikeOut.rawValue))
+        styleManager.setLastUsedValue(CanvadocsAnnotationColor.blue.color, forProperty: "color", forKey: AnnotationStateVariantID(rawValue: AnnotationString.stamp.rawValue))
+        styleManager.setLastUsedValue(UIColor.black, forProperty: "color", forKey: AnnotationStateVariantID(rawValue: AnnotationString.freeText.rawValue))
+        styleManager.setLastUsedValue(UIColor.white, forProperty: "fillColor", forKey: AnnotationStateVariantID(rawValue: AnnotationString.freeText.rawValue))
+        styleManager.setLastUsedValue("Verdana", forProperty: "fontName", forKey: AnnotationStateVariantID(rawValue: AnnotationString.freeText.rawValue))
+        styleManager.setLastUsedValue(14, forProperty: "fontSize", forKey: AnnotationStateVariantID(rawValue: AnnotationString.freeText.rawValue))
+        styleManager.setLastUsedValue(2.0, forProperty: "lineWidth", forKey: AnnotationStateVariantID(rawValue: AnnotationString.ink.rawValue))
+        styleManager.setLastUsedValue(2.0, forProperty: "lineWidth", forKey: AnnotationStateVariantID(rawValue: AnnotationString.square.rawValue))
+        styleManager.setLastUsedValue(2.0, forProperty: "lineWidth", forKey: AnnotationStateVariantID(rawValue: AnnotationString.circle.rawValue))
+        styleManager.setLastUsedValue(2.0, forProperty: "lineWidth", forKey: AnnotationStateVariantID(rawValue: AnnotationString.line.rawValue))
     }
 
-    open func getPDFViewController() -> UIViewController {
+    @objc open func getPDFViewController(showAnnotationBarButton: Bool = true) -> UIViewController {
         stylePSPDFKit()
 
         let pdfViewController = PSPDFViewController(document: pdfDocument, configuration: configuration)
         pdfViewController.delegate = self
-        pdfViewController.navigationItem.rightBarButtonItems = [pdfViewController.activityButtonItem, pdfViewController.searchButtonItem, pdfViewController.annotationButtonItem]
+        
+        var buttonItems = [UIBarButtonItem] ()
+        buttonItems.append(pdfViewController.activityButtonItem)
+        buttonItems.append(pdfViewController.searchButtonItem)
+        if showAnnotationBarButton {
+            buttonItems.append(pdfViewController.annotationButtonItem)
+        }
+        
+        pdfViewController.navigationItem.rightBarButtonItems = buttonItems
         self.pdfViewController = pdfViewController
 
         return pdfViewController
@@ -192,13 +210,13 @@ extension CanvadocsPDFDocumentPresenter: PSPDFViewControllerDelegate {
 
             let filteredMenuItems = menuItems.filter {
                 guard let identifier = $0.identifier else { return true }
-                if identifier == PSPDFAnnotationMenuInspector {
+                if identifier == PSPDFTextMenu.annotationMenuInspector.rawValue {
                     $0.title = NSLocalizedString("Style", tableName: "Localizable", bundle: Bundle(for: type(of: self)), value: "", comment: "")
                 }
                 return (
-                    identifier != PSPDFAnnotationMenuRemove &&
-                    identifier != PSPDFAnnotationMenuCopy &&
-                    identifier != PSPDFAnnotationMenuNote &&
+                    identifier != PSPDFTextMenu.annotationMenuRemove.rawValue &&
+                    identifier != PSPDFTextMenu.annotationMenuCopy.rawValue &&
+                    identifier != PSPDFTextMenu.annotationMenuNote.rawValue &&
                     !DisabledMenuItems.contains(identifier)
                 )
             }
@@ -207,7 +225,7 @@ extension CanvadocsPDFDocumentPresenter: PSPDFViewControllerDelegate {
             if annotation.isEditable || metadata.permissions == .ReadWriteManage {
                 realMenuItems.append(PSPDFMenuItem(title: NSLocalizedString("Remove", tableName: "Localizable", bundle: Bundle(for: type(of: self)), value: "", comment: ""), image: .icon(.trash), block: {
                     pdfController.document?.remove([annotation], options: nil)
-                }, identifier: PSPDFAnnotationMenuRemove))
+                }, identifier: PSPDFTextMenu.annotationMenuRemove.rawValue))
             }
             return realMenuItems
         }
@@ -232,7 +250,7 @@ extension CanvadocsPDFDocumentPresenter: PSPDFViewControllerDelegate {
             pointAnnotation.user = metadata.userID
             pointAnnotation.userName = metadata.userName
             pointAnnotation.color = state.drawColor
-            pointAnnotation.boundingBox = CGRect(x: 0, y: 0, width: 17 * 2 / 3, height: 24 * 2 / 3)
+            pointAnnotation.boundingBox = CGRect(x: 0, y: 0, width: 9.33, height: 13.33)
             pointAnnotation.pageIndex = pageView.pageIndex
             pageView.center(pointAnnotation, aroundPDFPoint: pageView.convertPoint(toPDFPoint: viewPoint))
             pdfDocument.add([ pointAnnotation ], options: nil)
@@ -258,5 +276,13 @@ extension CanvadocsPDFDocumentPresenter: CanvadocsAnnotationProviderDelegate {
         default:
             break
         }
+    }
+    
+    @objc func annotationDidFailToSave(error: NSError) {
+        self.onSaveStateChange?(["error": error.localizedDescription])
+    }
+    
+    @objc func annotationSaveStateChanges(saving: Bool) {
+        self.onSaveStateChange?(["saving": saving])
     }
 }

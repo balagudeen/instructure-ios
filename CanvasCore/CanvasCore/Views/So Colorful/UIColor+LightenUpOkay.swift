@@ -27,7 +27,7 @@
 import UIKit
 
 extension UIColor {
-    public func lighterShade() -> UIColor {
+    @objc public func lighterShade() -> UIColor {
         var a: CGFloat = 0.0
         var b: CGFloat = 0.0
         var c: CGFloat = 0.0

@@ -32,12 +32,12 @@ class SettingsViewController: UIViewController {
     // ---------------------------------------------
     // MARK: - IBOutlets
     // ---------------------------------------------
-    var logoutButton: UIBarButtonItem?
-    var closeButton: UIBarButtonItem?
-    var addButton: UIBarButtonItem?
+    @objc var logoutButton: UIBarButtonItem?
+    @objc var closeButton: UIBarButtonItem?
+    @objc var addButton: UIBarButtonItem?
     @IBOutlet weak var observeesContainerView: UIView!
     
-    let reuseIdentifier = "SettingsObserveesCell"
+    @objc let reuseIdentifier = "SettingsObserveesCell"
     
     // ---------------------------------------------
     // MARK: - ViewModel
@@ -48,15 +48,15 @@ class SettingsViewController: UIViewController {
     // ---------------------------------------------
     // MARK: - External Closures
     // ---------------------------------------------
-    var closeAction: SettingsSessionAction? = nil
-    var allObserveesAction: SettingsSessionAction? = nil
-    var observeeSelectedAction: SettingsObserveeSelectedAction? = nil
+    @objc var closeAction: SettingsSessionAction? = nil
+    @objc var allObserveesAction: SettingsSessionAction? = nil
+    @objc var observeeSelectedAction: SettingsObserveeSelectedAction? = nil
     
     // ---------------------------------------------
     // MARK: - Initializers
     // ---------------------------------------------
     fileprivate static let defaultStoryboardName = "SettingsViewController"
-    static func new(_ storyboardName: String = defaultStoryboardName, session: Session) -> SettingsViewController {
+    @objc static func new(_ storyboardName: String = defaultStoryboardName, session: Session) -> SettingsViewController {
         guard let controller = UIStoryboard(name: storyboardName, bundle: Bundle(for: self)).instantiateInitialViewController() as? SettingsViewController else {
             fatalError("Initial ViewController is not of type SettingsViewController")
         }
@@ -89,23 +89,23 @@ class SettingsViewController: UIViewController {
     // ---------------------------------------------
     // MARK: - View Setup
     // ---------------------------------------------
-    func setupNavigationBar() {
+    @objc func setupNavigationBar() {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.barTintColor = ColorCoordinator.colorSchemeForParent().mainColor
         self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: UIColor.white])
     }
 
-    func setupObserveeList() {
+    @objc func setupObserveeList() {
         guard let observeesViewController = observeesViewController else {
             return
         }
 
         observeesViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        observeesViewController.willMove(toParentViewController: self)
-        addChildViewController(observeesViewController)
+        observeesViewController.willMove(toParent: self)
+        addChild(observeesViewController)
         observeesContainerView.addSubview(observeesViewController.view)
-        observeesViewController.didMove(toParentViewController: self)
+        observeesViewController.didMove(toParent: self)
         observeesContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[subview]-0-|", options: .directionLeadingToTrailing, metrics: nil, views: ["subview": observeesViewController.view]))
         observeesContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[subview]-0-|", options: .directionLeadingToTrailing, metrics: nil, views: ["subview": observeesViewController.view]))
     }
@@ -116,4 +116,10 @@ class SettingsViewController: UIViewController {
     @IBAction func closeButtonPressed(_ sender: UIBarButtonItem) {
         closeAction?(viewModel.session)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

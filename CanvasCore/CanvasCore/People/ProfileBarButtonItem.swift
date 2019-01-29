@@ -22,7 +22,7 @@ import Kingfisher
 open class ProfileBarButtonItem: UIBarButtonItem {
     fileprivate var button: UIButton!
 
-    public convenience init(avatarURL: URL?) {
+    @objc public convenience init(avatarURL: URL?) {
         let button = UIButton()
 
         let buttonDiameter: CGFloat = 30
@@ -46,7 +46,7 @@ open class ProfileBarButtonItem: UIBarButtonItem {
         if let avatarURL = avatarURL {
             button.kf.setImage(with: avatarURL, for: .normal, placeholder: placeholderImage)
         } else {
-            button.setImage(placeholderImage, for: UIControlState())
+            button.setImage(placeholderImage, for: UIControl.State())
         }
 
         button.addTarget(self, action: #selector(ProfileBarButtonItem.showProfile(_:)), for: .touchUpInside)
@@ -60,11 +60,11 @@ open class ProfileBarButtonItem: UIBarButtonItem {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func setProfileImage(_ image: UIImage?) {
-        button.setImage(image, for: UIControlState())
+    @objc open func setProfileImage(_ image: UIImage?) {
+        button.setImage(image, for: UIControl.State())
     }
 
-    func showProfile(_ button: UIButton) {
+    @objc func showProfile(_ button: UIButton) {
         let _ = target?.perform(action, with: self)
     }
 }

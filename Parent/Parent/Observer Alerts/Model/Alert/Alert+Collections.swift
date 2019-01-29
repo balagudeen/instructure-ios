@@ -23,13 +23,13 @@ import CoreData
 import CanvasCore
 
 extension Alert {
-    public static func unreadPredicate() -> NSPredicate {
+    @objc public static func unreadPredicate() -> NSPredicate {
         return NSPredicate(format: "%K == false", "read")
     }
-    public static func undismissedPredicate() -> NSPredicate {
+    @objc public static func undismissedPredicate() -> NSPredicate {
         return NSPredicate(format: "%K == false", "dismissed")
     }
-    public static func observeePredicate(_ observeeID: String) -> NSPredicate {
+    @objc public static func observeePredicate(_ observeeID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "studentID", observeeID)
     }
 }

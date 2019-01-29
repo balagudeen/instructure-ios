@@ -36,7 +36,7 @@ enum EventDetailsViewModel: TableViewCellViewModel {
     case details(baseURL: URL, deets: String)
 
     static func tableViewDidLoad(_ tableView: UITableView) {
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 52.0
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: "DetailsInfoCell", bundle: nil), forCellReuseIdentifier: TitleCellReuseIdentifier)
@@ -126,7 +126,7 @@ enum EventDetailsViewModel: TableViewCellViewModel {
             return cell
         case .location(let locationName, let address):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: LocationCellReuseIdentifier, for: indexPath) as? DetailsLocationCell else { fatalError() }
-            let components = [locationName, address].flatMap { $0 }.filter { !$0.isEmpty }
+            let components = [locationName, address].compactMap { $0 }.filter { !$0.isEmpty }
             cell.locationLabel.text = components.joined(separator: "\n")
             return cell
 
@@ -186,7 +186,7 @@ enum EventDetailsViewModel: TableViewCellViewModel {
         let title = NSLocalizedString("Permission Needed", comment: "")
         let message = NSLocalizedString("You must allow notifications in Settings to set reminders.", comment: "")
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        if let url = URL(string: UIApplicationOpenSettingsURLString) {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
             alert.addAction(UIAlertAction(title: NSLocalizedString("Settings", comment: ""), style: .default) { _ in
                 UIApplication.shared.open(url)
             })

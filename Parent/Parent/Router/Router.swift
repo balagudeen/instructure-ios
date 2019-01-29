@@ -128,7 +128,7 @@ class Router {
         let navController = UINavigationController(rootViewController: viewController)
         navController.isNavigationBarHidden = true
         let animationDuration = animated ? 0.5 : 0.0
-        UIView.transition(with: window, duration: animationDuration, options: UIViewAnimationOptions(), animations: { _ in
+        UIView.transition(with: window, duration: animationDuration, options: UIView.AnimationOptions(), animations: {
             window.rootViewController = navController
             }, completion: nil)
     }
@@ -221,7 +221,7 @@ extension UIViewController {
         - modal: do you want the view to be specifically presented as a modal
      
     */
-    func transitionToViewController(_ viewController: UIViewController, animated: Bool, modal: Bool) {
+    @objc func transitionToViewController(_ viewController: UIViewController, animated: Bool, modal: Bool) {
         // for now we're just going to route using a navigationController or Modal
         if modal {
             present(viewController, animated: animated, completion: { })

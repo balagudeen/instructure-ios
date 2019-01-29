@@ -1,8 +1,14 @@
 /* <String> <Int> of <Int> */
 "%@ %d of %d" = "%1$@ %2$d of %3$d";
 
-/* Something to Something */
+/* No comment provided by engineer. */
+"%@ is due at %@" = "%1$@ har frist %2$@";
+
+/* No comment provided by engineer. */
 "%@ to %@" = "%1$@ to %2$@";
+
+/* No comment provided by engineer. */
+"%@ will begin at %@" = "%1$@ Vil begynne %2$@";
 
 /* Percentage field placeholder */
 "1-100%" = "1-100%";
@@ -31,6 +37,9 @@
 /* No comment provided by engineer. */
 "Announcement" = "Kunngjøring";
 
+/* No comment provided by engineer. */
+"Assignment" = "Oppgave";
+
 /* Assignment Grade High On Description */
 "Assignment grade above" = "Oppgavevurdering over";
 
@@ -39,6 +48,9 @@
 
 /* Assignment Missing Description */
 "Assignment missing" = "Oppgave mangler";
+
+/* No comment provided by engineer. */
+"Assignment reminder" = "Oppgavepåminnelse";
 
 /* No comment provided by engineer. */
 "Cache cleared" = "Hurtiglager nullstilt";
@@ -58,11 +70,11 @@
 /* Empty Alerts Text */
 "Caught up on Alerts" = "Hengt opp i varsler";
 
-/* title for status selection field */
-"Choose One" = "Velg en";
-
 /* No comment provided by engineer. */
 "Choose a student" = "Velg en student";
+
+/* title for status selection field */
+"Choose One" = "Velg en";
 
 /* Close Button Title */
 "Close" = "Lukk";
@@ -79,14 +91,26 @@
 /* Courses Tab */
 "Courses" = "Emner";
 
+/* No comment provided by engineer. */
+"Current student: %@, tap to switch students" = "Nåværende studenter: %@, trykk for å bytte mellom studenter";
+
 /* Title for field */
 "Describe your problem" = "Beskriv problemet ditt";
+
+/* No comment provided by engineer. */
+"Discussion" = "Diskusjon";
 
 /* No comment provided by engineer. */
 "Dismiss" = "Avvis";
 
 /* No comment provided by engineer. */
 "Error" = "Feil";
+
+/* No comment provided by engineer. */
+"Event" = "Hendelse";
+
+/* No comment provided by engineer. */
+"Event reminder" = "Hendelsespåminnelse";
 
 /* No comment provided by engineer. */
 "Excused" = "Unnskyldt";
@@ -160,11 +184,11 @@
 /* Title for label when no grade has been assigned to the course */
 "No Grade" = "Ingen vurdering";
 
-/* Empty Students Text */
-"No Students" = "Ingen studenter";
-
 /* Error message */
 "No installed apps support opening this file" = "Ingen installerte apper støtter åpning av denne filen.";
+
+/* Empty Students Text */
+"No Students" = "Ingen studenter";
 
 /* Not Authorized Error Title */
 "Not Authorized" = "Ikke Autorisert";
@@ -184,6 +208,12 @@
 /* Open file in another application */
 "Open in..." = "Åpne i ...";
 
+/* No comment provided by engineer. */
+"Permission Needed" = "Tillatelse kreves";
+
+/* No comment provided by engineer. */
+"Quiz" = "Test";
+
 /* Support Ticket Creation Failed */
 "Request Failed!  Check network and try again!" = "Forespørsel mislyktes!  Sjekk nettverket, og prøv igjen!";
 
@@ -195,6 +225,9 @@
 
 /* Server Error Title */
 "Server Error" = "Serverfeil";
+
+/* No comment provided by engineer. */
+"Settings" = "Innstillinger";
 
 /* Status level for issue being reported */
 "Something is broken but I can work around it" = "Noe er ødelagt, men jeg kan omgå det";
@@ -232,6 +265,12 @@
 /* No comment provided by engineer. */
 "There was an error loading your content. If it  is an audio or video upload it may still be processing." = "Det oppsto en feil med lasting av innholdet ditt. Hvis det er en lyd- eller video-opplasting kan den fremdeles være under behandling.";
 
+/* No comment provided by engineer. */
+"This announcement has expired." = "Denne kunngjøringen har utløpt-";
+
+/* No comment provided by engineer. */
+"This student's courses may not be published yet." = "Det kan være at denne studentens kurs ikke har blitt publisert enda.";
+
 /* Unknown T`hreshold Description */
 "Unknown" = "Ukjent";
 
@@ -240,6 +279,9 @@
 
 /* Default user name, the computer-friendly version of their name, until we find their real user name */
 "Unknown User Name" = "Ukjent brukernavn";
+
+/* No comment provided by engineer. */
+"Unread" = "Ulest";
 
 /* Calendar Tab */
 "Week" = "Uke";
@@ -252,6 +294,9 @@
 
 /* Not Authorized Error Message */
 "You are unauthorized to access this information.  Check your user permissions and try again." = "Du er ikke autorisert til å få tilgang til denne informasjonen. Sjekk brukertillatelsene dine og forsøk igjen.";
+
+/* No comment provided by engineer. */
+"You must allow notifications in Settings to set reminders." = "Du må tillate varsler i Innstillingene for å stille inn påminnelser.";
 
 /* Title for the email field */
 "Your Email" = "Din e-post";

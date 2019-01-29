@@ -21,8 +21,8 @@ import CanvasCore
 class WebBrowserViewController: UIViewController {
 
     // MARK: Important stuffs
-    var request: URLRequest?
-    var url: URL? {
+    @objc var request: URLRequest?
+    @objc var url: URL? {
         didSet {
             if let url = url {
                 self.request = URLRequest.requestWithDefaultHTTPHeaders(url)
@@ -30,8 +30,8 @@ class WebBrowserViewController: UIViewController {
         }
     }
 
-    let useAPISafeLinks: Bool
-    let isModal: Bool
+    @objc let useAPISafeLinks: Bool
+    @objc let isModal: Bool
 
     // MARK: Private stuffs
     // MARK: Outlets
@@ -46,7 +46,7 @@ class WebBrowserViewController: UIViewController {
     fileprivate var forwardButton: UIBarButtonItem!
     fileprivate var actionButton: UIBarButtonItem!
 
-    fileprivate var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    fileprivate var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
 
     fileprivate var networkOps: UInt = 0
     fileprivate var fullURLString: String?
@@ -55,7 +55,7 @@ class WebBrowserViewController: UIViewController {
     fileprivate var isTitleAbreviated: Bool = true
     fileprivate var isAnimatingTitle: Bool = false
 
-    init(useAPISafeLinks: Bool = true, isModal: Bool = true) {
+    @objc init(useAPISafeLinks: Bool = true, isModal: Bool = true) {
         self.useAPISafeLinks = useAPISafeLinks
         self.isModal = isModal
         super.init(nibName: nil, bundle: nil)
@@ -104,8 +104,8 @@ class WebBrowserViewController: UIViewController {
         webView.scalesPageToFit = true
         view.addSubview(webView)
 
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["webView": webView]))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["webView": webView]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[webView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["webView": webView]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[webView]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["webView": webView]))
 
         if let request = self.request {
             webView.loadRequest(request)
@@ -124,34 +124,34 @@ class WebBrowserViewController: UIViewController {
         frame.size.height = 30
         titleField.frame = frame
 
-        NotificationCenter.default.addObserver(self, selector: #selector(WebBrowserViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WebBrowserViewController.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(WebBrowserViewController.webViewTapped(_:)))
         webView.addGestureRecognizer(tapGesture)
     }
 
     // MARK: Handlers
-    func doneButtonTapped(_ doneButton: UIBarButtonItem) {
+    @objc func doneButtonTapped(_ doneButton: UIBarButtonItem) {
         self.presentingViewController?.dismiss(animated: true) { [weak self] in
             self?.webView.loadHTMLString("", baseURL: nil)
         }
     }
 
-    func backButtonTapped(_ backButton: UIBarButtonItem) {
+    @objc func backButtonTapped(_ backButton: UIBarButtonItem) {
         guard webView.canGoBack else { return }
 
         networkOps = 0
         webView.goBack()
     }
 
-    func forwardButtonTapped(_ forwardButton: UIBarButtonItem) {
+    @objc func forwardButtonTapped(_ forwardButton: UIBarButtonItem) {
         guard webView.canGoForward else { return }
 
         networkOps = 0
         webView.goForward()
     }
 
-    func reloadButtonTapped(_ refreshButton: UIBarButtonItem) {
+    @objc func reloadButtonTapped(_ refreshButton: UIBarButtonItem) {
         networkOps = 0
         if let request = webView.request, (request.url?.absoluteString.characters.count)! > 0 && request.url?.absoluteString != "about:blank" {
             webView.reload()
@@ -162,12 +162,12 @@ class WebBrowserViewController: UIViewController {
         }
     }
 
-    func actionButtonTapped(_ actionButton: UIBarButtonItem) {
+    @objc func actionButtonTapped(_ actionButton: UIBarButtonItem) {
         let title = webView.stringByEvaluatingJavaScript(from: "document.title")
         let actionSheet = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         if let fullURLString = fullURLString, let url = URL(string: fullURLString), request?.url?.isFileURL == false {
             actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Open in Safari", comment: "Open a url in the application Safari"), style: .default) { action in
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             })
         }
 
@@ -194,12 +194,12 @@ class WebBrowserViewController: UIViewController {
         present(actionSheet, animated: true, completion: nil)
     }
 
-    func stopButtonTapped(_ stopButton: UIBarButtonItem) {
+    @objc func stopButtonTapped(_ stopButton: UIBarButtonItem) {
         networkOps = 0
         webView.stopLoading()
     }
 
-    func webViewTapped(_ tapGesture: UITapGestureRecognizer) {
+    @objc func webViewTapped(_ tapGesture: UITapGestureRecognizer) {
         if !isTitleAbreviated {
             toggleTitleDisplayState()
             titleField.resignFirstResponder()
@@ -209,7 +209,7 @@ class WebBrowserViewController: UIViewController {
 
 // MARK: - UIWebViewDelegate
 extension WebBrowserViewController: UIWebViewDelegate {
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
         fullURLString = request.url?.absoluteString
         hostURLString = request.url?.host
 
@@ -259,7 +259,7 @@ extension WebBrowserViewController: UIWebViewDelegate {
 
         UIView.animate(withDuration: 0.3, animations: {
             if let text = self.titleField.text, let font = self.titleField.font, text.characters.count > 0 {
-                let size = (text as NSString).size(attributes: [NSFontAttributeName: font])
+                let size = (text as NSString).size(withAttributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font]))
                 let x: CGFloat = (self.view.frame.size.width - CGFloat(roundf(Float(size.width))) * 0.5)
                 let width: CGFloat = CGFloat(roundf(Float(size.width)))
                 self.titleField.frame = CGRect(x: x, y: self.titleField.frame.origin.y, width: width, height: self.titleField.frame.size.height)
@@ -298,7 +298,7 @@ extension WebBrowserViewController: UIWebViewDelegate {
         }
     }
 
-    func downloadFile(atURL url: URL) {
+    @objc func downloadFile(atURL url: URL) {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         let downloadTask = session.dataTask(with: url) { data, response, error in
@@ -328,7 +328,7 @@ extension WebBrowserViewController: UITextFieldDelegate {
         return true
     }
 
-    func toggleTitleDisplayState() {
+    @objc func toggleTitleDisplayState() {
         guard !isAnimatingTitle else { return }
         defer { isTitleAbreviated = !isTitleAbreviated }
 
@@ -348,7 +348,7 @@ extension WebBrowserViewController: UITextFieldDelegate {
             titleField.text = hostURLString
             UIView.animate(withDuration: 0.3, animations: {
                 if let hostURLString = self.hostURLString, let font = self.titleField.font {
-                    let size = (hostURLString as NSString).size(attributes: [NSFontAttributeName: font])
+                    let size = (hostURLString as NSString).size(withAttributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font]))
                     let x: CGFloat = (self.view.frame.size.width - CGFloat(roundf(Float(size.width))) * 0.5)
                     let width: CGFloat = CGFloat(roundf(Float(size.width)))
                     self.titleField.frame = CGRect(x: x, y: self.titleField.frame.origin.y, width: width, height: self.titleField.frame.size.height)
@@ -367,9 +367,25 @@ extension WebBrowserViewController: UITextFieldDelegate {
 
 // MARK: - Keyboard Notifications
 extension WebBrowserViewController {
-    func keyboardWillHide(_ note: Notification) {
+    @objc func keyboardWillHide(_ note: Notification) {
         if !isTitleAbreviated {
             toggleTitleDisplayState()
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

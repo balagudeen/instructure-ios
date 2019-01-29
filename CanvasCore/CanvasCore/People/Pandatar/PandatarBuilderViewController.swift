@@ -36,16 +36,16 @@ open class PandatarBuilderViewController: UIViewController {
     @IBOutlet var bodyViews: InfinitePagedImagesView!
     @IBOutlet var legViews: InfinitePagedImagesView!
 
-    open var doneBuilding: (UIImage)->Void = { _ in }
-    open var canceledBuilding: ()->Void = { }
+    @objc open var doneBuilding: (UIImage)->Void = { _ in }
+    @objc open var canceledBuilding: ()->Void = { }
 
-    lazy var headImages: [UIImage] = {
+    @objc lazy var headImages: [UIImage] = {
         return pandifyImages(fromIndex: 1, toIndex: 9)
     }()
-    lazy var bodyImages: [UIImage] = {
+    @objc lazy var bodyImages: [UIImage] = {
         return pandifyImages(fromIndex: 10, toIndex: 22)
     }()
-    lazy var legImages: [UIImage] = {
+    @objc lazy var legImages: [UIImage] = {
         return pandifyImages(fromIndex: 23, toIndex: 27)
     }()
 
@@ -78,11 +78,11 @@ open class PandatarBuilderViewController: UIViewController {
         randomizePanda()
     }
 
-    func cancel(_ sender: UIBarButtonItem) {
+    @objc func cancel(_ sender: UIBarButtonItem) {
         canceledBuilding()
     }
 
-    func done(_ sender: UIBarButtonItem) {
+    @objc func done(_ sender: UIBarButtonItem) {
         let image = snapshotPanda()
         doneBuilding(image)
     }
@@ -96,7 +96,7 @@ open class PandatarBuilderViewController: UIViewController {
     fileprivate func randomizePanda() {
         pandatarBox.isUserInteractionEnabled = false
         navigationItem.rightBarButtonItem?.isEnabled = false
-        UIView.animate(withDuration: 2.0, delay: 0.0, options: UIViewAnimationOptions(rawValue: 0), animations: {
+        UIView.animate(withDuration: 2.0, delay: 0.0, options: UIView.AnimationOptions(rawValue: 0), animations: {
             let headPage = arc4random_uniform(UInt32(self.headImages.count-1))+1
             var bodyPage = headPage
             if self.bodyImages.count > 2 {

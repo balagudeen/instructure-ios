@@ -17,6 +17,7 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import React from 'react'
+import { shallow } from 'enzyme'
 import { GradeTab, mapStateToProps } from '../GradeTab'
 import renderer from 'react-test-renderer'
 import explore from '../../../../test/helpers/explore'
@@ -90,13 +91,18 @@ describe('Rubric', () => {
   })
 
   it('has the correct score', () => {
-    let tree = renderer.create(
-      <GradeTab {...defaultProps} />
-    )
+    let component = new GradeTab(defaultProps)
+    let tree = shallow(component.renderHeader())
+    let score = tree.find('[testID="rubric-score"]')
+    expect(score.props().children).toEqual('10 out of 100')
 
-    tree.getInstance().setState({ ratings: { '2': 10 } })
-
-    expect(tree.toJSON()).toMatchSnapshot()
+    component = new GradeTab({
+      ...defaultProps,
+      rubricItems: [templates.rubric({ ignore_for_scoring: true })],
+    })
+    tree = shallow(component.renderHeader())
+    score = tree.find('[testID="rubric-score"]')
+    expect(score.props().children).toEqual('0 out of 100')
   })
 
   it('shows the activity indicator when saving a rubric score', () => {
@@ -115,8 +121,8 @@ describe('Rubric', () => {
       <GradeTab {...props} />
     )
 
-    tree.getInstance().openCommentKeyboard('1')
-    expect(tree.getInstance().state.criterionCommentInput).toEqual('1')
+    tree.getInstance().openCommentKeyboard('2')
+    expect(tree.getInstance().state.criterionCommentInput).toEqual('2')
     expect(tree.toJSON()).toMatchSnapshot()
   })
 
@@ -134,12 +140,12 @@ describe('Rubric', () => {
       <GradeTab {...defaultProps} />
     )
 
-    tree.getInstance().openCommentKeyboard('1')
+    tree.getInstance().openCommentKeyboard('2')
     tree.getInstance().submitRubricComment({ message: 'A Message' })
-    expect(tree.getInstance().state.ratings['1'].comments).toEqual('A Message')
+    expect(tree.getInstance().state.ratings['2'].comments).toEqual('A Message')
     expect(defaultProps.updateUnsavedChanges).toHaveBeenCalledWith(
       {
-        1: { comments: 'A Message', points: 10 },
+        2: { comments: 'A Message', points: 10 },
       },
     )
   })
@@ -149,13 +155,13 @@ describe('Rubric', () => {
       <GradeTab {...defaultProps} />
     )
 
-    tree.getInstance().setState({ ratings: { '1': { points: 10, comments: 'a' } } })
-    tree.getInstance().deleteComment('1')
+    tree.getInstance().setState({ ratings: { '2': { points: 10, comments: 'a' } } })
+    tree.getInstance().deleteComment('2')
 
-    expect(tree.getInstance().state.ratings['1'].comments).toEqual('')
+    expect(tree.getInstance().state.ratings['2'].comments).toEqual('')
     expect(defaultProps.updateUnsavedChanges).toHaveBeenCalledWith(
       {
-        1: { comments: '', points: 10 },
+        2: { comments: '', points: 10 },
       },
     )
   })

@@ -179,7 +179,7 @@ struct BackdropFile: Hashable, Equatable {
     //! Save Image to Disk
     func writeImage(_ image: UIImage?) throws {
         if let image = image {
-            try UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: localPath), options: .atomic)
+            try image.pngData()!.write(to: URL(fileURLWithPath: localPath), options: .atomic)
         }
     }
     

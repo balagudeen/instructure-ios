@@ -52,14 +52,14 @@ import Marshal
 
 
 extension Submission: SynchronizedModel {
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("id") ?? ""
         let attempt: Int = (try json <| "attempt") ?? 0
         
         return NSPredicate(format: "%K == %@ && %K == %@", "id", id, "attempt", NSNumber(value: attempt))
     }
     
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         //We fail and smother the alert here because of the RubricViewController which has to fetch a submission
         // and assignment and concats the results. The API returns a submission object with nil values even if no submission
         // exists. --nlambson June 6, 2016
@@ -102,5 +102,5 @@ extension Submission: SynchronizedModel {
     }
     
     // API parameters
-    public static var parameters: [String: Any] { return ["include": ["rubric_assessment", "visibility", "submission_comments", "submission_history"]] }
+    @objc public static var parameters: [String: Any] { return ["include": ["rubric_assessment", "visibility", "submission_comments", "submission_history"]] }
 }

@@ -38,6 +38,8 @@ protocol QuizService {
     func getQuiz(_ completed: @escaping (QuizResult)->())
     
     func getSubmissions(_ completed: @escaping (QuizSubmissionsResult)->())
+
+    func getSubmission(_ completed: @escaping (QuizSubmissionResult)->())
     
     func beginNewSubmission(_ completed: @escaping (QuizSubmissionResult)->())
     

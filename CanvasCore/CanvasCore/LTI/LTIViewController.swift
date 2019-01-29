@@ -20,20 +20,20 @@ import Marshal
 import SafariServices
 
 public class LTIViewController: UIViewController {
-    public let toolName: String
-    public let courseID: String?
-    public let launchURL: URL
-    public let session: Session
-    public let fallbackURL: URL?
+    @objc public let toolName: String
+    @objc public let courseID: String?
+    @objc public let launchURL: URL
+    @objc public let session: Session
+    @objc public let fallbackURL: URL?
 
-    var spinner: UIActivityIndicatorView!
-    var button: UIButton!
+    @objc var spinner: UIActivityIndicatorView!
+    @objc var button: UIButton!
 
-    public convenience init(toolName: String, courseID: String?, launchURL: URL, in session: Session) {
+    @objc public convenience init(toolName: String, courseID: String?, launchURL: URL, in session: Session) {
         self.init(toolName: toolName, courseID: courseID, launchURL: launchURL, in: session, fallbackURL: nil)
     }
     
-    public init(toolName: String, courseID: String?, launchURL: URL, in session: Session, fallbackURL: URL? = nil) {
+    @objc public init(toolName: String, courseID: String?, launchURL: URL, in session: Session, fallbackURL: URL? = nil) {
         self.toolName = toolName
         self.courseID = courseID
         self.launchURL = launchURL
@@ -62,7 +62,7 @@ public class LTIViewController: UIViewController {
             NSLayoutConstraint(item: button, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0)
         ])
 
-        spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        spinner = UIActivityIndicatorView(style: .gray)
         spinner.hidesWhenStopped = true
         spinner.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(spinner)
@@ -72,7 +72,7 @@ public class LTIViewController: UIViewController {
         ])
     }
 
-    func launch() {
+    @objc func launch() {
         showLoading(true)
         let presentingVC = navigationController ?? self
         ExternalToolManager.shared.launch(launchURL, in: session, from: presentingVC, fallbackURL: fallbackURL) { [weak self] in
@@ -80,7 +80,7 @@ public class LTIViewController: UIViewController {
         }
     }
 
-    func showLoading(_ loading: Bool) {
+    @objc func showLoading(_ loading: Bool) {
         loading ? spinner.startAnimating() : spinner.stopAnimating()
         button.isHidden = loading
     }

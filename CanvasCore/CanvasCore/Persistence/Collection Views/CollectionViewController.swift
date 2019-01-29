@@ -29,7 +29,7 @@ public protocol CollectionViewCellViewModel {
 }
 
 open class CollectionViewController: UICollectionViewController {
-    open var dataSource: CollectionViewDataSource! {
+    @objc open var dataSource: CollectionViewDataSource! {
         didSet {
             if isViewLoaded {
                 dataSource?.viewDidLoad(self)
@@ -48,9 +48,9 @@ open class CollectionViewController: UICollectionViewController {
     
     private var refreshDisposable: Disposable? = nil
 
-    open var didSelectItemAtIndexPath: ((IndexPath)->())? = nil
+    @objc open var didSelectItemAtIndexPath: ((IndexPath)->())? = nil
 
-    open var emptyView: UIView? {
+    @objc open var emptyView: UIView? {
         didSet {
             self.updateEmptyView()
         }

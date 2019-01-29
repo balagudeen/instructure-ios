@@ -34,7 +34,7 @@ private enum SupportTicketCellTag: String {
 
 open class StudentSettingsViewController : FormViewController {
 
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+    @objc let activityIndicator = UIActivityIndicatorView(style: .white)
     
     // Injected Vars
     fileprivate var session: Session!
@@ -50,7 +50,7 @@ open class StudentSettingsViewController : FormViewController {
     // MARK: - Initializers
     // ---------------------------------------------
     fileprivate static let defaultStoryboardName = "ThresholdsListViewController"
-    static func new(_ session: Session, studentID: String) -> StudentSettingsViewController {
+    @objc static func new(_ session: Session, studentID: String) -> StudentSettingsViewController {
         let controller = StudentSettingsViewController()
         controller.session = session
         controller.studentID = studentID
@@ -124,6 +124,9 @@ open class StudentSettingsViewController : FormViewController {
         switch type {
         case .courseAnnouncement, .assignmentMissing, .institutionAnnouncement:
             let row = SwitchRow(type.rawValue) {
+                $0.cellSetup { c, _ in
+                    c.isAccessibilityElement = true
+                }
                 $0.title = self.descriptionForType(type)
                 if let _ = thresholdForType(type) {
                     $0.value = true
@@ -212,7 +215,7 @@ open class StudentSettingsViewController : FormViewController {
         }
     }
 
-    func notifyUserOfInvalidInput(_ message: String) {
+    @objc func notifyUserOfInvalidInput(_ message: String) {
         let title = NSLocalizedString("Invalid Input", comment: "Title for an alert view")
 
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -241,14 +244,14 @@ open class StudentSettingsViewController : FormViewController {
         return header
     }
 
-    func refresh(_ refreshControl: UIRefreshControl?) {
+    @objc func refresh(_ refreshControl: UIRefreshControl?) {
         thresholdsRefresher?.refresh(true)
     }
 
     // ---------------------------------------------
     // MARK: - View Setup
     // ---------------------------------------------
-    func setupNavigationBar() {
+    @objc func setupNavigationBar() {
         guard let navBar = self.navigationController?.navigationBar else { return }
 
         let scheme = ColorCoordinator.colorSchemeForStudentID(studentID)
@@ -336,7 +339,7 @@ open class StudentSettingsViewController : FormViewController {
         }
     }
 
-    func updateValues() {
+    @objc func updateValues() {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         for type in AlertThresholdType.validThresholdTypes {
@@ -399,7 +402,7 @@ open class StudentSettingsViewController : FormViewController {
         }
     }
     
-    func displayError(error: NSError) {
+    @objc func displayError(error: NSError) {
         let title = NSLocalizedString("An Error Occurred", comment: "")
         let alert = UIAlertController(title: title, message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))

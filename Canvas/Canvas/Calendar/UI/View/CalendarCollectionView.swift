@@ -24,7 +24,7 @@ protocol CalendarCollectionViewDelegate: UICollectionViewDelegate {
 
 class CalendarCollectionView: UICollectionView {
     var calendarDelegate: CalendarCollectionViewDelegate?
-    var selfBackgroundColor: UIColor = .white
+    @objc var selfBackgroundColor: UIColor = .white
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
@@ -36,7 +36,7 @@ class CalendarCollectionView: UICollectionView {
         initialize()
     }
     
-    func initialize() {
+    @objc func initialize() {
         backgroundColor = selfBackgroundColor
         showsHorizontalScrollIndicator = false
         showsHorizontalScrollIndicator = false

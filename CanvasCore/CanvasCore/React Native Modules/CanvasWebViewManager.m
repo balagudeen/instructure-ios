@@ -37,10 +37,12 @@ RCT_EXPORT_VIEW_PROPERTY(onFinishedLoading, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onMessage, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onError, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onHeightChange, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onRefresh, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(automaticallyAdjustContentInsets, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(contentInset, UIEdgeInsets)
 RCT_EXPORT_VIEW_PROPERTY(hideKeyboardAccessoryView, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(isOpaque, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(openLinksInSafari, BOOL)
 RCT_REMAP_VIEW_PROPERTY(scrollEnabled, _webView.scrollView.scrollEnabled, BOOL)
 RCT_REMAP_VIEW_PROPERTY(bounces, _webView.scrollView.bounces, BOOL)
 
@@ -63,6 +65,18 @@ RCT_EXPORT_METHOD(evaluateJavaScript:(nonnull NSNumber *)reactTag
       }];
     }
   }];
+}
+
+RCT_EXPORT_METHOD(stopRefreshing:(nonnull NSNumber *)reactTag)
+{
+    [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, CanvasWebViewContainer *> *viewRegistry) {
+        CanvasWebViewContainer *view = viewRegistry[reactTag];
+        if (![view isKindOfClass:[CanvasWebViewContainer class]]) {
+            RCTLogError(@"Invalid view returned from registry, expecting CanvasWebViewContainer, got: %@", view);
+        } else {
+            [view stopRefreshing];
+        }
+    }];
 }
 
 @end

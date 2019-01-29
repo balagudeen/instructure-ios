@@ -29,10 +29,10 @@ class DetailsReminderCell: UITableViewCell {
     fileprivate let expandedBottomConstraintValue: CGFloat = 46.0
     fileprivate let contractedBottomConstraintValue: CGFloat = 14.0
 
-    var cellSizeUpdated: ()->() = { }
-    var toggleAction: (_ on: Bool)->() = { _ in }
+    @objc var cellSizeUpdated: ()->() = { }
+    @objc var toggleAction: (_ on: Bool)->() = { _ in }
 
-    static var dateFormatter: DateFormatter = {
+    @objc static var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
@@ -58,7 +58,7 @@ class DetailsReminderCell: UITableViewCell {
         cellSizeUpdated = { }
     }
 
-    func setExpanded(_ expanded: Bool) {
+    @objc func setExpanded(_ expanded: Bool) {
         if expanded {
             bottomLabelConstraint.constant = expandedBottomConstraintValue
         } else {

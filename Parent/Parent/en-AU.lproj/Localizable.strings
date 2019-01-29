@@ -1,8 +1,14 @@
 /* <String> <Int> of <Int> */
 "%@ %d of %d" = "%1$@ %2$d of %3$d";
 
-/* Something to Something */
+/* No comment provided by engineer. */
+"%@ is due at %@" = "%1$@ is due at %2$@";
+
+/* No comment provided by engineer. */
 "%@ to %@" = "%1$@ to %2$@";
+
+/* No comment provided by engineer. */
+"%@ will begin at %@" = "%1$@ will begin at %2$@";
 
 /* Percentage field placeholder */
 "1-100%" = "1-100%";
@@ -31,6 +37,9 @@
 /* No comment provided by engineer. */
 "Announcement" = "Announcement";
 
+/* No comment provided by engineer. */
+"Assignment" = "Assignment";
+
 /* Assignment Grade High On Description */
 "Assignment grade above" = "Assignment grade above";
 
@@ -39,6 +48,9 @@
 
 /* Assignment Missing Description */
 "Assignment missing" = "Assignment missing";
+
+/* No comment provided by engineer. */
+"Assignment reminder" = "Assignment reminder";
 
 /* No comment provided by engineer. */
 "Cache cleared" = "Cache cleared";
@@ -58,11 +70,11 @@
 /* Empty Alerts Text */
 "Caught up on Alerts" = "Caught up on Alerts";
 
-/* title for status selection field */
-"Choose One" = "Choose One";
-
 /* No comment provided by engineer. */
 "Choose a student" = "Choose a student";
+
+/* title for status selection field */
+"Choose One" = "Choose One";
 
 /* Close Button Title */
 "Close" = "Close";
@@ -79,14 +91,26 @@
 /* Courses Tab */
 "Courses" = "Courses";
 
+/* No comment provided by engineer. */
+"Current student: %@, tap to switch students" = "Current student: %@, tap to switch students";
+
 /* Title for field */
 "Describe your problem" = "Describe your problem.";
+
+/* No comment provided by engineer. */
+"Discussion" = "Discussion";
 
 /* No comment provided by engineer. */
 "Dismiss" = "Dismiss";
 
 /* No comment provided by engineer. */
 "Error" = "Error";
+
+/* No comment provided by engineer. */
+"Event" = "Event";
+
+/* No comment provided by engineer. */
+"Event reminder" = "Event reminder";
 
 /* No comment provided by engineer. */
 "Excused" = "Excused";
@@ -160,11 +184,11 @@
 /* Title for label when no grade has been assigned to the course */
 "No Grade" = "No Grade";
 
-/* Empty Students Text */
-"No Students" = "No Students";
-
 /* Error message */
 "No installed apps support opening this file" = "No installed apps support opening this file.";
+
+/* Empty Students Text */
+"No Students" = "No Students";
 
 /* Not Authorized Error Title */
 "Not Authorized" = "Not Authorised";
@@ -184,6 +208,12 @@
 /* Open file in another application */
 "Open in..." = "Open in...";
 
+/* No comment provided by engineer. */
+"Permission Needed" = "Permission Needed";
+
+/* No comment provided by engineer. */
+"Quiz" = "Quiz";
+
 /* Support Ticket Creation Failed */
 "Request Failed!  Check network and try again!" = "Request Failed!  Check network and try again!";
 
@@ -195,6 +225,9 @@
 
 /* Server Error Title */
 "Server Error" = "Server Error";
+
+/* No comment provided by engineer. */
+"Settings" = "Settings";
 
 /* Status level for issue being reported */
 "Something is broken but I can work around it" = "Something is broken but I can work around it.";
@@ -232,6 +265,12 @@
 /* No comment provided by engineer. */
 "There was an error loading your content. If it  is an audio or video upload it may still be processing." = "There was an error loading your content. If it is an audio or video upload, it may still be processing.";
 
+/* No comment provided by engineer. */
+"This announcement has expired." = "This announcement has expired.";
+
+/* No comment provided by engineer. */
+"This student's courses may not be published yet." = "This student's courses may not be published yet.";
+
 /* Unknown T`hreshold Description */
 "Unknown" = "Unknown";
 
@@ -240,6 +279,9 @@
 
 /* Default user name, the computer-friendly version of their name, until we find their real user name */
 "Unknown User Name" = "Unknown User Name";
+
+/* No comment provided by engineer. */
+"Unread" = "Unread";
 
 /* Calendar Tab */
 "Week" = "Week";
@@ -252,6 +294,9 @@
 
 /* Not Authorized Error Message */
 "You are unauthorized to access this information.  Check your user permissions and try again." = "You are unauthorised to access this information.  Please check your user permissions and try again.";
+
+/* No comment provided by engineer. */
+"You must allow notifications in Settings to set reminders." = "You must allow notifications in Settings to set reminders.";
 
 /* Title for the email field */
 "Your Email" = "Your Email";

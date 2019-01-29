@@ -25,9 +25,9 @@ class TextEntrySubmissionViewController: UITableViewController {
     }
     fileprivate let _text = MutableProperty<String?>(nil)
     fileprivate let textCellHeight = MutableProperty<CGFloat>(100)
-    let textCellReuseIdentifier = "TextCell"
+    @objc let textCellReuseIdentifier = "TextCell"
 
-    var didFinishEnteringText: ((String?) -> Void)?
+    @objc var didFinishEnteringText: ((String?) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,13 +46,13 @@ class TextEntrySubmissionViewController: UITableViewController {
         tableView.tableFooterView = UIView()
     }
 
-    func done() {
+    @objc func done() {
         dismiss(animated: true) {
             self.didFinishEnteringText?(self.text.value)
         }
     }
 
-    func cancel() {
+    @objc func cancel() {
         dismiss(animated: true)
     }
 }
@@ -82,7 +82,7 @@ extension TextEntrySubmissionViewController {
 
 class TextCell: WhizzyTextInputCell {
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    @objc override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         

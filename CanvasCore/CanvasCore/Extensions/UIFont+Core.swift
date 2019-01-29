@@ -17,7 +17,7 @@
 import Foundation
 
 extension UIFont {
-    open func noLargerThan(_ fontSize: CGFloat) -> UIFont {
+    @objc open func noLargerThan(_ fontSize: CGFloat) -> UIFont {
         if self.pointSize > fontSize {
             return self.withSize(fontSize)
         }

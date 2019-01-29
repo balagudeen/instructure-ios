@@ -25,17 +25,26 @@
 /* No comment provided by engineer. */
 "Choose One" = "Dewiswch Un";
 
+/* Connectivity alert close text */
+"Close" = "Cau";
+
 /* No comment provided by engineer. */
 "Continue Editing" = "Parhau i olygu";
 
 /* No comment provided by engineer. */
 "Describe the feature here" = "Disgrifiwch y nodwedd yma";
 
+/* No comment provided by engineer. */
+"describe your problem" = "disgrifiwch eich problem";
+
 /* Dismiss login expired/revoked alert button */
 "Dismiss" = "Diystyru";
 
 /* No comment provided by engineer. */
 "Emergency" = "Argyfwng";
+
+/* No comment provided by engineer. */
+"enter a subject" = "rhowch bwnc";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "Rhowch ddisgrifiad o'r tocyn";
@@ -76,14 +85,20 @@
 /* No comment provided by engineer. */
 "OK" = "Iawn";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "tynnu defnyddiwr";
+
 /* No comment provided by engineer. */
 "Report a Problem" = "Rhoi gwybod am broblem";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "Gofyn am Nodwedd";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "Mae'r cais wedi methu!";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "Gofyn am Nodwedd";
+"select the impact" = "dewiswch yr effaith";
 
 /* Button to select the severity of the ticket */
 "Select ticket impact level" = "Dewiswch lefel effaith y tocyn";
@@ -106,18 +121,15 @@
 /* No comment provided by engineer. */
 "Thanks, your request was received!" = "Wedi cael eich cais, diolch!";
 
+/* No comment provided by engineer. */
+"Trouble logging in" = "Trafferth yn mewngofnodi";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "Does dim modd i ni gysylltu â Canvas. Ydych chi wedi gwneud yn siŵr bod gennych chi gysylltiad â’r rhyngrwyd?";
+
+/* Connectivity alert title */
+"Whoops!" = "Wps!";
+
 /* when the access token has been revoked */
 "Your login has expired or has been removed by the server. Please log in again." = "Mae eich manylion mewngofnodi wedi dod i ben neu wedi cael eu tynnu gan y gweinydd. Mewngofnodwch eto.";
-
-/* No comment provided by engineer. */
-"describe your problem" = "disgrifiwch eich problem";
-
-/* No comment provided by engineer. */
-"enter a subject" = "rhowch bwnc";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "tynnu defnyddiwr";
-
-/* No comment provided by engineer. */
-"select the impact" = "dewiswch yr effaith";
 

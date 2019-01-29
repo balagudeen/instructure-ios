@@ -17,11 +17,11 @@
 // @flow
 
 import React, { PureComponent } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, I18nManager } from 'react-native'
 
 export default class DisclosureIndicator extends PureComponent<{}> {
   render () {
-    return <View style={styles.disclosureIndicator} />
+    return <View style={[styles.disclosureIndicator, { transform: [{ rotate: I18nManager.isRTL ? '-45deg' : '45deg' }] }]} />
   }
 }
 
@@ -34,9 +34,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderRightWidth: 2,
     borderColor: '#c7c7cc',
-    transform: [{
-      rotate: '45deg',
-    }],
     alignSelf: 'center',
   },
 })

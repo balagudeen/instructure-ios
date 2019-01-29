@@ -17,7 +17,7 @@
 import UIKit
 
 open class SplitViewController: UISplitViewController {
-    public var shouldCollapseDetail: Bool = true
+    @objc public var shouldCollapseDetail: Bool = true
 
     public init() {
         super.init(nibName: nil, bundle: nil)
@@ -49,7 +49,7 @@ open class SplitViewController: UISplitViewController {
 }
 
 extension SplitViewController: UISplitViewControllerDelegate {
-    public func targetDisplayModeForAction(in svc: UISplitViewController) -> UISplitViewControllerDisplayMode {
+    public func targetDisplayModeForAction(in svc: UISplitViewController) -> UISplitViewController.DisplayMode {
         if svc.displayMode == .primaryOverlay || svc.displayMode == .primaryHidden {
             if let nav = svc.viewControllers.last as? UINavigationController {
                 nav.topViewController?.navigationItem.leftBarButtonItem = prettyDisplayModeButtonItem
@@ -70,7 +70,7 @@ extension SplitViewController: UISplitViewControllerDelegate {
 }
 
 extension UISplitViewController {
-    open var prettyDisplayModeButtonItem: UIBarButtonItem {
+    @objc open var prettyDisplayModeButtonItem: UIBarButtonItem {
         let defaultButton = self.displayModeButtonItem
         let collapse = displayMode == .primaryOverlay || displayMode == .primaryHidden
         let icon: UIImage = collapse ? .icon(.collapse) : .icon(.expand)

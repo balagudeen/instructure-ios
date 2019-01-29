@@ -20,9 +20,9 @@ import Foundation
 
 
 extension UIButton {
-    func makeItBlue() {
-        titleLabel?.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
-        setTitleColor(UIColor.white, for: UIControlState())
+    @objc func makeItBlue() {
+        titleLabel?.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
+        setTitleColor(UIColor.white, for: UIControl.State())
         backgroundColor = Brand.current.tintColor
         layer.cornerRadius = 5.0
     }

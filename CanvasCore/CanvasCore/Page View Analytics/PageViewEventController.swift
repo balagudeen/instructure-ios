@@ -21,7 +21,7 @@ typealias ErrorHandler = (Error?) -> Void
 
 @objc(PageViewEventController)
 open class PageViewEventController: NSObject {
-    open static let instance = PageViewEventController()
+    @objc open static let instance = PageViewEventController()
     private var requestManager = PageViewEventRequestManager()
     private let session = PageViewSession()
     
@@ -39,7 +39,7 @@ open class PageViewEventController: NSObject {
     }
     
     //  MARK: - Public
-    func logPageView(_ eventNameOrPath: String, attributes: [String: Any]? = nil, eventDurationInSeconds: TimeInterval = 0) {
+    @objc func logPageView(_ eventNameOrPath: String, attributes: [String: Any]? = nil, eventDurationInSeconds: TimeInterval = 0) {
         if(!appCanLogEvents()) { return }
         guard let authSession = CanvasKeymaster.the().currentClient?.authSession else {
             return
@@ -68,7 +68,7 @@ open class PageViewEventController: NSObject {
         Persistency.instance.addToQueue(event)
     }
 
-    public func userDidChange() {
+    @objc public func userDidChange() {
         sync({ [weak self] in
             self?.requestManager.cleanup()
             self?.session.resetSessionInfo()
@@ -99,9 +99,9 @@ open class PageViewEventController: NSObject {
     
     fileprivate func enableAppLifeCycleNotifications(_ enable: Bool) {
         if enable {
-            NotificationCenter.default.addObserver(self, selector: #selector(PageViewEventController.didEnterBackground(_:)), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(PageViewEventController.willEnterForeground(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(PageViewEventController.appWillTerminate(_:)), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(PageViewEventController.didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(PageViewEventController.willEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(PageViewEventController.appWillTerminate(_:)), name: UIApplication.willTerminateNotification, object: nil)
         } else {
             NotificationCenter.default.removeObserver(self)
         }
@@ -121,7 +121,7 @@ open class PageViewEventController: NSObject {
         return path
     }
     
-    func clipRnSpecialCaseSuffix(path: String) -> String {
+    @objc func clipRnSpecialCaseSuffix(path: String) -> String {
         guard let url = URL(string: path) else { return path }
         if(url.pathComponents.last == "rn") {
             return (path as NSString).deletingLastPathComponent
@@ -190,7 +190,7 @@ open class PageViewEventController: NSObject {
 
 // MARK: - RN Logger methods
 extension PageViewEventController {
-    open func allEvents() -> String {
+    @objc open func allEvents() -> String {
         let count = Persistency.instance.queueCount
         let events = Persistency.instance.batchOfEvents(count)
         let defaultReturnValue = "[]"
@@ -201,7 +201,7 @@ extension PageViewEventController {
     }
 
     //  MARK: - Dev menu
-    open func clearAllEvents(handler: (() -> Void)?) {
+    @objc open func clearAllEvents(handler: (() -> Void)?) {
         Persistency.instance.dequeue(Persistency.instance.queueCount) {
             handler?()
         }

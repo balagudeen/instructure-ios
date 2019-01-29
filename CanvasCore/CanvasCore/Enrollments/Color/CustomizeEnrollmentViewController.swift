@@ -41,8 +41,8 @@ open class CustomizeEnrollmentViewController: UIViewController {
         15: (.contextLightPink(), NSLocalizedString("LightPink", tableName: "Localizable", bundle: .core, value: "", comment: "LightPink course color button")),
     ]
 
-    let session: Session
-    let dataSource: EnrollmentsDataSource
+    @objc let session: Session
+    @objc let dataSource: EnrollmentsDataSource
     let context: ContextID
     
     @IBOutlet var courseColorButtons: [UIButton]!
@@ -66,7 +66,7 @@ open class CustomizeEnrollmentViewController: UIViewController {
         
         self.navigationItem.title = NSLocalizedString("Customize", tableName: "Localizable", bundle: .core, value: "", comment: "Header label for a screen that customizes a course")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped(_:)))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-0-[header]", options: NSLayoutFormatOptions(), metrics: nil, views: ["topGuide": self.topLayoutGuide, "header": self.header]))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-0-[header]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["topGuide": self.topLayoutGuide, "header": self.header]))
         
         for courseColorButton in self.courseColorButtons {
             courseColorButton.layer.cornerRadius = 4.0
@@ -80,7 +80,7 @@ open class CustomizeEnrollmentViewController: UIViewController {
         }
     }
     
-    func doneButtonTapped(_ sender: UIBarButtonItem) {
+    @objc func doneButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -138,10 +138,10 @@ open class CustomizeEnrollmentViewController: UIViewController {
                 if imageSize.width > targetWidth {
                     image = image?.resizedImage(CGSize(width: targetWidth, height: targetWidth))
                 }
-                button.setImage(image, for: UIControlState())
+                button.setImage(image, for: UIControl.State())
                 button.tintColor = UIColor.white
             } else {
-                button.setImage(nil, for: UIControlState())
+                button.setImage(nil, for: UIControl.State())
                 button.accessibilityLabel = a11yLabel
             }
         }

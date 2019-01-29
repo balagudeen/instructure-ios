@@ -31,7 +31,7 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet var deleteButton: UIButton!
     @IBOutlet weak var removedLabelHeightConstraint: NSLayoutConstraint!
     
-    var annotation = CanvadocsCommentReplyAnnotation()
+    @objc var annotation = CanvadocsCommentReplyAnnotation()
     var delegate: CommentTableViewCellDelegate?
     
     func set(annotation: CanvadocsCommentReplyAnnotation, delegate: CommentTableViewCellDelegate, metadata: CanvadocsAnnotationMetadata) {

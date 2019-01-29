@@ -35,9 +35,9 @@ func colorfulFavoriteViewModel(_ enrollment: Enrollment) -> ColorfulViewModel {
     return vm
 }
 
-open class EditFavoriteEnrollmentsViewController<T where T: Enrollment>: TableViewController {
+open class EditFavoriteEnrollmentsViewController<T>: TableViewController where T: Enrollment {
     let collection: FetchedCollection<T>
-    let session: Session
+    @objc let session: Session
     
     public init(session: Session, collection: FetchedCollection<T>, refresher: Refresher) throws {
         self.session = session
@@ -49,11 +49,11 @@ open class EditFavoriteEnrollmentsViewController<T where T: Enrollment>: TableVi
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss(_:)))
 
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50
     }
     
-    func dismiss(_ button: AnyObject?) {
+    @objc func dismiss(_ button: AnyObject?) {
         dismiss(animated: true, completion: nil)
     }
     

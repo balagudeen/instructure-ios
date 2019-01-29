@@ -23,8 +23,8 @@ import {
 
 import Screen from '../../routing/Screen'
 import Row from '../../common/components/rows/Row'
-import { featureFlags, exemptDomains, featureFlagEnabled, type FeatureFlagName } from '../../common/feature-flags'
-import { Heading1, Text } from '../../common/text'
+import { featureFlags, featureFlagEnabled, type FeatureFlagName } from '../../common/feature-flags'
+import { Text } from '../../common/text'
 
 function subtitle (flagName: FeatureFlagName) {
   const flag = featureFlags[flagName]
@@ -40,8 +40,6 @@ export default class FeatureFlags extends Component<any, any> {
         title='Feature Flags'
       >
         <ScrollView style={{ flex: 1, padding: 16 }}>
-          <Heading1>Always on for:</Heading1>
-          {exemptDomains.map(domain => <Text>{domain}</Text>)}
           {Object.keys(featureFlags).map(flagName => {
             return (
               <Row

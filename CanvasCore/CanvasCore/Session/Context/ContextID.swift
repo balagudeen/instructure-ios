@@ -110,7 +110,7 @@ extension ContextID {
     fileprivate static func parseContextAndID(_ path: String) -> (Context, String)? {
         let components = (path as NSString).pathComponents
         
-        let matches: [(Int, Context)] = components.enumerated().flatMap { (index, component) in
+        let matches: [(Int, Context)] = components.enumerated().compactMap { (index, component) in
                 return Context(pathComponent: component).map { (index, $0) }
             }
         

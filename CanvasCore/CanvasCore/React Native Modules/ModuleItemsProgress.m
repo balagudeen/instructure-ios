@@ -32,6 +32,12 @@ RCT_EXPORT_METHOD(viewedDiscussion:(NSString *)courseID discussionID:(NSString *
     [session postProgressDiscussionViewedWithCourseID:courseID discussionTopicID:discussionID];
 }
 
+RCT_EXPORT_METHOD(viewedPage:(NSString *)courseID pageURL:(NSString *)pageURL)
+{
+    Session *session = TheKeymaster.currentClient.authSession;
+    [session postProgressPageViewedWithCourseID:courseID pageURL:pageURL];
+}
+
 - (dispatch_queue_t)methodQueue {
     return dispatch_get_main_queue();
 }

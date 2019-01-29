@@ -17,9 +17,10 @@
     
 
 import Foundation
+import UIKit
 
 extension UIImage {
-    func imageScaledToSize(_ size: CGSize) -> UIImage {
+    @objc func imageScaledToSize(_ size: CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
         draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -27,7 +28,7 @@ extension UIImage {
         return newImage!
     }
 
-    func imageScaledByPercentage(_ percent: CGFloat) -> UIImage {
+    @objc func imageScaledByPercentage(_ percent: CGFloat) -> UIImage {
         let newSize = CGSize(width: size.width * percent, height: size.height * percent)
         return imageScaledToSize(newSize)
     }

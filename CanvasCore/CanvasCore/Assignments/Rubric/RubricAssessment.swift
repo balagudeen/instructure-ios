@@ -33,13 +33,13 @@ import Marshal
 
 
 extension RubricAssessment {
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let assessmentID: String = try json.stringID("id")
         let submissionID: String = try json.stringID("submissionID")
         return NSPredicate(format: "%K == %@ && %K == %@", "id", assessmentID, "submission.id", submissionID)
     }
     
-    public func updateValues(_ assessmentID: String, submission: Submission, json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ assessmentID: String, submission: Submission, json: JSONObject, inContext context: NSManagedObjectContext) throws {
         id = assessmentID
         comments = try json <| "comments"
         points = try json <| "points"

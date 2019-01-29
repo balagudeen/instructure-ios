@@ -17,31 +17,31 @@
 import UIKit
 
 public extension HelmSplitViewController {
-    var masterHelmNavigationController: UINavigationController? {
+    @objc var masterHelmNavigationController: UINavigationController? {
         get {
             return self.viewControllers.first as? UINavigationController
         }
     }
     
-    var detailHelmNavigationController: HelmNavigationController? {
+    @objc var detailHelmNavigationController: HelmNavigationController? {
         get {
             return detailNavigationController as? HelmNavigationController
         }
     }
     
-    var masterTopHelmViewController: HelmViewController? {
+    @objc var masterTopHelmViewController: HelmViewController? {
         get {
             return masterTopViewController as? HelmViewController
         }
     }
     
-    var detailTopHelmViewController: HelmViewController? {
+    @objc var detailTopHelmViewController: HelmViewController? {
         get {
             return detailTopViewController as? HelmViewController
         }
     }
     
-    func sourceController(moduleName: String) -> HelmViewController? {
+    @objc func sourceController(moduleName: String) -> HelmViewController? {
         if let detailTopViewController = detailTopHelmViewController, detailTopViewController.moduleName == moduleName {
             return detailTopViewController
         }
@@ -52,7 +52,7 @@ public extension HelmSplitViewController {
         return nil
     }
     
-    @discardableResult
+    @objc @discardableResult
     func primeEmptyDetailNavigationController() -> HelmNavigationController {
         let navigationController = HelmNavigationController()
         self.showDetailViewController(navigationController, sender: nil)

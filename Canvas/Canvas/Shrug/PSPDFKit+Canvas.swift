@@ -18,12 +18,11 @@
 
 import Foundation
 import PSPDFKit
-import CanvasCore
+import Core
 
 extension PSPDFKit {
-    static func license() {
-        
-        if let key = Secrets.fetch(.canvasPSPDFKit) {
+    @objc static func license() {
+        if let key = Secret.studentPSPDFKitLicense.string {
            setLicenseKey(key)
         }
     }

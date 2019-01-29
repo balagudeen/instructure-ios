@@ -20,7 +20,7 @@ import CanvasCore
 import CanvasKeymaster
 
 extension AppDelegate {
-    func routeToPushNotificationPayloadURL(_ payload: [AnyHashable: Any]) {
+    @objc func routeToPushNotificationPayloadURL(_ payload: [AnyHashable: Any]) {
         guard let urlString = payload["html_url"] as? String else { return }
         let actualURLString = swappedPushBetaURLString(urlString) ?? urlString
         if let notificationURL = URL(string: actualURLString) {

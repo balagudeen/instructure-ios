@@ -19,7 +19,7 @@ import CanvasKit
 import ReactiveObjC
 
 extension CKIClient {
-    func fetchAuthorizedSections(forCourseWithID courseID: String, completed: @escaping ([CKISection], Error?) -> Void) {
+    @objc func fetchAuthorizedSections(forCourseWithID courseID: String, completed: @escaping ([CKISection], Error?) -> Void) {
         var enrollments: [CKIEnrollment] = []
         
         // /api/v1/courses/<courseID>/enrollments?user_id=<userID>&type[]=TeacherEnrollment&type[]=TaEnrollment

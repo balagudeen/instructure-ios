@@ -24,7 +24,7 @@ export type Page = {
   updated_at: string,
   hide_from_students: boolean,
   editing_roles: string, // comma separated eg: "students,teachers"
-  body: string,
+  body: ?string,
   published: boolean,
   front_page: boolean,
   page_id: string,

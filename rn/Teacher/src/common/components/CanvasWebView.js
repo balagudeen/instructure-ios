@@ -24,7 +24,9 @@ import {
   View,
   Image,
 } from 'react-native'
+import SFSafariViewController from 'react-native-sfsafariviewcontroller'
 import { getSession } from '../../canvas-api/session'
+import canvas from '../../canvas-api'
 
 import isEqual from 'lodash/isEqual'
 
@@ -53,6 +55,7 @@ export type Props = {
   isOpaque?: boolean,
   baseURL?: ?string,
   heightCacheKey?: any,
+  openLinksInSafari?: boolean,
 }
 
 export type State = {
@@ -76,10 +79,15 @@ export default class CanvasWebView extends Component<Props, State> {
     this.props.onFinishedLoading && this.props.onFinishedLoading()
   }
 
-  onNavigation = (event: { nativeEvent: { url: string } }) => {
-    this.props.navigator.show(event.nativeEvent.url, {
-      deepLink: true,
-    })
+  onNavigation = async (event: { nativeEvent: { url: string } }) => {
+    if (this.props.openLinksInSafari) {
+      let result = await canvas.getAuthenticatedSessionURL(event.nativeEvent.url)
+      SFSafariViewController.open(result.data.session_url)
+    } else {
+      this.props.navigator.show(event.nativeEvent.url, {
+        deepLink: true,
+      })
+    }
   }
 
   onMessage = (event: { nativeEvent: Message }) => {
@@ -155,6 +163,10 @@ export default class CanvasWebView extends Component<Props, State> {
 
   evaluateJavaScript = (js: string): Promise<any> => {
     return CanvasWebViewManager.evaluateJavaScript(this.getWebViewHandle(), js)
+  }
+
+  stopRefreshing = () => {
+    return CanvasWebViewManager.stopRefreshing(this.getWebViewHandle())
   }
 
   getWebViewHandle = () => findNodeHandle(this.webView)

@@ -30,7 +30,7 @@ class QuestionDrawerViewController: UITableViewController {
         }
     }
     
-    var questionSelectionAction: (_ questionIndex: Int)->() = { _ in }
+    @objc var questionSelectionAction: (_ questionIndex: Int)->() = { _ in }
     
     fileprivate var flaggedQuestions: [SubmissionQuestion] = []
     fileprivate static let questionNumberFormatter: NumberFormatter = {
@@ -39,7 +39,7 @@ class QuestionDrawerViewController: UITableViewController {
         return formatter
     }()
     
-    var isLoading: Bool = false {
+    @objc var isLoading: Bool = false {
         didSet {
             updateLoadingQuestionView()
         }
@@ -145,7 +145,7 @@ extension QuestionDrawerViewController {
 // MARK: - Loading/Pagination
 
 extension QuestionDrawerViewController {
-    func updateLoadingQuestionView() {
+    @objc func updateLoadingQuestionView() {
         if !isViewLoaded {
             return
         }

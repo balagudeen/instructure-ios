@@ -19,7 +19,7 @@ import Marshal
 import CoreData
 
 extension ModuleItem {
-    public static func detailsCacheKey(context: NSManagedObjectContext, courseID: String, moduleItemID: String) -> String {
+    @objc public static func detailsCacheKey(context: NSManagedObjectContext, courseID: String, moduleItemID: String) -> String {
         return cacheKey(context, [courseID, moduleItemID])
     }
 

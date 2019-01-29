@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="5Yb-K9-qQn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="5Yb-K9-qQn">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -62,21 +61,21 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="student-logomark" translatesAutoresizingMaskIntoConstraints="NO" id="1vm-R0-Psi">
-                                <rect key="frame" x="156" y="181.5" width="64" height="64"/>
+                                <rect key="frame" x="155.5" y="151.5" width="64" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="FK4-Ys-zjk"/>
                                     <constraint firstAttribute="width" constant="64" id="xoG-ak-cct"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="student-logo" translatesAutoresizingMaskIntoConstraints="NO" id="ccE-pU-Nuj">
-                                <rect key="frame" x="110" y="182" width="156" height="123"/>
+                                <rect key="frame" x="109.5" y="152" width="156" height="123"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="156" id="MBU-55-UeH"/>
                                     <constraint firstAttribute="height" constant="123" id="iKo-lI-Da1"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQQ-hy-gpK">
-                                <rect key="frame" x="76.5" y="345" width="222" height="52"/>
+                                <rect key="frame" x="76.5" y="315" width="222" height="52"/>
                                 <color key="backgroundColor" red="0.0" green="0.55779391527175903" blue="0.8858979344367981" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="findMySchoolButton"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
@@ -89,7 +88,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="uhu-cX-e6O">
-                                <rect key="frame" x="41.5" y="413" width="293.5" height="58"/>
+                                <rect key="frame" x="41" y="383" width="293.5" height="58"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eln-Wg-hVk">
                                         <rect key="frame" x="0.0" y="0.0" width="293.5" height="29"/>
@@ -122,14 +121,22 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfK-AJ-pER" userLabel="Parent Needs Help Button">
+                                <rect key="frame" x="325" y="40" width="34" height="34"/>
+                                <color key="tintColor" red="0.65556353329999995" green="0.66614228490000005" blue="0.69804239270000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" image="icon_help"/>
+                                <connections>
+                                    <action selector="actionParentNeedsHelp:" destination="5Yb-K9-qQn" eventType="touchUpInside" id="oZD-u4-loY"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canvas Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yY-o5-DSG">
-                                <rect key="frame" x="265" y="40" width="94" height="18"/>
+                                <rect key="frame" x="226" y="40" width="94" height="34"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                 <color key="textColor" red="0.5869837403" green="0.62711781259999999" blue="0.65633940700000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OcW-eP-myo">
-                                <rect key="frame" x="16" y="34" width="212" height="30"/>
+                                <rect key="frame" x="16" y="42" width="212" height="30"/>
                                 <state key="normal" title="http://example.instructure.com"/>
                                 <connections>
                                     <action selector="customLoginAction:" destination="5Yb-K9-qQn" eventType="touchUpInside" id="ixi-9E-vzY"/>
@@ -139,24 +146,25 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="zQQ-hy-gpK" firstAttribute="centerX" secondItem="gDM-5n-uiy" secondAttribute="centerX" id="2RM-Tw-LRq"/>
-                            <constraint firstItem="7yY-o5-DSG" firstAttribute="trailing" secondItem="gDM-5n-uiy" secondAttribute="trailingMargin" id="4YE-jP-LXI"/>
+                            <constraint firstItem="rfK-AJ-pER" firstAttribute="top" secondItem="mR3-fi-QYq" secondAttribute="bottom" constant="20" id="57f-yz-N7S"/>
+                            <constraint firstItem="OcW-eP-myo" firstAttribute="centerY" secondItem="rfK-AJ-pER" secondAttribute="centerY" id="6Lq-QF-Bgw"/>
                             <constraint firstAttribute="trailing" secondItem="H37-HX-EIG" secondAttribute="trailing" priority="750" id="Ah0-ci-Fae"/>
                             <constraint firstAttribute="centerX" secondItem="1vm-R0-Psi" secondAttribute="centerX" id="CF8-nR-W9Z"/>
-                            <constraint firstItem="7yY-o5-DSG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gDM-5n-uiy" secondAttribute="leadingMargin" constant="16" id="FfX-Xp-v2n"/>
-                            <constraint firstItem="OcW-eP-myo" firstAttribute="centerY" secondItem="7yY-o5-DSG" secondAttribute="centerY" id="Gcf-XR-fLo"/>
                             <constraint firstItem="zQQ-hy-gpK" firstAttribute="top" secondItem="ccE-pU-Nuj" secondAttribute="bottom" constant="40" id="OuW-Bf-cNo"/>
                             <constraint firstItem="1vm-R0-Psi" firstAttribute="centerY" secondItem="gDM-5n-uiy" secondAttribute="centerY" priority="999" id="P2e-Pn-vw7"/>
                             <constraint firstItem="uhu-cX-e6O" firstAttribute="top" secondItem="zQQ-hy-gpK" secondAttribute="bottom" constant="16" id="R59-8B-eKm"/>
                             <constraint firstItem="OcW-eP-myo" firstAttribute="leading" secondItem="gDM-5n-uiy" secondAttribute="leadingMargin" id="TOx-93-am3"/>
+                            <constraint firstItem="7yY-o5-DSG" firstAttribute="centerY" secondItem="rfK-AJ-pER" secondAttribute="centerY" id="TyI-2U-bvq"/>
                             <constraint firstItem="uhu-cX-e6O" firstAttribute="centerX" secondItem="gDM-5n-uiy" secondAttribute="centerX" id="UQm-sn-CHa"/>
+                            <constraint firstItem="rfK-AJ-pER" firstAttribute="leading" secondItem="7yY-o5-DSG" secondAttribute="trailing" constant="5" id="X4u-Rn-Pap"/>
                             <constraint firstItem="H37-HX-EIG" firstAttribute="centerX" secondItem="gDM-5n-uiy" secondAttribute="centerX" id="bPh-kM-GCA"/>
-                            <constraint firstItem="7yY-o5-DSG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OcW-eP-myo" secondAttribute="trailing" constant="8" id="cvY-7Y-FO5"/>
                             <constraint firstItem="H37-HX-EIG" firstAttribute="leading" secondItem="gDM-5n-uiy" secondAttribute="leading" priority="750" id="e5Q-Ul-fEJ"/>
-                            <constraint firstItem="ccE-pU-Nuj" firstAttribute="centerY" secondItem="gDM-5n-uiy" secondAttribute="centerY" constant="-90" id="fOU-Sa-e1m"/>
-                            <constraint firstItem="1vm-R0-Psi" firstAttribute="centerY" secondItem="gDM-5n-uiy" secondAttribute="centerY" constant="-120" id="j9k-HU-dtW"/>
+                            <constraint firstItem="ccE-pU-Nuj" firstAttribute="centerY" secondItem="gDM-5n-uiy" secondAttribute="centerY" constant="-120" id="fOU-Sa-e1m"/>
+                            <constraint firstItem="1vm-R0-Psi" firstAttribute="centerY" secondItem="gDM-5n-uiy" secondAttribute="centerY" constant="-150" id="j9k-HU-dtW"/>
                             <constraint firstAttribute="bottom" secondItem="H37-HX-EIG" secondAttribute="bottom" priority="750" id="jPY-DP-Mvq"/>
                             <constraint firstItem="7yY-o5-DSG" firstAttribute="top" secondItem="mR3-fi-QYq" secondAttribute="bottom" constant="20" id="s9P-dN-38J"/>
                             <constraint firstItem="ccE-pU-Nuj" firstAttribute="centerX" secondItem="gDM-5n-uiy" secondAttribute="centerX" id="vUa-Gg-IUQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rfK-AJ-pER" secondAttribute="trailing" id="zWi-1i-Suc"/>
                         </constraints>
                     </view>
                     <connections>
@@ -168,12 +176,13 @@
                         <outlet property="fullLogoImageView" destination="ccE-pU-Nuj" id="ZRj-BM-QHN"/>
                         <outlet property="logoImageStageTwoConstraint" destination="j9k-HU-dtW" id="x0a-oY-Dkj"/>
                         <outlet property="logoImageView" destination="1vm-R0-Psi" id="Mnw-nO-1Gw"/>
+                        <outlet property="parentNeedsHelpButton" destination="rfK-AJ-pER" id="3Cj-oX-l8C"/>
                         <outlet property="whatsNewContainer" destination="vv8-wU-xnO" id="L28-Zy-A6T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QuM-tm-WMP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-339.5" y="40.5"/>
+            <point key="canvasLocation" x="-543.20000000000005" y="36.431784107946029"/>
         </scene>
         <!--Domain Suggestion Table View Controller-->
         <scene sceneID="0hJ-Us-Xnk">
@@ -235,7 +244,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cw3-wa-jL1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="820" y="41"/>
+            <point key="canvasLocation" x="1312" y="36.881559220389811"/>
         </scene>
         <!--Multi User Table View Controller-->
         <scene sceneID="kwl-75-swf">
@@ -252,7 +261,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="MultiUserCell" id="kxs-mq-jpv" customClass="CKMMultiUserTableViewCell">
-                                <rect key="frame" x="0.0" y="29" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="30" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kxs-mq-jpv" id="ZBK-5X-rvS">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
@@ -271,7 +280,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WQX-ky-QFW">
-                                            <rect key="frame" x="16" y="12.5" width="34" height="34"/>
+                                            <rect key="frame" x="16" y="13" width="34" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="34" id="KKS-Cq-gDo"/>
                                                 <constraint firstAttribute="height" constant="34" id="SWl-hU-k7p"/>
@@ -316,7 +325,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bAi-ks-u3W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139.5" y="649.5"/>
+            <point key="canvasLocation" x="223.19999999999999" y="584.25787106446785"/>
         </scene>
         <!--Domain Search View Controller-->
         <scene sceneID="CSi-Cj-kze">
@@ -429,11 +438,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KXy-dV-H6m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="299.5" y="40.5"/>
+            <point key="canvasLocation" x="479.19999999999999" y="36.431784107946029"/>
         </scene>
     </scenes>
     <resources>
         <image name="Arrow-Back.png" width="13" height="24"/>
+        <image name="icon_help" width="34" height="34"/>
         <image name="spinner-icon" width="80" height="80"/>
         <image name="student-logo" width="156" height="123"/>
         <image name="student-logomark" width="64" height="64"/>

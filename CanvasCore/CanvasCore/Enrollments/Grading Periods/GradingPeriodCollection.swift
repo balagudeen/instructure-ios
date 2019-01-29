@@ -56,9 +56,9 @@ import Result
  A collection of GradingPeriodItems where the first row in the first section is 'All'.
  */
 open class GradingPeriodCollection: CanvasCore.Collection {
-    open let selectedGradingPeriod: Property<GradingPeriodItem>
+    public let selectedGradingPeriod: Property<GradingPeriodItem>
 
-    open let collectionUpdates: Signal<[CollectionUpdate<GradingPeriodItem>], NoError>
+    public let collectionUpdates: Signal<[CollectionUpdate<GradingPeriodItem>], NoError>
     let updatesObserver: Observer<[CollectionUpdate<GradingPeriodItem>], NoError>
 
     fileprivate let gradingPeriods: FetchedCollection<GradingPeriod>

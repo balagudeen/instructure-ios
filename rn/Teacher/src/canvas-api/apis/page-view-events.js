@@ -48,6 +48,7 @@ export async function sendEvents (eventsAsJsonString: string, endpointInfo: {[st
         user_id: attributes.user_id,
         session_id: attributes.session_id,
         agent: attributes.agent,
+        guid: e.guid,
       },
       signedProperties: propsToken,
     }

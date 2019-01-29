@@ -84,6 +84,11 @@ export class GradeTab extends Component<GradeTabProps, GradeTabState> {
 
   getCurrentScore = () => {
     return Object.keys(this.state.ratings)
+      .filter(id => {
+        if (!this.props.rubricItems) return true
+        let item = this.props.rubricItems.find(item => item.id === id)
+        return item && !item.ignore_for_scoring
+      })
       .reduce((sum, key) => sum + (this.state.ratings[key].points || 0), 0)
   }
 
@@ -124,7 +129,7 @@ export class GradeTab extends Component<GradeTabProps, GradeTabState> {
           <View style={styles.rubricHeader}>
             <View>
               <Heading1>{i18n('Rubric')}</Heading1>
-              <Text style={styles.pointsText}>
+              <Text testID='rubric-score' style={styles.pointsText}>
                 {
                   i18n('{points, number} out of {totalPoints, number}', {
                     points: this.getCurrentScore(),

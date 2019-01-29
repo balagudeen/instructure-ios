@@ -50,4 +50,11 @@ export type ApiPromise<T> = {
   request?: XMLHttpRequest,
 } & Promise<ApiResponse<T>>
 
+export type ApiPromiseRejection = {
+  config: ApiConfig,
+  error: Error,
+  request: XMLHttpRequest,
+  response: ?ApiResponse<Object>,
+} & Error
+
 export type CanvasApi = typeof canvas

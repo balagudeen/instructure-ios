@@ -26,15 +26,15 @@ import CanvasCore
 
 class CourseSyllabusViewController: UIViewController {
 
-    let courseID: String
-    let studentID: String
-    let session: Session
-    let whizzyWigView: WhizzyWigView
+    @objc let courseID: String
+    @objc let studentID: String
+    @objc let session: Session
+    @objc let whizzyWigView: WhizzyWigView
     internal var refresher: Refresher?
     
     fileprivate var course: Course?
 
-    init(courseID: String, studentID: String, session: Session) {
+    @objc init(courseID: String, studentID: String, session: Session) {
         self.courseID = courseID
         self.studentID = studentID
         self.session = session
@@ -68,18 +68,18 @@ class CourseSyllabusViewController: UIViewController {
 
         whizzyWigView.frame = view.bounds
         view.addSubview(whizzyWigView)
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[whizzy]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["whizzy": whizzyWigView]))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[whizzy]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["whizzy": whizzyWigView]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[whizzy]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["whizzy": whizzyWigView]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[whizzy]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["whizzy": whizzyWigView]))
         
         configureRefresher()
         
         refresher?.refresh(false)
     
     }
-    func configureRefresher() {
+    @objc func configureRefresher() {
         guard let r = refresher else { return }
         
-        r.refreshControl.addTarget(self, action: #selector(CourseSyllabusViewController.refresh), for: UIControlEvents.valueChanged)
+        r.refreshControl.addTarget(self, action: #selector(CourseSyllabusViewController.refresh), for: UIControl.Event.valueChanged)
         
         whizzyWigView.scrollView.addSubview(r.refreshControl)
         
@@ -90,7 +90,7 @@ class CourseSyllabusViewController: UIViewController {
         }
     }
     
-    internal func refresh() {
+    @objc internal func refresh() {
         refresher?.refresh(true)
     }
 }

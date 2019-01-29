@@ -26,9 +26,14 @@
 @property(nonatomic, copy) NSString *primaryButtonTextColor;
 @property(nonatomic, copy) NSString *secondaryButtonBackgroundColor;
 @property(nonatomic, copy) NSString *secondaryButtonTextColor;
+@property(nonatomic, copy) NSString *navigationBadgeBackgroundColor;
+@property(nonatomic, copy) NSString *navigationBadgeTextColor;
 @property(nonatomic, copy) NSString *navigationBackground;
 @property(nonatomic, copy) NSString *navigationButtonColor;
+@property(nonatomic, copy) NSString *navigationButtonColorActive;
 @property(nonatomic, copy) NSString *navigationTextColor;
+@property(nonatomic, copy) NSString *navigationTextColorActive;
+@property(nonatomic, copy) NSString *headerImageBackground;
 @property(nonatomic, copy) NSString *headerImageURL;
 
 @end

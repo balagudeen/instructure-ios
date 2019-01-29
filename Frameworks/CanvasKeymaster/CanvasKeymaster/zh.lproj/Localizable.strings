@@ -25,17 +25,26 @@
 /* No comment provided by engineer. */
 "Choose One" = "选择一个";
 
+/* Connectivity alert close text */
+"Close" = "关闭";
+
 /* No comment provided by engineer. */
 "Continue Editing" = "继续编辑";
 
 /* No comment provided by engineer. */
 "Describe the feature here" = "在此处描述功能";
 
+/* No comment provided by engineer. */
+"describe your problem" = "描述您的问题";
+
 /* Dismiss login expired/revoked alert button */
 "Dismiss" = "解散";
 
 /* No comment provided by engineer. */
 "Emergency" = "紧急";
+
+/* No comment provided by engineer. */
+"enter a subject" = "输入主题";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "输入票描述";
@@ -76,14 +85,20 @@
 /* No comment provided by engineer. */
 "OK" = "确定";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "删除用户";
+
 /* No comment provided by engineer. */
 "Report a Problem" = "报告问题";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "请求功能";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "请求失败！";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "请求功能";
+"select the impact" = "选择影响";
 
 /* Button to select the severity of the ticket */
 "Select ticket impact level" = "选择票影响级别";
@@ -106,18 +121,15 @@
 /* No comment provided by engineer. */
 "Thanks, your request was received!" = "谢谢，您的请求被接受！";
 
+/* No comment provided by engineer. */
+"Trouble logging in" = "在登录时遇到问题";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "我们无法连接到Canvas。您是否检查了网络连接？";
+
+/* Connectivity alert title */
+"Whoops!" = "糟糕！";
+
 /* when the access token has been revoked */
 "Your login has expired or has been removed by the server. Please log in again." = "您的登录已过期或已经被服务器删除。请重新登录。";
-
-/* No comment provided by engineer. */
-"describe your problem" = "描述您的问题";
-
-/* No comment provided by engineer. */
-"enter a subject" = "输入主题";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "删除用户";
-
-/* No comment provided by engineer. */
-"select the impact" = "选择影响";
 

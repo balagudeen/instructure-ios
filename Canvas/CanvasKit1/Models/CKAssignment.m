@@ -81,6 +81,9 @@
     else if ([scoringTypeString isEqual:@"letter_grade"]) {
         self.scoringType = CKAssignmentScoringTypeLetter;
     }
+    else if ([scoringTypeString isEqual:@"gpa_scale"]) {
+        self.scoringType = CKAssignmentScoringTypeGPA;
+    }
     
     self.pointsPossible = [info[@"points_possible"] doubleValue];
     
@@ -203,6 +206,10 @@
 
 - (NSString *)gradeStringForSubmission:(CKSubmission *)submission usingEnteredGrade:(BOOL)useEnteredGrade
 {
+    if ([submission.excused boolValue]) {
+        return NSLocalizedString(@"Excused", nil);
+    }
+
     NSString *submissionGrade = useEnteredGrade ? submission.enteredGrade : submission.grade ?: @"—";
     
     switch (self.scoringType) {
@@ -221,6 +228,7 @@
             return submissionGrade;
             break;
         }
+        case CKAssignmentScoringTypeGPA:
         case CKAssignmentScoringTypeLetter:
             [self setAccessibilityLabel:[NSString stringWithFormat:@"%@", submissionGrade]];
             return submissionGrade;
@@ -230,8 +238,6 @@
             return [NSString stringWithFormat:@"%@%%", submissionGrade];
             break;
         case CKAssignmentScoringTypePoints: {
-            [self setAccessibilityLabel:[NSString stringWithFormat:@"%@ %@ %g", submissionGrade, NSLocalizedString(@"out of", @"Accessibility label for out or grading style"), self.pointsPossible]];
-
             NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
             [formatter setMaximumFractionDigits:2];
             formatter.numberStyle = NSNumberFormatterDecimalStyle;
@@ -242,8 +248,12 @@
             NSNumber *gradeNumber = [formatter numberFromString:submissionGrade];
             [formatter setLocale:[NSLocale currentLocale]];
 
+            NSNumber *pointsPossible = [NSNumber numberWithDouble:self.pointsPossible];
+
+            [self setAccessibilityLabel:[NSString stringWithFormat:@"%@ %@ %@", submissionGrade, NSLocalizedString(@"out of", @"Accessibility label for out or grading style"), [formatter stringFromNumber:pointsPossible]]];
+
             if (gradeNumber) {
-                return [NSString stringWithFormat:@"%@/%g", [formatter stringFromNumber:gradeNumber], self.pointsPossible];
+                return [NSString stringWithFormat:@"%@/%@", [formatter stringFromNumber:gradeNumber], [formatter stringFromNumber:pointsPossible]];
             } else {
                 // Grade is not a number
                 // Most likely because it is a letter and we are using a GPA scale.

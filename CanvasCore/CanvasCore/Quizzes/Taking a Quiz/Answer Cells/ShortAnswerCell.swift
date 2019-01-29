@@ -24,17 +24,17 @@ class ShortAnswerCell: UITableViewCell {
     @IBOutlet fileprivate var textFieldBox: UIView!
     @IBOutlet var textField: UITextField!
     
-    var doneEditing: (String)->() = { _ in }
+    @objc var doneEditing: (String)->() = { _ in }
     
-    class var ReuseID: String {
+    @objc class var ReuseID: String {
         return "ShortAnswerCellReuseID"
     }
     
-    class var Nib: UINib {
+    @objc class var Nib: UINib {
         return UINib(nibName: "ShortAnswerCell", bundle: Bundle(for: self.classForCoder()))
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
@@ -68,7 +68,11 @@ extension ShortAnswerCell: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        doneEditing(textField.text ?? "")
+        var text = textField.text ?? ""
+        if textField.keyboardType == .numbersAndPunctuation {
+            while text.last == "." { text = String(text.dropLast()) }
+        }
+        doneEditing(text)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

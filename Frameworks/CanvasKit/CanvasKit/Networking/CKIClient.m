@@ -37,6 +37,7 @@ NSString *const CKIClientAccessTokenExpiredNotification = @"CKIClientAccessToken
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSString *clientSecret;
 @property (nonatomic, strong) NSString *accessToken;
+@property (nonatomic, strong) NSString *effectiveLocale;
 @property (nonatomic, strong) CKIUser *currentUser;
 @property (nonatomic, assign) BOOL invalidated;
 @property (nonatomic, strong) NSString *authenticationProvider;
@@ -181,10 +182,9 @@ NSString *const CKIClientAccessTokenExpiredNotification = @"CKIClientAccessToken
 {
     NSAssert(method < CKIAuthenticationMethodCount, @"Invalid authentication method");
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/login/oauth2/auth?client_id=%@&response_type=code&redirect_uri=https://canvas/login&mobile=1&session_locale=%@",
+    NSString *urlString = [NSString stringWithFormat:@"%@/login/oauth2/auth?client_id=%@&response_type=code&redirect_uri=https://canvas/login&mobile=1",
                            self.baseURL.absoluteString,
-                           self.clientID,
-                           [self sessionLocale]];
+                           self.clientID];
     
     if (method == CKIAuthenticationMethodForcedCanvasLogin) {
         urlString = [urlString stringByAppendingString:@"&canvas_login=1"];
@@ -277,12 +277,16 @@ NSString *const CKIClientAccessTokenExpiredNotification = @"CKIClientAccessToken
 
 - (RACSignal *)fetchResponseAtPath:(NSString *)path parameters:(NSDictionary *)parameters modelClass:(Class)modelClass context:(id<CKIContext>)context
 {
+    return [self fetchResponseAtPath:path parameters:parameters modelClass:modelClass context:context exhaust:YES];
+}
+
+- (RACSignal *)fetchResponseAtPath:(NSString *)path parameters:(NSDictionary *)parameters modelClass:(Class)modelClass context:(id<CKIContext>)context exhaust:(BOOL)exhaust
+{
     NSAssert([modelClass isSubclassOfClass:[CKIModel class]], @"Can only fetch CKIModels");
 
     NSValueTransformer *transformer = [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:modelClass];
-    return [self fetchResponseAtPath:path parameters:parameters jsonAPIKey:[modelClass keyForJSONAPIContent] transformer:transformer context:context];
+    return [self fetchResponseAtPath:path parameters:parameters jsonAPIKey:[modelClass keyForJSONAPIContent] transformer:transformer context:context exhaust:exhaust];
 }
-
 
 - (RACSignal *)fetchResponseAtPath:(NSString *)path parameters:(NSDictionary *)parameters transformer:(NSValueTransformer *)transformer context:(id<CKIContext>)context
 {
@@ -290,6 +294,11 @@ NSString *const CKIClientAccessTokenExpiredNotification = @"CKIClientAccessToken
 }
 
 - (RACSignal *)fetchResponseAtPath:(NSString *)path parameters:(NSDictionary *)parameters jsonAPIKey:(NSString *)jsonAPIKey transformer:(NSValueTransformer *)transformer context:(id<CKIContext>)context
+{
+    return [self fetchResponseAtPath:path parameters:parameters jsonAPIKey:jsonAPIKey transformer:transformer context:context exhaust:YES];
+}
+
+- (RACSignal *)fetchResponseAtPath:(NSString *)path parameters:(NSDictionary *)parameters jsonAPIKey:(NSString *)jsonAPIKey transformer:(NSValueTransformer *)transformer context:(id<CKIContext>)context exhaust:(BOOL)exhaust
 {
     NSParameterAssert(path);
     NSParameterAssert(transformer);
@@ -328,7 +337,7 @@ NSString *const CKIClientAccessTokenExpiredNotification = @"CKIClientAccessToken
             RACSignal *thisPageSignal = [self parseResponseWithTransformer:transformer fromJSON:responseObject context:context];
             RACSignal *nextPageSignal = [RACSignal empty];
 
-            if (nextPage && ![currentPage isEqual:lastPage]) {
+            if (nextPage && ![currentPage isEqual:lastPage] && exhaust) {
                 nextPageSignal = [self fetchResponseAtPath:nextPage.relativeString parameters:newParameters jsonAPIKey:jsonAPIKey transformer:transformer context:context];
             }
 
@@ -486,6 +495,7 @@ NSString *const CKIClientAccessTokenExpiredNotification = @"CKIClientAccessToken
         return [self postAuthCode:temporaryCode];
     }] flattenMap:^__kindof RACStream * _Nullable(NSDictionary *responseObject) {
         self.accessToken = responseObject[@"access_token"];
+        self.effectiveLocale = responseObject[@"user"][@"effective_locale"];
         return [self fetchCurrentUser];
     }] map:^id(CKIUser *user) {
         self.currentUser = user;

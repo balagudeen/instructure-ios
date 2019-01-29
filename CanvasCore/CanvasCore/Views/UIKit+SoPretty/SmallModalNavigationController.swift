@@ -54,7 +54,7 @@ open class SmallModalNavigationController: UINavigationController, UIViewControl
         view.clipsToBounds = true
     }
     
-    let txDelegate = FadeInOutTransition()
+    @objc let txDelegate = FadeInOutTransition()
     open func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return txDelegate
     }
@@ -69,7 +69,7 @@ class FadeInOutTransition: NSObject, UIViewControllerAnimatedTransitioning {
     
     fileprivate let duration = 0.2
     
-    let shadowView: UIView = {
+    @objc let shadowView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0, alpha: 0.2)
         return view
@@ -79,7 +79,7 @@ class FadeInOutTransition: NSObject, UIViewControllerAnimatedTransitioning {
         return duration
     }
     
-    func transitionToModal(_ modal: SmallModalNavigationController, inContext context: UIViewControllerContextTransitioning) {
+    @objc func transitionToModal(_ modal: SmallModalNavigationController, inContext context: UIViewControllerContextTransitioning) {
         let view = modal.view
         let containerView = context.containerView
         let containerBounds = containerView.bounds
@@ -107,7 +107,7 @@ class FadeInOutTransition: NSObject, UIViewControllerAnimatedTransitioning {
         }
     }
     
-    func transitionFromModel(_ modal: SmallModalNavigationController, inContext context: UIViewControllerContextTransitioning) {
+    @objc func transitionFromModel(_ modal: SmallModalNavigationController, inContext context: UIViewControllerContextTransitioning) {
         let view = modal.view
         
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseIn, animations: {

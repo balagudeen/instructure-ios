@@ -275,15 +275,8 @@
 }
 
 - (void)openCanvasURL:(NSURL *)url withOptions:(NSDictionary *)options {
-    // This still has the weakness of two people logged into the app with the same domain
-    // That should occur much less frequently with push tokens being deregistered correctly, though
-    if ([TheKeymaster currentClientHasHost:url.host]) {
-        UIViewController *root = UIApplication.sharedApplication.windows[0].rootViewController;
-        [self routeFromController:root.currentLeaf toURL:url withOptions:options];
-    } else {
-        // If routing to a different domain than the user that's logged in currently, open the login screen so they can select the correct user
-        [TheKeymaster switchUser];
-    }
+    UIViewController *root = UIApplication.sharedApplication.windows[0].rootViewController;
+    [self routeFromController:root.currentLeaf toURL:url withOptions:options];
 }
 
 # pragma mark - Parsing

@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, CBIPeopleTabSection) {
 {
     self = [super init];
     if (self) {
-        self.viewControllerTitle = NSLocalizedString(@"People", @"Title for the people view");
+        self.viewControllerTitle = NSLocalizedStringFromTableInBundle(@"People", nil, [NSBundle bundleForClass:self.class], @"Title for the people view");
         self.collectionController = [MLVCCollectionController collectionControllerGroupingByBlock:^id(CBIPeopleViewModel *viewModel) {
             CKIUser *user = (CKIUser *) viewModel.model;
             NSArray *enrollments = user.enrollments;
@@ -77,12 +77,13 @@ typedef NS_ENUM(NSInteger, CBIPeopleTabSection) {
 
 - (NSString *)titleForSection:(NSInteger)section
 {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     NSDictionary *sectionTitleMap = @{
-            @(CBIPeopleTabSectionTeacher) : NSLocalizedString(@"Teachers", nil),
-            @(CBIPeopleTabSectionTA) : NSLocalizedString(@"TAs",nil),
-            @(CBIPeopleTabSectionStudent) : NSLocalizedString(@"Student",nil),
-            @(CBIPeopleTabSectionObserver) : NSLocalizedString(@"Observer",nil),
-            @(CBIPeopleTabSectionOther) : NSLocalizedString(@"Other",nil)
+            @(CBIPeopleTabSectionTeacher) : NSLocalizedStringFromTableInBundle(@"Teachers", nil, bundle, nil),
+            @(CBIPeopleTabSectionTA) : NSLocalizedStringFromTableInBundle(@"TAs", nil, bundle, nil),
+            @(CBIPeopleTabSectionStudent) : NSLocalizedStringFromTableInBundle(@"Student", nil, bundle, nil),
+            @(CBIPeopleTabSectionObserver) : NSLocalizedStringFromTableInBundle(@"Observer", nil, bundle, nil),
+            @(CBIPeopleTabSectionOther) : NSLocalizedStringFromTableInBundle(@"Other", nil, bundle, nil)
     };
     NSString *title = sectionTitleMap[@(section)];
     NSAssert(title, @"Asked for title of an impossible section");

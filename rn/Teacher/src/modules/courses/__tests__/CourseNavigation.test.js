@@ -438,7 +438,13 @@ describe('mapStateToProps', () => {
   describe('external tools', () => {
     function assertExternalToolTabs () {
       const course = template.course({ id: 1 })
-      const tabs = { tabs: [template.tab({ id: 'context_external_tool_1234' })], pending: 0 }
+      const tabs = {
+        tabs: [
+          template.tab({ id: 'context_external_tool_1234' }),
+          template.tab({ id: 'context_external_tool_12345', hidden: true }),
+        ],
+        pending: 0,
+      }
       const state = template.appState({
         entities: {
           courses: {
@@ -458,7 +464,7 @@ describe('mapStateToProps', () => {
 
       const props = mapStateToProps(state, { courseID: '1' })
 
-      expect(props).toMatchObject({ tabs: tabs.tabs })
+      expect(props).toMatchObject({ tabs: [tabs.tabs[0]] })
     }
 
     it('includes them in student', () => {

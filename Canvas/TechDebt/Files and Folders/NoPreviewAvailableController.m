@@ -39,7 +39,7 @@
     
     label.autoresizingMask = (UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
     
-    NSString *explanation = NSLocalizedString(@"This file cannot be displayed on this device.", @"Text indicating a file cannot be previewed");
+    NSString *explanation = NSLocalizedStringFromTableInBundle(@"This file cannot be displayed on this device.", nil, [NSBundle bundleForClass:self.class], @"Text indicating a file cannot be previewed");
     NSString *text = [NSString stringWithFormat:@"%@\n\n%@", self.url.lastPathComponent, explanation];
     label.text = text;
     label.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];

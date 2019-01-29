@@ -26,7 +26,7 @@ let pageKitModelName = "PageKit"
 let pageKitStoreName = "PageKit"
 
 extension Session {
-    func pagesManagedObjectContext() throws -> NSManagedObjectContext {
+    @objc func pagesManagedObjectContext() throws -> NSManagedObjectContext {
         guard let model = NSManagedObjectModel(named: pageKitModelName, inBundle: Bundle(for: Page.self))?.mutableCopy() as? NSManagedObjectModel else {
             ❨╯°□°❩╯⌢"Could not load Page model in Session+Page extension"
         }

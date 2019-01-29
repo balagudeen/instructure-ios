@@ -119,7 +119,7 @@ export class Dashboard extends React.Component<Props, State> {
     noCoursesLayout: null,
   }
 
-  componentWillReceiveProps (newProps: Props) {
+  async componentWillReceiveProps (newProps: Props) {
     if (newProps.isFullDashboard &&
         !newProps.pending &&
         !newProps.error &&
@@ -312,14 +312,6 @@ export class Dashboard extends React.Component<Props, State> {
 
     let sections = []
 
-    // Announcements
-    sections.push({
-      sectionID: 'dashboard.announcements',
-      data: this.props.announcements,
-      renderItem: this.renderGlobalAnnouncement,
-      keyExtractor: ({ id }: AccountNotification) => id,
-    })
-
     // Course Invites
     if (this.props.enrollments.length > 0) {
       let courseInvites = this.props.enrollments.filter(en => {
@@ -332,6 +324,14 @@ export class Dashboard extends React.Component<Props, State> {
         keyExtractor: ({ id }: Invite) => `enrollment-${id}`,
       })
     }
+
+    // Announcements
+    sections.push({
+      sectionID: 'dashboard.announcements',
+      data: this.props.announcements,
+      renderItem: this.renderGlobalAnnouncement,
+      keyExtractor: ({ id }: AccountNotification) => id,
+    })
 
     // Courses
     if (this.props.courses.length > 0) {
@@ -531,6 +531,7 @@ export function mapStateToProps (isFullDashboard: boolean) {
       const blacklist = ['invited', 'rejected'] // except invited and rejected
       const filterFunc = (concluded: boolean) => {
         return (c: CourseState) => {
+          if (!c.course.enrollments) return false
           if (blacklist.includes(c.course.enrollments[0].enrollment_state)) return false
           return concluded ? isCourseConcluded(c.course) : !isCourseConcluded(c.course)
         }
@@ -557,8 +558,10 @@ export function mapStateToProps (isFullDashboard: boolean) {
     let groups = Object.keys(state.entities.groups)
       .filter(id => {
         if (state.entities.groups[id] && state.entities.groups[id].group) {
-          let group = state.entities.groups[id].group
-          return !group.concluded && (!group.course_id || (group.course_id && state.entities.courses[group.course_id]))
+          const group = state.entities.groups[id].group
+          const course = group.course_id && state.entities.courses[group.course_id]
+          const courseAvailable = course && !course.course.access_restricted_by_date
+          return !group.concluded && (!group.course_id || courseAvailable)
         } else {
           return false
         }

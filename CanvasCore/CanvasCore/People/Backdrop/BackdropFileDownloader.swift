@@ -26,7 +26,7 @@ private let backdropSessionIdentifier = "backdropSessionIdentifier"
 
 internal class BackdropFileDownloader: NSObject {
     
-    static let sharedDownloader: BackdropFileDownloader = BackdropFileDownloader()
+    @objc static let sharedDownloader: BackdropFileDownloader = BackdropFileDownloader()
     
     let statusChangedSignal: Signal<BackdropFile, NoError>
     let observer: Observer<BackdropFile, NoError>
@@ -41,7 +41,7 @@ internal class BackdropFileDownloader: NSObject {
     
     fileprivate var progressForType = [BackdropFile: Float]()
     
-    internal func requestAllImages() {
+    @objc internal func requestAllImages() {
         let shapes = (1...numShapeBackdrops).map { n in
             return BackdropFile(type: .shapes, n: n)
         }
@@ -90,14 +90,14 @@ internal class BackdropFileDownloader: NSObject {
         }
     }
     
-    func cancelAllFetches() {
+    @objc func cancelAllFetches() {
         disposable = nil
     }
 
     // ---------------------------------------------
     // MARK: - FRC-like Functionality
     // ---------------------------------------------
-    internal func numberOfSection() -> Int {
+    @objc internal func numberOfSection() -> Int {
         return ImageType.count()
     }
     

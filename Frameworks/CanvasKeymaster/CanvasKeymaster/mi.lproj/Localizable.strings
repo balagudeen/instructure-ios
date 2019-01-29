@@ -17,13 +17,16 @@
 "Canvas Login" = "Canvas Takiuru";
 
 /* No comment provided by engineer. */
-"Casual question or suggestion" = "pātai causal mana'o ranei";
+"Casual question or suggestion" = "Pātai tūao whakāro puaki";
 
 /* No comment provided by engineer. */
 "Check network and try again!" = "Tirohia te whatunga ka ngana anō!";
 
 /* No comment provided by engineer. */
-"Choose One" = "Kōwhiri Kotahi";
+"Choose One" = "Kōwhiria Kotahi";
+
+/* Connectivity alert close text */
+"Close" = "Katia";
 
 /* No comment provided by engineer. */
 "Continue Editing" = "Haere tonu te whakatika";
@@ -31,11 +34,17 @@
 /* No comment provided by engineer. */
 "Describe the feature here" = "Whakāhua te āhuatanga i konei";
 
+/* No comment provided by engineer. */
+"describe your problem" = "whakāhuatia mai te raruraru";
+
 /* Dismiss login expired/revoked alert button */
-"Dismiss" = "Tonoa";
+"Dismiss" = "Pana";
 
 /* No comment provided by engineer. */
-"Emergency" = "Whawhati tata";
+"Emergency" = "Mate Whawhati tata";
+
+/* No comment provided by engineer. */
+"enter a subject" = "Whakauru he kaupapa";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "Whakauru te āhuatanga o te tīkiti";
@@ -56,10 +65,10 @@
 "I am stuck and can't get things done" = "Kei te raru ahau a kaore e taea ki te whakaoti mahi";
 
 /* No comment provided by engineer. */
-"I can't get things done until I hear back from you" = "Kaore e taea e ahau te whakaoti ngā mea , kia hoki mai he rongo ki ahau mai ia koe";
+"I can't get things done until I hear back from you" = "Ka taea e kore kia mea mahi ahau, kia hoki rongo ahau i a koutou";
 
 /* No comment provided by engineer. */
-"I need help but it's not urgent" = "Me ahau te tauturu engari e kore te mea kōhukihuki";
+"I need help but it's not urgent" = "E hiahia āwhina ahau ēngari kaore kōhukihuki";
 
 /* No comment provided by engineer. */
 "Invalid Canvas URL." = "Koremana Canvas URL";
@@ -68,7 +77,7 @@
 "Invalid User Agent." = "Koremana Kaimahi Māngai";
 
 /* No comment provided by engineer. */
-"Non-urgent help needed" = "He awhina kaore i te akiaki e hiahiatia ana";
+"Non-urgent help needed" = "He āwhina kaore i te akiaki e hiahiatia ana";
 
 /* No comment provided by engineer. */
 "Not authorized." = "Kaore i whakamanahia";
@@ -76,17 +85,23 @@
 /* No comment provided by engineer. */
 "OK" = "Ae";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "tango te kaiwhakamahi";
+
 /* No comment provided by engineer. */
-"Report a Problem" = "Rīpoatatia te Raruraru";
+"Report a Problem" = "Pūrongo i te Raruraru";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "Tono he Āhuatanga";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "I rāhua te tono!";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "Tono te Āhuatanga";
+"select the impact" = "tīpako te pānga";
 
 /* Button to select the severity of the ticket */
-"Select ticket impact level" = "Tīpako te tīkiti pānga taumata ";
+"Select ticket impact level" = "Tīpako te tīkiti pānga taumata";
 
 /* No comment provided by engineer. */
 "Send" = "Tukua";
@@ -95,29 +110,26 @@
 "Site Admin Login" = "Takiuru Whakahaere Pae";
 
 /* No comment provided by engineer. */
-"Something is broken but I can work around it" = "pakaru te tahi mea te engari ka taea e ahau te mahi a tawhio noa te reira";
+"Something is broken but I can work around it" = "Kua pakaru tētahi mea ēngari ka taea e ahau te mahi a tawhio noa ";
 
 /* No comment provided by engineer. */
 "Success!" = "Angitu!";
 
 /* Subtitle help text describing how to find a school. */
-"Tap here for help." = "Pātō ki kōnei mo te awhina";
+"Tap here for help." = "Pātō ki kōnei mo te āwhina";
 
 /* No comment provided by engineer. */
-"Thanks, your request was received!" = "Mihi, ka riro koutou tono!";
+"Thanks, your request was received!" = "Ngā Mihi, kua tae tō tono!";
+
+/* No comment provided by engineer. */
+"Trouble logging in" = "He raruraru ki te takiuru?";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "Kaore e taea e mātou te hono ki Canvas. Kua tīpakohia e koe tō hononga ipurangi?";
+
+/* Connectivity alert title */
+"Whoops!" = "Whoops!";
 
 /* when the access token has been revoked */
-"Your login has expired or has been removed by the server. Please log in again." = "Kua mutu tō takiuru, kua tangohia rānei e te tūmau Tēnā takiuru anō";
-
-/* No comment provided by engineer. */
-"describe your problem" = "whakāhuatia mai te raruraru";
-
-/* No comment provided by engineer. */
-"enter a subject" = "Whakauru he kaupapa";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "tango te kaiwhakamahi";
-
-/* No comment provided by engineer. */
-"select the impact" = "tīpako te pānga";
+"Your login has expired or has been removed by the server. Please log in again." = "Kua mutu tō takiuru, kua tangohia rānei e te tūmau Tēnā koa takiuru anō";
 

@@ -18,30 +18,30 @@ import Foundation
 
 public extension UINavigationController {
     
-    public func applyDefaultBranding() {
+    @objc public func applyDefaultBranding() {
         self.navigationBar.barStyle = .black
         self.navigationBar.barTintColor = Brand.current.navBgColor
         self.navigationBar.tintColor = Brand.current.navTextColor
-        self.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: Brand.current.navTextColor
-        ]
+        self.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([
+            NSAttributedString.Key.foregroundColor.rawValue: Brand.current.navTextColor
+        ])
         self.navigationBar.isTranslucent = false
     }
     
     // Sets the barTintColor on self as well as a detail in a split view controller situation
-    public func syncBarTintColor(_ color: UIColor?) {
+    @objc public func syncBarTintColor(_ color: UIColor?) {
         self.navigationBar.barTintColor = color
         syncStyles()
     }
     
     // Same as above but for tintColor
-    public func syncTintColor(_ color: UIColor?) {
+    @objc public func syncTintColor(_ color: UIColor?) {
         self.navigationBar.tintColor = color
         syncStyles()
     }
     
     // Looks at what is in the master, if in split view, and applies what master has to detail
-    public func syncStyles() {
+    @objc public func syncStyles() {
         guard let svc = self.splitViewController else { return }
         guard let master = svc.masterNavigationController else { return }
         guard let detail = svc.detailNavigationController else { return }
@@ -53,7 +53,7 @@ public extension UINavigationController {
         detail.navigationBar.barStyle = master.navigationBar.barStyle
         
         if let titleView = detail.topViewController?.navigationItem.titleView as? HelmTitleView {
-            var color: UIColor = (master.navigationBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor) ?? .black
+            var color: UIColor = (convertFromOptionalNSAttributedStringKeyDictionary(master.navigationBar.titleTextAttributes)?[convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor)] as? UIColor) ?? .black
             if (master.navigationBar.barStyle != .default) {
                 color = .white
             }
@@ -61,4 +61,21 @@ public extension UINavigationController {
             titleView.subtitleLabel.textColor = color
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromOptionalNSAttributedStringKeyDictionary(_ input: [NSAttributedString.Key: Any]?) -> [String: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

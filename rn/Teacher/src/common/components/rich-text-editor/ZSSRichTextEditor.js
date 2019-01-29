@@ -22,6 +22,7 @@ import {
   WebView,
   NativeModules,
   Clipboard,
+  I18nManager,
 } from 'react-native'
 
 import isEqual from 'lodash/isEqual'
@@ -126,8 +127,8 @@ export default class ZSSRichTextEditor extends Component<Props, State> {
     this.trigger(`zss_editor.setHTML("${cleanHTML}");`)
   }
 
-  setCustomCSS = (css?: string) => {
-    if (!css) { css = '' }
+  setCustomCSS = (css?: string = '') => {
+    css += `body { direction: ${I18nManager.isRTL ? 'rtl' : 'ltr'}; }`
     this.trigger(`zss_editor.setCustomCSS('${css}');`)
   }
 

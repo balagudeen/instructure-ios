@@ -25,6 +25,7 @@ import {
   View,
   LayoutAnimation,
   NativeModules,
+  I18nManager,
 } from 'react-native'
 
 import { ColorPicker } from './'
@@ -53,10 +54,11 @@ type Item = {
   image: string,
   action: string,
   accessibilityLabel: string,
+  flipImageForRTL: boolean,
 }
 
-function item (image: string, action: string, accessibilityLabel: string): Item {
-  return { image, action, accessibilityLabel }
+function item (image: string, action: string, accessibilityLabel: string, flipImageForRTL?: boolean = false): Item {
+  return { image, action, accessibilityLabel, flipImageForRTL }
 }
 
 const ColorPickerAnimation = {
@@ -81,13 +83,13 @@ export default class RichTextToolbar extends Component<Props, State> {
 
   render () {
     const ITEMS = [
-      item('undo', 'undo', i18n('Undo')),
-      item('redo', 'redo', i18n('Redo')),
+      item('undo', 'undo', i18n('Undo'), true),
+      item('redo', 'redo', i18n('Redo'), true),
       item('bold', 'setBold', i18n('Bold')),
       item('italic', 'setItalic', i18n('Italic')),
       item('textColor', 'setTextColor', i18n('Text Color')),
-      item('unorderedList', 'setUnorderedList', i18n('Unordered List')),
-      item('orderedList', 'setOrderedList', i18n('Ordered List')),
+      item('unorderedList', 'setUnorderedList', i18n('Unordered List'), true),
+      item('orderedList', 'setOrderedList', i18n('Ordered List'), true),
       item('link', 'insertLink', i18n('Insert Link')),
       item('embedImage', 'insertImage', i18n('Insert Image')),
     ]
@@ -120,7 +122,7 @@ export default class RichTextToolbar extends Component<Props, State> {
     )
   }
 
-  _renderItem ({ image }: Item) {
+  _renderItem ({ image, flipImageForRTL }: Item) {
     switch (image) {
       case 'textColor':
         const textColorKey = this.props.active && this.props.active.find((s) => s.startsWith('textColor'))
@@ -135,7 +137,8 @@ export default class RichTextToolbar extends Component<Props, State> {
         const isActive = (this.props.active || []).includes(image) && images.rce.active[image]
         const icon = images.rce[image]
         const tintColor = isActive ? colors.primaryBrandColor : colors.secondaryButton
-        return <Image source={icon} style={{ tintColor }} />
+        const transform = [{ scaleX: I18nManager.isRTL && flipImageForRTL ? -1 : 1 }]
+        return <Image source={icon} style={{ tintColor, transform }} />
     }
   }
 

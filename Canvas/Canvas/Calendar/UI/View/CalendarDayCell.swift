@@ -31,13 +31,13 @@ enum CalendarDayCellState {
 }
 
 open class CalendarDayCell: UICollectionViewCell {
-    static let dayOfTheMonthA11yFormatter: (Int)->String = {
+    @objc static let dayOfTheMonthA11yFormatter: (Int)->String = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .ordinal
         return { i in formatter.string(from: NSNumber(value: i))! }
     }()
 
-    var day: Int = 1 {
+    @objc var day: Int = 1 {
         didSet {
             dateLabel.text = "\(day)"
             dateLabel.sizeToFit()                
@@ -46,13 +46,26 @@ open class CalendarDayCell: UICollectionViewCell {
         }
     }
     private var dateLabel = UILabel()
-    var dateCircleImageView = UIImageView()
-    var notThisMonth = true
+    @objc var dateCircleImageView = UIImageView()
+    @objc var notThisMonth = true
     
     var date: CalendarDate?
-    var eventCount: Int = 0 {
+    @objc var dayOfWeek: Int = 0 {
+        didSet {
+            if (day < 8 && dayOfWeek == 7) || dayOfWeek == 1 {
+                // Mark the last day of the first week in the month as an accessibility button
+                // Mark the first day of each week as an accessiblity button
+                // In Switch Control mode, the combination of these two will draw a nice square around the entire month
+                dateLabel.accessibilityTraits.insert(.button)
+            }
+        }
+    }
+    @objc var eventCount: Int = 0 {
         didSet {
             self.eventCountDot.isHidden = eventCount < 1
+            if eventCount > 0 {
+                dateLabel.accessibilityTraits.insert(.button)
+            }
         }
     }
     var cellState: CalendarDayCellState = .normal {
@@ -61,8 +74,8 @@ open class CalendarDayCell: UICollectionViewCell {
         }
     }
     
-    var cellBackgroundColor = UIColor.white
-    let eventCountDot = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 8))
+    @objc var cellBackgroundColor = UIColor.white
+    @objc let eventCountDot = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 8))
     
     // MARK: init
     required public init?(coder aDecoder: NSCoder) {
@@ -75,7 +88,7 @@ open class CalendarDayCell: UICollectionViewCell {
         initialize()
     }
     
-    func initialize() {
+    @objc func initialize() {
         self.backgroundColor = self.cellBackgroundColor
         
         self.addSubview(self.dateCircleImageView)
@@ -104,15 +117,16 @@ open class CalendarDayCell: UICollectionViewCell {
     override open func prepareForReuse() {
         super.prepareForReuse()
         eventCountDot.isHidden = true
+        dateLabel.accessibilityTraits.remove(.button)
     }
     
-    func updateA11y() {
+    @objc func updateA11y() {
         dateLabel.accessibilityLabel = dateLabel.text
             .flatMap { Int($0) }
             .map(CalendarDayCell.dayOfTheMonthA11yFormatter)
     }
     
-    func updateCellState() {
+    @objc func updateCellState() {
         switch self.cellState {
         case .normal:
             self.dateLabel.textColor = UIColor.black

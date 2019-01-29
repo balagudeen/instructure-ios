@@ -22,7 +22,7 @@ import Foundation
 import Marshal
 
 struct QuizSubmission {
-    init(id: String, dateStarted: Date?, dateFinished: Date?, endAt: Date?, attempt: Int, attemptsLeft: Int, validationToken: String, workflowState: WorkflowState) {
+    init(id: String, dateStarted: Date?, dateFinished: Date?, endAt: Date?, attempt: Int, attemptsLeft: Int, validationToken: String, workflowState: WorkflowState, extraTime: Int) {
         self.id = id
         self.dateStarted = dateStarted
         self.dateFinished = dateFinished
@@ -31,6 +31,7 @@ struct QuizSubmission {
         self.attemptsLeft = attemptsLeft
         self.validationToken = validationToken
         self.workflowState = workflowState
+        self.extraTime = extraTime
     }
     
     let id: String
@@ -41,6 +42,7 @@ struct QuizSubmission {
     let attemptsLeft: Int
     let validationToken: String
     let workflowState: WorkflowState
+    let extraTime: Int
     
     enum WorkflowState: String, Equatable {
         case Untaken = "untaken"
@@ -83,7 +85,17 @@ extension QuizSubmission : JSONDecodable {
             let validationToken = jsonObject?["validation_token"] as? String,
             let workflowState = QuizSubmission.WorkflowState.fromJSON(jsonObject?["workflow_state"]) {
                 
-                return QuizSubmission(id: id, dateStarted: Date.fromJSON(jsonObject?["started_at"]), dateFinished: Date.fromJSON(jsonObject?["finished_at"]), endAt: Date.fromJSON(jsonObject?["end_at"]), attempt: attempt, attemptsLeft: attemptsLeft, validationToken: validationToken, workflowState: workflowState)
+                return QuizSubmission(
+                    id: id,
+                    dateStarted: Date.fromJSON(jsonObject?["started_at"]),
+                    dateFinished: Date.fromJSON(jsonObject?["finished_at"]),
+                    endAt: Date.fromJSON(jsonObject?["end_at"]),
+                    attempt: attempt,
+                    attemptsLeft: attemptsLeft,
+                    validationToken: validationToken,
+                    workflowState: workflowState,
+                    extraTime: jsonObject?["extra_time"] as? Int ?? 0
+                )
         }
         
         return nil

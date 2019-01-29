@@ -36,7 +36,7 @@ open class NotificationPreferencesViewController: UITableViewController {
     }
     
     // Don't allow people to create using init, would be great to prevent other ways in
-    fileprivate override init(style: UITableViewStyle) {
+    fileprivate override init(style: UITableView.Style) {
         super.init(style: style)
     }
     
@@ -46,21 +46,21 @@ open class NotificationPreferencesViewController: UITableViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
-        tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 25
         
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         refreshControl = UIRefreshControl()
-        refreshControl!.addTarget(self, action: #selector(NotificationPreferencesViewController.refreshDataSource(_:)), for: UIControlEvents.valueChanged)
+        refreshControl!.addTarget(self, action: #selector(NotificationPreferencesViewController.refreshDataSource(_:)), for: UIControl.Event.valueChanged)
         
         refreshControl!.beginRefreshing()
         self.refreshDataSource(refreshControl!)
     }
     
-    func refreshDataSource(_ sender: AnyObject) {
+    @objc func refreshDataSource(_ sender: AnyObject) {
         self.dataController.getNotificationPreferences(channel, completion: { (result) -> () in
             
             if let error = result.error {
@@ -155,10 +155,10 @@ extension NotificationPreferencesViewController: ChangeNotificationPreferencePro
         }
     }
     
-    func showCouldNotUpdatePushNotificationAlert() {
-        let alert = UIAlertController(title: NSLocalizedString("Could not update", comment: "Error title for being unable to update a push notification preference"), message: NSLocalizedString("We were not able to update this value with the server", tableName: "Localizable", bundle: .core, value: "", comment: "Error message for being unable to update a push notification preference"), preferredStyle: UIAlertControllerStyle.alert)
+    @objc func showCouldNotUpdatePushNotificationAlert() {
+        let alert = UIAlertController(title: NSLocalizedString("Could not update", comment: "Error title for being unable to update a push notification preference"), message: NSLocalizedString("We were not able to update this value with the server", tableName: "Localizable", bundle: .core, value: "", comment: "Error message for being unable to update a push notification preference"), preferredStyle: UIAlertController.Style.alert)
         
-        let alertAction = UIAlertAction(title: NSLocalizedString("OK", tableName: "Localizable", bundle: .core, value: "", comment: "OK Button Title"), style: UIAlertActionStyle.default, handler: nil)
+        let alertAction = UIAlertAction(title: NSLocalizedString("OK", tableName: "Localizable", bundle: .core, value: "", comment: "OK Button Title"), style: UIAlertAction.Style.default, handler: nil)
         alert.addAction(alertAction)
         self.present(alert, animated: true, completion: nil)
     }

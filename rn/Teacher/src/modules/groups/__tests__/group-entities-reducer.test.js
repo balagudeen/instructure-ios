@@ -20,10 +20,12 @@ import Actions from '../actions'
 import CoursesActions from '../../courses/actions'
 import { groups } from '../group-entities-reducer'
 import DiscussionEditActions from '../../discussions/edit/actions'
+import PermissionsActions from '../../permissions/actions'
 
 const { refreshGroupsForCourse, refreshGroup, listUsersForGroup } = Actions
 const { refreshCourses } = CoursesActions
 const { createDiscussion } = DiscussionEditActions
+const { updateContextPermissions } = PermissionsActions
 
 import * as template from '../../../__templates__'
 
@@ -91,6 +93,7 @@ test('captures entities with discussion', () => {
       color: '',
       discussions: { pending: 0, refs: [], new: { pending: 1, id: null, error: null } },
       announcements: { pending: 0, refs: [] },
+      permissions: {},
       pending: 0,
       error: null,
     },
@@ -102,6 +105,7 @@ test('captures entities with discussion', () => {
       color: '',
       discussions: { pending: 0, refs: [], new: { pending: 0, id: announcement.id, error: null } },
       announcements: { pending: 0, refs: [announcement.id] },
+      permissions: {},
       pending: 0,
       error: null,
     },
@@ -160,6 +164,7 @@ test('captures list of users resolved', () => {
         refs: [],
       },
       color: '',
+      permissions: {},
     },
   }
 
@@ -204,6 +209,7 @@ test('captures list of users pending', () => {
         refs: [],
       },
       color: '',
+      permissions: {},
     },
   }
 
@@ -249,6 +255,7 @@ test('captures list of users rejected', () => {
         refs: [],
       },
       color: '',
+      permissions: {},
     },
   }
 
@@ -316,4 +323,46 @@ test('colors when there are no groups', () => {
   }
 
   expect(groups(initialState, action)).toEqual(initialState)
+})
+
+test('updates the group permissions when the context is a group', () => {
+  let action = {
+    type: updateContextPermissions.toString(),
+    payload: {
+      contextID: '1',
+      contextName: 'groups',
+      result: {
+        data: { post_to_forum: false },
+      },
+    },
+  }
+
+  let state = {
+    '1': {},
+  }
+  let newState = groups(state, action)
+  expect(newState).toMatchObject({
+    '1': {
+      permissions: { post_to_forum: false },
+    },
+  })
+})
+
+test('doesnt update the group when the context is not a group', () => {
+  let action = {
+    type: updateContextPermissions.toString(),
+    payload: {
+      contextID: '1',
+      contextName: 'courses',
+      result: {
+        data: { post_to_forum: false },
+      },
+    },
+  }
+
+  let state = {
+    '1': {},
+  }
+  let newState = groups(state, action)
+  expect(newState).toMatchObject(state)
 })

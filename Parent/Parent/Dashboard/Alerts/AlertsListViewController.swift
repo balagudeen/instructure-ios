@@ -25,10 +25,10 @@ import CanvasCore
 import ReactiveSwift
 
 class AlertsListViewController: FetchedTableViewController<Alert> {
-    let session: Session
-    let observeeID: String
+    @objc let session: Session
+    @objc let observeeID: String
 
-    init(session: Session, observeeID: String) throws {
+    @objc init(session: Session, observeeID: String) throws {
         self.session = session
         self.observeeID = observeeID
 
@@ -76,7 +76,7 @@ class AlertsListViewController: FetchedTableViewController<Alert> {
 
         let alert = self.collection[indexPath]
         alert.markAsRead(session)
-        self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+        self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
 
         if let assetPath = alert.assetPath, let routeURL = Router.sharedInstance.alertRoute(studentID: observeeID, alertAssetPath: assetPath) {
             Router.sharedInstance.route(self, toURL: routeURL, modal: true)

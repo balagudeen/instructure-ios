@@ -59,7 +59,10 @@ export function mapStateToProps ({ entities }: AppState, { courseID, navigator }
 
   const assignmentGroups: AssignmentGroup[] = assignmentGroupsState.map((groupState) => {
     const groupWithAssignments = Object.assign({}, groupState.group)
-    groupWithAssignments.assignments = (groupState.assignmentRefs || []).map((id) => entities.assignments[id].data)
+    const assignmentRefs = groupState.assignmentRefs || []
+    groupWithAssignments.assignments = assignmentRefs
+      .map((id) => entities.assignments[id].data)
+      .filter(({ grading_type, submission_types }) => grading_type !== 'not_graded' && !(submission_types.length === 1 && submission_types[0] === 'not_graded'))
     return groupWithAssignments
   })
 
@@ -77,14 +80,14 @@ export function mapStateToProps ({ entities }: AppState, { courseID, navigator }
   let selectedRowID = entities.courseDetailsTabSelectedRow.rowID || ''
   let currentGradingPeriodID
   let currentScore
-  for (const enroll of course.course.enrollments) {
-    if (enroll.type === 'student') {
-      if (enroll.current_grading_period_id) {
-        currentGradingPeriodID = enroll.current_grading_period_id
-      }
-      currentScore = enroll.computed_current_score
-      break
+  const enrollment = course.course.enrollments.find(e => e.type === 'student')
+  if (enrollment) {
+    if (enrollment.current_grading_period_id) {
+      currentGradingPeriodID = enrollment.current_grading_period_id
     }
+    const hideTotalGrade = course.course.hide_final_grades ||
+      (enrollment.has_grading_periods && enrollment.totals_for_all_grading_periods_option === false)
+    currentScore = hideTotalGrade ? null : enrollment.computed_current_score
   }
 
   return {
@@ -104,11 +107,13 @@ export function mapStateToProps ({ entities }: AppState, { courseID, navigator }
   }
 }
 
-const Refreshed = refresh(
+export const Refreshed = refresh(
   props => {
     props.refreshAssignmentList(props.courseID, undefined, true)
     props.refreshGradingPeriods(props.courseID)
     props.refreshUserEnrollments()
+    // Refresh course to get the current score (when there are no grading periods)
+    props.refreshCourse(props.courseID)
   },
   props => props.assignmentGroups.length === 0 || props.gradingPeriods.length === 0 || !props.currentScore,
   props => Boolean(props.pending),

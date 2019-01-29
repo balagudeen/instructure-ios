@@ -1,5 +1,23 @@
 /* Description for rubric criterion rating object */
-" Rating for %@, Score: %g" = " Lefel sgôr ar gyfer %1$@, Sgôr: %2$g";
+" Rating for %@, Score: %g" = " Sgôr ar gyfer %1$@, Sgôr: %2$g";
+
+/* B- (83 out of 100 points */
+"%@ (%g out of %@)" = "%1$@ (%2$g allan o %3$@)";
+
+/* something at something */
+"%@ at %@" = "%1$@ am %2$@";
+
+/* 88 out of 100 points */
+"%@ out of %@" = "%1$@ allan o %2$@";
+
+/* {point range max} to > {point range min} pts */
+"%@ to > %@ pts" = "%1$@ i > %2$@ pwynt";
+
+/* Word and ellipses */
+"%@..." = "%@...";
+
+/* 83% (83 out of 100 points */
+"%@%% (%g out of %@)" = "%1$@%% (%2$g allan o %3$@)";
 
 /* Gigabytes */
 "%0.2f GB" = "%0.2f GB";
@@ -9,24 +27,6 @@
 
 /* Megabytes */
 "%0.2f MB" = "%0.2f MB";
-
-/* B- (83 out of 100 points */
-"%@ (%g out of %@)" = "%1$@ (%2$g allan o %3$@)";
-
-/* something at something */
-"%@ at %@" = "%1$@ yn %2$@";
-
-/* 88 out of 100 points */
-"%@ out of %@" = "%1$@ allan o %2$@";
-
-/* {point range max} to > {point range min} pts */
-"%@ to > %@ pts" = "%1$@ i > %2$@ pwynt";
-
-/* 83% (83 out of 100 points */
-"%@%% (%g out of %@)" = "%1$@%% (%2$g allan o %3$@)";
-
-/* Word and ellipses */
-"%@..." = "%@...";
 
 /* 88 out of 100 points */
 "%g out of %@" = "%1$g allan o %2$@";
@@ -49,6 +49,9 @@
 /* No comment provided by engineer. */
 "Done" = "Wedi gorffen";
 
+/* No comment provided by engineer. */
+"Excused" = "Wedi esgusodi";
+
 /* The file extension for a submission is not acceptable */
 "File extension not allowed: %@" = "Dyma'r estyniad ffeil a ganiateir: %@";
 
@@ -64,11 +67,11 @@
 /* No comment provided by engineer. */
 "Me" = "Fi";
 
-/* No comment provided by engineer. */
-"Media Comment" = "Sylw ar Gyfryngau";
-
 /* The name for a video or audio response to something */
 "Media comment" = "Sylw ar gyfryngau";
+
+/* No comment provided by engineer. */
+"Media Comment" = "Sylw ar Gyfryngau";
 
 /* A slider to choose between media types */
 "Media type selector. %@" = "Nodwedd dewis math o gyfryngau. %@";
@@ -88,14 +91,23 @@
 /* Short name for observer enrollment */
 "Observer" = "Arsyllwr";
 
+/* Accessibility label for out or grading style */
+"out of" = "allan o";
+
+/* The assignment is out of 100 points */
+"out of %@" = "allan o %@";
+
+/* No comment provided by engineer. */
+"out of %@ points" = "allan o %@ pwynt";
+
 /* A button that plays */
 "Play" = "Chwarae";
 
 /* No comment provided by engineer. */
-"Post Comment" = "Postio Sylw";
+"Post Comment" = "Postio sylw";
 
 /* No comment provided by engineer. */
-"Posts your comment" = "Yn postio eich sylw";
+"Posts your comment" = "Mae'n postio eich sylw";
 
 /* A button that records */
 "Record" = "Recordio";
@@ -145,6 +157,9 @@
 /* Error description when a user tries to upload a file that's too big */
 "The file you are trying to uploading is %@, but the maximum size is %@." = "Mae'r ffeil rydych chi'n ceisio ei llwytho i fyny yn %1$@, ond y maint mwyaf a ganiateir yw %2$@.";
 
+/* When we don't know the name of a file, we display this */
+"unknown" = "dieithr";
+
 /* Media type is video */
 "Video" = "Fideo";
 
@@ -153,16 +168,4 @@
 
 /* No comment provided by engineer. */
 "Warning" = "Rhybudd";
-
-/* Accessibility label for out or grading style */
-"out of" = "allan o";
-
-/* The assignment is out of 100 points */
-"out of %@" = "allan o %@";
-
-/* No comment provided by engineer. */
-"out of %@ points" = "allan o %@ pwynt";
-
-/* When we don't know the name of a file, we display this */
-"unknown" = "dieithr";
 

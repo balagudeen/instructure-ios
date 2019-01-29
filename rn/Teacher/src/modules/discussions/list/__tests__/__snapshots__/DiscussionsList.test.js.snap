@@ -206,12 +206,15 @@ exports[`DiscussionsList renders discussions 1`] = `
                   "color": "#2D3B45",
                   "fontSize": 16,
                 },
-                Object {
-                  "backgroundColor": "#f5f5f5",
-                  "color": "#73818C",
-                  "fontSize": 14,
-                  "fontWeight": "600",
-                },
+                Array [
+                  Object {
+                    "backgroundColor": "#f5f5f5",
+                    "color": "#73818C",
+                    "fontSize": 14,
+                    "fontWeight": "600",
+                  },
+                  undefined,
+                ],
                 Object {
                   "fontFamily": ".SFUIDisplay-semibold",
                 },
@@ -235,7 +238,7 @@ exports[`DiscussionsList renders discussions 1`] = `
                     "button",
                   ]
                 }
-                accessible={false}
+                accessible={true}
                 onPress={[Function]}
                 style={
                   Array [
@@ -515,7 +518,7 @@ exports[`DiscussionsList renders discussions 1`] = `
                               2 Replies
                             </Text>
                             <Text
-                              accessible={true}
+                              accessible={false}
                               allowFontScaling={true}
                               ellipsizeMode="tail"
                               style={
@@ -654,7 +657,7 @@ exports[`DiscussionsList renders discussions 1`] = `
                     "button",
                   ]
                 }
-                accessible={false}
+                accessible={true}
                 onPress={[Function]}
                 style={
                   Array [
@@ -934,7 +937,7 @@ exports[`DiscussionsList renders discussions 1`] = `
                               2 Replies
                             </Text>
                             <Text
-                              accessible={true}
+                              accessible={false}
                               allowFontScaling={true}
                               ellipsizeMode="tail"
                               style={
@@ -1128,12 +1131,15 @@ exports[`DiscussionsList renders discussions with no assignments 1`] = `
                   "color": "#2D3B45",
                   "fontSize": 16,
                 },
-                Object {
-                  "backgroundColor": "#f5f5f5",
-                  "color": "#73818C",
-                  "fontSize": 14,
-                  "fontWeight": "600",
-                },
+                Array [
+                  Object {
+                    "backgroundColor": "#f5f5f5",
+                    "color": "#73818C",
+                    "fontSize": 14,
+                    "fontWeight": "600",
+                  },
+                  undefined,
+                ],
                 Object {
                   "fontFamily": ".SFUIDisplay-semibold",
                 },
@@ -1157,7 +1163,7 @@ exports[`DiscussionsList renders discussions with no assignments 1`] = `
                     "button",
                   ]
                 }
-                accessible={false}
+                accessible={true}
                 onPress={[Function]}
                 style={
                   Array [
@@ -1404,7 +1410,7 @@ exports[`DiscussionsList renders discussions with no assignments 1`] = `
                               2 Replies
                             </Text>
                             <Text
-                              accessible={true}
+                              accessible={false}
                               allowFontScaling={true}
                               ellipsizeMode="tail"
                               style={
@@ -1543,7 +1549,7 @@ exports[`DiscussionsList renders discussions with no assignments 1`] = `
                     "button",
                   ]
                 }
-                accessible={false}
+                accessible={true}
                 onPress={[Function]}
                 style={
                   Array [
@@ -1790,7 +1796,7 @@ exports[`DiscussionsList renders discussions with no assignments 1`] = `
                               2 Replies
                             </Text>
                             <Text
-                              accessible={true}
+                              accessible={false}
                               allowFontScaling={true}
                               ellipsizeMode="tail"
                               style={
@@ -1984,12 +1990,15 @@ exports[`DiscussionsList renders in correct order 1`] = `
                   "color": "#2D3B45",
                   "fontSize": 16,
                 },
-                Object {
-                  "backgroundColor": "#f5f5f5",
-                  "color": "#73818C",
-                  "fontSize": 14,
-                  "fontWeight": "600",
-                },
+                Array [
+                  Object {
+                    "backgroundColor": "#f5f5f5",
+                    "color": "#73818C",
+                    "fontSize": 14,
+                    "fontWeight": "600",
+                  },
+                  undefined,
+                ],
                 Object {
                   "fontFamily": ".SFUIDisplay-semibold",
                 },
@@ -2013,7 +2022,7 @@ exports[`DiscussionsList renders in correct order 1`] = `
                     "button",
                   ]
                 }
-                accessible={false}
+                accessible={true}
                 onPress={[Function]}
                 style={
                   Array [
@@ -2293,7 +2302,7 @@ exports[`DiscussionsList renders in correct order 1`] = `
                               2 Replies
                             </Text>
                             <Text
-                              accessible={true}
+                              accessible={false}
                               allowFontScaling={true}
                               ellipsizeMode="tail"
                               style={
@@ -2432,7 +2441,7 @@ exports[`DiscussionsList renders in correct order 1`] = `
                     "button",
                   ]
                 }
-                accessible={false}
+                accessible={true}
                 onPress={[Function]}
                 style={
                   Array [
@@ -2712,7 +2721,7 @@ exports[`DiscussionsList renders in correct order 1`] = `
                               2 Replies
                             </Text>
                             <Text
-                              accessible={true}
+                              accessible={false}
                               allowFontScaling={true}
                               ellipsizeMode="tail"
                               style={
@@ -2906,12 +2915,15 @@ exports[`DiscussionsList renders pinned discussions 1`] = `
                   "color": "#2D3B45",
                   "fontSize": 16,
                 },
-                Object {
-                  "backgroundColor": "#f5f5f5",
-                  "color": "#73818C",
-                  "fontSize": 14,
-                  "fontWeight": "600",
-                },
+                Array [
+                  Object {
+                    "backgroundColor": "#f5f5f5",
+                    "color": "#73818C",
+                    "fontSize": 14,
+                    "fontWeight": "600",
+                  },
+                  undefined,
+                ],
                 Object {
                   "fontFamily": ".SFUIDisplay-semibold",
                 },
@@ -2935,7 +2947,7 @@ exports[`DiscussionsList renders pinned discussions 1`] = `
                     "button",
                   ]
                 }
-                accessible={false}
+                accessible={true}
                 onPress={[Function]}
                 style={
                   Array [
@@ -3215,7 +3227,7 @@ exports[`DiscussionsList renders pinned discussions 1`] = `
                               2 Replies
                             </Text>
                             <Text
-                              accessible={true}
+                              accessible={false}
                               allowFontScaling={true}
                               ellipsizeMode="tail"
                               style={
@@ -3354,7 +3366,7 @@ exports[`DiscussionsList renders pinned discussions 1`] = `
                     "button",
                   ]
                 }
-                accessible={false}
+                accessible={true}
                 onPress={[Function]}
                 style={
                   Array [
@@ -3634,7 +3646,7 @@ exports[`DiscussionsList renders pinned discussions 1`] = `
                               2 Replies
                             </Text>
                             <Text
-                              accessible={true}
+                              accessible={false}
                               allowFontScaling={true}
                               ellipsizeMode="tail"
                               style={
@@ -3794,12 +3806,15 @@ exports[`DiscussionsList renders pinned discussions 1`] = `
                   "color": "#2D3B45",
                   "fontSize": 16,
                 },
-                Object {
-                  "backgroundColor": "#f5f5f5",
-                  "color": "#73818C",
-                  "fontSize": 14,
-                  "fontWeight": "600",
-                },
+                Array [
+                  Object {
+                    "backgroundColor": "#f5f5f5",
+                    "color": "#73818C",
+                    "fontSize": 14,
+                    "fontWeight": "600",
+                  },
+                  undefined,
+                ],
                 Object {
                   "fontFamily": ".SFUIDisplay-semibold",
                 },
@@ -3823,7 +3838,7 @@ exports[`DiscussionsList renders pinned discussions 1`] = `
                     "button",
                   ]
                 }
-                accessible={false}
+                accessible={true}
                 onPress={[Function]}
                 style={
                   Array [
@@ -4103,7 +4118,7 @@ exports[`DiscussionsList renders pinned discussions 1`] = `
                               2 Replies
                             </Text>
                             <Text
-                              accessible={true}
+                              accessible={false}
                               allowFontScaling={true}
                               ellipsizeMode="tail"
                               style={

@@ -38,6 +38,7 @@ const {
   deletePendingReplies,
   markAllAsRead,
   markEntryAsRead,
+  rateEntry,
 } = DetailsActions
 const { refreshAnnouncements } = AnnouncementListActions
 const {
@@ -127,6 +128,26 @@ export function newEntriesContainsReply (newEntries: DiscussionReply[], reply: D
     }
   }
   return false
+}
+
+export function updateReplyRating (replies: ?Array<DiscussionReply>, path: Array<number>, rating: number): Array<DiscussionReply> {
+  if (!replies) {
+    return []
+  }
+
+  if (path.length === 0) {
+    return replies
+  }
+
+  let index = path.shift()
+  let newReplies = replies.slice()
+  newReplies.splice(index, 1, {
+    ...newReplies[index],
+    rating_sum: path.length === 0 ? newReplies[index].rating_sum + rating : newReplies[index].rating_sum,
+    replies: updateReplyRating(newReplies[index].replies, path, rating),
+  })
+
+  return newReplies
 }
 
 const refsChanges: Reducer<AsyncRefs, any> = handleActions({
@@ -269,16 +290,20 @@ export const discussionData: Reducer<DiscussionState, any> = handleActions({
     },
   }),
   [refreshSingleDiscussion.toString()]: handleAsync({
-    resolved: (state, { result, discussionID }) => ({
-      ...state,
-      [discussionID]: {
-        ...state[discussionID],
-        data: {
-          ...(state[discussionID] && state[discussionID].data),
-          ...result.data,
+    resolved: (state, { result, discussionID }) => {
+      const isAnnouncement = result.data['subscription_hold'] && result.data['subscription_hold'] === 'topic_is_announcement'
+      return {
+        ...state,
+        [discussionID]: {
+          ...state[discussionID],
+          isAnnouncement,
+          data: {
+            ...(state[discussionID] && state[discussionID].data),
+            ...result.data,
+          },
         },
-      },
-    }),
+      }
+    },
   }),
   [deleteDiscussionEntry.toString()]: handleAsync({
     rejected: (state, { error, discussionID, entryID }) => {
@@ -583,6 +608,40 @@ export const discussionData: Reducer<DiscussionState, any> = handleActions({
         },
       },
     }),
+  }),
+  [rateEntry.toString()]: handleAsync({
+    pending: (state, { discussionID, entryID, rating, path }) => {
+      return {
+        ...state,
+        [discussionID]: {
+          ...state[discussionID],
+          data: {
+            ...state[discussionID].data,
+            replies: updateReplyRating(state[discussionID].data.replies.slice(), path.slice(), rating === 1 ? 1 : -1),
+          },
+          entry_ratings: {
+            ...state[discussionID].entry_ratings,
+            [entryID]: rating,
+          },
+        },
+      }
+    },
+    rejected: (state, { discussionID, entryID, rating, path }) => {
+      return {
+        ...state,
+        [discussionID]: {
+          ...state[discussionID],
+          data: {
+            ...state[discussionID].data,
+            replies: updateReplyRating(state[discussionID].data.replies.slice(), path.slice(), rating === 1 ? -1 : 1),
+          },
+          entry_ratings: {
+            ...state[discussionID].entry_ratings,
+            [entryID]: rating === 1 ? 0 : 1,
+          },
+        },
+      }
+    },
   }),
 }, {})
 

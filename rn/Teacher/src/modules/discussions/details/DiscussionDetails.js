@@ -22,15 +22,18 @@ import {
   View,
   StyleSheet,
   TouchableHighlight,
+  TouchableOpacity,
   Image,
   FlatList,
   ActionSheetIOS,
   AlertIOS,
   NativeModules,
+  I18nManager,
 } from 'react-native'
 import i18n from 'format-message'
 import DetailActions from './actions'
 import EditActions from '../edit/actions'
+import PermissionsActions from '../../permissions/actions'
 import AssignmentSection from '../../assignment-details/components/AssignmentSection'
 import AssignmentDates from '../../assignment-details/components/AssignmentDates'
 import CanvasWebView from '../../../common/components/CanvasWebView'
@@ -51,9 +54,13 @@ import Reply from './Reply'
 import { replyFromLocalIndexPath } from '../reducer'
 import { type TraitCollection } from '../../../routing/Navigator'
 import { isRegularDisplayMode } from '../../../routing/utils'
-import { isTeacher } from '../../app'
+import { isTeacher, isStudent } from '../../app'
 import { alertError } from '../../../redux/middleware/error-handler'
 import { logEvent } from '../../../common/CanvasAnalytics'
+
+const { NativeAccessibility, ModuleItemsProgress } = NativeModules
+
+type EntryRatings = { [string]: number }
 
 type OwnProps = {
   announcementID: string,
@@ -68,7 +75,7 @@ type State = {
   courseColor: ?string,
   courseName: string,
   unreadEntries: ?string[],
-  entryRatings: { [string]: number },
+  entryRatings: EntryRatings,
   context: CanvasContext,
   contextID: string,
   courseName: string,
@@ -90,9 +97,10 @@ const {
   deleteDiscussionEntry,
   markAllAsRead,
   markEntryAsRead,
+  rateEntry,
 } = DetailActions
-const { NativeAccessibility, ModuleItemsProgress } = NativeModules
 const { deleteDiscussion } = EditActions
+const { updateContextPermissions } = PermissionsActions
 
 const Actions = {
   refreshDiscussionEntries,
@@ -101,6 +109,8 @@ const Actions = {
   deleteDiscussionEntry,
   markAllAsRead,
   markEntryAsRead,
+  updateContextPermissions,
+  rateEntry,
 }
 
 export type Props
@@ -112,6 +122,7 @@ export type Props
   & AsyncState
   & PushNotificationProps & {
   isAnnouncement?: boolean,
+  permissions: { [string]: boolean },
 }
 
 export class DiscussionDetails extends Component<Props, any> {
@@ -124,7 +135,6 @@ export class DiscussionDetails extends Component<Props, any> {
       deletePending: false,
       maxReplyNodeDepth: 2,
       unread_entries: props.unreadEntries || [],
-      entry_ratings: props.entryRatings || {},
     }
     const groupDiscussion = this.groupDiscussion(props)
     if (groupDiscussion && this.showingWrongDiscussionForGroups(props)) {
@@ -133,8 +143,11 @@ export class DiscussionDetails extends Component<Props, any> {
       this.hasReplaced = true
       this.props.navigator.replace(`/groups/${group_id}/discussion_topics/${id}`)
     } else {
-      this.state.flatReplies = this.rootRepliesData(props.discussion, [], this.state.maxReplyNodeDepth)
+      this.state.flatReplies = this.rootRepliesData(props.discussion, [], this.state.maxReplyNodeDepth, props.entryRatings)
       NativeModules.AppStoreReview.handleNavigateToAssignment()
+      if (isStudent) {
+        ModuleItemsProgress.viewedDiscussion(props.contextID, props.discussionID)
+      }
     }
   }
 
@@ -159,17 +172,10 @@ export class DiscussionDetails extends Component<Props, any> {
       alertError(nextProps.error)
     }
 
-    const { discussion } = nextProps
-    if (discussion) {
-      // Mark this discussion as viewed
-      ModuleItemsProgress.viewedDiscussion(nextProps.contextID, nextProps.discussionID)
-    }
-
     if (this.state.deletePending && !nextProps.pending && !nextProps.error && !nextProps.discussion) {
       this.setState({
         deletePending: false,
         unread_entries: nextProps.unreadEntries,
-        entry_ratings: nextProps.entryRatings || {},
       })
       this.props.navigator.pop()
       return
@@ -177,8 +183,7 @@ export class DiscussionDetails extends Component<Props, any> {
 
     this.setState({
       unread_entries: nextProps.unreadEntries,
-      entry_ratings: nextProps.entryRatings || {},
-      flatReplies: this.rootRepliesData(nextProps.discussion, this.state.rootNodePath, this.state.maxReplyNodeDepth),
+      flatReplies: this.rootRepliesData(nextProps.discussion, this.state.rootNodePath, this.state.maxReplyNodeDepth, nextProps.entryRatings),
     })
   }
 
@@ -190,7 +195,7 @@ export class DiscussionDetails extends Component<Props, any> {
     const maxReplyNodeDepth = isRegularDisplayMode(traits) ? 4 : 2
     this.setState({
       maxReplyNodeDepth,
-      flatReplies: this.rootRepliesData(this.props.discussion, this.state.rootNodePath, maxReplyNodeDepth),
+      flatReplies: this.rootRepliesData(this.props.discussion, this.state.rootNodePath, maxReplyNodeDepth, this.props.entryRatings),
     })
   }
 
@@ -291,25 +296,29 @@ export class DiscussionDetails extends Component<Props, any> {
           </View>
 
           { (Boolean(discussion.message) || Boolean(discussion.attachments)) &&
-            <View style={style.message}>
+            <View>
               { Boolean(discussion.message) &&
-                <CanvasWebView style={{ flex: 1 }} automaticallySetHeight html={discussion.message} navigator={this.props.navigator} />
+                <CanvasWebView
+                  style={{ flex: 1, marginHorizontal: -global.style.defaultPadding }}
+                  automaticallySetHeight html={discussion.message}
+                  navigator={this.props.navigator}
+                />
               }
               { Boolean(discussion.attachments) && discussion.attachments && discussion.attachments.length === 1 &&
                 // should only ever have 1, blocked by UI, but API returns array of 1 :facepalm:
-                <TouchableHighlight testID={`discussion.${discussion.id}.attachment`} onPress={this.showAttachment}>
+                <TouchableOpacity testID={`discussion.${discussion.id}.attachment`} onPress={this.showAttachment}>
                   <View style={style.attachment}>
-                    <Image source={Images.attachment} style={style.attachmentIcon} />
+                    <Image source={Images.paperclip} style={style.attachmentIcon} />
                     <Text style={style.attachmentText}>
                       {discussion.attachments[0].display_name}
                     </Text>
                   </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
               }
             </View>
           }
 
-          {!discussion.locked_for_user &&
+          {!discussion.locked_for_user && this.props.permissions.post_to_forum &&
             <View style={style.authorContainer}>
               <TouchableHighlight
                 underlayColor='white'
@@ -318,7 +327,13 @@ export class DiscussionDetails extends Component<Props, any> {
                 accessibilityTraits='button'
               >
                 <View style={[{ backgroundColor: colors.primaryButtonColor }, style.replyButtonWrapper]}>
-                  <Image source={Images.rce.undo} style={style.replyButtonImage} />
+                  <Image
+                    source={Images.rce.undo}
+                    style={[
+                      style.replyButtonImage,
+                      { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] },
+                    ]}
+                  />
                   <Text style={[{ color: colors.primaryButtonTextColor }, style.reply]}>{i18n('Reply')}</Text>
                 </View>
               </TouchableHighlight>
@@ -391,31 +406,33 @@ export class DiscussionDetails extends Component<Props, any> {
           onPressMoreReplies={this._onPressMoreReplies}
           isRootReply
           discussionLockedForUser={discussionLockedForUser}
+          userCanReply={this.props.permissions.post_to_forum}
           rating={reply.rating}
           canRate={this.props.canRate}
           showRating={discussion.allow_rating}
           isLastReply={this.state.flatReplies.length - 1 === index}
           isAnnouncement={Boolean(this.props.isAnnouncement)}
+          rateEntry={this.props.rateEntry}
         />
       </View>
     )
   }
 
-  rootRepliesData = (discussion: ?Discussion, rootNodePath: number[], maxDepth: number) => {
+  rootRepliesData = (discussion: ?Discussion, rootNodePath: number[], maxDepth: number, entryRatings: EntryRatings) => {
     if (!discussion) return []
     let replies = discussion && discussion.replies || []
 
-    if (rootNodePath.length === 0) return this.flattenRepliesData([], 0, replies, [], maxDepth)
+    if (rootNodePath.length === 0) return this.flattenRepliesData([], 0, replies, [], maxDepth, entryRatings)
 
     let reply = replyFromLocalIndexPath(rootNodePath, replies, false)
     if (reply) {
-      return this.flattenRepliesData([], 0, [reply], [], maxDepth)
+      return this.flattenRepliesData([], 0, [reply], [], maxDepth, entryRatings)
     } else {
       return [reply]
     }
   }
 
-  flattenRepliesData (flatList: DiscussionReply[], depth: number, replies: DiscussionReply[], indexPath: number[], maxDepth: number): DiscussionReply[] {
+  flattenRepliesData (flatList: DiscussionReply[], depth: number, replies: DiscussionReply[], indexPath: number[], maxDepth: number, entryRatings: EntryRatings = {}): DiscussionReply[] {
     if (!replies || depth > maxDepth) return flatList
 
     for (let i = 0; i < replies.length; i++) {
@@ -425,10 +442,10 @@ export class DiscussionDetails extends Component<Props, any> {
         depth: depth,
         myPath: [...indexPath, i],
         readState: readState,
-        rating: this.state.entry_ratings[replies[i].id],
+        rating: entryRatings[replies[i].id],
       }
       flatList.push(reply)
-      flatList = this.flattenRepliesData(flatList, depth + 1, replies[i].replies, reply.myPath, maxDepth)
+      flatList = this.flattenRepliesData(flatList, depth + 1, replies[i].replies, reply.myPath, maxDepth, entryRatings)
     }
     return flatList
   }
@@ -460,7 +477,6 @@ export class DiscussionDetails extends Component<Props, any> {
             initialNumToRender={10}
             extraData={{
               unread_entries: this.state.unread_entries,
-              entry_ratings: this.state.entry_ratings,
             }}
             keyExtractor={this.keyExtractor}
             windowSize={5}
@@ -576,7 +592,7 @@ export class DiscussionDetails extends Component<Props, any> {
   _onPressMoreReplies = (rootPath: number[]) => {
     this.setState({
       rootNodePath: rootPath,
-      flatReplies: this.rootRepliesData(this.props.discussion, rootPath, this.state.maxReplyNodeDepth),
+      flatReplies: this.rootRepliesData(this.props.discussion, rootPath, this.state.maxReplyNodeDepth, this.props.entryRatings),
     })
 
     setTimeout(function () { NativeAccessibility.focusElement('discussion.popToLastDiscussionList') }, 500)
@@ -587,7 +603,7 @@ export class DiscussionDetails extends Component<Props, any> {
     if (path.length === 1) path = []
     this.setState({
       rootNodePath: path,
-      flatReplies: this.rootRepliesData(this.props.discussion, path, this.state.maxReplyNodeDepth),
+      flatReplies: this.rootRepliesData(this.props.discussion, path, this.state.maxReplyNodeDepth, this.props.entryRatings),
     })
   }
 
@@ -728,11 +744,13 @@ const style = StyleSheet.create({
   },
   attachmentIcon: {
     tintColor: colors.link,
+    height: 14,
+    width: 14,
   },
   attachmentText: {
     color: colors.link,
     fontFamily: BOLD_FONT,
-    marginLeft: 6,
+    marginLeft: 4,
     fontSize: 14,
   },
   popReplyStackContainer: {
@@ -743,10 +761,6 @@ const style = StyleSheet.create({
   },
   popReplyStackIcon: {
     tintColor: colors.link,
-  },
-  message: {
-    paddingTop: global.style.defaultPadding,
-    paddingBottom: global.style.defaultPadding,
   },
   section: {
     flex: 1,
@@ -772,7 +786,7 @@ export function mapStateToProps ({ entities }: AppState, ownProps: OwnProps): St
   const contextID = ownProps.contextID
   const context = ownProps.context
   const discussionID = ownProps.announcementID || ownProps.discussionID
-  const isAnnouncement = ownProps.isAnnouncement || ownProps.announcementID != null
+  let isAnnouncement = ownProps.isAnnouncement || ownProps.announcementID != null
   let discussion: ?Discussion
   let pending = 0
   let error = null
@@ -782,6 +796,7 @@ export function mapStateToProps ({ entities }: AppState, ownProps: OwnProps): St
   let entryRatings = {}
   let course: ?Course
   let initialPostRequired = true
+  let permissions = {}
 
   if (entities && entities.discussions) {
     if (context === 'courses' && entities.courses[contextID]) {
@@ -789,10 +804,12 @@ export function mapStateToProps ({ entities }: AppState, ownProps: OwnProps): St
       course = entities.courses[contextID].course
       courseColor = entity.color
       courseName = course.name
+      permissions = entity.permissions
     } else if (entities.groups[contextID]) {
       let group = entities.groups[contextID]
       courseName = group.group.name
       courseColor = group.color
+      permissions = group.permissions
     }
   }
 
@@ -806,6 +823,9 @@ export function mapStateToProps ({ entities }: AppState, ownProps: OwnProps): St
     pending = state.pending
     error = state.error
     initialPostRequired = state.initialPostRequired ? discussion.require_initial_post : false
+    if (!isAnnouncement) {
+      isAnnouncement = state.isAnnouncement
+    }
   }
 
   let assignment = null
@@ -842,6 +862,7 @@ export function mapStateToProps ({ entities }: AppState, ownProps: OwnProps): St
     canRate,
     initialPostRequired,
     groups: entities.groups,
+    permissions,
   }
 }
 
@@ -850,7 +871,8 @@ export function shouldRefresh (props: Props): boolean {
          !props.discussion.replies ||
          (props.discussion.assignment_id && !props.assignment) ||
          (!props.unreadEntries && props.discussion.unread_count > 0) ||
-         props.discussion.allow_rating
+         props.discussion.allow_rating ||
+         Object.keys(props.permissions).length === 0
 }
 
 export function refreshData (props: Props): void {
@@ -858,6 +880,8 @@ export function refreshData (props: Props): void {
 
   // Must refresh single discussion in case user cant view replies.
   props.refreshSingleDiscussion(props.context, props.contextID, props.discussionID)
+
+  props.updateContextPermissions(props.context, props.contextID)
 }
 
 let Refreshed = refresh(

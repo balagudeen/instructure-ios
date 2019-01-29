@@ -30,7 +30,7 @@ extension File {
     }
     
     static func collectionCacheKey(_ context: NSManagedObjectContext, contextID: ContextID, folderID: String?) -> String {
-        return cacheKey(context, [contextID.canvasContextID, folderID].flatMap { $0 })
+        return cacheKey(context, [contextID.canvasContextID, folderID].compactMap { $0 })
     }
     
     open class DetailViewController: UIViewController {
@@ -41,7 +41,7 @@ extension File {
             fatalError()
         }
         
-        public init(session: Session, file: File) {
+        @objc public init(session: Session, file: File) {
             self.file = file
             self.session = session
             super.init(nibName: nil, bundle: nil)

@@ -26,7 +26,7 @@ private let modelName = "SoEdventurous"
 private let dbFailedToLoadErrorDescription = NSLocalizedString("There was a problem loading the SoEdventurous database file.", comment: "SoEdventurous database load failure message")
 
 extension Session {
-    public func soEdventurousManagedObjectContext() throws -> NSManagedObjectContext {
+    @objc public func soEdventurousManagedObjectContext() throws -> NSManagedObjectContext {
         let model = NSManagedObjectModel(named: modelName, inBundle: Bundle(for: Module.self))?.mutableCopy() as! NSManagedObjectModel
         let storeID = StoreID(storeName: modelName, model: model, localizedErrorDescription: dbFailedToLoadErrorDescription)
         return try managedObjectContext(storeID)

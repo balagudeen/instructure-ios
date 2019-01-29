@@ -39,7 +39,7 @@ open class FileUpload: Upload {
 
     open var disposable = CompositeDisposable()
 
-    open func abort() {
+    @objc open func abort() {
         cancel()
         disposable.dispose()
     }
@@ -50,7 +50,7 @@ open class FileUpload: Upload {
         abort()
     }
 
-    public convenience init(inContext context: NSManagedObjectContext, uploadable: Uploadable, path: String, backgroundSessionID: String = "", parentFolderID: String? = nil, batch: FileUploadBatch? = nil) {
+    @objc public convenience init(inContext context: NSManagedObjectContext, uploadable: Uploadable, path: String, backgroundSessionID: String = "", parentFolderID: String? = nil, batch: FileUploadBatch? = nil) {
         self.init(
             inContext: context,
             backgroundSessionID: backgroundSessionID,
@@ -117,7 +117,7 @@ open class FileUpload: Upload {
         }
     }
 
-    open func session(_ session: Session, didFinishTask task: URLSessionTask, withResponse json: JSONObject, inContext context: NSManagedObjectContext) {
+    @objc open func session(_ session: Session, didFinishTask task: URLSessionTask, withResponse json: JSONObject, inContext context: NSManagedObjectContext) {
         guard targetURL != nil && targetParameters != nil else {
             
             // json should be the upload target
@@ -146,7 +146,7 @@ open class FileUpload: Upload {
             .start()
     }
 
-    open func addTaskCompletionHandler(_ task: URLSessionTask, inSession session: Session, inContext context: NSManagedObjectContext) {
+    @objc open func addTaskCompletionHandler(_ task: URLSessionTask, inSession session: Session, inContext context: NSManagedObjectContext) {
         session.completionHandlerByTask[task] = { [weak self] task, error in
             if let data = session.responseDataByTask[task], let response = task.response {
                 if let result = session.responseJSONSignalProducer(data, response: response).first() {
@@ -176,7 +176,7 @@ open class FileUpload: Upload {
 }
 
 extension FileUpload {
-    open func begin(inSession session: Session, inContext context: NSManagedObjectContext) {
+    @objc open func begin(inSession session: Session, inContext context: NSManagedObjectContext) {
         disposable = CompositeDisposable()
         disposable += attemptProducer {
             let request = try session.requestPostUploadTarget(path: path, fileName: name, size: data.count, contentType: contentType, folderPath: nil, overwrite: false)
@@ -194,7 +194,7 @@ extension FileUpload {
         .start()
     }
 
-    internal func complete(file: File) {
+    @objc internal func complete(file: File) {
         file.parentFolderID = self.parentFolderID
         file.isInRootFolder = self.parentFolderID == nil
         self.file = file

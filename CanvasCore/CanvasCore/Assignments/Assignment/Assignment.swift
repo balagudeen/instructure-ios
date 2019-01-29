@@ -103,7 +103,7 @@ public final class Assignment: NSManagedObject, LockableModel {
         }
     }
     
-    public var icon: UIImage {
+    @objc public var icon: UIImage {
         switch submissionTypes {
         case [.quiz]:               return .icon(.quiz)
         case [.discussionTopic]:    return .icon(.discussion)
@@ -112,14 +112,14 @@ public final class Assignment: NSManagedObject, LockableModel {
         }
     }
 
-    static let gradeNumberFormatter: NumberFormatter = {
+    @objc static let gradeNumberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 1
         formatter.minimumFractionDigits = 0
         return formatter
     }()
 
-    public var grade: String {
+    @objc public var grade: String {
         let formatter = Assignment.gradeNumberFormatter
         let grade: String
         switch gradingType {
@@ -143,11 +143,11 @@ public final class Assignment: NSManagedObject, LockableModel {
         return grade
     }
 
-    public var graded: Bool {
+    @objc public var graded: Bool {
         return status.contains(.Graded)
     }
 
-    var assignmentGroupName: String {
+    @objc var assignmentGroupName: String {
         return assignmentGroup?.name ?? NSLocalizedString("None", tableName: "Localizable", bundle: .core, value: "", comment: "Section header for assignments without an assignment group")
     }
 }
@@ -222,7 +222,7 @@ public struct SubmissionTypes: OptionSet {
         case "online_url":          return .url
         case "online_upload":       return .upload
         case "media_recording":     return .mediaRecording
-        case "none":                return .none
+        case "none", "not_graded":  return .none
         default:                    return []
         }
     }
@@ -243,7 +243,7 @@ import Marshal
 
 
 extension Assignment {
-    public var allowsSubmissions: Bool {
+    @objc public var allowsSubmissions: Bool {
         return !submissionTypes.contains(.none) && gradingType != .notGraded && !lockedForUser
     }
 }
@@ -259,7 +259,7 @@ extension NSError {
 
 extension Assignment: SynchronizedModel {
 
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("id")
         return NSPredicate(format: "%K == %@", "id", id)
     }
@@ -319,7 +319,7 @@ extension Assignment: SynchronizedModel {
         let _ = DueDateOverride.upsert(inContext: context, jsonArray: oJSON.filter { $0["due_at"] != nil })
     }
     
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         id                  = try json.stringID("id")
         courseID            = try json.stringID("course_id")
         name                = try json <| "name"
@@ -349,7 +349,7 @@ extension Assignment: SynchronizedModel {
         try updateLockStatus(json)
     }
 
-    func updateSubmission(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc func updateSubmission(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         var status: SubmissionStatus = []
         var submissionState = ""
 
@@ -407,5 +407,5 @@ extension Assignment: SynchronizedModel {
     }
 
     // API parameters
-    public static var parameters: [String: Any] { return ["include": ["assignment_visibility", "all_dates", "submission", "observed_users"]] }
+    @objc public static var parameters: [String: Any] { return ["include": ["assignment_visibility", "all_dates", "submission", "observed_users"]] }
 }

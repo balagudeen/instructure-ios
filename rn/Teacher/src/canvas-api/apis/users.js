@@ -26,6 +26,10 @@ export function getUserProfile (userID: string): ApiPromise<User> {
   return httpClient.get(`/users/${userID}/profile`)
 }
 
+export function getUser (userID: string): ApiPromise<User> {
+  return httpClient.get(`/users/${userID}`)
+}
+
 export function createUser (createUserData: CreateUser): ApiPromise<User> {
   let data = {
     user: {

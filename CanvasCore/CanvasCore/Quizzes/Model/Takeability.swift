@@ -26,6 +26,7 @@ enum Takeability {
         case attemptLimitReached
         case undecided
         case other(String)
+        case offline
     }
     
     case notTakeable(reason: NotTakeableReason)

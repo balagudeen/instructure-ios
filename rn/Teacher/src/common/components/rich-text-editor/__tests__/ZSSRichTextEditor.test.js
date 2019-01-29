@@ -17,7 +17,7 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 import { shallow } from 'enzyme'
-import { NativeModules, Clipboard } from 'react-native'
+import { NativeModules, Clipboard, I18nManager } from 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import RNFS from 'react-native-fs'
@@ -125,6 +125,19 @@ describe('ZSSRichTextEditor', () => {
     postMessage(web, 'ZSS_LOADED')
 
     expect(js.mock.calls).toMatchSnapshot()
+  })
+
+  it('loads with rtl direction when in rtl', () => {
+    I18nManager.isRTL = true
+    const component = renderer.create(
+      <ZSSRichTextEditor />, options
+    )
+
+    const web = webView(component)
+    postMessage(web, 'ZSS_LOADED')
+
+    expect(js.mock.calls).toMatchSnapshot()
+    I18nManager.isRTL = false
   })
 
   it('triggers undo', () => {
@@ -287,15 +300,6 @@ describe('ZSSRichTextEditor', () => {
 
   it('triggers blur', () => {
     testTrigger((editor) => editor.blurEditor())
-  })
-
-  it('sets custom css on web view loaded', () => {
-    const component = renderer.create(
-      <ZSSRichTextEditor />, options
-    )
-    const web = webView(component)
-    web.props.onLoad()
-    expect(js.mock.calls).toMatchSnapshot()
   })
 
   it('notifies when editor loaded', async () => {

@@ -718,21 +718,25 @@ exports[`QuizDetails displays "Lock Questions After Answering" 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -2138,21 +2142,25 @@ exports[`QuizDetails displays access code 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -3558,21 +3566,25 @@ exports[`QuizDetails does not render Show Correct Answers when hide_results is n
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -4862,21 +4874,25 @@ exports[`QuizDetails renders 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -6224,21 +6240,25 @@ exports[`QuizDetails renders One Question At A Time: 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -7644,21 +7664,25 @@ exports[`QuizDetails renders One Question At A Time: 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -9006,21 +9030,25 @@ exports[`QuizDetails renders Show Correct Answers dates 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -10368,21 +10396,25 @@ exports[`QuizDetails renders Show Correct Answers dates 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -11730,21 +11762,25 @@ exports[`QuizDetails renders Show Correct Answers dates 3`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -13092,21 +13128,25 @@ exports[`QuizDetails renders Show Correct Answers: After Last Attempt 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -14454,21 +14494,25 @@ exports[`QuizDetails renders Show Correct Answers: After Last Attempt 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -15758,21 +15802,25 @@ exports[`QuizDetails renders allowed attempts 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -17120,21 +17168,25 @@ exports[`QuizDetails renders allowed attempts 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -18389,21 +18441,25 @@ exports[`QuizDetails renders assignment due dates 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -18514,21 +18570,25 @@ exports[`QuizDetails renders assignment due dates 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -19876,21 +19936,25 @@ exports[`QuizDetails renders assignment group 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -21296,21 +21360,25 @@ exports[`QuizDetails renders published state 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -22658,21 +22726,25 @@ exports[`QuizDetails renders published state 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -24020,21 +24092,25 @@ exports[`QuizDetails renders quiz type 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -25382,21 +25458,25 @@ exports[`QuizDetails renders quiz type 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -26744,21 +26824,25 @@ exports[`QuizDetails renders scoring policy 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -28106,21 +28190,25 @@ exports[`QuizDetails renders scoring policy 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -29468,21 +29556,25 @@ exports[`QuizDetails renders scoring policy 3`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -30830,21 +30922,25 @@ exports[`QuizDetails renders show correct answers 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -32192,21 +32288,25 @@ exports[`QuizDetails renders show correct answers 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -33554,21 +33654,25 @@ exports[`QuizDetails renders shuffle answers 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -34916,21 +35020,25 @@ exports[`QuizDetails renders shuffle answers 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -36278,21 +36386,25 @@ exports[`QuizDetails renders time limit 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -37640,21 +37752,25 @@ exports[`QuizDetails renders time limit 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -39002,21 +39118,25 @@ exports[`QuizDetails renders view responses 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -40364,21 +40484,25 @@ exports[`QuizDetails renders view responses 2`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -41668,21 +41792,25 @@ exports[`QuizDetails renders view responses 3`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -42972,21 +43100,25 @@ exports[`QuizDetails renders without a description 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>

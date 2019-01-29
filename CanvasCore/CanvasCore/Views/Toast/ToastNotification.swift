@@ -22,11 +22,11 @@ private let verticalPadding = CGFloat(4)
 private let defaultDuration = TimeInterval(1.65)
 
 fileprivate class ToastView: UIView {
-    let label = UILabel()
-    var heightConstraint: NSLayoutConstraint!
-    var hideConstraint: NSLayoutConstraint!
+    @objc let label = UILabel()
+    @objc var heightConstraint: NSLayoutConstraint!
+    @objc var hideConstraint: NSLayoutConstraint!
 
-    init(message: String, color: UIColor) {
+    @objc init(message: String, color: UIColor) {
         super.init(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +54,7 @@ fileprivate class ToastView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func attach(to navigationBar: UINavigationBar) {
+    @objc func attach(to navigationBar: UINavigationBar) {
         navigationBar.addSubview(self)
         var toastFrame = navigationBar.bounds
         toastFrame.origin.y = toastFrame.height
@@ -62,18 +62,18 @@ fileprivate class ToastView: UIView {
         frame = toastFrame
     }
     
-    func present() {
+    @objc func present() {
         hideConstraint.isActive = false
         heightConstraint.isActive = true
         
         UIView.animate(withDuration: 0.16, delay: 0.0, options: .curveEaseOut, animations: {
             self.superview?.layoutIfNeeded()
         }, completion: { _ in
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.label.text)
+            UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: self.label.text)
         })
     }
     
-    func dismiss() {
+    @objc func dismiss() {
         heightConstraint.isActive = false
         hideConstraint.isActive = true
         
@@ -93,11 +93,11 @@ fileprivate class ToastView: UIView {
 
 public class ToastManager : NSObject {
     
-    let defaultToastDuration = 2.5
-    let navigationBar: UINavigationBar?
+    @objc let defaultToastDuration = 2.5
+    @objc let navigationBar: UINavigationBar?
     fileprivate var toastView: ToastView?
     
-    public init(navigationBar: UINavigationBar) {
+    @objc public init(navigationBar: UINavigationBar) {
         self.navigationBar = navigationBar
         super.init()
     }
@@ -107,29 +107,29 @@ public class ToastManager : NSObject {
     // ---------------------------------------------
     
     /// Shows success toast with message *does not autodismiss*
-    public func beginToastSuccess(_ message: String) {
+    @objc public func beginToastSuccess(_ message: String) {
         toast(message, color: .toastSuccess, dismissAfter: nil)
     }
     /// Shows and autodismisses success toast with message
-    public func toastSuccess(_ message: String) {
+    @objc public func toastSuccess(_ message: String) {
         toast(message, color: .toastSuccess, dismissAfter: defaultDuration)
     }
 
     /// Shows info toast with message *does not autodismiss*
-    public func beginToastInfo(_ message: String) {
+    @objc public func beginToastInfo(_ message: String) {
         toast(message, color: .toastInfo, dismissAfter: nil)
     }
     /// Shows and autodismisses info toast with message
-    public func toastInfo(_ message: String) {
+    @objc public func toastInfo(_ message: String) {
         toast(message, color: .toastInfo, dismissAfter: defaultDuration)
     }
     
     /// Shows failure toast with message *does not autodismiss*
-    public func beginToastFailure(_ message: String) {
+    @objc public func beginToastFailure(_ message: String) {
         toast(message, color: UIColor.toastFailure, dismissAfter: nil)
     }
     /// Shows and autodismisses failure toast with message
-    public func toastFailure(_ message: String) {
+    @objc public func toastFailure(_ message: String) {
         toast(message, color: .toastFailure, dismissAfter: defaultDuration)
     }
     
@@ -159,7 +159,7 @@ public class ToastManager : NSObject {
         toastView = toast
     }
     
-    public func endToast() {
+    @objc public func endToast() {
         toastView?.dismiss()
         toastView = nil
     }

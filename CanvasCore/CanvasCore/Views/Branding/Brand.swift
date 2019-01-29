@@ -17,19 +17,20 @@
 import UIKit
 
 open class Brand: NSObject {
-    public var navBgColor = rgb(14, g: 20, b: 34)
-    public var navButtonColor = UIColor.white
-    public var navTextColor = UIColor.white
-    public var primaryButtonColor = rgb(227, g: 60, b: 41)
-    public var primaryButtonTextColor = UIColor.white
-    public var primaryBrandColor = rgb(227, g: 60, b: 41)
-    public var fontColorDark = UIColor.black
-    public var headerImageURL: String = ""
+    @objc public var navBgColor = rgb(14, g: 20, b: 34)
+    @objc public var navButtonColor = UIColor.white
+    @objc public var navTextColor = UIColor.white
+    @objc public var linkColor = rgb(227, g: 60, b: 41)
+    @objc public var primaryButtonColor = rgb(227, g: 60, b: 41)
+    @objc public var primaryButtonTextColor = UIColor.white
+    @objc public var primaryBrandColor = rgb(227, g: 60, b: 41)
+    @objc public var fontColorDark = UIColor.black
+    @objc public var headerImageURL: String = ""
     
-    public let secondaryTintColor = #colorLiteral(red: 0.2117647059, green: 0.5450980392, blue: 0.8470588235, alpha: 1)
-    public var tintColor: UIColor { return primaryButtonColor }
+    @objc public let secondaryTintColor = #colorLiteral(red: 0.2117647059, green: 0.5450980392, blue: 0.8470588235, alpha: 1)
+    @objc public var tintColor: UIColor { return primaryButtonColor }
     
-    public init(webPayload: [String: Any]?) {
+    @objc public init(webPayload: [String: Any]?) {
         if let payload = webPayload {
             if let hex = payload["ic-brand-global-nav-bgd"] as? String, let color = UIColor.colorFromHexString(hex) {
                 navBgColor = color
@@ -57,6 +58,10 @@ open class Brand: NSObject {
             if let hex = payload["ic-brand-font-color-dark"] as? String, let color = UIColor.colorFromHexString(hex) {
                 fontColorDark = color
             }
+
+            if let hex = payload["ic-link-color"] as? String, let color = UIColor.colorFromHexString(hex) {
+                linkColor = color
+            }
             
             if let imagePath = payload["ic-brand-header-image"] as? String {
                 headerImageURL = imagePath
@@ -64,20 +69,17 @@ open class Brand: NSObject {
         }
     }
     
-    open func apply(_ window: UIWindow) {
-        window.tintColor = primaryButtonColor
+    @objc open func apply(_ window: UIWindow) {
         let tabsAppearance = UITabBar.appearance()
         tabsAppearance.tintColor = primaryBrandColor
         tabsAppearance.barTintColor = UIColor.white
         tabsAppearance.unselectedItemTintColor = UIColor(red: 115/255.0, green: 129/255.0, blue: 140/255.0, alpha: 1)
 
         let navBarAppearance = UINavigationBar.appearance()
-        let customBackButton = UIImage(named: "back_arrow", in: .core, compatibleWith: nil)
-        navBarAppearance.backIndicatorImage = customBackButton
-        navBarAppearance.backIndicatorTransitionMaskImage = customBackButton
+        navBarAppearance.tintColor = linkColor
     }
     
-    open func navBarTitleView() -> UIView? {
+    @objc open func navBarTitleView() -> UIView? {
         guard headerImageURL.count > 0 else { return nil }
         return HelmManager.narBarTitleViewFromImagePath(headerImageURL)
     }
@@ -92,9 +94,9 @@ private func rgb(_ r: Int, g: Int, b: Int) -> UIColor {
 }
 
 extension Brand {
-    private (set) public static var current = Brand()
+    @objc private (set) public static var current = Brand()
     
-    public static func setCurrent(_ brand: Brand, applyInWindow window: UIWindow? = nil) {
+    @objc public static func setCurrent(_ brand: Brand, applyInWindow window: UIWindow? = nil) {
         current = brand
         if let window = window {
             current.apply(window)

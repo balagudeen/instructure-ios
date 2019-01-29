@@ -41,11 +41,12 @@
 
 @implementation SupportTicketViewController
 
-+ (SupportTicketViewController *)presentFromViewController:(UIViewController *)presenter supportTicketType:(SupportTicketType)type {
++ (SupportTicketViewController *)presentFromViewController:(UIViewController *)presenter supportTicketType:(SupportTicketType)type defaultSubject:(NSString* _Nullable) defaultSubject {
     UINavigationController *nav = (UINavigationController *)[UIStoryboard storyboardWithName:@"SupportTicket" bundle:[NSBundle bundleForClass:self]].instantiateInitialViewController;
     SupportTicketViewController *support = (SupportTicketViewController *)nav.viewControllers[0];
     support.ticketType = type;
-    
+    support.defaultSubject = defaultSubject;
+
     [presenter presentViewController:nav animated:YES completion:nil];
     return support;
 }
@@ -82,7 +83,10 @@
         self.ticket.ticketType = SupportTicketTypeProblem;
         self.title = NSLocalizedStringFromTableInBundle(@"Report a Problem", @"Localizable", [NSBundle bundleForClass:[self class]], nil);
     }
-    
+
+    if ([self.defaultSubject length] > 0) {
+        self.subjectTextField.text = self.defaultSubject;
+    }
 }
 
 - (void)editingChanged
@@ -140,6 +144,8 @@
 {
     [super viewWillAppear:animated];
     [self.impactButton setTitle:self.ticket.impactString forState:UIControlStateNormal];
+    [self.impactButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [self.impactButton setContentEdgeInsets:UIEdgeInsetsMake(0, -7, 0, 0)];
     [self enableSendIfValidates];
 }
 

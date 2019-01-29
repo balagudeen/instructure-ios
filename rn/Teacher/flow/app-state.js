@@ -50,6 +50,7 @@ export type CourseContentState = {
 export type GroupState = AsyncState & {
   group: Group,
   color: ?string,
+  permissions: ?{ [string]: boolean },
 }
 
 export type GroupContentState = {
@@ -143,6 +144,7 @@ export type DiscussionState = AsyncState & {
   unread_entries: string[],
   entry_ratings: { [string]: number },
   initialPostRequired?: boolean,
+  isAnnouncement?: boolean,
 }
 
 export type PendingDiscussionReply = {
@@ -219,6 +221,7 @@ export type UserInfo = {
   canMasquerade: boolean,
   showsGradesOnCourseCards: boolean,
   externalTools: ExternalToolLaunchDefinitionGlobalNavigationItem[],
+  helpLinks?: HelpLinks,
 }
 
 // I moved this to the bottom because something with it is making vscode syntax highlighting stop working in this file

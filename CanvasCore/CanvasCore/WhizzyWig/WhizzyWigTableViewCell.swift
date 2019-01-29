@@ -20,26 +20,29 @@ import UIKit
 
 open class WhizzyWigTableViewCell: UITableViewCell {
     
-    open var indexPath = IndexPath(row: 0, section: 0)
-    open var cellSizeUpdated: (IndexPath)->() = {_ in }
-    open var readMore: ((WhizzyWigViewController)->())? {
+    @objc open var indexPath = IndexPath(row: 0, section: 0)
+    @objc open var cellSizeUpdated: (IndexPath)->() = {_ in }
+    @objc open var didRecieveMessage: (IndexPath, String)->() = {_,_  in }
+    private var lastContentHeight: CGFloat?
+    private var lastContentWidth: CGFloat?
+    @objc open var readMore: ((WhizzyWigViewController)->())? {
         didSet {
             readMoreButton.isHidden = readMore == nil || whizzyWigView.contentHeight <= maxHeight
         }
     }
     
-    var minHeight: CGFloat = 0.0
-    var maxHeight: CGFloat = 6144.0
+    @objc var minHeight: CGFloat = 0.0
+    @objc var maxHeight: CGFloat = 6144.0
     
-    open let whizzyWigView = WhizzyWigView(frame: CGRect(x: 0, y: 0, width: 320, height: 43))
+    @objc public let whizzyWigView = WhizzyWigView(frame: CGRect(x: 0, y: 0, width: 320, height: 43))
     
-    let heightConstraint: NSLayoutConstraint
-    let readMoreButton = UIButton(type: .system)
+    @objc let heightConstraint: NSLayoutConstraint
+    @objc let readMoreButton = UIButton(type: .system)
     
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         heightConstraint = NSLayoutConstraint(item: whizzyWigView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: minHeight)
-        heightConstraint.priority = 999.0
+        heightConstraint.priority = UILayoutPriority(rawValue: 999.0)
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -59,9 +62,14 @@ open class WhizzyWigTableViewCell: UITableViewCell {
                 me.contentSizeDidChange()
             }
         }
+        whizzyWigView.didRecieveMessage = { [weak self] message in
+            if let me = self {
+                me.didRecieveMessage(me.indexPath, message)
+            }
+        }
 
         let readMore = NSLocalizedString("Read More", tableName: "Localizable", bundle: Bundle(for: type(of: self)), value: "", comment: "button to read more of the description")
-        readMoreButton.setTitle(readMore, for: UIControlState())
+        readMoreButton.setTitle(readMore, for: UIControl.State())
         readMoreButton.translatesAutoresizingMaskIntoConstraints = false
         readMoreButton.addTarget(self, action: #selector(WhizzyWigTableViewCell.readMoreButtonWasTapped(_:)), for: .touchUpInside)
         readMoreButton.isHidden = true
@@ -81,9 +89,15 @@ open class WhizzyWigTableViewCell: UITableViewCell {
     
     fileprivate func contentSizeDidChange() {
         let contentHeight = whizzyWigView.contentHeight
+        let contentWidth = whizzyWigView.contentWidth
+        if contentHeight == lastContentHeight, contentWidth == lastContentWidth {
+            return
+        }
+        lastContentHeight = contentHeight
+        lastContentWidth = contentWidth
         heightConstraint.constant = min(maxHeight, max(minHeight, contentHeight))
         cellSizeUpdated(indexPath)
-        if contentHeight > maxHeight && readMore != nil {
+        if contentHeight > maxHeight || contentWidth > frame.width, readMore != nil {
             readMoreButton.isHidden = false
         }
     }
@@ -99,7 +113,7 @@ open class WhizzyWigTableViewCell: UITableViewCell {
     }
     
     
-    open var expectedHeight: CGFloat {
+    @objc open var expectedHeight: CGFloat {
         get {
             return heightConstraint.constant
         }
@@ -115,7 +129,7 @@ open class WhizzyWigTableViewCell: UITableViewCell {
         readMore = nil
     }
 
-    open func readMoreButtonWasTapped(_ sender: UIButton) {
+    @objc open func readMoreButtonWasTapped(_ sender: UIButton) {
         let wwvc = WhizzyWigViewController(nibName: nil, bundle: nil)
         self.readMore?(wwvc)
     }

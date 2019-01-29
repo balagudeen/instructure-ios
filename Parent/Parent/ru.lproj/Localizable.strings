@@ -1,8 +1,14 @@
 /* <String> <Int> of <Int> */
 "%@ %d of %d" = "%1$@ %2$d из %3$d";
 
-/* Something to Something */
+/* No comment provided by engineer. */
+"%@ is due at %@" = "%1$@ необходимо завершить через %2$@";
+
+/* No comment provided by engineer. */
 "%@ to %@" = "%1$@ до %2$@";
+
+/* No comment provided by engineer. */
+"%@ will begin at %@" = "%1$@ начнется в %2$@";
 
 /* Percentage field placeholder */
 "1-100%" = "1-100%";
@@ -31,6 +37,9 @@
 /* No comment provided by engineer. */
 "Announcement" = "Объявление";
 
+/* No comment provided by engineer. */
+"Assignment" = "Задание";
+
 /* Assignment Grade High On Description */
 "Assignment grade above" = "Оценка за задание выше";
 
@@ -39,6 +48,9 @@
 
 /* Assignment Missing Description */
 "Assignment missing" = "Задание отсутствует";
+
+/* No comment provided by engineer. */
+"Assignment reminder" = "Напоминание о тестировании";
 
 /* No comment provided by engineer. */
 "Cache cleared" = "Данные кэша очищены";
@@ -58,11 +70,11 @@
 /* Empty Alerts Text */
 "Caught up on Alerts" = "Выполнить задания по оповещениям";
 
-/* title for status selection field */
-"Choose One" = "Выбрать один вариант";
-
 /* No comment provided by engineer. */
 "Choose a student" = "Выберите студента";
+
+/* title for status selection field */
+"Choose One" = "Выбрать один вариант";
 
 /* Close Button Title */
 "Close" = "Закрыть";
@@ -79,14 +91,26 @@
 /* Courses Tab */
 "Courses" = "Курсы";
 
+/* No comment provided by engineer. */
+"Current student: %@, tap to switch students" = "Текущий студент: %@, нажмите для переключения между студентами";
+
 /* Title for field */
 "Describe your problem" = "Опишите вашу проблему";
+
+/* No comment provided by engineer. */
+"Discussion" = "Обсуждение";
 
 /* No comment provided by engineer. */
 "Dismiss" = "Отклонить";
 
 /* No comment provided by engineer. */
 "Error" = "Ошибка";
+
+/* No comment provided by engineer. */
+"Event" = "Событие";
+
+/* No comment provided by engineer. */
+"Event reminder" = "Напоминание о событии";
 
 /* No comment provided by engineer. */
 "Excused" = "По уважительной причине";
@@ -160,11 +184,11 @@
 /* Title for label when no grade has been assigned to the course */
 "No Grade" = "Без оценки";
 
-/* Empty Students Text */
-"No Students" = "Студенты отсутствуют";
-
 /* Error message */
 "No installed apps support opening this file" = "Установленные приложения не поддерживают открытие этого файла";
+
+/* Empty Students Text */
+"No Students" = "Студенты отсутствуют";
 
 /* Not Authorized Error Title */
 "Not Authorized" = "Нет авторизации";
@@ -184,6 +208,12 @@
 /* Open file in another application */
 "Open in..." = "Открыть в...";
 
+/* No comment provided by engineer. */
+"Permission Needed" = "Требуется разрешение";
+
+/* No comment provided by engineer. */
+"Quiz" = "Тест";
+
 /* Support Ticket Creation Failed */
 "Request Failed!  Check network and try again!" = "Сбой при выполнении запроса!  Проверьте сеть и попробуйте еще раз!";
 
@@ -195,6 +225,9 @@
 
 /* Server Error Title */
 "Server Error" = "Ошибка сервера";
+
+/* No comment provided by engineer. */
+"Settings" = "Настройки";
 
 /* Status level for issue being reported */
 "Something is broken but I can work around it" = "Что-то сломалось, но я могу работать и без этого";
@@ -232,6 +265,12 @@
 /* No comment provided by engineer. */
 "There was an error loading your content. If it  is an audio or video upload it may still be processing." = "Возникла ошибка при загрузке контента. Если это загрузка аудио или видео, она все еще может быть в обработке.";
 
+/* No comment provided by engineer. */
+"This announcement has expired." = "Срок действия этого объявления истек.";
+
+/* No comment provided by engineer. */
+"This student's courses may not be published yet." = "Курсы этого студента пока еще не могут быть опубликованы.";
+
 /* Unknown T`hreshold Description */
 "Unknown" = "Неизвестно";
 
@@ -240,6 +279,9 @@
 
 /* Default user name, the computer-friendly version of their name, until we find their real user name */
 "Unknown User Name" = "Неизвестное имя пользователя";
+
+/* No comment provided by engineer. */
+"Unread" = "Не прочитано";
 
 /* Calendar Tab */
 "Week" = "Неделя";
@@ -252,6 +294,9 @@
 
 /* Not Authorized Error Message */
 "You are unauthorized to access this information.  Check your user permissions and try again." = "Вы не авторизованы для доступа к этой информации. Проверьте права доступа пользователя и повторите попытку.";
+
+/* No comment provided by engineer. */
+"You must allow notifications in Settings to set reminders." = "Вы должны разрешить уведомления в настройках для задания напоминаний.";
 
 /* Title for the email field */
 "Your Email" = "Ваша электронная почта";

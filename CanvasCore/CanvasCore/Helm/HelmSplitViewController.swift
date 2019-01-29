@@ -65,7 +65,7 @@ open class HelmSplitViewController: UISplitViewController {
 }
 
 extension HelmSplitViewController: UISplitViewControllerDelegate {
-    open func targetDisplayModeForAction(in svc: UISplitViewController) -> UISplitViewControllerDisplayMode {
+    open func targetDisplayModeForAction(in svc: UISplitViewController) -> UISplitViewController.DisplayMode {
         if svc.displayMode == .primaryOverlay || svc.displayMode == .primaryHidden {
             if let nav = svc.viewControllers.last as? UINavigationController {
                 nav.topViewController?.navigationItem.leftBarButtonItem = prettyDisplayModeButtonItem

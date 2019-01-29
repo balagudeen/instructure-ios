@@ -16,6 +16,9 @@
 /* Confirmations alerting user of unanswered questions */
 "%d questions not answered" = "%d spørsmål ikke besvart";
 
+/* web content failed to load */
+"⚠️ Error Loading Content" = "⚠️ Feil ved nedlasting av innhold";
+
 /* Accessiblity hint for question drawer button */
 "0 Questions Answered" = "0 spørsmål besvart";
 
@@ -38,14 +41,14 @@
 /* option to view results for all grading periods */
 "All Grading Periods" = "Alle vurderingsperioder";
 
-/* all pages segmented control title */
-"All Pages" = "Alle sider";
-
 /* No comment provided by engineer. */
 "All notifications are currently disabled." = "Alle varslinger er deaktivert.";
 
 /* No comment provided by engineer. */
 "All notifications are currently enabled." = "Alle varslinger er aktivert.";
+
+/* all pages segmented control title */
+"All Pages" = "Alle sider";
 
 /* No comment provided by engineer. */
 "Allow Notifications in Settings" = "Tillat varslinger i innstillinger";
@@ -56,8 +59,14 @@
 /* Default error message displayed when a file fails to upload */
 "An error occured, please try again." = "En feil har oppstått, vennligst prøv på nytt.";
 
+/* No comment provided by engineer. */
+"An unexpected error has occurred." = "En uventet feil har oppstått.";
+
 /* an unknown error's message */
 "An unknown error has occurred." = "En ukjent feil har oppstått.";
+
+/* No comment provided by engineer. */
+"Answers will not be submitted while offline." = "Svar sendes ikke inn mens du er frakoblet.";
 
 /* Question to confirm user wants to navigate away from a quiz. */
 "Are you sure you want to leave this quiz?" = "Er du sikker på ut du vil gå ut av denne testen?";
@@ -67,6 +76,9 @@
 
 /* No comment provided by engineer. */
 "Are you sure you would like to delete this comment?" = "Er du sikker du ønsker å slette denne kommentaren?";
+
+/* label to be read for visually impaired users with assignment types */
+"assignment" = "Oppgave";
 
 /* No comment provided by engineer. */
 "Attendance" = "Oppmøte";
@@ -104,9 +116,6 @@
 /* Description for Chat communication channel */
 "Chat" = "Chat";
 
-/* No comment provided by engineer. */
-"Choose Date" = "Velg dato";
-
 /* Choose a file */
 "Choose a File" = "Velg en fil";
 
@@ -122,8 +131,11 @@
 /* Pick a video from library */
 "Choose a Video" = "Velg en video";
 
-/* Label indicating that the question is a multiple dropdown answer question and answer must be chosen. */
-"Choose your answers below" = "Velg svarene dine nedenfor";
+/* No comment provided by engineer. */
+"Choose Date" = "Velg dato";
+
+/* No comment provided by engineer. */
+"Close App" = "Lukk app";
 
 /* No comment provided by engineer. */
 "Collapse" = "Skjul";
@@ -186,8 +198,8 @@
 /* message for delete dialog of audio recorder */
 "Delete recording?" = "Slett opptak?";
 
-/* Designer role */
-"Designer" = "Designer";
+/* label to be read for visually impaired users with discusstion topic assignment types */
+"discussion topic" = "diskusjonstema";
 
 /* Notification display name for discussions group */
 "Discussions" = "Diskusjoner";
@@ -214,26 +226,29 @@
 /* Data encoding error title */
 "Encoding Error" = "Kodefeil";
 
+/* No comment provided by engineer. */
+"End Act as User" = "Avslutt opptre som bruker";
+
+/* Default text for essay cell */
+"Enter answer..." = "Skriv inn svar ...";
+
 /* Text submission option */
 "Enter Text" = "Skriv inn tekst";
 
 /* Placeholder for URL */
 "Enter URL..." = "Skriv inn URL ...";
 
-/* Default text for essay cell */
-"Enter answer..." = "Skriv inn svar ...";
-
 /* Prompt for text upload */
 "Enter your submission..." = "Sett inn din innlevering...";
 
-/* Title for quiz loading error */
-"Error Loading Quiz" = "Feil under lasting av quiz";
-
-/* Error title for parsing assignment data from server */
-"Error Updating Assignment" = "Feil ved oppdatering av oppgaven";
+/* No comment provided by engineer. */
+"Error" = "Avvik";
 
 /* error message for when the cache management database fails to load */
 "Error loading cache management database." = "Feil med lasting av hurtiglager administrasjonsdatabase.";
+
+/* Title for quiz loading error */
+"Error Loading Quiz" = "Feil under lasting av quiz";
 
 /* No comment provided by engineer. */
 "Error parsing the Roll Call response. Expected (e), received (a)" = "Feil ved parsering av svar på opprop. Forventet (e), mottatt (a)";
@@ -250,6 +265,9 @@
 /* No comment provided by engineer. */
 "Error retrieving tool launch URL" = "Feil i pålogging av URL";
 
+/* Error title for parsing assignment data from server */
+"Error Updating Assignment" = "Feil ved oppdatering av oppgaven";
+
 /* rollcall status error */
 "Error: No data returned from the rollcall api." = "Avvik: Ingen data returnert fra opprop api.";
 
@@ -262,17 +280,20 @@
 /* Error message when the server returns a invalid response */
 "Expected a response in the 200-299 range. Got %@" = "Forventet et svar i området 200-299. Fikk %@";
 
+/* label to be read for visually impaired users with external tool assignment types */
+"external tool" = "eksternt verktøy";
+
 /* File upload failed */
 "Failed" = "Feilet";
-
-/* Error when submitting an assignment */
-"Failed to Submit" = "Kunne ikke levere";
 
 /* No comment provided by engineer. */
 "Failed to find image at path" = "Kunne ikke finne bilde i sti";
 
 /* Error Message when the app can't load an object model from the database */
 "Failed to load (discussionKitModelName) NSManagedObjectModel" = "Kunne ikke laste (discussionKitModelName) NSManagedObjectModel";
+
+/* Error when submitting an assignment */
+"Failed to Submit" = "Kunne ikke levere";
 
 /* No comment provided by engineer. */
 "Failed to write image" = "Kunne ikke skrive bilde";
@@ -316,6 +337,12 @@
 /* Indigo course color button */
 "Indigo" = "Indigo";
 
+/* No comment provided by engineer. */
+"Internet Connection Offline" = "Internettilkoblingen er frakoblet";
+
+/* No comment provided by engineer. */
+"Invalid date received from API." = "Ugyldig data mottatt fra API.";
+
 /* Mark student late
    Student is present in class */
 "Late" = "Sent";
@@ -336,13 +363,15 @@
 "LightPink" = "LightPink";
 
 /* Label indicating that the quiz lock date was reached and the quiz is auto submitting */
-"Lock Date Reached\nSubmitting" = "Lås dato oppnådd\nSender";
-
-/* Title for when another tool called Lockdown Browser is required to take a quiz */
-"Lockdown Browser Required" = "Lockdown-nettleser påkrevd";
+"Lock Date Reached
+Submitting" = "Låsedato oppnådd
+Sender inn";
 
 /* Detail label for when a tool called Lockdown Browser is required to take the quiz */
 "Lockdown Browser is required for viewing your results. Please open the quiz in Lockdown Browser to continue." = "Lockdown-nettleser er påkrevd for å se dine resultater. Vennligst åpne quizzen i Lockdown-nettleser for å fortsette.";
+
+/* Title for when another tool called Lockdown Browser is required to take a quiz */
+"Lockdown Browser Required" = "Lockdown-nettleser påkrevd";
 
 /* No comment provided by engineer. */
 "Mark All as Present" = "Merk alle som nåværende";
@@ -392,9 +421,6 @@
 
 /* OK Button Title */
 "OK" = "OK";
-
-/* Observer role */
-"Observer" = "Observatør";
 
 /* No comment provided by engineer. */
 "Open in Safari" = "Åpne i Safari";
@@ -460,17 +486,20 @@
 /* accessibility label for a quiz question */
 "Question" = "Spørsmål";
 
-/* Shows question position */
-"Question %@" = "Spørsmål %@";
-
 /* state for a question that has been flagged */
 "Question (number) Flagged" = "Spørsmål (nummer) flagget";
 
 /* state for unflagged question */
 "Question (number) Unflagged" = "Spørsmål (nummer) uflagget";
 
+/* Shows question position */
+"Question %@" = "Spørsmål %@";
+
 /* label for the number of questions */
 "Questions" = "Spørsmål";
+
+/* label to be read for visually impaired users with quiz assignment types */
+"quiz" = "test";
 
 /* Title for alert that shows when a quiz hits the due date */
 "Quiz Due" = "Test forventet";
@@ -535,17 +564,14 @@
 /* button for retaking quiz */
 "Retake Quiz" = "Ta testen på nytt";
 
-/* Description for SMS communication channel */
-"SMS" = "SMS";
-
 /* Notification display name for scheduling group */
 "Scheduling" = "Planlegger";
 
-/* Indicates that a matching quiz question needs to have an answer selected */
-"Select Answer" = "Valg svar";
-
 /* Label indicating that the question is a multiple answer question and more than 1 answer can be correct */
 "Select all that apply" = "Velg alt som passer";
+
+/* Indicates that a matching quiz question needs to have an answer selected */
+"Select Answer" = "Valg svar";
 
 /* No comment provided by engineer. */
 "Select to change the roll call date" = "Velg for å endre dato for opprop";
@@ -562,6 +588,9 @@
 /* Text for a button that toggles to show a timer for a timed quiz */
 "Show Timer" = "Vis tidtaker";
 
+/* Description for SMS communication channel */
+"SMS" = "SMS";
+
 /* Error message displayed when the file is unrecognized. */
 "Something went wrong. Check the file format and try again." = "Noe gikk galt. Sjekk filformatet og prøv på nytt.";
 
@@ -574,11 +603,11 @@
 /* stop recording button a11y label */
 "Stop" = "Stopp";
 
+/* No comment provided by engineer. */
+"Stop acting as..." = "Slutt å opptre som...";
+
 /* File upload was stopped */
 "Stopped" = "Stoppet";
-
-/* Student role */
-"Student" = "Student";
 
 /* No comment provided by engineer. */
 "Style" = "Stil";
@@ -600,8 +629,11 @@
 /* Label for indication of submitting quiz */
 "Submitting Quiz" = "Sender inn test";
 
-/* TA role */
-"TA" = "LA";
+/* Take a photo submission choice */
+"Take a Photo" = "Ta et bilde";
+
+/* Take a video submission choice */
+"Take a Video" = "Ta en video";
 
 /* Take a photo or video submission choice */
 "Take Photo or Video" = "Ta bilde eller video";
@@ -609,23 +641,17 @@
 /* Button for taking the quiz */
 "Take Quiz" = "Ta test";
 
-/* Take a photo submission choice */
-"Take a Photo" = "Ta et bilde";
-
-/* Take a video submission choice */
-"Take a Video" = "Ta en video";
-
-/* Teacher role */
-"Teacher" = "Lærer";
-
 /* Teal course color button */
 "Teal" = "Blågrønn";
 
-/* This shouldn't ever happen. */
-"The Pages are gone!? Why are the pages always gone?" = "Sidene er borte!? Hvorfor er sidene alltid borte?";
+/* No comment provided by engineer. */
+"The app needs to restart to use the new language settings. Please relaunch the app." = "Appen må åpnes på nytt for å ta i bruk de nye språkinnstillingene. Vennligst gjeninnfør appen.";
 
 /* Error message for a file missing */
 "The file does not exist." = "Filen eksisterer ikke";
+
+/* This shouldn't ever happen. */
+"The Pages are gone!? Why are the pages always gone?" = "Sidene er borte!? Hvorfor er sidene alltid borte?";
 
 /* Description for alert that shows when the quiz hits the due date */
 "The quiz is due in 1 minute. Would you like to submit now and be on time or continue taking the quiz and possibly be late?" = "Testen skal være ferdig om 1 minutt. Vil du sende inn nå og være i tide, eller fortsette å ta testen og muligens levere sent?";
@@ -720,6 +746,9 @@
 /* Message when telling the user they can't take the quiz because the quiz is locked */
 "This quiz is locked." = "Denne testen er låst.";
 
+/* No comment provided by engineer. */
+"This quiz is not available offline." = "Denne testen er ikke tilgjengelig i frakoblet modus.";
+
 /* label for the time limit */
 "Time Limit" = "Tidsbegrensning";
 
@@ -771,11 +800,17 @@
 /* Upcoming assignments */
 "Upcoming" = "Kommende";
 
+/* No comment provided by engineer. */
+"Updated Language Settings" = "Oppdatert språkinnstillinger";
+
 /* File upload submission option */
 "Upload File" = "Last opp fil";
 
 /* Message displayed while a file is being uploaded */
 "Uploading file..." = "Laster opp fil...";
+
+/* File upload in progress */
+"uploading..." = "laster opp...";
 
 /* permission denied button a11y hint */
 "User has denied record permission" = "Bruker har nektet opptakstillatelse";
@@ -807,24 +842,12 @@
 /* permission was rejected */
 "You must grant (appName) Microphone access in the Settings app in order to record audio." = "Du må gi (appName) mikrofontilgang i Innstillinger-appen for å gjøre opptak av lyd.";
 
+/* No comment provided by engineer. */
+"You will stop acting as %@ and return to your account." = "Du vil slutte å opptre som %@ og gå tilbake til din egen konto.";
+
+/* No comment provided by engineer. */
+"You will stop acting as this user and return to your account." = "Du vil slutte å opptre som denne brukeren og gå tilbake til din egen konto.";
+
 /* Error description for file out of space */
 "Your device is out of storage space. Please free up space and try again." = "Enheten din har gått tom for lagringsplass. Frigjør plass og prøv igjen.";
-
-/* label to be read for visually impaired users with assignment types */
-"assignment" = "Oppgave";
-
-/* label to be read for visually impaired users with discusstion topic assignment types */
-"discussion topic" = "diskusjonstema";
-
-/* label to be read for visually impaired users with external tool assignment types */
-"external tool" = "eksternt verktøy";
-
-/* label to be read for visually impaired users with quiz assignment types */
-"quiz" = "test";
-
-/* File upload in progress */
-"uploading..." = "laster opp...";
-
-/* web content failed to load */
-"⚠️ Error Loading Content" = "⚠️ Feil ved nedlasting av innhold";
 

@@ -23,19 +23,19 @@ import CoreData
 import ReactiveCocoa
 
 extension Module {
-    public static func predicate(forModulesIn courseID: String) -> NSPredicate {
+    @objc public static func predicate(forModulesIn courseID: String) -> NSPredicate {
         return NSPredicate(format:"%K == %@", "courseID", courseID)
     }
 
-    public static func predicate(withIDs ids: [String]) -> NSPredicate {
+    @objc public static func predicate(withIDs ids: [String]) -> NSPredicate {
         return NSPredicate(format: "%K IN %@", "id", ids)
     }
 
-    public static func predicate(withPrerequisite moduleID: String) -> NSPredicate {
+    @objc public static func predicate(withPrerequisite moduleID: String) -> NSPredicate {
         return NSPredicate(format: "%K CONTAINS %@", "prerequisiteModuleIDs", moduleID)
     }
 
-    public static func collectionCacheKey(context: NSManagedObjectContext, courseID: String) -> String {
+    @objc public static func collectionCacheKey(context: NSManagedObjectContext, courseID: String) -> String {
         return cacheKey(context, [courseID])
     }
 

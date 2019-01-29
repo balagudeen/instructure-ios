@@ -25,9 +25,8 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_REMAP_METHOD(syncFeatureFlags, syncFeatureFlags:(NSDictionary *) flags exemptDomains:(NSArray *)domains resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+RCT_REMAP_METHOD(syncFeatureFlags, syncFeatureFlags:(NSDictionary *) flags resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     FeatureFlags.featureFlags = flags;
-    FeatureFlags.exemptDomains = domains;
     resolve(nil);
 };
 

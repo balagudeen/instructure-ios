@@ -161,7 +161,17 @@
 		5B58B4BA20DF818A008B8856 /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B58B4BB20DF818A008B8856 /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/SupportTicket.strings; sourceTree = "<group>"; };
 		5B58B4BC20DF818A008B8856 /* cy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cy; path = cy.lproj/CKMDomainPickerViewController.strings; sourceTree = "<group>"; };
+		5B5C966F21BCFD8A00F8B80D /* en-CY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CY"; path = "en-CY.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		5B5C967021BCFD8A00F8B80D /* en-CY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CY"; path = "en-CY.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		5B5C967121BCFD8A00F8B80D /* en-CY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CY"; path = "en-CY.lproj/Main.strings"; sourceTree = "<group>"; };
+		5B5C967221BCFD8A00F8B80D /* en-CY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CY"; path = "en-CY.lproj/SupportTicket.strings"; sourceTree = "<group>"; };
+		5B5C967321BCFD8A00F8B80D /* en-CY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CY"; path = "en-CY.lproj/CKMDomainPickerViewController.strings"; sourceTree = "<group>"; };
 		5B63522A40D7F33C56E0E141 /* Pods-defaults-CanvasKeymaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-defaults-CanvasKeymaster.release.xcconfig"; path = "../../Pods/Target Support Files/Pods-defaults-CanvasKeymaster/Pods-defaults-CanvasKeymaster.release.xcconfig"; sourceTree = "<group>"; };
+		5B90117121E1E8D400DC8656 /* sl-SI */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sl-SI"; path = "sl-SI.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		5B90117221E1E8D400DC8656 /* sl-SI */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sl-SI"; path = "sl-SI.lproj/Main.strings"; sourceTree = "<group>"; };
+		5B90117321E1E8D400DC8656 /* sl-SI */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sl-SI"; path = "sl-SI.lproj/SupportTicket.strings"; sourceTree = "<group>"; };
+		5B90117421E1E8D400DC8656 /* sl-SI */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sl-SI"; path = "sl-SI.lproj/CKMDomainPickerViewController.strings"; sourceTree = "<group>"; };
+		5BA3A5A221FD983700EF022A /* sl-SI */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sl-SI"; path = "sl-SI.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		5E274A401914434100E04789 /* icon_cancel_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_cancel_light.png; sourceTree = "<group>"; };
 		5E274A411914434100E04789 /* icon_cancel_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_cancel_light@2x.png"; sourceTree = "<group>"; };
 		5E274A421914434100E04789 /* icon_profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_profile@2x.png"; sourceTree = "<group>"; };
@@ -189,6 +199,30 @@
 		5EEEB1761B56C9A7001438C3 /* SupportTicketManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportTicketManager.m; sourceTree = "<group>"; };
 		5EEEB1771B56C9A7001438C3 /* SupportTicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportTicketViewController.h; sourceTree = "<group>"; };
 		5EEEB1781B56C9A7001438C3 /* SupportTicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportTicketViewController.m; sourceTree = "<group>"; };
+		7D349C3D214309CB004C1074 /* da-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "da-instk12"; path = "da-instk12.lproj/Main.strings"; sourceTree = "<group>"; };
+		7D349C3E214309CC004C1074 /* da-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "da-instk12"; path = "da-instk12.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7D349C3F214309CC004C1074 /* da-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "da-instk12"; path = "da-instk12.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7D349C40214309CD004C1074 /* da-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "da-instk12"; path = "da-instk12.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7D349C41214309CD004C1074 /* da-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "da-instk12"; path = "da-instk12.lproj/SupportTicket.strings"; sourceTree = "<group>"; };
+		7D349C4321430A15004C1074 /* en-GB-instukhe */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB-instukhe"; path = "en-GB-instukhe.lproj/Main.strings"; sourceTree = "<group>"; };
+		7D349C4421430A16004C1074 /* en-GB-instukhe */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB-instukhe"; path = "en-GB-instukhe.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7D349C4521430A17004C1074 /* en-GB-instukhe */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB-instukhe"; path = "en-GB-instukhe.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7D349C4621430A17004C1074 /* en-GB-instukhe */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB-instukhe"; path = "en-GB-instukhe.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7D349C4721430A18004C1074 /* en-GB-instukhe */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB-instukhe"; path = "en-GB-instukhe.lproj/SupportTicket.strings"; sourceTree = "<group>"; };
+		7D349C4921430A45004C1074 /* nb-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-instk12"; path = "nb-instk12.lproj/Main.strings"; sourceTree = "<group>"; };
+		7D349C4A21430A45004C1074 /* nb-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-instk12"; path = "nb-instk12.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7D349C4B21430A46004C1074 /* nb-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-instk12"; path = "nb-instk12.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7D349C4C21430A47004C1074 /* nb-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-instk12"; path = "nb-instk12.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7D349C4D21430A47004C1074 /* nb-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-instk12"; path = "nb-instk12.lproj/SupportTicket.strings"; sourceTree = "<group>"; };
+		7D349C4F21430A6A004C1074 /* sv-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sv-instk12"; path = "sv-instk12.lproj/Main.strings"; sourceTree = "<group>"; };
+		7D349C5021430A6A004C1074 /* sv-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sv-instk12"; path = "sv-instk12.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7D349C5121430A6B004C1074 /* sv-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sv-instk12"; path = "sv-instk12.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7D349C5221430A6C004C1074 /* sv-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sv-instk12"; path = "sv-instk12.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7D349C5321430A6C004C1074 /* sv-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sv-instk12"; path = "sv-instk12.lproj/SupportTicket.strings"; sourceTree = "<group>"; };
+		7DC4D6972146E0D4007B1C06 /* sv-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sv-instk12"; path = "sv-instk12.lproj/CKMDomainPickerViewController.strings"; sourceTree = "<group>"; };
+		7DC4D6992146E0D7007B1C06 /* nb-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-instk12"; path = "nb-instk12.lproj/CKMDomainPickerViewController.strings"; sourceTree = "<group>"; };
+		7DC4D69B2146E0E0007B1C06 /* en-GB-instukhe */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB-instukhe"; path = "en-GB-instukhe.lproj/CKMDomainPickerViewController.strings"; sourceTree = "<group>"; };
+		7DC4D69D2146E0E4007B1C06 /* da-instk12 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "da-instk12"; path = "da-instk12.lproj/CKMDomainPickerViewController.strings"; sourceTree = "<group>"; };
 		A2C655512AEE7F55037ED04C /* Pods-CanvasKeymaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanvasKeymaster.release.xcconfig"; path = "../../Pods/Target Support Files/Pods-CanvasKeymaster/Pods-CanvasKeymaster.release.xcconfig"; sourceTree = "<group>"; };
 		B10E9F711E2FDB85000F5D01 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/SupportTicket.strings; sourceTree = "<group>"; };
 		B10E9F721E2FDB85000F5D01 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
@@ -645,7 +679,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = CKM;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Instructure;
 				TargetAttributes = {
 					49E545A01909B4AC001AD3BC = {
@@ -664,6 +698,10 @@
 			knownRegions = (
 				en,
 				Base,
+				"da-instk12",
+				"en-GB-instukhe",
+				"nb-instk12",
+				"sv-instk12",
 			);
 			mainGroup = 49E9585F190967B000A1BFB7;
 			productRefGroup = 49E95869190967B000A1BFB7 /* Products */;
@@ -813,6 +851,12 @@
 				B10E9FFA1E2FDCCF000F5D01 /* zh-HK */,
 				B10EA0011E2FDCDA000F5D01 /* zh */,
 				5B58B4BA20DF818A008B8856 /* cy */,
+				7D349C3E214309CC004C1074 /* da-instk12 */,
+				7D349C4421430A16004C1074 /* en-GB-instukhe */,
+				7D349C4A21430A45004C1074 /* nb-instk12 */,
+				7D349C5021430A6A004C1074 /* sv-instk12 */,
+				5B5C966F21BCFD8A00F8B80D /* en-CY */,
+				5BA3A5A221FD983700EF022A /* sl-SI */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -842,6 +886,12 @@
 				B10E9FF81E2FDCCD000F5D01 /* zh-HK */,
 				B10E9FFF1E2FDCD9000F5D01 /* zh */,
 				5B58B4B720DF8189008B8856 /* cy */,
+				7D349C3D214309CB004C1074 /* da-instk12 */,
+				7D349C4321430A15004C1074 /* en-GB-instukhe */,
+				7D349C4921430A45004C1074 /* nb-instk12 */,
+				7D349C4F21430A6A004C1074 /* sv-instk12 */,
+				5B5C967121BCFD8A00F8B80D /* en-CY */,
+				5B90117221E1E8D400DC8656 /* sl-SI */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -870,6 +920,12 @@
 				B10E9FF91E2FDCCE000F5D01 /* zh-HK */,
 				B10EA0001E2FDCDA000F5D01 /* zh */,
 				5B58B4B820DF818A008B8856 /* cy */,
+				7D349C40214309CD004C1074 /* da-instk12 */,
+				7D349C4621430A17004C1074 /* en-GB-instukhe */,
+				7D349C4C21430A47004C1074 /* nb-instk12 */,
+				7D349C5221430A6C004C1074 /* sv-instk12 */,
+				5B5C967021BCFD8A00F8B80D /* en-CY */,
+				5B90117121E1E8D400DC8656 /* sl-SI */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -898,6 +954,10 @@
 				B10E9FFB1E2FDCCF000F5D01 /* zh-HK */,
 				B10EA0021E2FDCDB000F5D01 /* zh */,
 				5B58B4B920DF818A008B8856 /* cy */,
+				7D349C3F214309CC004C1074 /* da-instk12 */,
+				7D349C4521430A17004C1074 /* en-GB-instukhe */,
+				7D349C4B21430A46004C1074 /* nb-instk12 */,
+				7D349C5121430A6B004C1074 /* sv-instk12 */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -927,6 +987,12 @@
 				B10E9FFC1E2FDCD0000F5D01 /* zh-HK */,
 				B10EA0031E2FDCDC000F5D01 /* zh */,
 				5B58B4BC20DF818A008B8856 /* cy */,
+				7DC4D6972146E0D4007B1C06 /* sv-instk12 */,
+				7DC4D6992146E0D7007B1C06 /* nb-instk12 */,
+				7DC4D69B2146E0E0007B1C06 /* en-GB-instukhe */,
+				7DC4D69D2146E0E4007B1C06 /* da-instk12 */,
+				5B5C967321BCFD8A00F8B80D /* en-CY */,
+				5B90117421E1E8D400DC8656 /* sl-SI */,
 			);
 			name = CKMDomainPickerViewController.storyboard;
 			sourceTree = "<group>";
@@ -956,6 +1022,12 @@
 				B10E9FF71E2FDCCD000F5D01 /* zh-HK */,
 				B10E9FFE1E2FDCD9000F5D01 /* zh */,
 				5B58B4BB20DF818A008B8856 /* cy */,
+				7D349C41214309CD004C1074 /* da-instk12 */,
+				7D349C4721430A18004C1074 /* en-GB-instukhe */,
+				7D349C4D21430A47004C1074 /* nb-instk12 */,
+				7D349C5321430A6C004C1074 /* sv-instk12 */,
+				5B5C967221BCFD8A00F8B80D /* en-CY */,
+				5B90117321E1E8D400DC8656 /* sl-SI */,
 			);
 			name = SupportTicket.storyboard;
 			sourceTree = "<group>";
@@ -1033,12 +1105,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1084,12 +1158,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1134,7 +1210,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = CanvasKeymaster/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.instructure.CanvasKeymaster;
@@ -1167,7 +1243,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = CanvasKeymaster/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.instructure.CanvasKeymaster;

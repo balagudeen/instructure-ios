@@ -199,13 +199,13 @@ extension ModuleItem: SynchronizedModel {
         return (completionRequirement, minScore, completed)
     }
 
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("id")
         let moduleID: String = try json.stringID("module_id")
         return NSPredicate(format: "%K == %@ && %K == %@", "id", id, "moduleID", moduleID)
     }
 
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         id          = try json.stringID("id")
         courseID    = try json.stringID("course_id")
         moduleID    = try json.stringID("module_id")
@@ -224,14 +224,14 @@ extension ModuleItem: SynchronizedModel {
         try updateLockStatus((try json <| "content_details") ?? [:])
     }
 
-    func updateCompletionRequirement(_ json: JSONObject) throws {
+    @objc func updateCompletionRequirement(_ json: JSONObject) throws {
         completionRequirement = nil
         minScore = nil
         completed = true
         (completionRequirement, minScore, completed) = try ModuleItem.parseCompletionRequirement(json)
     }
 
-    func updateMasteryPaths(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc func updateMasteryPaths(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         if let masteryPaths: JSONObject = try json <| "mastery_paths" {
             // We don't care to remember the details about what selection they made, so we don't store that.
             // In the future, we can remove this requirement and filter any with a selectedSetID from the

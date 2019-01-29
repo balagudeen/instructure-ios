@@ -33,8 +33,9 @@ export type AssignmentListDataProps = {
   screenTitle: string,
   ListRow?: Class<Component<*, *>>,
   user?: SessionUser,
-  currentScore?: number,
+  currentScore?: ?number,
   showTotalScore: boolean,
+  doNotSelectFirstItem?: boolean,
 }
 
 export type AssignmentListProps = AssignmentListDataProps

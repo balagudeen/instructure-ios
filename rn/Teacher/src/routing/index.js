@@ -21,7 +21,7 @@ import PropTypes from 'prop-types'
 import { Store } from 'redux'
 import { Provider } from 'react-redux'
 import URL from 'url-parse'
-import Route from 'route-parser'
+import RouteHandler from './RouteHandler'
 import { AppRegistry } from 'react-native'
 import Navigator from './Navigator'
 import { getSession } from '../canvas-api/session'
@@ -32,7 +32,7 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
-export const routes: Map<Route, RouteConfig> = new Map()
+export const routes: Map<RouteHandler, RouteConfig> = new Map()
 export const routeProps: Map<string, ?Object> = new Map()
 export type RouteConfig = {
   canBecomeMaster?: boolean,
@@ -46,10 +46,6 @@ export type RouteOptions = {
   config: RouteConfig,
 }
 
-export function screenID (path: string): string {
-  return '(/api/v1)' + path
-}
-
 export function registerScreen (
   path: string,
   componentGenerator?: ?((props: any) => any),
@@ -60,7 +56,7 @@ export function registerScreen (
     const generator = wrapComponentInProviders(path, componentGenerator, store)
     AppRegistry.registerComponent(path, generator)
   }
-  const route = new Route(screenID(path))
+  const route = new RouteHandler(path)
   routes.set(route, options)
 }
 
@@ -80,10 +76,9 @@ export function wrapComponentInProviders (moduleName: string, generator: (props:
       }
 
       componentDidCatch (error, info) {
-        global.crashReporter.notify(error, (report) => {
-          report.addMetaData('screen', 'url', moduleName)
-          report.addMetaData('screen', 'error', true)
-        })
+        global.crashReporter.setString('screenUrl', moduleName)
+        global.crashReporter.setBool('screenError', true)
+        global.crashReporter.recordError(error)
         this.setState({ hasError: true })
       }
 
@@ -158,7 +153,7 @@ export function route (url: string, additionalProps: Object = {}): ?RouteOptions
         params.screenInstanceID = Math.random().toString(36).slice(2)
         routeProps.set(params.screenInstanceID, params)
         return {
-          screen: r.spec.replace('(/api/v1)', ''),
+          screen: r.template,
           passProps: params,
           config: routes.get(r) || {},
         }

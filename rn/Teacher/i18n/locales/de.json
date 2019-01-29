@@ -86,6 +86,9 @@
   "all_4321c3a1": {
     "message": "Alle"
   },
+  "all_annotations_saved_c0c650ab": {
+    "message": "Alle Anmerkungen gespeichert."
+  },
   "all_courses_a7dbb853": {
     "message": "Alle Kurse"
   },
@@ -129,9 +132,6 @@
     "message": "Ankündigungen"
   },
   "anonymous_grading_3083dc0": {
-    "message": "Anonyme Benotung"
-  },
-  "anonymous_grading_ccb5045c": {
     "message": "Anonyme Benotung"
   },
   "anyone_5b8fdf9f": {
@@ -551,11 +551,11 @@
   "edit_quiz_details_72cd055": {
     "message": "Quiz-Details bearbeiten"
   },
-  "email_contact_e095f380": {
-    "message": "E-Mail-Kontakt"
-  },
   "enjoy_your_day_a4cb2c1": {
     "message": "Genießen Sie Ihren Tag!"
+  },
+  "enter_a_search_term_with_three_or_more_characters_1577ec2": {
+    "message": "Geben Sie einen Suchbegriff mit drei oder mehr Zeichen ein."
   },
   "enter_code_c7ab5104": {
     "message": "Code eingeben"
@@ -565,6 +565,9 @@
   },
   "error_saving_grade_367dd920": {
     "message": "Fehler beim Speichern der Note"
+  },
+  "error_saving_tap_to_retry_a66b9c5f": {
+    "message": "Fehler beim Speichern. Tippen Sie zum Wiederholen."
   },
   "everyone_854554dd": {
     "message": "Jeder"
@@ -947,6 +950,9 @@
   "no_results_f36777ee": {
     "message": "Keine Ergebnisse"
   },
+  "no_results_found_2ace1494": {
+    "message": "Keine Ergebnisse gefunden"
+  },
   "no_starred_messages_e1b28bca": {
     "message": "Keine markierten Nachrichten"
   },
@@ -1031,6 +1037,9 @@
   "only_teachers_1628d9b9": {
     "message": "Nur Dozenten"
   },
+  "oops_we_couldn_t_find_that_page_7474fec6": {
+    "message": "Hoppla, wir konnten diese Seite nicht finden."
+  },
   "open_coursename_user_preferences_430b877e": {
     "message": "{ courseName }-Benutzereinstellungen öffnen"
   },
@@ -1051,6 +1060,9 @@
   },
   "page_details_847e35e6": {
     "message": "Seitendetails"
+  },
+  "page_not_found_683da852": {
+    "message": "Seite nicht gefunden"
   },
   "pages_e5414c2c": {
     "message": "Seiten"
@@ -1108,6 +1120,9 @@
   },
   "previewing_this_file_type_is_not_supported_7df9231": {
     "message": "Eine Vorschau auf diesen Dateityp wird nicht unterstützt."
+  },
+  "profile_6bd2baed": {
+    "message": "Profil"
   },
   "profile_menu_a688027e": {
     "message": "Profilmenü"
@@ -1184,6 +1199,9 @@
   "reply_389d6fb9": {
     "message": "Antwort"
   },
+  "reply_all_b864cd0e": {
+    "message": "Allen antworten"
+  },
   "report_a_problem_4d48624a": {
     "message": "Ein Problem melden"
   },
@@ -1244,6 +1262,12 @@
   "search_280d00bd": {
     "message": "Suchen"
   },
+  "search_files_7e8153fd": {
+    "message": "Dateien suchen"
+  },
+  "searching_f330d682": {
+    "message": "Suche läuft ..."
+  },
   "seconds_plural_one_second_other_seconds_d33cf6e3": {
     "message": "{ seconds, plural,    one {# Sekunde} other {# Sekunden}}"
   },
@@ -1267,6 +1291,9 @@
   },
   "send_individual_message_to_each_recipient_4fdfc1e5": {
     "message": "Eine einzelne Nachricht an jeden Empfänger senden."
+  },
+  "send_message_a371a974": {
+    "message": "Nachricht senden"
   },
   "send_recording_82e5a550": {
     "message": "Aufzeichnung senden"
@@ -1391,6 +1418,9 @@
   "teacher_5a73b637": {
     "message": "Dozent"
   },
+  "teachers_52e2423f": {
+    "message": "Dozenten"
+  },
   "teachers_and_students_ba2db3e4": {
     "message": "Dozenten und Studenten"
   },
@@ -1511,10 +1541,13 @@
   "this_assignment_only_allows_on_paper_submissions_f478408a": {
     "message": "Diese Aufgabe erlaubt nur Abgaben auf Papier."
   },
+  "this_criterion_will_not_impact_the_score_94adf77b": {
+    "message": "Dieses Kriterium hat keinen Einfluss auf die Punktzahl."
+  },
   "this_file_must_have_usage_rights_set_before_it_can_e4bf8bae": {
     "message": "Für die Datei müssen Benutzerrechte festgelegt werden, bevor sie veröffentlicht werden kann."
   },
-  "this_folder_is_empty_14af41c": {
+  "this_folder_is_empty_89c70e89": {
     "message": "Dieser Ordner ist leer."
   },
   "this_group_does_not_have_a_submission_for_this_ass_ca275999": {
@@ -1528,9 +1561,6 @@
   },
   "this_submission_is_a_url_to_an_external_page_we_ve_9993d2fd": {
     "message": "Diese Abgabe ist ein URL zu einer externen Seite. Ein angehängter Snapshot zeigt, wie die Seite zum Zeitpunkt der Abgabe ausgesehen hat."
-  },
-  "this_will_anonymize_each_student_and_shuffle_the_s_127956c7": {
-    "message": "Dadurch werden alle Studenten anonymisiert und die Abgabeliste wird gemischt."
   },
   "this_will_remove_the_due_date_and_all_of_the_assoc_56d1ea8": {
     "message": "Dadurch werden das Fälligkeitsdatum und alle zugehörigen Aufgabenempfänger entfernt."

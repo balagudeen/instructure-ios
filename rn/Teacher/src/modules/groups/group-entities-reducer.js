@@ -20,6 +20,7 @@ import { Reducer, Action, combineReducers } from 'redux'
 import Actions from './actions'
 import AssigneeSearchActions from '../assignee-picker/actions'
 import CoursesActions from '../courses/actions'
+import PermissionsActions from '../permissions/actions'
 import { handleActions } from 'redux-actions'
 import handleAsync from '../../utils/handleAsync'
 import groupCustomColors from '../../utils/group-custom-colors'
@@ -33,14 +34,17 @@ const { refreshAnnouncements } = AnnouncementActions
 const { refreshDiscussions } = DiscussionActions
 const { refreshGroupsForCourse, refreshGroup, listUsersForGroup, refreshUsersGroups } = Actions
 const { refreshGroupsForCategory } = AssigneeSearchActions
+const { updateContextPermissions } = PermissionsActions
 const group = (state) => (state || {}) // dummy's to appease combineReducers
 const color = (state) => (state || '')
+const permissions = (state) => (state || {})
 
 const groupContents: Reducer<GroupsState, Action> = combineReducers({
   group,
   color,
   discussions,
   announcements,
+  permissions,
   // dummys to appease combineReducers
   pending: state => state || 0,
   error: state => state || null,
@@ -154,6 +158,21 @@ const groupsData: Reducer<GroupsState, any> = handleActions({
         return newState
       }, { ...state })
       return newState
+    },
+  }),
+  [updateContextPermissions.toString()]: handleAsync({
+    resolved: (state, { result, contextName, contextID }) => {
+      if (contextName !== 'groups') {
+        return state
+      }
+
+      return {
+        ...state,
+        [contextID]: {
+          ...state[contextID],
+          permissions: result.data,
+        },
+      }
     },
   }),
 }, {})

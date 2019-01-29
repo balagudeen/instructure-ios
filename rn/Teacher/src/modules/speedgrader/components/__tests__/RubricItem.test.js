@@ -21,6 +21,7 @@ import { AlertIOS, AccessibilityInfo, ActionSheetIOS } from 'react-native'
 import RubricItem from '../RubricItem'
 import renderer from 'react-test-renderer'
 import explore from '../../../../../test/helpers/explore'
+import { shallow } from 'enzyme'
 
 jest.mock('../../../../common/components/CircleToggle', () => 'CircleToggle')
 jest.mock('TouchableOpacity', () => 'TouchableOpacity')
@@ -53,6 +54,15 @@ describe('RubricItem', () => {
       <RubricItem {...defaultProps} />
     ).toJSON()
     expect(tree).toMatchSnapshot()
+  })
+
+  it('shows the text for not impacting a score if `ignore_for_scoring` is true', () => {
+    let props = {
+      ...defaultProps,
+      rubricItem: templates.rubric({ ignore_for_scoring: true }),
+    }
+    let tree = shallow(<RubricItem {...props} />)
+    expect(tree.find(`[testID='rubric-item.${props.rubricItem.id}-no-score']`).length).toEqual(1)
   })
 
   it('renders with free form', () => {
@@ -298,7 +308,7 @@ describe('RubricItem', () => {
     ).toJSON()
 
     let button = explore(tree).selectByID(`rubric-item.points-${defaultProps.rubricItem.ratings[0].id}`) || {}
-    button.props.onLongPress(0, { x: 8, y: 9, width: 10, height: 44 })
+    button.props.onLongPress(defaultProps.rubricItem.ratings[0].id, { x: 8, y: 9, width: 10, height: 44 })
 
     expect(showToolTip).toHaveBeenCalledWith(
       { x: 13, y: 9 },

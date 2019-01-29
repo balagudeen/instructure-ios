@@ -19,7 +19,7 @@
 import UIKit
 
 class SystemSettingsLinkCell: UITableViewCell {
-    func setupCell() {
+    @objc func setupCell() {
         
     }
 }

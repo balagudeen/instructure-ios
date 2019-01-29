@@ -16,11 +16,13 @@
 
 /* eslint-disable flowtype/require-valid-file-annotation */
 
+import { shallow } from 'enzyme'
 import React from 'react'
 import {
   ContextCard,
   props,
 } from '../ContextCard'
+import app from '../../app'
 
 import renderer from 'react-test-renderer'
 import explore from '../../../../test/helpers/explore'
@@ -54,12 +56,18 @@ const defaultProps = {
   refresh: jest.fn(),
   loading: false,
   modal: false,
-  canViewAnalytics: true,
-  canViewGrades: true,
+  permissions: {
+    viewAnalytics: true,
+    viewAllGrades: true,
+    sendMessages: true,
+  },
   isStudent: true,
 }
 
-beforeEach(() => jest.resetAllMocks())
+beforeEach(() => {
+  jest.resetAllMocks()
+  app.setCurrentApp('teacher')
+})
 
 describe('ContextCard', () => {
   it('renders', () => {
@@ -69,9 +77,34 @@ describe('ContextCard', () => {
     expect(view.toJSON()).toMatchSnapshot()
   })
 
+  it('renders last activity in teacher', () => {
+    app.setCurrentApp('teacher')
+    const view = shallow(<ContextCard {...defaultProps} />)
+    const label = view.find('[testID="context-card.last-activity"]')
+    expect(label).not.toBeNull()
+  })
+
+  it('does not render last activity in student', () => {
+    app.setCurrentApp('student')
+    const view = shallow(<ContextCard {...defaultProps} />)
+    const label = view.find('[testID="context-card.last-activity"]')
+    expect(label).not.toBeNull()
+  })
+
   it('renders for a user that cannot view analytics', () => {
     let view = renderer.create(
-      <ContextCard {...defaultProps} canViewAnalytics={false} isStudent={false} />
+      <ContextCard {...defaultProps} permissions={{ ...defaultProps.permissions, viewAnalytics: false }} isStudent={false} />
+    )
+    expect(view.toJSON()).toMatchSnapshot()
+  })
+
+  it('renders for a user that cannot send messages', () => {
+    var view = renderer.create(
+      <ContextCard {...defaultProps} permissions={{ ...defaultProps.permissions, sendMessages: false }} isStudent={false} />
+    )
+    expect(view.toJSON()).toMatchSnapshot()
+    view = renderer.create(
+      <ContextCard {...defaultProps} permissions={{ ...defaultProps.permissions, sendMessages: false }} />
     )
     expect(view.toJSON()).toMatchSnapshot()
   })

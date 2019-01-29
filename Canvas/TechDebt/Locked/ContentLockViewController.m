@@ -45,6 +45,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = self.lockedItemName;
+
+    [self.modulesButton setTitle:NSLocalizedStringFromTableInBundle(@"View Modules", nil, [NSBundle bundleForClass:self.class], @"Return to modules from locked module") forState:UIControlStateNormal];
     
     [self updateForContentLock];
 }
@@ -62,11 +64,12 @@
 }
 
 - (NSString *)explanationForContentLock {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     NSString *moduleName = self.contentLock.moduleName;
-    NSString *explanation = [NSString stringWithFormat:NSLocalizedString(@"%@ is locked", @"explanation for locked item"), self.lockedItemName];
+    NSString *explanation = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%@ is locked", nil, bundle, @"explanation for locked item"), self.lockedItemName];
     
     if (moduleName && [moduleName class] != [NSNull class]) {
-        NSString *explanationFormat = NSLocalizedString(@"\"%@\" is locked as part of \"%@\"", @"explanation for locked module item");
+        NSString *explanationFormat = NSLocalizedStringFromTableInBundle(@"\"%@\" is locked as part of \"%@\"", nil, bundle, @"explanation for locked module item");
         explanation = [NSString stringWithFormat:explanationFormat, self.lockedItemName, moduleName];
     }
     
@@ -74,7 +77,7 @@
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateStyle:NSDateFormatterLongStyle];
         
-        NSString *dateExplanationFormat = NSLocalizedString(@" until %@", @"when locked item will become unlocked");
+        NSString *dateExplanationFormat = NSLocalizedStringFromTableInBundle(@" until %@", nil, bundle, @"when locked item will become unlocked");
         NSString *formattedDate = [dateFormatter stringFromDate:self.contentLock.unlockDate];
         NSString *dateExplanation = [NSString stringWithFormat:dateExplanationFormat, formattedDate];
         explanation = [explanation stringByAppendingString:dateExplanation];
@@ -95,7 +98,8 @@
     __block NSString *explanation;
     NSArray *requirementNames = [self.contentLock prerequisiteNames];
     if (requirementNames.count > 0) {
-        explanation = NSLocalizedString(@"\n\nYou must first complete:", @"prerequisites for unlocking item");
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
+        explanation = NSLocalizedStringFromTableInBundle(@"\n\nYou must first complete:", nil, bundle, @"prerequisites for unlocking item");
         [requirementNames enumerateObjectsUsingBlock:^(NSString *name, NSUInteger idx, BOOL *stop) {
             explanation = [explanation stringByAppendingFormat:@"\n\t• %@", name];
         }];

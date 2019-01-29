@@ -23,11 +23,11 @@ import Cartography
 
 
 class EssayAnswerCell: WhizzyTextInputCell {
-    class var ReuseID: String {
+    @objc class var ReuseID: String {
         return "EssayAnswerCellReuseID"
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    @objc override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         placeholder.text = "Enter answer..."

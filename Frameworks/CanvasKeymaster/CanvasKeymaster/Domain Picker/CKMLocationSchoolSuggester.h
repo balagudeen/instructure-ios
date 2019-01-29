@@ -41,8 +41,5 @@
  *
  */
 + (instancetype)shared;
-    
-// Fetch accounts, if not already doing so
-- (void)fetchSchools;
-    
+
 @end

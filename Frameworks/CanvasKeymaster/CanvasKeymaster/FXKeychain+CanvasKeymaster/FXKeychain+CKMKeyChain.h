@@ -22,7 +22,7 @@
 @interface FXKeychain (CKMKeychain)
 + (instancetype)sharedKeychain;
 
-- (NSArray *)clients;
+- (NSArray<CKIClient *> *)clients;
 - (void)addClient:(CKIClient *)client;
 - (void)removeClient:(CKIClient *)client;
 

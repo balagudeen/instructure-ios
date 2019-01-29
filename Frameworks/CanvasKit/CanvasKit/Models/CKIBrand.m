@@ -32,7 +32,12 @@
             @"secondaryButtonTextColor": @"ic-brand-button--secondary-text",
             @"navigationBackground": @"ic-brand-global-nav-bgd",
             @"navigationButtonColor": @"ic-brand-global-nav-ic-icon-svg-fill",
+            @"navigationButtonColorActive": @"ic-brand-global-nav-ic-icon-svg-fill--active",
             @"navigationTextColor": @"ic-brand-global-nav-menu-item__text-color",
+            @"navigationTextColorActive": @"ic-brand-global-nav-menu-item__text-color--active",
+            @"navigationBadgeBackgroundColor": @"ic-brand-global-nav-menu-item__badge-bgd",
+            @"navigationBadgeTextColor": @"ic-brand-global-nav-menu-item__badge-text",
+            @"headerImageBackground": @"ic-brand-global-nav-logo-bgd",
             @"headerImageURL": @"ic-brand-header-image",
     };
     NSDictionary *superPaths = [super JSONKeyPathsByPropertyKey];

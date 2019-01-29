@@ -18,7 +18,7 @@
  * @flow
  */
 
-import 'react-native'
+import { I18nManager } from 'react-native'
 import React from 'react'
 import DisclosureIndicator from '../components/DisclosureIndicator'
 
@@ -30,4 +30,13 @@ test('renders disclosure indiciator correctly', () => {
     <DisclosureIndicator />
   ).toJSON()
   expect(tree).toMatchSnapshot()
+})
+
+test('renders properly in rtl', () => {
+  I18nManager.isRTL = true
+  let tree = renderer.create(
+    <DisclosureIndicator />
+  ).toJSON()
+  expect(tree).toMatchSnapshot()
+  I18nManager.isRTL = false
 })

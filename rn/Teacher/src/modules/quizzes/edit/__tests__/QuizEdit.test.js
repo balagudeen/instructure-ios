@@ -275,10 +275,11 @@ describe('QuizEdit', () => {
 
   it('updates assignment on done', () => {
     const originalAssignment = template.assignment({ name: 'Original Assignment' })
-    let overrides = {
-      id: originalAssignment.id,
-      assignment_overrides: originalAssignment.assignment_overrides,
+    const updatedAssignment = {
+      ...originalAssignment,
+      overrides: [],
     }
+    delete updatedAssignment.assignment_overrides
     const createNodeMock = ({ type }) => {
       if (type === 'AssignmentDatesEditor') {
         return {
@@ -293,7 +294,7 @@ describe('QuizEdit', () => {
     const doneButton: any = explore(tree).selectRightBarButton('quizzes.edit.doneButton')
     doneButton.action()
 
-    expect(props.updateAssignment).toHaveBeenCalledWith(props.courseID, overrides, originalAssignment)
+    expect(props.updateAssignment).toHaveBeenCalledWith(props.courseID, updatedAssignment, originalAssignment)
   })
 
   it('shows modal while saving', () => {

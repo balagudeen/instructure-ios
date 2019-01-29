@@ -23,7 +23,7 @@ import CoreData
 import ReactiveSwift
 
 extension CalendarEvent {
-    public static func predicate(_ calendarEventID: String) -> NSPredicate {
+    @objc public static func predicate(_ calendarEventID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "id", calendarEventID)
     }
 

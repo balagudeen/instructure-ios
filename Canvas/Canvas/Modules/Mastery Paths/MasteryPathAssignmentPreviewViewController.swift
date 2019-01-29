@@ -22,7 +22,7 @@ private enum AssignmentPreviewViewModel: TableViewCellViewModel {
     case details(baseURL: URL, deets: String)
 
     static func tableViewDidLoad(_ tableView: UITableView) {
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 52.0
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: "MasteryPathAssignmentInfoCell", bundle: nil), forCellReuseIdentifier: "Info")
@@ -95,10 +95,10 @@ private func ==(lhs: AssignmentPreviewViewModel, rhs: AssignmentPreviewViewModel
 
 class MasteryPathAssignmentPreviewViewController: MasteryPathAssignmentDetailViewController {
 
-    let session: Session
-    let assignment: MasteryPathAssignment
+    @objc let session: Session
+    @objc let assignment: MasteryPathAssignment
 
-    init(session: Session, assignment: MasteryPathAssignment) throws {
+    @objc init(session: Session, assignment: MasteryPathAssignment) throws {
         self.session = session
         self.assignment = assignment
 

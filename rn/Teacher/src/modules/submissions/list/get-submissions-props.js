@@ -125,11 +125,13 @@ export function dueDate (assignment: Assignment, user: ?User | SessionUser): ?st
 
 function uniqueEnrollments (enrollments: Array<Enrollment>): Array<Enrollment> {
   const ids: Set<string> = new Set()
-  return enrollments.reduce((unique, e) => {
-    if (ids.has(e.user_id)) { return unique }
-    ids.add(e.user_id)
-    return [...unique, e]
-  }, [])
+  return enrollments
+    .filter(e => e.enrollment_state === 'active' || e.enrollment_state === 'invited')
+    .reduce((unique, e) => {
+      if (ids.has(e.user_id)) { return unique }
+      ids.add(e.user_id)
+      return [...unique, e]
+    }, [])
 }
 
 export function pendingProp (assignmentContent?: AssignmentContentState, courseContent?: CourseContentState): boolean {
@@ -160,11 +162,7 @@ export function getSubmissionsProps (entities: Entities, courseID: string, assig
   // wouldn't show the submission for the user
   const submissions = Object.keys(submissionsByUserID).length
     ? uniqueEnrollments(enrollments)
-      .filter(e => {
-        return e.type === 'StudentEnrollment' &&
-                (e.enrollment_state === 'active' ||
-                e.enrollment_state === 'invited')
-      })
+      .filter(e => e.type === 'StudentEnrollment')
       .sort((e1, e2) => {
         if (e1.type !== e2.type) {
           if (e1.type === 'StudentEnrollment') {

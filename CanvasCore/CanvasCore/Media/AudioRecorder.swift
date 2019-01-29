@@ -37,13 +37,13 @@ class AudioRecorder: NSObject {
         }()
     
     fileprivate let meterTable: MeterTable
-    var recordedFileURL: URL?
+    @objc var recordedFileURL: URL?
     
     weak var delegate: AudioRecorderDelegate?
     
     fileprivate var timer: CADisplayLink? = nil
     
-    init(ticks: Int) {
+    @objc init(ticks: Int) {
         meterTable = MeterTable(meterTicks: ticks)
     }
     
@@ -51,9 +51,9 @@ class AudioRecorder: NSObject {
         stopRecording()
     }
     
-    var recorder: AVAudioRecorder?
+    @objc var recorder: AVAudioRecorder?
     
-    func startRecording() throws {
+    @objc func startRecording() throws {
         let now = Date()
         
         let tmp = URL(fileURLWithPath: NSTemporaryDirectory())
@@ -72,14 +72,14 @@ class AudioRecorder: NSObject {
         recorder?.delegate = self
         recorder?.isMeteringEnabled = true
 
-        try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryRecord)
+        try AVAudioSession.sharedInstance().setCategory(.record, mode: .default)
         try AVAudioSession.sharedInstance().setActive(true)
         
         let began = recorder?.record() ?? false
         
         if began {
             timer = CADisplayLink(target: self, selector: #selector(AudioRecorder.timerFired(_:)))
-            timer?.add(to: RunLoop.main, forMode: RunLoopMode.commonModes)
+            timer?.add(to: RunLoop.main, forMode: RunLoop.Mode.common)
             delegate?.recorder(self, progressWithTime: 0, meter: 0)
             self.recordedFileURL = recordedFileURL
         } else {
@@ -87,7 +87,7 @@ class AudioRecorder: NSObject {
         }
     }
     
-    func stopRecording() {
+    @objc func stopRecording() {
         timer?.invalidate()
         timer = nil
         recorder?.delegate = nil
@@ -115,7 +115,7 @@ extension AudioRecorder: AVAudioRecorderDelegate {
 }
 
 extension AudioRecorder {
-    func timerFired(_ timer: CADisplayLink) {
+    @objc func timerFired(_ timer: CADisplayLink) {
         if let r = recorder, r.isRecording {
             r.updateMeters()
             let peak0 = r.averagePower(forChannel: 0)

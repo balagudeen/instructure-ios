@@ -43,8 +43,7 @@ export type FeatureFlagName = 'favoriteGroups' |
                               'newGroupNavigation' |
                               'simpleDiscussionRenderer' |
                               'newStudentAssignmentView' |
-                              'conferences' |
-                              'assignmentLevelAnonymousGrading'
+                              'conferences'
 
 // if a feature is listed here it will be turned off
 // unless in development, the current user is on a domain
@@ -56,10 +55,7 @@ export const featureFlags: { [FeatureFlagName]: FeatureFlag } = {
   simpleDiscussionRenderer: {},
   newStudentAssignmentView: {},
   conferences: {},
-  assignmentLevelAnonymousGrading: {},
 }
-
-export const exemptDomains = []
 
 var enableAllFeatureFlags = false
 
@@ -72,10 +68,6 @@ export function featureFlagEnabled (flagName: FeatureFlagName): boolean {
   }
 
   let session = getSession()
-  // certain domains should always have the flags on
-  if (exemptDomains.includes(session.baseURL)) {
-    return true
-  }
 
   let flag = featureFlags[flagName]
   if (!flag) {
@@ -96,10 +88,10 @@ export function featureFlagEnabled (flagName: FeatureFlagName): boolean {
 export async function featureFlagSetup (): Promise<*> {
   enableAllFeatureFlags = Boolean(await AsyncStorage.getItem(featureFlagKey))
   if (enableAllFeatureFlags) {
-    return FeatureFlagsManager.syncFeatureFlags({}, [])
+    return FeatureFlagsManager.syncFeatureFlags({})
   }
 
-  return FeatureFlagsManager.syncFeatureFlags(featureFlags, exemptDomains)
+  return FeatureFlagsManager.syncFeatureFlags(featureFlags)
 }
 
 export function enableAllFeaturesFlagsForTesting () {

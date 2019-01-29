@@ -58,7 +58,7 @@ extension Session {
         static var storeType = "whatevs"
     }
     
-    internal var contextsByStoreID: NSMutableDictionary {
+    @objc internal var contextsByStoreID: NSMutableDictionary {
         get {
             guard let box: NSMutableDictionary = getAssociatedObject(&AssociatedObjectKeys.contextByStoreID) else {
                 let box = NSMutableDictionary()
@@ -73,7 +73,7 @@ extension Session {
         }
     }
 
-    public var storeType: String {
+    @objc public var storeType: String {
         get {
             guard let box: NSString = getAssociatedObject(&AssociatedObjectKeys.storeType) else {
                 return NSSQLiteStoreType

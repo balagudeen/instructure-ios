@@ -30,7 +30,7 @@ public struct Stats {
 }
 
 public struct Student {
-    public var id: Int
+    public var id: String
     public var name: String
     public var sortableName: String
     public var avatarURL: URL?
@@ -45,11 +45,11 @@ public struct Status {
     }()
 
     // such IDs
-    public var id: Int? // null if no attendance is set
-    public var studentID: Int
-    public var teacherID: Int
-    public var sectionID: Int
-    public var courseID: Int
+    public var id: String? // null if no attendance is set
+    public var studentID: String
+    public var teacherID: String
+    public var sectionID: String
+    public var courseID: String
     
     public var student: Student
     
@@ -86,7 +86,7 @@ extension Stats: Unmarshaling, Marshaling {
 
 extension Student: Unmarshaling, Marshaling {
     public init(object: MarshaledObject) throws {
-        id              = try object <| "id"
+        id              = try object.stringID("id")
         name            = try object <| "name"
         sortableName    = try object <| "sortable_name"
         
@@ -107,11 +107,11 @@ extension Student: Unmarshaling, Marshaling {
 extension Status: Unmarshaling, Marshaling {
     public init(object: MarshaledObject) throws {
         
-        id          = try object <| "id"
-        studentID   = try object <| "student_id"
-        teacherID   = try object <| "teacher_id"
-        sectionID   = try object <| "section_id"
-        courseID    = try object <| "course_id"
+        id          = try object.stringID("id")
+        studentID   = try object.stringID("student_id")
+        teacherID   = try object.stringID("teacher_id")
+        sectionID   = try object.stringID("section_id")
+        courseID    = try object.stringID("course_id")
         attendance  = try object <| "attendance"
         stats       = try object <| "stats"
         seated      = try object <| "seated"

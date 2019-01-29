@@ -22,7 +22,7 @@ import Result
 import CoreData
 
 extension ModuleItem {
-    public static func beginObservingProgress(_ session: Session) {
+    @objc public static func beginObservingProgress(_ session: Session) {
         guard let context = try? session.soEdventurousManagedObjectContext() else { return }
         session
             .progressDispatcher
@@ -105,7 +105,7 @@ extension ModuleItem {
         let incomplete = NSPredicate(format: "%K == %@", "completed", NSNumber(value: false as Bool))
         let unlocked = NSPredicate(format: "%K == false", "lockedForUser", NSNumber(value: false as Bool))
 
-        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [type, course, requirement, incomplete, unlocked].flatMap { $0 })
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [type, course, requirement, incomplete, unlocked].compactMap { $0 })
 
         switch progress.itemType {
         case .legacyModuleProgressShim:
@@ -141,7 +141,7 @@ extension ModuleItem {
         }
     }
 
-    var progressItemID: String? {
+    @objc var progressItemID: String? {
         guard let content = content else {
             return nil
         }

@@ -20,7 +20,7 @@ import CoreData
 
 
 extension Session {
-    var suchActivityManagedObjectContext: NSManagedObjectContext {
+    @objc var suchActivityManagedObjectContext: NSManagedObjectContext {
         let model = NSManagedObjectModel(named: "SuchActivity", inBundle: .core)!
         
         let storeID = StoreID(storeName: "SuchActivity", model: model, localizedErrorDescription: "Error loading SuchActivity database file")

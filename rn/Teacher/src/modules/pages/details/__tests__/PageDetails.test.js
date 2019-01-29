@@ -18,7 +18,7 @@
 
 import { shallow } from 'enzyme'
 import React from 'react'
-import { Alert, ActionSheetIOS } from 'react-native'
+import { NativeModules, Alert, ActionSheetIOS } from 'react-native'
 import URL from 'url-parse'
 import { alertError } from '../../../../redux/middleware/error-handler'
 import { API, httpCache } from '../../../../canvas-api/model-api'
@@ -49,6 +49,24 @@ describe('PageDetails', () => {
       loadError: null,
       refresh: jest.fn(),
     }
+  })
+
+  it('uses default html when body is null', () => {
+    props.page = template.pageModel({ body: null })
+    const screen = shallow(<PageDetails {...props} />)
+    const webView = screen.find('CanvasWebView')
+    const source = webView.prop('source')
+    expect(source.html).toEqual('')
+  })
+
+  it('marks page as viewed', () => {
+    app.setCurrentApp('student')
+    const spy = jest.fn()
+    NativeModules.ModuleItemsProgress.viewedPage = spy
+    props.courseID = '33'
+    props.url = 'view-this'
+    shallow(<PageDetails {...props} />)
+    expect(spy).toHaveBeenCalledWith('33', 'view-this')
   })
 
   it('gets courseColor, course, and page from the model api', () => {
@@ -97,6 +115,15 @@ describe('PageDetails', () => {
     const loadError = new Error()
     tree.setProps({ loadError })
     expect(alertError).toHaveBeenCalledWith(loadError)
+  })
+
+  it('sets specific error message for 404', () => {
+    const tree = shallow(<PageDetails {...props} />)
+    const loadError = {
+      response: { status: 404 },
+    }
+    tree.setProps({ loadError })
+    expect(alertError).toHaveBeenCalledWith('Oops, we couldn’t find that page.', 'Page Not Found')
   })
 
   it('routes to page edit', async () => {
@@ -202,5 +229,22 @@ describe('PageDetails', () => {
     expect(props.navigator.replace).toHaveBeenCalledWith(
       '/courses/1/pages/updated-3'
     )
+  })
+
+  it('refreshes when webview refreshes', () => {
+    props.refresh = jest.fn()
+    const screen = shallow(<PageDetails {...props} />)
+    expect(props.refresh).not.toHaveBeenCalled()
+    const webView = screen.find('CanvasWebView')
+    webView.simulate('Refresh')
+    expect(props.refresh).toHaveBeenCalled()
+  })
+
+  it('calls stops refreshing webview if not loading', () => {
+    const stopRefreshing = jest.fn()
+    const screen = shallow(<PageDetails {...props} />)
+    screen.find('CanvasWebView').getElement().ref({ stopRefreshing })
+    screen.setProps({ isLoading: false })
+    expect(stopRefreshing).toHaveBeenCalled()
   })
 })

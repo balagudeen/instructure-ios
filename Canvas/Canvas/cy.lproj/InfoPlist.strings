@@ -1,15 +1,15 @@
-/* (No Comment) */
+/* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "Atodwch luniau a fideos ar gyfer negeseuon a phostiadau trafodaeth, neu eu cyflwyno fel aseiniadau.";
 
-/* (No Comment) */
+/* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "Helpwch ni i ddod o hyd i ysgolion yn eich ardal.";
 
-/* (No Comment) */
+/* Privacy - Microphone Usage Description */
 "NSMicrophoneUsageDescription" = "Atodwch recordiadau sain ar gyfer negeseuon a phostiadau trafodaeth, neu eu cyflwyno fel aseiniadau.";
 
-/* (No Comment) */
+/* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Atodwch luniau a fideos ar gyfer negeseuon a phostiadau trafodaeth, neu eu cyflwyno fel aseiniadau.";
 
-/* (No Comment) */
+/* Privacy - Photo Library Usage Description */
 "NSPhotoLibraryUsageDescription" = "Atodwch luniau a fideos ar gyfer negeseuon a phostiadau trafodaeth, neu eu cyflwyno fel aseiniadau.";
 

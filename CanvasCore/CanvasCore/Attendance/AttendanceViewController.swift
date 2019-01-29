@@ -66,14 +66,14 @@ open class AttendanceViewController: UIViewController {
     
     fileprivate var statii: [AttendanceStatusController] = []
     
-    static let dateFormatter: DateFormatter = {
+    @objc static let dateFormatter: DateFormatter = {
         let d = DateFormatter()
         d.dateStyle = .medium
         d.timeStyle = .none
         return d
     }()
     
-    public init(client: CKIClient, launchURL: URL, courseID: String, date: Date) {
+    @objc public init(client: CKIClient, launchURL: URL, courseID: String, date: Date) {
         self.session = RollCallSession(client: client, initialLaunchURL: launchURL)
         self.date = date
         self.client = client
@@ -108,14 +108,14 @@ open class AttendanceViewController: UIViewController {
         divider.translatesAutoresizingMaskIntoConstraints = false
         header.addSubview(divider)
         
-        sectionLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightSemibold)
+        sectionLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.semibold)
         sectionLabel.textColor = #colorLiteral(red: 0.1764705882, green: 0.231372549, blue: 0.2705882353, alpha: 1)
         sectionLabel.text = NSLocalizedString(currentSectionTitle, comment: "")
         sectionLabel.translatesAutoresizingMaskIntoConstraints = false
         header.addSubview(sectionLabel)
         
         changeSectionButton.translatesAutoresizingMaskIntoConstraints = false
-        changeSectionButton.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        changeSectionButton.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         changeSectionButton.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
         changeSectionButton.setTitle(NSLocalizedString("Change Section", tableName: "Localizable", bundle: .core, value: "", comment: ""), for: .normal)
         changeSectionButton.sizeToFit()
@@ -123,7 +123,7 @@ open class AttendanceViewController: UIViewController {
         header.addSubview(changeSectionButton)
         
         tableView.separatorInset = .zero
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 60
         tableView.register(StatusCell.self, forCellReuseIdentifier: StatusCell.reuseID)
         tableView.dataSource = self
@@ -137,7 +137,7 @@ open class AttendanceViewController: UIViewController {
         
         bigBlueButton.backgroundColor = #colorLiteral(red: 0, green: 0.5568627451, blue: 0.8862745098, alpha: 1)
         bigBlueButton.translatesAutoresizingMaskIntoConstraints = false
-        bigBlueButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
+        bigBlueButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         bigBlueButton.addTarget(self, action: #selector(markRemainingPresent(_:)), for: .touchUpInside)
         bigBlueButtonBottom = bigBlueButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: 50)
         
@@ -178,7 +178,7 @@ open class AttendanceViewController: UIViewController {
         tableView.setEditing(false, animated: false)
     }
     
-    func updateBigBlueButton() {
+    @objc func updateBigBlueButton() {
         // If ALL are unmarked, display "Mark All as Present"
         // Or, if less than all are unmarked, display "Mark Remaining as Present"
         
@@ -192,7 +192,7 @@ open class AttendanceViewController: UIViewController {
         showOrHideBigBlueButton()
     }
     
-    func showOrHideBigBlueButton() {
+    @objc func showOrHideBigBlueButton() {
         let containsNull = statii.contains(where: { $0.status.attendance == nil })
         if containsNull && bigBlueButtonBottom.constant != 0 {
             bigBlueButtonBottom.constant = 0
@@ -210,7 +210,7 @@ open class AttendanceViewController: UIViewController {
         }
     }
     
-    func alertError(_ error: Error) {
+    @objc func alertError(_ error: Error) {
         let alert = UIAlertController(
             title: NSLocalizedString("Attendance Error", tableName: "Localizable", bundle: .core, value: "", comment: "Error title for attendance app"),
             message: error.localizedDescription,
@@ -252,7 +252,7 @@ open class AttendanceViewController: UIViewController {
         updateBigBlueButton()
     }
     
-    func refreshStatusesForCurrentSection(completed: @escaping () -> Void) {
+    @objc func refreshStatusesForCurrentSection(completed: @escaping () -> Void) {
         guard let sectionID = self.sectionID else {
             completed()
             return
@@ -269,7 +269,7 @@ open class AttendanceViewController: UIViewController {
         }
     }
     
-    func refreshStatuses(sender: UIRefreshControl?) {
+    @objc func refreshStatuses(sender: UIRefreshControl?) {
         client.fetchAuthorizedSections(forCourseWithID: courseID) { [weak self] sections, error in
             guard let me = self else { return }
             
@@ -346,7 +346,7 @@ open class AttendanceViewController: UIViewController {
         return (titleView, titleLabel, subtitleLabel)
     }
     
-    func showDatePicker(_ sender: Any?) {
+    @objc func showDatePicker(_ sender: Any?) {
         let datePicker = DatePickerViewController()
         datePicker.initialDate = date
         datePicker.delegate = self
@@ -356,7 +356,7 @@ open class AttendanceViewController: UIViewController {
         present(nav, animated: true, completion: nil)
     }
     
-    func markRemainingPresent(_ sender: Any?) {
+    @objc func markRemainingPresent(_ sender: Any?) {
         statii.forEach { statusController in
             if statusController.status.attendance == nil {
                 statusController.update(attendance: .present)
@@ -383,7 +383,7 @@ extension AttendanceViewController: UITableViewDataSource, UITableViewDelegate {
         return true
     }
     
-    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
     }
     
@@ -391,7 +391,7 @@ extension AttendanceViewController: UITableViewDataSource, UITableViewDelegate {
         return false
     }
     
-    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
     }
     
@@ -449,7 +449,7 @@ extension AttendanceViewController: UITableViewDataSource, UITableViewDelegate {
 
 
 extension AttendanceViewController: DatePickerDelegate {
-    func didSelectDate(_ date: Date) {
+    @objc func didSelectDate(_ date: Date) {
         self.date = date
         statii = []
         tableView.reloadData()
@@ -483,7 +483,7 @@ extension AttendanceViewController: RollCallSessionDelegate {
 
 extension AttendanceViewController {
     
-    func changeToSection(withID sectionID: String) {
+    @objc func changeToSection(withID sectionID: String) {
         if let current = self.sectionID, current == Int(sectionID) {
             return
         }

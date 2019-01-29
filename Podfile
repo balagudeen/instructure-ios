@@ -2,7 +2,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 workspace 'AllTheThings.xcworkspace'
 inhibit_all_warnings!
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 abstract_target 'defaults' do
   use_frameworks!
@@ -43,10 +43,8 @@ abstract_target 'defaults' do
   pod 'RCTSFSafariViewController', :path => nm_path + 'react-native-sfsafariviewcontroller'
   pod 'RNSound', :path => nm_path + 'react-native-sound'
   pod 'react-native-camera', :path => nm_path + 'react-native-camera'
-  pod 'BugsnagReactNative', :path => nm_path + 'bugsnag-react-native'
 
   pod 'SDWebImage', '~> 4.1'
-  pod 'SVGKit', :git => 'https://github.com/SVGKit/SVGKit.git', :branch => '2.x'
   pod 'ReactiveCocoa', '~> 5.0'
   pod 'Marshal', '~> 1.1'
   pod 'Result', '~> 3.2'
@@ -65,19 +63,18 @@ abstract_target 'defaults' do
   pod 'DeviceKit', '~> 1.0'
   pod 'TPKeyboardAvoiding', '~> 1.3'
   pod 'SwiftSimplify'
-  pod 'PSPDFKit', podspec: 'https://customers.pspdfkit.com/cocoapods/8YzxfVzsGsqs4HKYsejmoeD6WEJ9ma/pspdfkit/7.6.2.podspec'
 
   target 'Parent' do
     project 'Parent/Parent.xcodeproj'
     pod 'Fabric', '~> 1.7.7'
-    pod 'Crashlytics', '~> 3.10.2'
     pod 'Eureka', :git => 'https://github.com/xmartlabs/Eureka', :branch => 'Swift-3.3'
+    pod 'Firebase/Core'
   end
 
   target 'Teacher' do
     project 'rn/Teacher/ios/Teacher.xcodeproj'
     pod 'Fabric', '~> 1.7.7'
-    pod 'Crashlytics', '~> 3.10.2'
+    pod 'Firebase/Core'
   end
 
   target 'TechDebt' do
@@ -88,12 +85,12 @@ abstract_target 'defaults' do
   target 'Canvas' do
     project 'Canvas/Canvas.xcodeproj'
     pod 'Fabric', '~> 1.7.7'
-    pod 'Crashlytics', '~> 3.10.2'
     pod 'Firebase/Core'
   end
 
   target 'CanvasCore' do
     project 'CanvasCore/CanvasCore.xcodeproj'
+    pod 'Crashlytics', '~> 3.10.2'
   end
 
   target 'CanvasKit1' do
@@ -114,26 +111,6 @@ abstract_target 'defaults' do
     project 'Frameworks/CanvasKeymaster/CanvasKeymaster.xcodeproj'
   end
 
-  abstract_target 'common_ui_tests' do
-    target 'TeacherUITests' do
-      pod 'EarlGrey', '~> 1.1'
-      pod 'SwiftGRPC', git: 'https://github.com/grpc/grpc-swift.git'
-      pod 'fishhook'
-      project 'rn/Teacher/ios/Teacher.xcodeproj'
-    end
-
-    target 'StudentUITests' do
-      pod 'EarlGrey', '~> 1.1'
-      pod 'SwiftGRPC', git: 'https://github.com/grpc/grpc-swift.git'
-      pod 'fishhook'
-      project 'Canvas/Canvas.xcodeproj'
-    end
-  end
-
-  target 'SoSeedySwift' do
-    pod 'SwiftGRPC', git: 'https://github.com/grpc/grpc-swift.git'
-    project 'Frameworks/SoSeedySwift/SoSeedySwift.xcodeproj'
-  end
 end
 
 target 'GradesWidget' do
@@ -149,11 +126,11 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-       config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'YES'
+      config.build_settings['SWIFT_VERSION'] = '3.0'
+      config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'YES'
     end
     usesNonAppExAPI = %w[
       SVProgressHUD
-      BugsnagReactNative
       RCTSFSafariViewController
       react-native-camera
       react-native-mail

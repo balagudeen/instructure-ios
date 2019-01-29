@@ -1,12 +1,12 @@
-/* (No Comment) */
+/* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "Załącz zdjęcia i filmy do komentarzy do przesyłanych materiałów.";
 
-/* (No Comment) */
+/* Privacy - Microphone Usage Description */
 "NSMicrophoneUsageDescription" = "Załącz nagrania audio do komentarzy do przesyłanych materiałów.";
 
-/* (No Comment) */
+/* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Załącz zdjęcia i filmy do komentarzy do przesyłanych materiałów.";
 
-/* (No Comment) */
+/* Privacy - Photo Library Usage Description */
 "NSPhotoLibraryUsageDescription" = "Prześlij zawartość do kursów.";
 

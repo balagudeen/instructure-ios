@@ -38,7 +38,7 @@ export type Enrollment = {
   type: EnrollmentType,
   enrollment_state: EnrollmentState,
   course_id: string,
-  last_activity_at: string,
+  last_activity_at: ?string,
   course_section_id: string,
   computed_current_grade?: string,
   current_grading_period_id?: ?string,

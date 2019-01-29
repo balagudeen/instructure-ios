@@ -34,7 +34,7 @@ class AccountNotificationViewController: UITableViewController {
     }
     var disposable: Disposable?
 
-    init(session: Session, announcementID: String) throws {
+    @objc init(session: Session, announcementID: String) throws {
         super.init(style: .plain)
         let request = try session.GET("/api/v1/accounts/self/account_notifications/\(announcementID)")
         let producer = session.JSONSignalProducer(request)

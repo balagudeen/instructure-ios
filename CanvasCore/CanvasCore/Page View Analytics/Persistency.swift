@@ -105,7 +105,7 @@ class Persistency {
 }
 
 extension FileManager {
-    static func appSupportDirectory() -> URL? {
+    @objc static func appSupportDirectory() -> URL? {
         return FileManager.default.urls(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in: .userDomainMask).last
     }
 }

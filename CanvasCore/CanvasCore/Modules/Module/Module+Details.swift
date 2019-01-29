@@ -21,7 +21,7 @@ import ReactiveSwift
 import CoreData
 
 extension Module {
-    public static func detailsCacheKey(context: NSManagedObjectContext, courseID: String, moduleID: String) -> String {
+    @objc public static func detailsCacheKey(context: NSManagedObjectContext, courseID: String, moduleID: String) -> String {
         return cacheKey(context, [courseID, moduleID])
     }
 

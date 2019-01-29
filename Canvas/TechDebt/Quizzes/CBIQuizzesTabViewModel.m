@@ -26,7 +26,7 @@
 {
     self = [super init];
     if (self) {
-        self.viewControllerTitle = NSLocalizedString(@"Quizzes", @"The title for the list of quizzes for a course");
+        self.viewControllerTitle = NSLocalizedStringFromTableInBundle(@"Quizzes", nil, [NSBundle bundleForClass:self.class], @"The title for the list of quizzes for a course");
         self.collectionController = [MLVCCollectionController collectionControllerGroupingByBlock:nil groupTitleBlock:nil sortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"dueAt" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"model.title" ascending:YES]]];
     }
     return self;

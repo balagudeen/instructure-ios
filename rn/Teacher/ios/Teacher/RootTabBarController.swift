@@ -16,6 +16,7 @@
 
 import UIKit
 import CanvasCore
+import Core
 import ReactiveSwift
 import UserNotifications
 
@@ -44,11 +45,14 @@ class RootTabBarController: UITabBarController {
         NotificationKitController.registerForPushNotifications()
     }
     
-    func configureTabs() {
+    @objc func configureTabs() {
         viewControllers = [coursesTab(),  toDoTab(), inboxTab()]
+        if FeatureFlags.featureFlagEnabled(.newStudentAssignmentView) {
+            tabBar.useGlobalNavStyle()
+        }
     }
     
-    func coursesTab() -> UIViewController {
+    @objc func coursesTab() -> UIViewController {
         let split = EnrollmentSplitViewController()
         let emptyNav = HelmNavigationController(rootViewController: EmptyViewController())
         
@@ -71,7 +75,7 @@ class RootTabBarController: UITabBarController {
         return split
     }
 
-    func toDoTab() -> UIViewController {
+    @objc func toDoTab() -> UIViewController {
         let toDoVC = HelmViewController(moduleName: "/to-do", props: [:])
         toDoVC.view.accessibilityIdentifier = "to-do-list.view"
         toDoVC.tabBarItem = UITabBarItem(title: NSLocalizedString("To Do", comment: ""), image: UIImage(named: "todo"), selectedImage: nil)

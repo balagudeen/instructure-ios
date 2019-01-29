@@ -547,9 +547,10 @@ static CGRect CGRectForDisplayingItemOfSize(CGRect container, CGSize itemSize) {
 - (void)scrollToItemAtIndex:(NSUInteger)index {
     CGPoint offset = [self contentOffsetForDisplayingItemAtIndex:index];
     [scrollView setContentOffset:offset animated:YES];
-    NSString *accessibilityStr = [NSString stringWithFormat:NSLocalizedString(@"Item %d of %d", nil), index + 1, [self numberOfPages]];
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    NSString *accessibilityStr = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Item %d of %d", nil, bundle, nil), index + 1, [self numberOfPages]];
     if ([selectedItemIndexes containsIndex:index]) {
-        accessibilityStr = [accessibilityStr stringByAppendingFormat:@", %@", NSLocalizedString(@"Selected", nil)];
+        accessibilityStr = [accessibilityStr stringByAppendingFormat:@", %@", NSLocalizedStringFromTableInBundle(@"Selected", nil, bundle, nil)];
     }
     UIAccessibilityPostNotification(UIAccessibilityPageScrolledNotification, accessibilityStr);
 }
@@ -677,6 +678,7 @@ static CGRect CGRectForDisplayingItemOfSize(CGRect container, CGSize itemSize) {
 
 - (NSArray *)accessibilityElements {
     if (!accessibilityElements) {
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
         UIAccessibilityElement *prevTab = [[UIAccessibilityElement alloc] initWithAccessibilityContainer:self];
         
         CGRect garbage;
@@ -685,17 +687,17 @@ static CGRect CGRectForDisplayingItemOfSize(CGRect container, CGSize itemSize) {
         CGRectDivide(self.bounds, &leftSide, &garbage, 50, CGRectMinXEdge);
         leftSide = [self convertRect:leftSide toView:nil];
         prevTab.accessibilityFrame = leftSide;
-        prevTab.accessibilityLabel = NSLocalizedString(@"Previous item", nil);
+        prevTab.accessibilityLabel = NSLocalizedStringFromTableInBundle(@"Previous item", nil, bundle, nil);
         
         UIAccessibilityElement *nextTab = [[UIAccessibilityElement alloc] initWithAccessibilityContainer:self];
         CGRect rightSide;
         CGRectDivide(self.bounds, &rightSide, &garbage, 50, CGRectMaxXEdge);
         rightSide = [self convertRect:rightSide toView:nil];
         nextTab.accessibilityFrame = rightSide;
-        nextTab.accessibilityLabel = NSLocalizedString(@"Next item", nil);
+        nextTab.accessibilityLabel = NSLocalizedStringFromTableInBundle(@"Next item", nil, bundle, nil);
         
         UIAccessibilityElement *middleItem = [[UIAccessibilityElement alloc] initWithAccessibilityContainer:self];
-        middleItem.accessibilityHint = NSLocalizedString(@"Toggles selection of item", nil);
+        middleItem.accessibilityHint = NSLocalizedStringFromTableInBundle(@"Toggles selection of item", nil, bundle, nil);
         // The accessibility properties of the middle item will be dynamically
         // configured, based on whatever item is in front.
                 

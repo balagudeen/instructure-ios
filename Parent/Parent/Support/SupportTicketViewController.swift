@@ -112,7 +112,7 @@ open class SupportTicketViewController : FormViewController {
     // ---------------------------------------------
     // MARK: - IBActions
     // ---------------------------------------------
-    func doneTapped(_ barButtonItem: UIBarButtonItem) {
+    @objc func doneTapped(_ barButtonItem: UIBarButtonItem) {
         guard let impactRow = form.rowBy(tag: SupportTicketCellTag.Impact.rawValue) as? PushRow<String>,
             let subjectRow = form.rowBy(tag: SupportTicketCellTag.Subject.rawValue) as? TextRow,
             let commentRow = form.rowBy(tag: SupportTicketCellTag.Comment.rawValue) as? TextAreaRow,
@@ -169,7 +169,7 @@ open class SupportTicketViewController : FormViewController {
         sendTask?.resume()
     }
 
-    func cancelTapped(_ barButtonItem: UIBarButtonItem) {
+    @objc func cancelTapped(_ barButtonItem: UIBarButtonItem) {
         sendTask?.cancel()
         let _ = navigationController?.popViewController(animated: true)
     }
@@ -177,13 +177,13 @@ open class SupportTicketViewController : FormViewController {
     // ---------------------------------------------
     // MARK: - Validation
     // ---------------------------------------------
-    func validateForm() {
+    @objc func validateForm() {
         doneButton.isEnabled = isFormValid()
     }
 
-    func setLoading(_ loading: Bool) {
+    @objc func setLoading(_ loading: Bool) {
         if loading {
-            let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+            let activityIndicator = UIActivityIndicatorView(style: .white)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
             activityIndicator.startAnimating()
         } else {
@@ -191,7 +191,7 @@ open class SupportTicketViewController : FormViewController {
         }
     }
 
-    func isFormValid() -> Bool {
+    @objc func isFormValid() -> Bool {
         if let emailRow = form.rowBy(tag: SupportTicketCellTag.Email.rawValue) as? EmailRow,
             let formEmail = emailRow.value {
             requesterEmail = formEmail

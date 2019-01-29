@@ -25,17 +25,26 @@
 /* No comment provided by engineer. */
 "Choose One" = "اختيار واحد";
 
+/* Connectivity alert close text */
+"Close" = "إغلاق";
+
 /* No comment provided by engineer. */
 "Continue Editing" = "متابعة التحرير";
 
 /* No comment provided by engineer. */
 "Describe the feature here" = "قم بوصف الميزة هنا";
 
+/* No comment provided by engineer. */
+"describe your problem" = "قم بوصف مشكلتك";
+
 /* Dismiss login expired/revoked alert button */
 "Dismiss" = "رفض";
 
 /* No comment provided by engineer. */
 "Emergency" = "الطوارئ";
+
+/* No comment provided by engineer. */
+"enter a subject" = "أدخل موضوعًا";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "أدخل وصف التذكرة";
@@ -76,14 +85,20 @@
 /* No comment provided by engineer. */
 "OK" = "موافق";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "قم بإزالة مستخدم";
+
 /* No comment provided by engineer. */
 "Report a Problem" = "إبلاغ عن مشكلة";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "طلب ميزة";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "فشل الطلب!";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "طلب ميزة";
+"select the impact" = "حدد التأثير";
 
 /* Button to select the severity of the ticket */
 "Select ticket impact level" = "تحديد مستوى تأثير التذكرة";
@@ -106,18 +121,15 @@
 /* No comment provided by engineer. */
 "Thanks, your request was received!" = "شكراً، تم استلام طلبك!";
 
+/* No comment provided by engineer. */
+"Trouble logging in" = "مشكلة تسجيل الدخول";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "لا يمكننا الاتصال بـ Canvas. هل تحققت من اتصالك بالإنترنت؟";
+
+/* Connectivity alert title */
+"Whoops!" = "عذرًا!";
+
 /* when the access token has been revoked */
 "Your login has expired or has been removed by the server. Please log in again." = "انتهت مدة تسجيل الدخول الخاصة بك أو تمت الإزالة من قبل الخادم. يُرجى تسجيل الدخول مرة أخرى.";
-
-/* No comment provided by engineer. */
-"describe your problem" = "قم بوصف مشكلتك";
-
-/* No comment provided by engineer. */
-"enter a subject" = "أدخل موضوعًا";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "قم بإزالة مستخدم";
-
-/* No comment provided by engineer. */
-"select the impact" = "حدد التأثير";
 

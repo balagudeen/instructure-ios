@@ -130,7 +130,7 @@ final class FileUploadsViewModel: FileUploadsViewModelType, FileUploadsViewModel
         self.files = batch
             .sample(on: contextDidSave.ignoreValues())
             .map { batch in
-                return batch.fileUploads.map { $0.file }.flatMap { $0 }
+                return batch.fileUploads.map { $0.file }.compactMap { $0 }
             }
             .sample(on: tappedDoneProperty.signal)
 
@@ -154,7 +154,7 @@ final class FileUploadsViewModel: FileUploadsViewModelType, FileUploadsViewModel
         self.sessionBatch.value = (session, batch)
     }
 
-    fileprivate let tappedAddFileProperty = MutableProperty()
+    fileprivate let tappedAddFileProperty = MutableProperty(())
     func tappedAddFile() {
         self.tappedAddFileProperty.value = ()
     }
@@ -164,17 +164,17 @@ final class FileUploadsViewModel: FileUploadsViewModelType, FileUploadsViewModel
         self.addUploadableProperty.value = uploadable
     }
 
-    fileprivate let viewDidLoadProperty = MutableProperty()
+    fileprivate let viewDidLoadProperty = MutableProperty(())
     func viewDidLoad() {
         self.viewDidLoadProperty.value = ()
     }
 
-    fileprivate let tappedDoneProperty = MutableProperty()
+    fileprivate let tappedDoneProperty = MutableProperty(())
     func tappedDone() {
         self.tappedDoneProperty.value = ()
     }
 
-    fileprivate let tappedCancelProperty = MutableProperty()
+    fileprivate let tappedCancelProperty = MutableProperty(())
     func tappedCancel() {
         self.tappedCancelProperty.value = ()
     }

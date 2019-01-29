@@ -19,7 +19,7 @@ public func registerSharedNativeViewControllers() {
         guard let type = props["type"] as? String else { return nil }
         
         let storyboard = UIStoryboard(name: "SupportTicket", bundle: Bundle(for: SupportTicketViewController.self))
-        let controller = storyboard.instantiateInitialViewController()!.childViewControllers[0] as! SupportTicketViewController
+        let controller = storyboard.instantiateInitialViewController()!.children[0] as! SupportTicketViewController
         if type == "feature" {
             controller.ticketType = SupportTicketTypeFeatureRequest
         } else {

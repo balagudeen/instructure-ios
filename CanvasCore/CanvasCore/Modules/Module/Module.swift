@@ -32,7 +32,7 @@ open class Module: NSManagedObject {
     @NSManaged internal (set) open var completionDate: Date?
 
     @NSManaged fileprivate var primitivePrerequisiteModuleIDs: String
-    internal (set) open var prerequisiteModuleIDs: [String] {
+    @objc internal (set) open var prerequisiteModuleIDs: [String] {
         get {
             willAccessValue(forKey: "prerequisiteModuleIDs")
             let value = primitivePrerequisiteModuleIDs.components(separatedBy: ",").filter { !$0.isEmpty }
@@ -90,7 +90,7 @@ open class Module: NSManagedObject {
         }
     }
 
-    open var hasPrerequisites: Bool {
+    @objc open var hasPrerequisites: Bool {
         return !prerequisiteModuleIDs.isEmpty
     }
 }
@@ -99,12 +99,12 @@ open class Module: NSManagedObject {
 import Marshal
 
 extension Module: SynchronizedModel {
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("id")
         return NSPredicate(format: "%K == %@", "id", id)
     }
 
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         id                          = try json.stringID("id")
         courseID                    = try json.stringID("course_id")
         name                        = try json <| "name"
@@ -119,7 +119,7 @@ extension Module: SynchronizedModel {
         try updateState(json, inContext: context)
     }
 
-    func updateState(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc func updateState(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         state = try json <| "state"
 
         if state == .completed {

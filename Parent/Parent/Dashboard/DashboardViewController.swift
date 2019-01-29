@@ -54,26 +54,26 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var alertsTabItem: UITabBarItem!
     
     // Views hooked up
-    var pageViewController: UIPageViewController!
-    var context: NSManagedObjectContext!
-    var coursesViewController: UIViewController?
-    var calendarViewController: UIViewController?
-    var alertsViewController: UIViewController?
-    var viewControllers: [UIViewController]!
+    @objc var pageViewController: UIPageViewController!
+    @objc var context: NSManagedObjectContext!
+    var coursesViewController: CourseListViewController?
+    @objc var calendarViewController: UIViewController?
+    @objc var alertsViewController: UIViewController?
+    @objc var viewControllers: [UIViewController]!
 
-    var session: Session!
+    @objc var session: Session!
     
-    var selectCourseAction: DashboardSelectCourseAction? = nil
-    var selectCalendarEventAction: DashboardSelectCalendarEventAction? = nil
-    var selectAlertAction: DashboardSelectAlertAction? = nil
+    @objc var selectCourseAction: DashboardSelectCourseAction? = nil
+    @objc var selectCalendarEventAction: DashboardSelectCalendarEventAction? = nil
+    @objc var selectAlertAction: DashboardSelectAlertAction? = nil
 
-    var logoutAction: (()->Void)? = nil
-    var addStudentAction: (()->Void)? = nil
+    @objc var logoutAction: (()->Void)? = nil
+    @objc var addStudentAction: (()->Void)? = nil
 
-    var currentStudent: Student? {
+    @objc var currentStudent: Student? {
         didSet {
             if let student = currentStudent {
-                if !UIAccessibilityIsReduceTransparencyEnabled() {
+                if !UIAccessibility.isReduceTransparencyEnabled {
                     let colorScheme = ColorCoordinator.colorSchemeForStudentID(student.id)
                     headerContainerView.backgroundColor = colorScheme.mainColor
                     tabBar.tintColor = colorScheme.mainColor
@@ -81,7 +81,7 @@ class DashboardViewController: UIViewController {
                 }
             }
 
-            if oldValue?.id != currentStudent?.id {
+            if currentStudent == nil || oldValue?.id != currentStudent?.id {
                 self.updateStudentInfoView()
                 self.reloadObserveeData()
             }
@@ -91,14 +91,14 @@ class DashboardViewController: UIViewController {
     var alertTabBadgeCountCoordinator: AlertCountCoordinator?
 
     var studentCountObserver: ManagedObjectCountObserver<Student>!
-    var adminViewController: AdminViewController!
+    @objc var adminViewController: AdminViewController!
     var viewState = DashboardViewState()
     
     // ---------------------------------------------
     // MARK: - Initializers
     // ---------------------------------------------
     fileprivate static let defaultStoryboardName = "DashboardViewController"
-    static func new(_ storyboardName: String = defaultStoryboardName, session: Session) -> DashboardViewController {
+    @objc static func new(_ storyboardName: String = defaultStoryboardName, session: Session) -> DashboardViewController {
         guard let controller = UIStoryboard(name: storyboardName, bundle: Bundle(for: self)).instantiateInitialViewController() as? DashboardViewController else {
             fatalError("Initial ViewController is not of type DashboardViewController")
         }
@@ -140,7 +140,7 @@ class DashboardViewController: UIViewController {
         tabBar.barTintColor = UIColor.init(r: 254, g: 254, b: 254)
         view.backgroundColor = tabBar.barTintColor
         
-        if !UIAccessibilityIsReduceTransparencyEnabled() {
+        if !UIAccessibility.isReduceTransparencyEnabled {
             let colorScheme = ColorCoordinator.colorSchemeForParent()
             headerContainerView.backgroundColor = colorScheme.mainColor
             tabBar.tintColor = colorScheme.mainColor
@@ -177,14 +177,14 @@ class DashboardViewController: UIViewController {
     // MARK: - View Setup
     // ---------------------------------------------
     override var preferredStatusBarStyle : UIStatusBarStyle {
-        if UIAccessibilityIsReduceTransparencyEnabled() {
+        if UIAccessibility.isReduceTransparencyEnabled {
             return .default
         } else {
             return .lightContent
         }
     }
 
-    func setup() throws {
+    @objc func setup() throws {
         viewState.isSiteAdmin = session.isSiteAdmin
         studentCollection = try Student.observedStudentsCollection(session)
         studentCountObserver = try Student.countOfObservedStudentsObserver(session) { [weak self] count in
@@ -203,49 +203,77 @@ class DashboardViewController: UIViewController {
             self?.viewState.studentCount = count
             
             if (noMoreLinkedStudents) {
-                self?.retrieveStudentsCompleted()
+                DispatchQueue.main.async {
+                    self?.updateMainView()
+                }
             }
         }
         
+        canUserMasquerade()
         try retrieveStudents()
     }
     
-    func retrieveStudents() throws {
+    @objc func canUserMasquerade() {
+        if viewState.isSiteAdmin {
+            return
+        }
+        
+        var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
+        backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "become user permissions") { backgroundTask = UIBackgroundTaskIdentifier.invalid }
+        
+        APIBridge.shared().call("becomeUserPermissions", args: ["self"]) { [weak self] response, _ in
+            guard let data = response as? [String: Any], let canBecomeUser = data["become_user"] as? Bool, canBecomeUser == true else {
+                UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(backgroundTask.rawValue))
+                return
+            }
+            
+            self?.viewState.isSiteAdmin = true
+            
+            DispatchQueue.main.async {
+                self?.updateMainView()
+            }
+            
+            UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(backgroundTask.rawValue))
+        }
+    }
+    
+    @objc func retrieveStudents() throws {
         studentSyncProducer = try Student.observedStudentsSyncProducer(session)
         studentSyncProducer.startWithSignal { [weak self] (signal, disposable) in
             signal.observe({ (event) in
                 if let error = event.error, error.code == Student.Error.NoObserverEnrollments {
                     self?.viewState.isValidObserver = false
                 }
-                self?.retrieveStudentsCompleted()
+                self?.updateMainView()
                 disposable.dispose()
             })
         }
     }
     
-    func retrieveStudentsCompleted() {
-        guard viewState.isValidObserver && viewState.studentCount > 0 else {
+    
+    @objc func updateMainView() {
+        guard viewState.isSiteAdmin || viewState.isValidObserver else {
             return showNotAParentView()
         }
         
         self.studentInfoContainer.isHidden = false
         setupTabs()
-        
-        if(viewState.isSiteAdmin && viewState.studentCount == 0) {
+
+        if viewState.isSiteAdmin && viewState.studentCount == 0 {
             showSiteAdminViews()
         }
         
         displayDefaultStudent()
     }
     
-    func studentAtIndex(_ index: Int) -> Student? {
+    @objc func studentAtIndex(_ index: Int) -> Student? {
         guard index >= 0 else { return nil }
         guard let collection = studentCollection else { return nil }
         guard collection.numberOfItemsInSection(0) > index else { return nil }
         return collection[IndexPath(row: index, section: 0)]
     }
     
-    func setupTabs() {
+    @objc func setupTabs() {
         tabBar.delegate = self
         
         let coursesTitle = NSLocalizedString("Courses", comment: "Courses Tab")
@@ -271,45 +299,46 @@ class DashboardViewController: UIViewController {
         selectCoursesTab()
     }
     
-    func showSiteAdminViews() {
+    @objc func showSiteAdminViews() {
         studentInfoName.text = NSLocalizedString("Admin", comment: "Label displayed when logged in as an admin")
         studentInfoContainer.accessibilityLabel = studentInfoName.text
         studentInfoAvatar.isHidden = true
         let storyboard = UIStoryboard(name: "AdminViewController", bundle: nil)
-        adminViewController = storyboard.instantiateViewController(withIdentifier: "vc") as! AdminViewController
+        adminViewController = storyboard.instantiateViewController(withIdentifier: "vc") as? AdminViewController
         
-        adminViewController.actAsUserHandler = { [weak self] in
-            let masquerade = HelmViewController(moduleName: "/masquerade", props: [:])
-            self?.present(masquerade, animated: true, completion: nil)
+        adminViewController.actAsUserHandler = {
+            let navigatorOptions: [String: Any] = ["modal": true, "modalPresentationStyle": "formsheet", "showDismissButton": true, "embedInNavigationController": true]
+            HelmManager.shared.present("/masquerade", withProps: [:], options: navigatorOptions)
         }
         
         pageViewController?.setViewControllers([adminViewController], direction: .reverse, animated: false, completion: { _ in })
     }
     
-    func showNotAParentView() {
+    @objc func showNotAParentView() {
         let vc =  HelmViewController( moduleName: "/parent/notAParent", props: [:] )
         showViewController(vc)
     }
     
     //  MARK: - Helpers
-    func showViewController(_ viewController: UIViewController) {
-        viewController.willMove(toParentViewController: self)
-        addChildViewController(viewController)
+    @objc func showViewController(_ viewController: UIViewController) {
+        viewController.willMove(toParent: self)
+        addChild(viewController)
         view.addSubview(viewController.view)
-        viewController.didMove(toParentViewController: self)
+        viewController.didMove(toParent: self)
         viewController.view.pinToAllSidesOfSuperview()
     }
     
     // ---------------------------------------------
     // MARK: - Data Methods
     // ---------------------------------------------
-    func reloadObserveeData() {
+    @objc func reloadObserveeData() {
         var calendarStartDate: Date = Date()
         if let calendarVC = calendarViewController as? CalendarEventWeekPageViewController, let currentStart = calendarVC.currentStartDate {
             calendarStartDate = currentStart
         }
         
         coursesViewController = coursesViewController(session)
+        coursesViewController?.refresher?.refresh(false)
         calendarViewController = calendarViewController(session, startDate: calendarStartDate)
         alertsViewController = alertsViewController(session)
 
@@ -347,11 +376,11 @@ class DashboardViewController: UIViewController {
     // ---------------------------------------------
     // MARK: - ChildViewControllers
     // ---------------------------------------------
-    func initialViewController() -> UIViewController? {
+    @objc func initialViewController() -> UIViewController? {
         return coursesViewController
     }
     
-    func coursesViewController(_ session: Session) -> UIViewController? {
+    func coursesViewController(_ session: Session) -> CourseListViewController? {
         guard let currentStudent = currentStudent else {
             return nil
         }
@@ -363,7 +392,7 @@ class DashboardViewController: UIViewController {
         return coursesViewController
     }
     
-    func calendarViewController(_ session: Session, startDate: Date = Date()) -> UIViewController? {
+    @objc func calendarViewController(_ session: Session, startDate: Date = Date()) -> UIViewController? {
         guard let currentStudent = currentStudent else {
             return nil
         }
@@ -376,12 +405,12 @@ class DashboardViewController: UIViewController {
         return calendarWeekPageVC
     }
 
-    func alertsViewController(_ session: Session) -> UIViewController? {
+    @objc func alertsViewController(_ session: Session) -> UIViewController? {
         guard let currentStudent = currentStudent else { return nil }
         return try! AlertsListViewController(session: session, observeeID: currentStudent.id)
     }
     
-    func studentInfoTapped(gesture: UITapGestureRecognizer) {
+    @objc func studentInfoTapped(gesture: UITapGestureRecognizer) {
         guard let collection = studentCollection else { return }
         guard collection.numberOfItemsInSection(0) > 0 else { return }
         
@@ -406,7 +435,7 @@ class DashboardViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    func selectCoursesTab() {
+    @objc func selectCoursesTab() {
         tabBar.selectedItem = coursesTabItem
         
         guard let coursesViewController = coursesViewController else {
@@ -416,7 +445,7 @@ class DashboardViewController: UIViewController {
         self.pageViewController?.setViewControllers([coursesViewController], direction: .reverse, animated: false, completion: { _ in })
     }
     
-    func selectCalendarTab() {
+    @objc func selectCalendarTab() {
         tabBar.selectedItem = calendarTabItem
         
         guard let calendarViewController = calendarViewController else {
@@ -425,14 +454,14 @@ class DashboardViewController: UIViewController {
         
         // Because we're in the middle we have to figure out which direction to go
         let viewController = self.pageViewController?.viewControllers?[0]
-        var direction = UIPageViewControllerNavigationDirection.forward
+        var direction = UIPageViewController.NavigationDirection.forward
         if viewController == alertsViewController {
-            direction = UIPageViewControllerNavigationDirection.reverse
+            direction = UIPageViewController.NavigationDirection.reverse
         }
         self.pageViewController?.setViewControllers([calendarViewController], direction: direction, animated: false, completion: { _ in })
     }
     
-    func selectAlertsTab() {
+    @objc func selectAlertsTab() {
         tabBar.selectedItem = alertsTabItem
         
         guard let alertsViewController = alertsViewController else {
@@ -455,21 +484,23 @@ class DashboardViewController: UIViewController {
         // reload user dropdown?
     }
     
-    func displayDefaultStudent() {
+    @objc func displayDefaultStudent() {
         currentStudent = studentAtIndex(0)
     }
     
-    func updateStudentInfoView() {
-        guard let student = currentStudent else { return }
-        
-        studentInfoName.text = student.name
-        studentInfoContainer.accessibilityLabel = student.name
-        studentInfoAvatar.isHidden = false
-        
-        if let url = student.avatarURL {
-            studentInfoAvatar.accessibilityLabel = student.name
-            studentInfoAvatar.kf.setImage(with: url,
-                                 placeholder: DefaultAvatarCoordinator.defaultAvatarForStudent(student))
+    @objc func updateStudentInfoView() {
+        studentInfoName.text = currentStudent?.name
+        studentInfoAvatar.isHidden = currentStudent == nil
+        studentInfoDownArrow.isHidden = currentStudent == nil
+        if let student = currentStudent {
+            if let url = student.avatarURL {
+                studentInfoAvatar.kf.setImage(with: url,
+                                              placeholder: DefaultAvatarCoordinator.defaultAvatarForStudent(student))
+            }
+            studentInfoContainer.accessibilityLabel = String.localizedStringWithFormat(NSLocalizedString("Current student: %@, tap to switch students", comment: ""), student.name)
+            studentInfoContainer.accessibilityTraits = UIAccessibilityTraits.header
+        } else {
+            studentInfoContainer.isAccessibilityElement = false
         }
     }
 }
@@ -500,4 +531,9 @@ extension DashboardViewController : UIPageViewControllerDelegate {
         }
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIBackgroundTaskIdentifier(_ input: Int) -> UIBackgroundTaskIdentifier {
+	return UIBackgroundTaskIdentifier(rawValue: input)
 }

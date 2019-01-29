@@ -37,19 +37,19 @@ extension GradingPeriodItem {
 
 
 extension GradingPeriod {
-    static func collectionCacheKey(_ context: NSManagedObjectContext, courseID: String) -> String {
+    @objc static func collectionCacheKey(_ context: NSManagedObjectContext, courseID: String) -> String {
         return cacheKey(context, [courseID])
     }
 
-    public static func predicate(_ courseID: String) -> NSPredicate {
+    @objc public static func predicate(_ courseID: String) -> NSPredicate {
         return NSPredicate(format:"%K == %@", "courseID", courseID)
     }
 
-    internal static func predicate(_ courseID: String, notMatchingID id: String?) -> NSPredicate {
+    @objc internal static func predicate(_ courseID: String, notMatchingID id: String?) -> NSPredicate {
         return id.flatMap { NSPredicate(format: "%K == %@ && %K != %@", "courseID", courseID, "id", $0) } ?? NSPredicate(format: "%K == %@", "courseID", courseID)
     }
     
-    public static func gradingPeriodIDs(_ session: Session, courseID: String, excludingGradingPeriodID: String?) throws -> [String] {
+    @objc public static func gradingPeriodIDs(_ session: Session, courseID: String, excludingGradingPeriodID: String?) throws -> [String] {
         let context = try session.enrollmentManagedObjectContext()
         let fetch: NSFetchRequest<GradingPeriod> = context.fetch(predicate(courseID, notMatchingID: excludingGradingPeriodID))
         let invalidatedGradingPeriods: [GradingPeriod] = try context.findAll(fromFetchRequest: fetch)
@@ -111,15 +111,15 @@ extension GradingPeriod {
             collection.selectGradingPeriod(gradingPeriod: item)
         }
 
-        func cancel() {
+        @objc func cancel() {
             dismiss(animated: true, completion: nil)
         }
     }
     
     open class Header: NSObject, UITableViewDataSource, UITableViewDelegate {
         // Input
-        open let includeGradingPeriods: Bool
-        open weak var viewController: UIViewController?
+        @objc open let includeGradingPeriods: Bool
+        @objc open weak var viewController: UIViewController?
         open let grade: MutableProperty<String?>
         
         // Output
@@ -130,14 +130,14 @@ extension GradingPeriod {
             return ReactiveSwift.Property(initial: nil, then: gradingPeriodsList.collection.selectedGradingPeriod.producer.map { Optional($0) })
         }
 
-        open lazy var tableView: UITableView = {
+        @objc open lazy var tableView: UITableView = {
             let tableView = UITableView(frame: CGRect.zero, style: .plain)
             tableView.dataSource = self
             tableView.delegate = self
             tableView.isScrollEnabled = false
             tableView.tableFooterView = UIView(frame: CGRect.zero)
             tableView.estimatedRowHeight = 44.0
-            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
             return tableView
         }()
 
@@ -145,7 +145,7 @@ extension GradingPeriod {
         fileprivate let gradingPeriodsList: TableViewController
         fileprivate var disposable: Disposable?
 
-        var includeGrade: Bool {
+        @objc var includeGrade: Bool {
             return grade.value != nil
         }
 

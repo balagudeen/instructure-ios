@@ -34,12 +34,12 @@ public final class AssignmentGroup: NSManagedObject {
 
 
 extension AssignmentGroup: SynchronizedModel {
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("id")
         return NSPredicate(format: "%K == %@", "id", id)
     }
     
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         try id          = json.stringID("id")
         try name        = json <| "name"
         try position    = json <| "position"
@@ -51,7 +51,7 @@ extension AssignmentGroup: SynchronizedModel {
         assignments.forEach { $0.assignmentGroup = self }
     }
 
-    func updateAssignments(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc func updateAssignments(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         let gradingPeriodID: String? = try json.stringID("grading_period_id")
         let assignmentsJSON: [JSONObject] = (try json <| "assignments") ?? []
         let assignmentIDs: [String] = try assignmentsJSON.map { try $0.stringID("id") }

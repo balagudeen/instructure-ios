@@ -21,8 +21,8 @@ import Cartography
 
 
 class QuizIntroFooterView: UIView {
-    let pageControl = UIPageControl()
-    let takeButton = UIButton()
+    @objc let pageControl = UIPageControl()
+    @objc let takeButton = UIButton()
     fileprivate let takeabilityActivityIndicator = UIActivityIndicatorView()
     
     fileprivate var pageControlConstraintGroup = ConstraintGroup()
@@ -51,7 +51,7 @@ class QuizIntroFooterView: UIView {
 // MARK: Layout
 
 extension QuizIntroFooterView {
-    func setTakeButtonOnscreen(_ onscreen: Bool, animated: Bool) {
+    @objc func setTakeButtonOnscreen(_ onscreen: Bool, animated: Bool) {
         if onscreen {
             constrain(pageControl, visualEffectContainer.contentView, replace: pageControlConstraintGroup) { pageControl, contentView in
                 pageControl.centerY == contentView.bottom + 60
@@ -80,7 +80,7 @@ extension QuizIntroFooterView {
 // MARK: BackgroundView
 
 extension QuizIntroFooterView {
-    func prepareBackgroundView() {
+    @objc func prepareBackgroundView() {
         addSubview(visualEffectContainer)
         constrain(self, visualEffectContainer) { my, visualEffects in
             visualEffects.center == my.center
@@ -110,24 +110,24 @@ extension QuizIntroFooterView {
         switch takeability {
         case .notTakeable(let reason):
             if reason == .undecided {
-                takeButton.setImage(nil, for: UIControlState())
-                takeButton.setTitle("", for: UIControlState())
+                takeButton.setImage(nil, for: UIControl.State())
+                takeButton.setTitle("", for: UIControl.State())
                 
                 takeabilityActivityIndicator.isHidden = false
                 takeabilityActivityIndicator.startAnimating()
             } else {
                 let lockImage = UIImage(named: "quiz-lock", in: Bundle(for: QuizIntroViewController.self), compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
                 takeButton.imageView?.tintColor = UIColor.white
-                takeButton.setImage(lockImage, for: UIControlState())
-                takeButton.setTitle(nil, for: UIControlState())
+                takeButton.setImage(lockImage, for: UIControl.State())
+                takeButton.setTitle(nil, for: UIControl.State())
                 
                 takeabilityActivityIndicator.stopAnimating()
                 takeabilityActivityIndicator.isHidden = true
             }
             
         default:
-            takeButton.setImage(nil, for: UIControlState())
-            takeButton.setTitle(takeability.label, for: UIControlState())
+            takeButton.setImage(nil, for: UIControl.State())
+            takeButton.setTitle(takeability.label, for: UIControl.State())
             
             takeabilityActivityIndicator.stopAnimating()
             takeabilityActivityIndicator.isHidden = true

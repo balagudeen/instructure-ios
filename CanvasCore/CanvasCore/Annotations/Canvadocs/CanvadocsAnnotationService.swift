@@ -23,6 +23,7 @@ struct CanvadocsFileMetadata {
     let pdfDownloadURL: URL
     let annotationMetadata: CanvadocsAnnotationMetadata
     let pandaPush: PandaPushMetadata?
+    let rotations: [String: UInt]
 }
 
 struct CanvadocsAnnotationMetadata {
@@ -61,7 +62,7 @@ typealias DeleteAnnotationResult = Result<Bool, NSError>
 
 class CanvadocsAnnotationService: NSObject {
 
-    let sessionURL: URL
+    @objc let sessionURL: URL
     fileprivate let baseURLString: String
     fileprivate let sessionID: String
     
@@ -69,7 +70,7 @@ class CanvadocsAnnotationService: NSObject {
     
     fileprivate let clientId: String
     
-    static let ISO8601MillisecondFormatter: DateFormatter = {
+    @objc static let ISO8601MillisecondFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
@@ -78,7 +79,7 @@ class CanvadocsAnnotationService: NSObject {
         return formatter
     }()
     
-    init(sessionURL: URL) {
+    @objc init(sessionURL: URL) {
         self.sessionURL = sessionURL
         self.sessionID = sessionURL.lastPathComponent
         if let components = URLComponents(url: sessionURL, resolvingAgainstBaseURL: false), let scheme = components.scheme, let host = components.host {
@@ -102,7 +103,7 @@ class CanvadocsAnnotationService: NSObject {
         }
         return path
     }
-    
+
     fileprivate func sessionBasedPDFFilename() -> String {
         let url = self.sessionURL.absoluteString
         let endIndex = url.index(url.endIndex, offsetBy: -12)
@@ -157,9 +158,15 @@ class CanvadocsAnnotationService: NSObject {
                         pandaPushMetadata = PandaPushMetadata(host: host, annotationsChannel: annotationsChannel, annotationsToken: annotationsToken)
                     }
                 }
-                
-                if let pdfDownloadURLStr = urls["pdf_download"] as? String, let pdfDownloadURL = URL(string: (self.baseURLString+self.removeLeadingSlash(pdfDownloadURLStr))), let annotationMetadata = annotationMetadata {
-                    let metadata = CanvadocsFileMetadata(pdfDownloadURL: pdfDownloadURL, annotationMetadata: annotationMetadata, pandaPush: pandaPushMetadata)
+
+                let rotations = json["rotations"] as? [String: UInt] ?? [:]
+                if let pdfDownloadURLStr = urls["pdf_download"] as? String,
+                    let pdfDownloadURL = URL(string: (self.baseURLString+self.removeLeadingSlash(pdfDownloadURLStr))),
+                    let annotationMetadata = annotationMetadata {
+                    let metadata = CanvadocsFileMetadata(pdfDownloadURL: pdfDownloadURL,
+                                                         annotationMetadata: annotationMetadata,
+                                                         pandaPush: pandaPushMetadata,
+                                                         rotations: rotations)
                     completed(.success(metadata))
                 } else {
                     completed(.failure(genericError))

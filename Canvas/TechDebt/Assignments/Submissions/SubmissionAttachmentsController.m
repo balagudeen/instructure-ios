@@ -76,7 +76,7 @@
     if (section == 0) {
         return nil;
     }
-    return NSLocalizedString(@"Current Submission", @"Header for a section showing submitted filenames");
+    return NSLocalizedStringFromTableInBundle(@"Current Submission", nil, [NSBundle bundleForClass:self.class], @"Header for a section showing submitted filenames");
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -115,7 +115,7 @@
     }
     
     if (indexPath.section == 0) {
-        cell.textLabel.text = NSLocalizedString(@"Re-submit Assignment", @"Title for a button allowing user to re-submit files for an assignment");
+        cell.textLabel.text = NSLocalizedStringFromTableInBundle(@"Re-submit Assignment", nil, [NSBundle bundleForClass:self.class], @"Title for a button allowing user to re-submit files for an assignment");
     }
     else {   
         // Configure the cell...

@@ -16,6 +16,7 @@
 
 /* eslint-disable flowtype/require-valid-file-annotation */
 
+import { shallow } from 'enzyme'
 import 'react-native'
 import React from 'react'
 import * as courseTemplate from '../../../../__templates__/course'
@@ -112,4 +113,23 @@ it('renders with a grade even if the grade does not exist', () => {
       <CourseCard {...defaultProps} course={course} showGrade={true} />
     ).toJSON()
   ).toMatchSnapshot()
+})
+
+it('shows lock icon for grade if needed', () => {
+  let course = courseTemplate.course({
+    enrollments: [{
+      enrollment_state: 'active',
+      role: 'StudentEnrollment',
+      role_id: '1',
+      type: 'student',
+      user_id: '1',
+      has_grading_periods: true,
+      totals_for_all_grading_periods_option: false,
+      current_grading_period_id: null,
+    }],
+  })
+  const tree = shallow(<CourseCard {...defaultProps} course={course} showGrade />)
+  expect(tree.find('[testID="course-1-grades-locked"]').prop('source')).toEqual({
+    uri: 'lockSolid',
+  })
 })

@@ -52,6 +52,12 @@ export const submissionProps: Array<SubmissionDataProps> = [
     grade: 'B+',
     userID: '6',
   }),
+  tsubmissionProps({
+    name: 'S7',
+    status: 'none',
+    grade: 'not_submitted',
+    userID: '7',
+  }),
 ]
 
 test('submissions', () => {
@@ -64,6 +70,9 @@ test('submissions', () => {
     // user in two sections or as a TA & Student
     '5': t.enrollment({ id: '5', user_id: '4', user: t.user({ id: '4', name: 'S4', sortable_name: 'S4' }) }),
     '6': t.enrollment({ id: '6', user_id: '6', user: t.user({ id: '6', name: 'S6', sortable_name: 'S6' }) }),
+    // user in two sections where one is inactive
+    '7': t.enrollment({ id: '7', user_id: '7', enrollment_state: 'inactive', course_section_id: '2', user: t.user({ id: '7', name: 'S7', sortable_name: 'S7' }) }),
+    '8': t.enrollment({ id: '8', user_id: '7', user: t.user({ id: '7', name: 'S7', sortable_name: 'S7' }) }),
   }
 
   const submissions: SubmissionsState = {
@@ -140,7 +149,7 @@ test('submissions', () => {
   }
 
   const enrRefs = { pending: 0,
-    refs: ['0', '1', '2', '3', '4', '6'],
+    refs: ['0', '1', '2', '3', '4', '6', '7', '8'],
   }
 
   const courses = {

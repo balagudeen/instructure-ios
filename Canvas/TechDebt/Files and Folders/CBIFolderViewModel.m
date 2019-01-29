@@ -100,24 +100,26 @@
 }
 
 - (void)addButtonTouched:(UIBarButtonItem *)button {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     actionSheet.popoverPresentationController.barButtonItem = button;
-    [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add a folder", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Add a folder", nil, bundle, nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self addFolder];
     }]];
-    [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Upload a file", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Upload a file", nil, bundle, nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self addFile];
     }]];
-    [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", "Cancel button title") style:UIAlertActionStyleCancel handler:nil]];
+    [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, "Cancel button title") style:UIAlertActionStyleCancel handler:nil]];
     [self.viewController presentViewController:actionSheet animated:YES completion:nil];
 }
 
 - (void)addFolder {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"New Folder", nil) message:NSLocalizedString(@"Choose a name for the new folder", nil) preferredStyle:UIAlertControllerStyleAlert];
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTableInBundle(@"New Folder", nil, bundle, nil) message:NSLocalizedStringFromTableInBundle(@"Choose a name for the new folder", nil, bundle, nil) preferredStyle:UIAlertControllerStyleAlert];
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = NSLocalizedString(@"Enter folder name", nil);
+        textField.placeholder = NSLocalizedStringFromTableInBundle(@"Enter folder name", nil, bundle, nil);
     }];
-    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Create Folder", "Cancel button title") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Create Folder", nil, bundle, "Cancel button title") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         CKIFolder *folder = [CKIFolder new];
         folder.name = alert.textFields.firstObject.text;
         [[[CKIClient currentClient] createFolder:folder InFolder:self.model] subscribeNext:^(CKIFolder *newFolder) {
@@ -128,14 +130,14 @@
             [self.collectionController insertObjects:@[folderViewModel]];
         }];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", "Cancel button title") style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, "Cancel button title") style:UIAlertActionStyleCancel handler:nil]];
     [self.viewController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)addFile {
     ReceivedFilesViewController *filesController = [ReceivedFilesViewController presentReceivedFilesViewControllerFrom:self.viewController];
     @weakify(filesController);
-    filesController.submitButtonTitle = NSLocalizedString(@"Upload", @"Button title for uploading a file");
+    filesController.submitButtonTitle = NSLocalizedStringFromTableInBundle(@"Upload", nil, [NSBundle bundleForClass:self.class], @"Button title for uploading a file");
     filesController.onSubmitBlock = ^(NSArray *urls) {
         @strongify(filesController);
         [filesController dismissViewControllerAnimated:YES completion:^{
@@ -195,7 +197,7 @@
     [deleteSignal subscribeError:^(NSError *error) {
         @strongify(self);
         [tableViewController.viewModel.collectionController insertObjects:@[self]];
-        [UIAlertController showAlertWithTitle:NSLocalizedString(@"Error deleting folder", @"Error deleting folder alert view title") message:error.localizedDescription];
+        [UIAlertController showAlertWithTitle:NSLocalizedStringFromTableInBundle(@"Error deleting folder", nil, [NSBundle bundleForClass:self.class], @"Error deleting folder alert view title") message:error.localizedDescription];
     }];
 }
 

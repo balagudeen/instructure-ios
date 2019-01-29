@@ -1,9 +1,3 @@
-/* (No Comment) */
-"CFBundleDisplayName" = "Ariki Matua";
-
-/* (No Comment) */
-"CFBundleName" = "${PRODUCT_NAME}";
-
-/* (No Comment) */
-"CFBundleShortVersionString" = "1.0";
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Āwhina mai ia mātou ki te kimi i ngā kura e tata ana ki a koe.";
 

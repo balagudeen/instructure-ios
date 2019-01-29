@@ -1,15 +1,6 @@
 /* Description for rubric criterion rating object */
 " Rating for %@, Score: %g" = " Rating for %1$@, Score: %2$g";
 
-/* Gigabytes */
-"%0.2f GB" = "%0.2f GB";
-
-/* Kilobytes */
-"%0.2f KB" = "%0.2f KB";
-
-/* Megabytes */
-"%0.2f MB" = "%0.2f MB";
-
 /* B- (83 out of 100 points */
 "%@ (%g out of %@)" = "%1$@ (%2$g out of %3$@)";
 
@@ -22,11 +13,20 @@
 /* {point range max} to > {point range min} pts */
 "%@ to > %@ pts" = "%1$@ to > %2$@ pts";
 
+/* Word and ellipses */
+"%@..." = "%@...";
+
 /* 83% (83 out of 100 points */
 "%@%% (%g out of %@)" = "%1$@%% (%2$g out of %3$@)";
 
-/* Word and ellipses */
-"%@..." = "%@...";
+/* Gigabytes */
+"%0.2f GB" = "%0.2f GB";
+
+/* Kilobytes */
+"%0.2f KB" = "%0.2f KB";
+
+/* Megabytes */
+"%0.2f MB" = "%0.2f MB";
 
 /* 88 out of 100 points */
 "%g out of %@" = "%1$g out of %2$@";
@@ -49,6 +49,9 @@
 /* No comment provided by engineer. */
 "Done" = "Done";
 
+/* No comment provided by engineer. */
+"Excused" = "Excused";
+
 /* The file extension for a submission is not acceptable */
 "File extension not allowed: %@" = "File extension not allowed: %@";
 
@@ -64,11 +67,11 @@
 /* No comment provided by engineer. */
 "Me" = "Me";
 
-/* No comment provided by engineer. */
-"Media Comment" = "Media Comment";
-
 /* The name for a video or audio response to something */
 "Media comment" = "Media comment";
+
+/* No comment provided by engineer. */
+"Media Comment" = "Media Comment";
 
 /* A slider to choose between media types */
 "Media type selector. %@" = "Media type selector. %@";
@@ -87,6 +90,15 @@
 
 /* Short name for observer enrollment */
 "Observer" = "Observer";
+
+/* Accessibility label for out or grading style */
+"out of" = "out of";
+
+/* The assignment is out of 100 points */
+"out of %@" = "out of %@";
+
+/* No comment provided by engineer. */
+"out of %@ points" = "out of %@ points";
 
 /* A button that plays */
 "Play" = "Play";
@@ -145,6 +157,9 @@
 /* Error description when a user tries to upload a file that's too big */
 "The file you are trying to uploading is %@, but the maximum size is %@." = "The file you are trying to upload is %1$@, but the maximum size is %2$@.";
 
+/* When we don't know the name of a file, we display this */
+"unknown" = "unknown";
+
 /* Media type is video */
 "Video" = "Video";
 
@@ -153,16 +168,4 @@
 
 /* No comment provided by engineer. */
 "Warning" = "Warning";
-
-/* Accessibility label for out or grading style */
-"out of" = "out of";
-
-/* The assignment is out of 100 points */
-"out of %@" = "out of %@";
-
-/* No comment provided by engineer. */
-"out of %@ points" = "out of %@ points";
-
-/* When we don't know the name of a file, we display this */
-"unknown" = "unknown";
 

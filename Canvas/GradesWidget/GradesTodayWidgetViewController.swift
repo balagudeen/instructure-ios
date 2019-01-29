@@ -105,7 +105,7 @@ class GradesTodayWidgetViewController: UIViewController {
         tableView.delegate = self
         tableView.showsVerticalScrollIndicator = false
         tableView.estimatedRowHeight = COURSE_ROW_HEIGHT
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView(frame: .zero)
 
         // Cells
@@ -136,13 +136,13 @@ class GradesTodayWidgetViewController: UIViewController {
         view.addSubview(tableView)
         view.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "V:|[tableView]|",
-            options: NSLayoutFormatOptions(rawValue: 0),
+            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: nil,
             views: ["tableView": tableView])
         )
         view.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:|[tableView]|",
-            options: NSLayoutFormatOptions(rawValue: 0),
+            options: NSLayoutConstraint.FormatOptions(rawValue: 0),
             metrics: nil,
             views: ["tableView": tableView])
         )

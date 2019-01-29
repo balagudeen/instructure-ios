@@ -23,7 +23,7 @@ import CoreData
 import ReactiveSwift
 
 extension User {
-    public static func predicate(_ observeeID: String) -> NSPredicate {
+    @objc public static func predicate(_ observeeID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "id", observeeID)
     }
 

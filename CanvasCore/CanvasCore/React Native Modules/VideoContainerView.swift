@@ -38,11 +38,14 @@ public class VideoContainerView: UIView {
     }
     public required init?(coder aDecoder: NSCoder) { fatalError("nope") }
     
-    weak var player: AVPlayerViewController?
+    @objc weak var player: AVPlayerViewController?
     
     @objc
     var source: Dictionary<String, Any> = [:] {
         didSet {
+            if let url = itemURL {
+                player?.player?.replaceCurrentItem(with: AVPlayerItem(url: url))
+            }
             setNeedsLayout()
         }
     }
@@ -65,7 +68,7 @@ public class VideoContainerView: UIView {
         }
     }
 
-    var itemURL: URL? {
+    @objc var itemURL: URL? {
         guard let uri = source["uri"] as? String else { return nil }
         if uri.hasPrefix("file://") {
             let path = uri.substring(from: uri.index(uri.startIndex, offsetBy: 7))
@@ -74,7 +77,7 @@ public class VideoContainerView: UIView {
         return URL(string: uri)
     }
     
-    func embedPlayer() {
+    @objc func embedPlayer() {
         guard
             let parentVC = parentViewController,
             let itemURL = itemURL else {
@@ -82,10 +85,10 @@ public class VideoContainerView: UIView {
         }
         let player = AVPlayerViewController()
         player.player = AVPlayer(url: itemURL)
-        parentVC.addChildViewController(player)
+        parentVC.addChild(player)
         addSubview(player.view)
         player.view.frame = bounds
-        player.didMove(toParentViewController: parentVC)
+        player.didMove(toParent: parentVC)
         self.player = player
     }
     

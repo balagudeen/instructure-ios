@@ -21,7 +21,7 @@ import Kingfisher
 let masqueradeColor = UIColor.colorFromHexString("#BE32A3")!
 
 public class MasqueradableWindow: UIWindow {
-    lazy var overlay: MasqueradeOverlay = {
+    @objc lazy var overlay: MasqueradeOverlay = {
         let view = MasqueradeOverlay(frame: self.bounds)
         view.backgroundColor = .clear
         view.layer.borderColor = masqueradeColor.cgColor
@@ -33,7 +33,7 @@ public class MasqueradableWindow: UIWindow {
     override public func layoutSubviews() {
         super.layoutSubviews()
         overlay.frame = self.bounds
-        self.bringSubview(toFront: overlay)
+        self.bringSubviewToFront(overlay)
         self.overlay.setNeedsLayout()
     }
     
@@ -77,7 +77,7 @@ public class MasqueradableWindow: UIWindow {
 
 class MasqueradeOverlay: UIView {
     
-    lazy var button: UIButton = {
+    @objc lazy var button: UIButton = {
         let button = UIButton(type: .custom)
         button.addTarget(self, action: #selector(endMasquerade), for: .touchUpInside)
         button.backgroundColor = .white
@@ -86,7 +86,7 @@ class MasqueradeOverlay: UIView {
         return button
     }()
     
-    lazy var buttonContainer: UIView = {
+    @objc lazy var buttonContainer: UIView = {
         let view = UIView()
         view.backgroundColor = masqueradeColor
         view.layer.cornerRadius = 48 / 2
@@ -130,7 +130,7 @@ class MasqueradeOverlay: UIView {
         }
     }
     
-    func beginMasquerade() {
+    @objc func beginMasquerade() {
         let placeholderImage = UIImage(named: "icon_user", in: .core, compatibleWith: nil)
         if let avatarURL = CanvasKeymaster.the().currentClient?.currentUser?.avatarURL {
             button.kf.setImage(with: avatarURL, for: .normal, placeholder: placeholderImage)
@@ -139,7 +139,7 @@ class MasqueradeOverlay: UIView {
         }
     }
     
-    func endMasquerade() {
+    @objc func endMasquerade() {
         guard let viewController = UIApplication.shared.delegate?.topViewController else { return }
         var message = NSLocalizedString("You will stop acting as this user and return to your account.", tableName: nil, bundle: .core, value: "You will stop acting as this user and return to your account.", comment: "")
         if let name = CanvasKeymaster.the().currentClient?.currentUser?.name {

@@ -13,8 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-    
-    
 
 #import <QuartzCore/QuartzCore.h>
 #import <CanvasKit1/CanvasKit1.h>
@@ -31,7 +29,6 @@ typedef NS_ENUM(NSInteger, AboutSections) {
 };
 
 typedef NS_ENUM(NSInteger, LegalRows) {
-    EULARow,
     PrivacyRow,
     TermsRow,
     OpenSourceRow
@@ -44,7 +41,6 @@ typedef NS_ENUM(NSInteger, LegalRows) {
 @property (strong, nonatomic) IBOutlet UILabel *loginIDLabel;
 @property (strong, nonatomic) IBOutlet UILabel *domainLabel;
 @property (strong, nonatomic) IBOutlet UILabel *subscribeCalendarLabel;
-@property (strong, nonatomic) IBOutlet UILabel *EULALabel;
 @property (strong, nonatomic) IBOutlet UILabel *privacyPolicyLabel;
 @property (strong, nonatomic) IBOutlet UILabel *termsOfUseLabel;
 @property (strong, nonatomic) IBOutlet UILabel *openSourceLabel;
@@ -83,21 +79,23 @@ typedef NS_ENUM(NSInteger, LegalRows) {
     self.versionLabel.text = versionString;
     
     self.versionNameLabel.text = bundleInfo[@"VersionName"];
-    self.title = NSLocalizedString(@"About", @"Name of a tab displaying Canvas Info including legal info");
+
+    NSBundle *techDebtBundle = [NSBundle bundleForClass:AboutViewController.self];
+    self.title = NSLocalizedStringFromTableInBundle(@"About", nil, techDebtBundle, @"Name of a tab displaying Canvas Info including legal info");
     self.user = self.canvasAPI.user;
     [self localizeLabels];
 }
 
 - (void)localizeLabels {
-    [self.nameLabel setText:NSLocalizedString(@"Name", @"the users name")];
-    [self.emailLabel setText:NSLocalizedString(@"Email", @"the users email")];
-    [self.loginIDLabel setText:NSLocalizedString(@"Login ID", @"Typically the email address correlated to the user")];
-    [self.domainLabel setText:NSLocalizedString(@"Domain", @"The domain for the institution/school that the user is currently using")];
-    [self.EULALabel setText:NSLocalizedString(@"EULA", @"Link to the End User License Agreement document")];
-    [self.privacyPolicyLabel setText:NSLocalizedString(@"Privacy Policy", @"Link to the privacy policy")];
-    [self.termsOfUseLabel setText:NSLocalizedString(@"Terms of Use", @"Link to the Terms of Use")];
-    [self.openSourceLabel setText:NSLocalizedString(@"Open Source Components", @"Link to Open Source Components")];
-    [self.subscribeCalendarLabel setText:NSLocalizedString(@"Subscribe to calendar feed", @"Subscribe to calendar feed allows the user to export their calendar events to a 3rd party calendar")];
+    NSBundle *bundle = [NSBundle bundleForClass:AboutViewController.self];
+    [self.nameLabel setText:NSLocalizedStringFromTableInBundle(@"Name", nil, bundle, @"the users name")];
+    [self.emailLabel setText:NSLocalizedStringFromTableInBundle(@"Email", nil, bundle, @"the users email")];
+    [self.loginIDLabel setText:NSLocalizedStringFromTableInBundle(@"Login ID", nil, bundle, @"Typically the email address correlated to the user")];
+    [self.domainLabel setText:NSLocalizedStringFromTableInBundle(@"Domain", nil, bundle, @"The domain for the institution/school that the user is currently using")];
+    [self.privacyPolicyLabel setText:NSLocalizedStringFromTableInBundle(@"Privacy Policy", nil, bundle, @"Link to the privacy policy")];
+    [self.termsOfUseLabel setText:NSLocalizedStringFromTableInBundle(@"Terms of Use", nil, bundle, @"Link to the Terms of Use")];
+    [self.openSourceLabel setText:NSLocalizedStringFromTableInBundle(@"Open Source Components", nil, bundle, @"Link to Open Source Components")];
+    [self.subscribeCalendarLabel setText:NSLocalizedStringFromTableInBundle(@"Subscribe to calendar feed", nil, bundle, @"Subscribe to calendar feed allows the user to export their calendar events to a 3rd party calendar")];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -159,12 +157,13 @@ typedef NS_ENUM(NSInteger, LegalRows) {
 #pragma mark - Table view delegate
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     switch (section) {
         case InfoSection:
-            return NSLocalizedString(@"User Info", @"Title for User Info section on the about page");
+            return NSLocalizedStringFromTableInBundle(@"User Info", nil, bundle, @"Title for User Info section on the about page");
             break;
         case LegalSection:
-            return NSLocalizedString(@"Legal", @"Title for legal section on the about page");
+            return NSLocalizedStringFromTableInBundle(@"Legal", nil, bundle, @"Title for legal section on the about page");
             break;
         default:
             break;
@@ -212,19 +211,14 @@ typedef NS_ENUM(NSInteger, LegalRows) {
     if (section == SubscribeSection) {
         return nil;
     }
-    
-    CGFloat headerViewWidth = tableView.bounds.size.width;
-    
-    // Grouped table view cells don't span the entire width of the table view
-    // so the header should also not span the entire width, but should span
-    // as far as the cell width
-    CGFloat headerWidth = 302;
+
+    CGFloat headerWidth = tableView.bounds.size.width;
     CGFloat headerHeight = 38;
     
-    UIView * header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerViewWidth, headerHeight)];
+    UIView * header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, headerHeight)];
     [header setBackgroundColor:[UIColor clearColor]];
     
-    UIView *backgroundColorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerViewWidth, headerHeight)];
+    UIView *backgroundColorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, headerWidth, headerHeight)];
     [header addSubview:backgroundColorView];
     
     // Prepare label
@@ -263,10 +257,7 @@ typedef NS_ENUM(NSInteger, LegalRows) {
                                                                                           @"embedInNavigationController": @YES
                                                                                           } callback:nil];
         }
-        
-        if (indexPath.row == EULARow) {
-            urlAddress = @"https://www.canvaslms.com/policies/end-user-license-agreement";
-        }
+
         if (indexPath.row == PrivacyRow) {
             urlAddress = @"https://www.instructure.com/policies/privacy/";
         }

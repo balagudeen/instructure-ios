@@ -94,6 +94,7 @@ extension SubmissionQuestionsController {
             }
             
             questions.append(contentsOf: newQuestions)
+            questions.sort(by: { $0.question.position < $1.question.position })
             questionUpdates(Result(value: updates))
 
             // exhaust pagination

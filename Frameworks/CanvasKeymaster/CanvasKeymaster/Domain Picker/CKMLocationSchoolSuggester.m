@@ -41,7 +41,16 @@ static CKMLocationSchoolSuggester* _sharedInstance = nil;
             return [RACSignal empty];
         }];
         self.availableSchools = [NSMutableSet new];
-        [self loadSchools];
+
+        @weakify(self);
+        [RACObserve(self, schoolSearchString) subscribeNext:^(id  _Nullable x) {
+            @strongify(self);
+            self.fetching = YES;
+        }];
+        [self.suggestionsSignal subscribeNext:^(id  _Nullable x) {
+            @strongify(self);
+            self.fetching = NO;
+        }];
     }
     return self;
 }
@@ -55,80 +64,18 @@ static CKMLocationSchoolSuggester* _sharedInstance = nil;
     return _sharedInstance;
 }
     
-- (void)loadSchools {
-    self.fetching = YES;
-
-    // fetch the schools and when we're done, check to see if cache is expired.  Then download the new file for next time
-    @weakify(self);
-    [[CKIClient fetchAccountDomains] subscribeNext:^(NSArray *accountDomains) {
-        @strongify(self);
-        [self.availableSchools addObjectsFromArray:accountDomains];
-        self.schoolSearchString = [self.schoolSearchString copy];
-    } error:^(NSError *error) {
-        self.fetching = NO;
-    } completed:^{
-        self.fetching = NO;
-        // Nothing to do here.  Searching will happen as soon as results start returning
-    }];
-}
-
-- (void)fetchSchools {
-    if (!self.fetching) {
-        [self loadSchools];
-    }
-}
-    
 - (RACSignal *)suggestionsSignal
 {
-    return [RACSignal combineLatest:@[RACObserve(self, schoolSearchString), RACObserve(self, currentLocation) ] reduce:^id(NSString *schoolSearchString, CLLocation *currentLocation) {
-        if (!schoolSearchString || schoolSearchString.length == 0) {
-            // if location is not available sort by name
-            if (!currentLocation) {
-                // if location is not available sort based on name
-                return [self availableSchoolsSortedByName];
-            } else {
-                // if location is available sort based on location
-                return  [self availableSchoolsSortedByCurrentLocation:currentLocation];
-            }
+    return [[RACObserve(self, schoolSearchString) map:^id(NSString *query) {
+        if (!query || query.length == 0) {
+            return [RACSignal return:@[]];
         }
-        
-        NSMutableArray *availableSchools = [NSMutableArray arrayWithArray:[[self.availableSchools.rac_sequence filter:^BOOL(CKIAccountDomain *school) {
-            NSRange nameRange = [school.name rangeOfString:schoolSearchString options:NSCaseInsensitiveSearch];
-            NSRange domainRange = [school.domain rangeOfString:schoolSearchString options:NSCaseInsensitiveSearch];
-            return (nameRange.location != NSNotFound) || (domainRange.location != NSNotFound);
-        }] array]];
-        
-        [availableSchools addObject:[CKIAccountDomain cantFindSchool]];
-        
-        // if we have a search string, search based on the search string
-        return availableSchools;
-    }];
-}
-
-- (NSArray *)availableSchoolsSortedByName {
-    NSMutableArray *availableSchools = [NSMutableArray arrayWithArray:[[self.availableSchools.rac_sequence filter:^BOOL(CKIAccountDomain *school) {
-        return school.distance && [school.distance floatValue] < CKMDistanceThreshold;
-    }] array]];
-    [availableSchools sortUsingComparator:^NSComparisonResult(CKIAccountDomain *school1, CKIAccountDomain *school2) {
-        return [school1.name compare:school2.name];
-    }];
-    
-    [self addStandardDomainsToArray:availableSchools];
-    
-    return availableSchools;
-}
-
-- (NSArray *)availableSchoolsSortedByCurrentLocation:(CLLocation *)currentLocation {
-    NSMutableArray *availableSchools = [NSMutableArray arrayWithArray:[[self.availableSchools.rac_sequence filter:^BOOL(CKIAccountDomain *school) {
-        return school.distance && [school.distance floatValue] < CKMDistanceThreshold;
-    }] array]];
-    [availableSchools sortUsingComparator:^NSComparisonResult(CKIAccountDomain *school1, CKIAccountDomain *school2) {
-        return [school1.distance compare:school2.distance];
-    }];
-    
-    [self addStandardDomainsToArray:availableSchools];
-    
-    return availableSchools;
+        return [[CKIClient fetchAccountDomains:query] map:^id(NSArray *accountDomains) {
+            NSMutableArray *schools = [NSMutableArray arrayWithArray:accountDomains];
+            [schools addObject:[CKIAccountDomain cantFindSchool]];
+            return schools;
+        }];
+    }] switchToLatest];
 }
 
 - (void)addStandardDomainsToArray:(NSMutableArray *)array {

@@ -19,7 +19,7 @@
 import Foundation
 
 extension UIViewController {
-    func showSimpleAlert(_ title: String, message: String, actionText: String) {
+    @objc func showSimpleAlert(_ title: String, message: String, actionText: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let alertAction = UIAlertAction(title: actionText, style: .default, handler: nil)

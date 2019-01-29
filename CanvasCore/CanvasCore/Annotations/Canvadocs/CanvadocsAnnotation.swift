@@ -24,7 +24,7 @@ fileprivate var annotationDeletedByKey: UInt8 = 0
 fileprivate var annotationDeletedByIDKey: UInt8 = 0
 
 extension PSPDFAnnotation {
-    var userName: String? {
+    @objc var userName: String? {
         get {
             return objc_getAssociatedObject(self, &annotationUserNameKey) as? String
         }
@@ -32,7 +32,7 @@ extension PSPDFAnnotation {
             objc_setAssociatedObject(self, &annotationUserNameKey, newValue, .OBJC_ASSOCIATION_COPY)
         }
     }
-    var deletedAt: Date? {
+    @objc var deletedAt: Date? {
         get {
             return objc_getAssociatedObject(self, &annotationDeletedAtKey) as? Date
         }
@@ -40,7 +40,7 @@ extension PSPDFAnnotation {
             objc_setAssociatedObject(self, &annotationDeletedAtKey, newValue, .OBJC_ASSOCIATION_RETAIN)
         }
     }
-    var deletedBy: String? {
+    @objc var deletedBy: String? {
         get {
             return objc_getAssociatedObject(self, &annotationDeletedByKey) as? String
         }
@@ -48,7 +48,7 @@ extension PSPDFAnnotation {
             objc_setAssociatedObject(self, &annotationDeletedByKey, newValue, .OBJC_ASSOCIATION_COPY)
         }
     }
-    var deletedByID: String? {
+    @objc var deletedByID: String? {
         get {
             return objc_getAssociatedObject(self, &annotationDeletedByIDKey) as? String
         }
@@ -166,9 +166,9 @@ struct CanvadocsAnnotation: Codable {
             self.type = .strikeout(color: color, boundingBoxes: boxes, rect: rect)
         case "freetext":
             let fontInfoStr = try container.decodeIfPresent(String.self, forKey: .font)
-            let sizeStr = fontInfoStr?.matches(for: "^[^\\d]*(\\d+)").first ?? "12"
-            let family = fontInfoStr?.matches(for: "\\b(\\w+)$").first ?? "Helvetica"
-            let size = Int(sizeStr) ?? 12
+            let sizeStr = fontInfoStr?.matches(for: "^[^\\d]*(\\d+)").first ?? "14"
+            let family = fontInfoStr?.matches(for: "\\b(\\w+)$").first ?? "Verdana"
+            let size = Int(sizeStr) ?? 14
             let text = try container.decodeIfPresent(String.self, forKey: .contents)
             let color = try container.decodeIfPresent(String.self, forKey: .color) ?? "#000000"
             let rect = try CanvadocsAnnotation.decodeRect(with: decoder, in: container)
@@ -345,8 +345,6 @@ struct CanvadocsAnnotation: Codable {
         var pspdfAnnotation: PSPDFAnnotation?
         switch self.type {
         case .highlight(let color, let boundingBoxes, let rect), .strikeout(let color, let boundingBoxes, let rect):
-            guard let pageInfo = document.pageInfoForPage(at: page) else { return nil }
-            
             switch self.type {
             case .highlight:
                 pspdfAnnotation = PSPDFHighlightAnnotation()
@@ -356,7 +354,6 @@ struct CanvadocsAnnotation: Codable {
                 break // should never get here
             }
 
-            pspdfAnnotation?.rotation = pageInfo.rotation
             pspdfAnnotation?.pageIndex = page
             pspdfAnnotation?.rects = boundingBoxes.map { NSValue(cgRect: $0) }
             pspdfAnnotation?.boundingBox = rect

@@ -22,14 +22,14 @@ import Kingfisher
 
 // this is in `AuthKit` so the `Session` can have a `currentUser`
 open class SessionUser: NSObject {
-    open let id: String
-    open let loginID: String?
-    open let name: String
-    open let sortableName: String?
-    open let email: String?
-    open let avatarURL: URL?
+    @objc open let id: String
+    @objc open let loginID: String?
+    @objc open let name: String
+    @objc open let sortableName: String?
+    @objc open let email: String?
+    @objc open let avatarURL: URL?
     
-    public init(id: String, name: String, loginID: String? = nil, sortableName: String? = nil, email: String? = nil, avatarURL: URL? = nil) {
+    @objc public init(id: String, name: String, loginID: String? = nil, sortableName: String? = nil, email: String? = nil, avatarURL: URL? = nil) {
         self.id = id
         self.loginID = loginID
         self.name = name
@@ -38,7 +38,7 @@ open class SessionUser: NSObject {
         self.sortableName = sortableName
     }
 
-    open func getAvatarImage(_ completion: @escaping (UIImage?, NSError?)->Void) {
+    @objc open func getAvatarImage(_ completion: @escaping (UIImage?, NSError?)->Void) {
         guard let url = avatarURL else { completion(nil, NSError(subdomain: "TooLegit", description: NSLocalizedString("User has no valid avatar image url", tableName: "Localizable", bundle: .core, value: "", comment: "Error message if we can't pull the avatar image"))); return }
         KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil) { (image, error, cacheType, imageURL) in
             completion(image, error)
@@ -50,7 +50,7 @@ open class SessionUser: NSObject {
 // MARK: JSON
 
 extension SessionUser {
-    public class func fromJSON(_ json: Any?) -> SessionUser? {
+    @objc public class func fromJSON(_ json: Any?) -> SessionUser? {
         if let
             data = json as? [String: AnyObject],
             let id = data["id"] as? String,
@@ -65,7 +65,7 @@ extension SessionUser {
         return nil
     }
 
-    public func JSONDictionary() -> [String : Any] {
+    @objc public func JSONDictionary() -> [String : Any] {
         var dictionary = [String : Any]()
         dictionary["avatar_url"] = avatarURL?.absoluteString ?? ""
         dictionary["id"] = id

@@ -24,13 +24,13 @@ import CanvasCore
 /** Keeps TechDebt Modules and Assignments UI up to date course progress
  */
 open class LegacyModuleProgressShim: NSObject {
-    open static func observeProgress(_ session: Session) {
+    @objc open static func observeProgress(_ session: Session) {
         NotificationCenter.default.addObserver(session, selector: #selector(Session.legacyModuleItemProgressUpdated(_:)), name: NSNotification.Name.CBIModuleItemProgressUpdated, object: nil)
     }
 }
 
 extension Session {
-    func legacyModuleItemProgressUpdated(_ note: NSNotification) {
+    @objc func legacyModuleItemProgressUpdated(_ note: NSNotification) {
         if let progress = Progress(contextID: ContextID(id: user.id, context: .user), notification: note) {
             progressDispatcher.dispatch(progress)
         }

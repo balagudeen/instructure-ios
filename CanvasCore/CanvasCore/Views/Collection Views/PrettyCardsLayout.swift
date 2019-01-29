@@ -51,13 +51,13 @@ open class PrettyCardsLayout: UICollectionViewFlowLayout {
         super.prepare()
     }
     
-    func updatePadding(_ padding: CGFloat) {
+    @objc func updatePadding(_ padding: CGFloat) {
         minimumLineSpacing = padding
         minimumInteritemSpacing = padding
         sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
     }
     
-    open func widthOfItemIn(_ width: CGFloat, traits: UITraitCollection) -> CGFloat {
+    @objc open func widthOfItemIn(_ width: CGFloat, traits: UITraitCollection) -> CGFloat {
         let padding = traits.prettyCardsPadding
         let widthForOneColumn = width - 2.0 * padding
         return (1...5).reduce(widthForOneColumn, {initial, new in
@@ -90,7 +90,7 @@ open class PrettyCardsLayout: UICollectionViewFlowLayout {
 
 
 open class PrettyCardsCell: UICollectionViewCell {
-    fileprivate(set) open lazy var widthConstraint: NSLayoutConstraint = {
+    @objc fileprivate(set) open lazy var widthConstraint: NSLayoutConstraint = {
         let constraint = NSLayoutConstraint(item: self.contentView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
         constraint.identifier = "Pretty Card Width"
         return constraint

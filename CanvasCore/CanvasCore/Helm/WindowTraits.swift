@@ -17,7 +17,7 @@
 import Foundation
 
 public class WindowTraits: NSObject {
-    public static func current() -> [String: String] {
+    @objc public static func current() -> [String: String] {
         guard let traits = UIApplication.shared.keyWindow?.sizeClassInfoForJavascriptConsumption() else { return [:] }
         return traits
     }

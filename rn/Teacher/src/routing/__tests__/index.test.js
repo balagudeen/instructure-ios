@@ -42,7 +42,7 @@ describe('wrapComponentInProviders', () => {
   })
 
   it('renders wrapped screen and shows the error screen when there is an error', () => {
-    global.crashReporter = { notify: jest.fn() }
+    global.crashReporter = { recordError: jest.fn(), setString: jest.fn(), setBool: jest.fn() }
     const ErrorThrower = () => { throw new Error() }
     const generator = () => ErrorThrower
     const wrappedGenerator = wrapComponentInProviders('TestScreen', generator, store)
@@ -55,7 +55,7 @@ describe('wrapComponentInProviders', () => {
       tree.instance().componentDidCatch(err)
       tree.update()
     }
-    expect(global.crashReporter.notify).toHaveBeenCalled()
+    expect(global.crashReporter.recordError).toHaveBeenCalled()
     expect(tree).toMatchSnapshot()
   })
 })

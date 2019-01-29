@@ -17,8 +17,6 @@
 import Foundation
 import CoreData
 
-
-
 // Groups don't technically have enrollments, so for the case of groups the role may be []
 public enum UserEnrollmentRole: String {
     case student  = "StudentEnrollment"
@@ -26,16 +24,6 @@ public enum UserEnrollmentRole: String {
     case observer = "TaEnrollment"
     case ta       = "ObserverEnrollment"
     case designer = "DesignerEnrollment"
-    
-    var title: String {
-        switch self {
-        case .student: return NSLocalizedString("Student", comment: "Student role")
-        case .teacher: return NSLocalizedString("Teacher", comment: "Teacher role")
-        case .observer: return NSLocalizedString("Observer", comment: "Observer role")
-        case .ta: return NSLocalizedString("TA", comment: "TA role")
-        case .designer: return NSLocalizedString("Designer", comment: "Designer role")
-        }
-    }
     
     var order: Int16 {
         switch self {
@@ -73,13 +61,13 @@ open class UserEnrollment: NSManagedObject {
 import Marshal
 
 extension UserEnrollment: SynchronizedModel {
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         
         let id: String = try json.stringID("id")
         return NSPredicate(format: "%K == %@", "id", id)
     }
     
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         
         id = try json.stringID("id")
         courseID = try json.stringID("course_id")

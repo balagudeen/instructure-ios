@@ -1,9 +1,3 @@
-/* (No Comment) */
-"CFBundleDisplayName" = "Keymaster";
-
-/* (No Comment) */
-"CFBundleName" = "${PRODUCT_NAME}";
-
-/* (No Comment) */
-"CFBundleShortVersionString" = "1.0";
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Aidez-nous à trouver des écoles près de chez vous.";
 

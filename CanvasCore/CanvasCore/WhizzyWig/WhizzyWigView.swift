@@ -43,16 +43,23 @@ private func renderHTML(_ html: String, width: Float, fontColor: UIColor, backgr
 }
 
 open class WhizzyWigView: UIWebView, UIWebViewDelegate {
-    open var contentFinishedLoading: ()->() = {}
-    open var contentHeight: CGFloat {
+    @objc open var contentFinishedLoading: ()->() = {}
+    @objc open var didRecieveMessage: (String)->() = {_ in }
+    @objc open var contentHeight: CGFloat {
         let heightString = stringByEvaluatingJavaScript(from: "document.getElementById('whizzy_content').scrollHeight") ?? "43.0"
         return CGFloat((heightString as NSString).doubleValue)
     }
-    open var contentFontColor = UIColor.black
-    open var contentBackgroundColor = UIColor.white
-    open var contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
-    open var useAPISafeLinks: Bool = true
-    open var allowLinks: Bool = true {
+    @objc open var contentWidth: CGFloat {
+        guard let widthString = stringByEvaluatingJavaScript(from: "document.documentElement.scrollWidth") else {
+            return frame.width
+        }
+        return CGFloat((widthString as NSString).doubleValue)
+    }
+    @objc open var contentFontColor = UIColor.black
+    @objc open var contentBackgroundColor = UIColor.white
+    @objc open var contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    @objc open var useAPISafeLinks: Bool = true
+    @objc open var allowLinks: Bool = true {
         didSet {
             isUserInteractionEnabled = allowLinks
         }
@@ -75,7 +82,7 @@ open class WhizzyWigView: UIWebView, UIWebViewDelegate {
         super.loadHTMLString(renderHTML(string, width: Float(frame.size.width), fontColor: contentFontColor, backgroundColor: contentBackgroundColor, padding: contentInsets), baseURL: baseURL)
     }
     
-    open func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    open func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
         
         if !allowLinks && navigationType == .linkClicked {
             return false
@@ -90,6 +97,10 @@ open class WhizzyWigView: UIWebView, UIWebViewDelegate {
             contentFinishedLoading()
             return false
         }
+        if request.url?.scheme == "canvas-message", let path = request.url?.path {
+            didRecieveMessage(path)
+            return false
+        }
         
         return true
     }
@@ -100,7 +111,7 @@ open class WhizzyWigView: UIWebView, UIWebViewDelegate {
         }
     }
     
-    open static func setOpenURLHandler(_ urlHandler: @escaping URLHandler) {
+    @objc open static func setOpenURLHandler(_ urlHandler: @escaping URLHandler) {
         WhizzyWigOpenURLHandler = urlHandler
     }
 }

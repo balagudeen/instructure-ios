@@ -25,21 +25,21 @@ import UIKit
 open class PagesHomeViewController: UIViewController {
 
     let refresher: Refresher
-    let route: (UIViewController, URL) -> ()
+    @objc let route: (UIViewController, URL) -> ()
     let observer: ManagedObjectObserver<Page>
     let contextID: ContextID
-    let session: Session
+    @objc let session: Session
     let listViewModelFactory: (Session, Page) -> ColorfulViewModel
 
-    var innerControllerToggle: UIBarButtonItem?
+    @objc var innerControllerToggle: UIBarButtonItem?
     var innerController: InnerController = .none {
         didSet {
             embedViewController(innerController)
         }
     }
 
-    let frontPageTitle = NSLocalizedString("Front Page", tableName: "Localizable", bundle: .core, value: "", comment: "front page segmented control title")
-    let allPagesTitle = NSLocalizedString("All Pages", tableName: "Localizable", bundle: .core, value: "", comment: "all pages segmented control title")
+    @objc let frontPageTitle = NSLocalizedString("Front Page", tableName: "Localizable", bundle: .core, value: "", comment: "front page segmented control title")
+    @objc let allPagesTitle = NSLocalizedString("All Pages", tableName: "Localizable", bundle: .core, value: "", comment: "all pages segmented control title")
 
     enum InnerController {
         case list
@@ -98,12 +98,12 @@ open class PagesHomeViewController: UIViewController {
 
     // MARK: - Helpers
 
-    func initializeToggleButton() {
+    @objc func initializeToggleButton() {
         innerControllerToggle = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(toggleInnerController))
         navigationItem.rightBarButtonItem = innerControllerToggle
     }
 
-    func addSegmentedControl() {
+    @objc func addSegmentedControl() {
         let control = UISegmentedControl(items: [frontPageTitle, allPagesTitle])
         control.sizeToFit()
         control.selectedSegmentIndex = 0
@@ -111,7 +111,7 @@ open class PagesHomeViewController: UIViewController {
         self.navigationItem.titleView = control
     }
 
-    func toggleInnerController() {
+    @objc func toggleInnerController() {
         switch innerController {
         case .frontPage: innerController = .list
         case .list: innerController = .frontPage
@@ -143,17 +143,17 @@ open class PagesHomeViewController: UIViewController {
             ErrorReporter.reportError(e, from: self)
         }
 
-        self.addChildViewController(innerViewController)
+        self.addChild(innerViewController)
         self.view.addSubview(innerViewController.view)
-        innerViewController.didMove(toParentViewController: self)
+        innerViewController.didMove(toParent: self)
 
         addConstraints(innerViewController.view)
     }
 
-    func addConstraints(_ view: UIView) {
+    @objc func addConstraints(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
-        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view": view])
-        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[view]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view": view])
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view": view])
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view": view])
         self.view.addConstraints(horizontalConstraints)
         self.view.addConstraints(verticalConstraints)
     }

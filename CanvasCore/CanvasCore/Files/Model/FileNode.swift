@@ -46,9 +46,9 @@ open class FileNode: NSManagedObject, LockableModel {
     
     @NSManaged open var isInRootFolder: Bool
     @NSManaged open var parentFolderID: String?
-    open var iconName: String!
+    @objc open var iconName: String!
     
-    open var icon: UIImage {
+    @objc open var icon: UIImage {
         let iconName: String = "icon_document"
         let bundle = Bundle(for: File.self)
         return UIImage(named: iconName, in: bundle, compatibleWith: nil)!

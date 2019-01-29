@@ -30,17 +30,12 @@ public enum FeatureFlagName: String {
 
 @objc(FeatureFlags)
 open class FeatureFlags: NSObject {
-    public static var featureFlags: [String: Any] = [:]
-    public static var exemptDomains: [String] = []
+    @objc public static var featureFlags: [String: Any] = [:]
     
     // The logic in this method is duplicated from ./rn/Teacher/src/common/feature-flags.js
     // Any changes here should be duplicated into that file
     public class func featureFlagEnabled(_ flagName: FeatureFlagName) -> Bool {
         guard let baseURL = CanvasKeymaster.the().currentClient?.baseURL?.absoluteString else { return false }
-        // return true if the domain is in the list of always on domains
-        if exemptDomains.contains(baseURL) {
-            return true
-        }
         
         if let featureFlag = featureFlags[flagName.rawValue] as? [String: [String: Any]] {
             if let exemptions = featureFlag["exempt"] {
@@ -64,7 +59,7 @@ open class FeatureFlags: NSObject {
     }
     
     // For obj-c
-    public class func featureFlagEnabledObjC(_ flagName: String) -> Bool {
+    @objc public class func featureFlagEnabledObjC(_ flagName: String) -> Bool {
         if let flagName = FeatureFlagName(rawValue: flagName) {
             return featureFlagEnabled(flagName)
         }

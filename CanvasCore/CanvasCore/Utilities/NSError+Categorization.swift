@@ -17,7 +17,7 @@
 import Foundation
 
 extension NSError {
-    public var shouldRecordInCrashlytics: Bool {
+    @objc public var shouldRecordInCrashlytics: Bool {
         switch (domain, code) {
         case (NSCocoaErrorDomain, 13):  fallthrough // NSCocoaErrorDomain 13 NSUnderlyingException: error during SQL execution : database or disk is full
         case (NSURLErrorDomain, NSURLErrorNotConnectedToInternet):  fallthrough

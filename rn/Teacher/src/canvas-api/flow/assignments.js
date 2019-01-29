@@ -30,6 +30,7 @@ export type Rubric = {
   description: string,
   long_description: string,
   ratings: RubricRating[],
+  ignore_for_scoring?: boolean,
 }
 
 export type RubricSettings = {

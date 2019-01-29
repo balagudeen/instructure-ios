@@ -23,15 +23,15 @@ class QuizDetailCell: UITableViewCell {
     @IBOutlet var itemLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
     
-    class var Nib: UINib {
+    @objc class var Nib: UINib {
         return UINib(nibName: "QuizDetailCell", bundle: Bundle(for: self.classForCoder()))
     }
     
-    class var ReuseID: String {
+    @objc class var ReuseID: String {
         return "QuizDetailCell"
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
     }

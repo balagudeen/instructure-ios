@@ -67,7 +67,7 @@
     if (self) {
         // Allow all attachment types by default
         allowedAttachmentTypes = CKAllowPhotoAttachments | CKAllowVideoAttachments | CKAllowAudioAttachments;
-        self.recordAudioLabel = NSLocalizedString(@"Record Audio...", @"Record audio to use in a comment.");
+        self.recordAudioLabel = NSLocalizedStringFromTableInBundle(@"Record Audio...", nil, [NSBundle bundleForClass:self.class], @"Record audio to use in a comment.");
         [self setupLabels];
         
         // Don't apply overlays by default
@@ -106,16 +106,17 @@
 
 - (void)setupLabels
 {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     BOOL cameraAvailable = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
     
-    self.chooseMediaLabel = NSLocalizedString(@"Choose from Library...", @"Choose an existing picture or video to use in a comment.");
+    self.chooseMediaLabel = NSLocalizedStringFromTableInBundle(@"Choose from Library...", nil, bundle, @"Choose an existing picture or video to use in a comment.");
     if (cameraAvailable) {
         if ((CKAllowPhotoAttachments & allowedAttachmentTypes) && (CKAllowVideoAttachments & allowedAttachmentTypes)) {
-            self.recordMediaLabel = NSLocalizedString(@"Take Photo or Video...", @"Take a picture or video to use in a comment.");
+            self.recordMediaLabel = NSLocalizedStringFromTableInBundle(@"Take Photo or Video...", nil, bundle, @"Take a picture or video to use in a comment.");
         } else if (CKAllowPhotoAttachments & allowedAttachmentTypes) {
-            self.recordMediaLabel = NSLocalizedString(@"Take a Photo...", @"Take a picture to use in a comment.");
+            self.recordMediaLabel = NSLocalizedStringFromTableInBundle(@"Take a Photo...", nil, bundle, @"Take a picture to use in a comment.");
         } else if (CKAllowVideoAttachments & allowedAttachmentTypes) {
-            self.recordMediaLabel = NSLocalizedString(@"Take a Video...", @"Take a video to use in a comment.");
+            self.recordMediaLabel = NSLocalizedStringFromTableInBundle(@"Take a Video...", nil, bundle, @"Take a video to use in a comment.");
         } else {
             self.chooseMediaLabel = nil;
         }
@@ -154,6 +155,7 @@
 
 - (void)showAttachmentPickerWithSheetTitle:(NSString *)sheetTitle
 {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     self.actionSheet = [[CKActionSheetWithBlocks alloc] initWithTitle:sheetTitle];
     
     __weak CKAttachmentManager *weakSelf = self;
@@ -177,7 +179,7 @@
     }
     
     if (self.viewAttachmentsOptionEnabled && mutableAttachments.count > 0) {
-        [self.actionSheet addButtonWithTitle:NSLocalizedString(@"Existing Attachments...", nil)
+        [self.actionSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Existing Attachments...", nil, bundle, nil)
                                 handler:^{
                                     [weakSelf.delegate showAttachmentsForAttachmentManager:weakSelf];
                                 }];
@@ -189,7 +191,7 @@
                          animated:YES];
     } else{
         
-        [self.actionSheet addCancelButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel button title")];
+        [self.actionSheet addCancelButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, @"Cancel button title")];
         
         self.actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
         if (self.presentFromViewController.tabBarController) {
@@ -216,7 +218,7 @@
     @weakify(self);
     [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *doneButtonTitle = NSLocalizedString(@"Use", @"button for using the recorded audio");
+            NSString *doneButtonTitle = NSLocalizedStringFromTableInBundle(@"Use", nil, [NSBundle bundleForClass:self.class], @"button for using the recorded audio");
             AudioRecorderViewController *recorder = [AudioRecorderViewController presentFrom:self.presentFromViewController completeButtonTitle:doneButtonTitle];
             
             @weakify(recorder);
@@ -240,8 +242,9 @@
     CKAttachmentMediaType mediaTypeToUse = CKAttachmentMediaTypeAudio;
 
     if (!pathToAudio || mediaTypeToUse == CKAttachmentMediaTypeUnknown) {
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
         // This means that they tried to submit a comment without an audio attachment
-        [UIAlertController showAlertWithTitle:NSLocalizedString(@"No Recorded Audio", @"Title for attempting submission without a comment") message:NSLocalizedString(@"No audio was recorded.", @"Message for attempting submission without a comment")];
+        [UIAlertController showAlertWithTitle:NSLocalizedStringFromTableInBundle(@"No Recorded Audio", nil, bundle, @"Title for attempting submission without a comment") message:NSLocalizedStringFromTableInBundle(@"No audio was recorded.", nil, bundle, @"Message for attempting submission without a comment")];
         
         return;
     }
@@ -496,26 +499,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttachmentCell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"AttachmentCell"];
     }
     
     CKEmbeddedMediaAttachment *attachment = mutableAttachments[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Attachment %d", @"label for an attachment"), indexPath.row + 1];
+    cell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Attachment %d", nil, bundle, @"label for an attachment"), indexPath.row + 1];
     NSString *detailText;
     switch (attachment.type) {
         case CKAttachmentMediaTypeAudio:
-            detailText = NSLocalizedString(@"Audio", @"Audio file type");
+            detailText = NSLocalizedStringFromTableInBundle(@"Audio", nil, bundle, @"Audio file type");
             break;
         case CKAttachmentMediaTypeVideo:
-            detailText = NSLocalizedString(@"Video", @"Video file type");
+            detailText = NSLocalizedStringFromTableInBundle(@"Video", nil, bundle, @"Video file type");
             break;
         case CKAttachmentMediaTypeImage:
-            detailText = NSLocalizedString(@"Image", @"Image file type");
+            detailText = NSLocalizedStringFromTableInBundle(@"Image", nil, bundle, @"Image file type");
             break;
         default:
-            detailText = NSLocalizedString(@"Unknown", @"Unknown file type");
+            detailText = NSLocalizedStringFromTableInBundle(@"Unknown", nil, bundle, @"Unknown file type");
             break;
     }
     cell.detailTextLabel.text = detailText;

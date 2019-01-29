@@ -22,7 +22,7 @@
 
 - (void)loadNib
 {
-    self.placeholderText = NSLocalizedString(@"Enter submission",@"Submission input view placeholder text");
+    self.placeholderText = NSLocalizedStringFromTableInBundle(@"Enter submission", nil, [NSBundle bundleForClass:self.class], @"Submission input view placeholder text");
 }
 
 @end

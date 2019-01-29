@@ -171,7 +171,7 @@ private enum AsyncAction {
 }
 
 public class CoreDataSyncHelper: NSObject {
-    public static func syncAction(_ info: [String: Any], completion: @escaping () -> Void) {
+    @objc public static func syncAction(_ info: [String: Any], completion: @escaping () -> Void) {
         guard let action = Action(userInfo: info) else { return completion() }
         guard let asyncAction = AsyncAction(action: action) else { return completion() }
         guard let session = CanvasKeymaster.the().currentClient?.authSession else { return completion() }

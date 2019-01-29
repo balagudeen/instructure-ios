@@ -25,7 +25,7 @@ extension FileUpload {
         return NSPredicate(format:"%K == %@", "rawContextID", contextID.canvasContextID)
     }
     
-    public static func folderIDPredicate(_ folderID: String?) -> NSPredicate {
+    @objc public static func folderIDPredicate(_ folderID: String?) -> NSPredicate {
         if let folderID = folderID {
             return NSPredicate(format:"%K == %@", "parentFolderID", folderID)
         } else {
@@ -33,7 +33,7 @@ extension FileUpload {
         }
     }
     
-    public static func rootFolderPredicate(_ isInRootFolder: Bool) -> NSPredicate {
+    @objc public static func rootFolderPredicate(_ isInRootFolder: Bool) -> NSPredicate {
         return NSPredicate(format:"%K == %@", "isInRootFolder", isInRootFolder as CVarArg)
     }
     
@@ -43,23 +43,23 @@ extension FileUpload {
         return NSCompoundPredicate(andPredicateWithSubpredicates: [contextID, folder])
     }
 
-    public static func predicate(batch: FileUploadBatch) -> NSPredicate {
+    @objc public static func predicate(batch: FileUploadBatch) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "batch", batch)
     }
 
-    public static func inProgressPredicate() -> NSPredicate {
+    @objc public static func inProgressPredicate() -> NSPredicate {
         return NSPredicate(format: "%K != nil && %K == nil", "startedAt", "terminatedAt")
     }
 
-    public static func completedPredicate() -> NSPredicate {
+    @objc public static func completedPredicate() -> NSPredicate {
         return NSPredicate(format: "%K != nil", "completedAt")
     }
 
-    public static func inProgressPredicate(batch: FileUploadBatch) -> NSPredicate {
+    @objc public static func inProgressPredicate(batch: FileUploadBatch) -> NSPredicate {
         return NSCompoundPredicate.init(andPredicateWithSubpredicates: [self.predicate(batch: batch), self.inProgressPredicate()])
     }
 
-    public static func completedPredicate(batch: FileUploadBatch) -> NSPredicate {
+    @objc public static func completedPredicate(batch: FileUploadBatch) -> NSPredicate {
         return NSCompoundPredicate.init(andPredicateWithSubpredicates: [self.predicate(batch: batch), self.completedPredicate()])
     }
 }

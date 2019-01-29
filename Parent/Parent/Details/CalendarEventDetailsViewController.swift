@@ -58,9 +58,9 @@ extension EventDetailsViewModel {
 
 class CalendarEventDetailsViewController: CalendarEventDetailViewController {
     var disposable: Disposable?
-    let studentID: String
+    @objc let studentID: String
 
-    init(session: Session, studentID: String, courseID: String, calendarEventID: String) throws {
+    @objc init(session: Session, studentID: String, courseID: String, calendarEventID: String) throws {
         self.studentID = studentID
         super.init()
         let observer = try CalendarEvent.observer(session, studentID: studentID, calendarEventID: calendarEventID)

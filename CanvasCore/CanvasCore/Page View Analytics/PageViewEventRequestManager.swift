@@ -40,9 +40,9 @@ class PageViewEventRequestManager {
             
             if(count == 0) { handler?(nil); return }
             
-            var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
+            var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
             backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "send pageview events") {
-                backgroundTask = UIBackgroundTaskInvalid
+                backgroundTask = UIBackgroundTaskIdentifier.invalid
             }
             
             let eventsToSync = Persistency.instance.batchOfEvents(count)
@@ -52,17 +52,17 @@ class PageViewEventRequestManager {
                     if let success = response as? String, success.lowercased() == "ok" {
                         Persistency.instance.dequeue(count, handler: {
                             handler?(nil)
-                            UIApplication.shared.endBackgroundTask(backgroundTask)
+                            UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(backgroundTask.rawValue))
                         })
                     }
                     else {
                         handler?(error)
-                        UIApplication.shared.endBackgroundTask(backgroundTask)
+                        UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(backgroundTask.rawValue))
                     }
                 }
             }
             else {
-                UIApplication.shared.endBackgroundTask(backgroundTask)
+                UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(backgroundTask.rawValue))
             }
         }
     }
@@ -93,18 +93,23 @@ class PageViewEventRequestManager {
     }
     
     func requestPandataEndpointInfo(userID: String, handler: @escaping ([String: Any]? , Error? ) -> Void ) {
-        var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
-        backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "fetch pandata token") { backgroundTask = UIBackgroundTaskInvalid }
+        var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
+        backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "fetch pandata token") { backgroundTask = UIBackgroundTaskIdentifier.invalid }
         
         APIBridge.shared().call("fetchPandataToken", args: [userID]) { response, error in
             guard let data = response as? [String: Any] else {
                 handler(nil, error)
-                UIApplication.shared.endBackgroundTask(backgroundTask)
+                UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(backgroundTask.rawValue))
                 return
             }
             
             handler(data, nil)
-            UIApplication.shared.endBackgroundTask(backgroundTask)
+            UIApplication.shared.endBackgroundTask(convertToUIBackgroundTaskIdentifier(backgroundTask.rawValue))
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIBackgroundTaskIdentifier(_ input: Int) -> UIBackgroundTaskIdentifier {
+	return UIBackgroundTaskIdentifier(rawValue: input)
 }

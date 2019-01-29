@@ -27,7 +27,7 @@ import Result
 }
 
 public class NewSubmissionViewModelShim: NewSubmissionViewModel {
-    public weak var delegate: NewSubmissionViewModelShimProtocol?
+    @objc public weak var delegate: NewSubmissionViewModelShimProtocol?
     fileprivate let documentMenuViewModel: DocumentMenuViewModelType = DocumentMenuViewModel()
 
     override init() {
@@ -125,7 +125,7 @@ public class NewSubmissionViewModelShim: NewSubmissionViewModel {
         let groupSetID: String?
     }
 
-    public func configureWith(session: Session, id: String, courseID: String, submissionTypes: [String], allowedExtensions: [String]?, groupSetID: String?) {
+    @objc public func configureWith(session: Session, id: String, courseID: String, submissionTypes: [String], allowedExtensions: [String]?, groupSetID: String?) {
         let assignment = AssignmentProtocolShim(
             id: id,
             courseID: courseID,
@@ -203,7 +203,7 @@ public class NewSubmissionViewModelShim: NewSubmissionViewModel {
         self.delegate?.newSubmissionViewModel(self, wantsToPresentViewController: docsMenu, completion: nil)
     }
 
-    private func presentImagePickerController(sourceType: UIImagePickerControllerSourceType, mediaTypes: [String]) {
+    private func presentImagePickerController(sourceType: UIImagePickerController.SourceType, mediaTypes: [String]) {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = sourceType
@@ -258,9 +258,17 @@ extension NewSubmissionViewModelShim: UIDocumentPickerDelegate {
 
 extension NewSubmissionViewModelShim: UINavigationControllerDelegate {}
 extension NewSubmissionViewModelShim: UIImagePickerControllerDelegate {
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         picker.dismiss(animated: true) {
             self.documentMenuViewModel.inputs.pickedMedia(with: info)
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }

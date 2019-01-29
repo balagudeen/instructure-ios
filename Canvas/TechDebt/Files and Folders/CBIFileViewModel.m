@@ -89,9 +89,10 @@
     }
     
     RACSignal *deleteSignal = [[CKIClient currentClient] deleteFile:self.model];
-    
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+
     [deleteSignal subscribeCompleted:^{
-        [self.toastManager toastSuccess:[NSString stringWithFormat:NSLocalizedString(@"Deleted file: \"%@\"", @"delete file confirmation alert"), self.name]];
+        [self.toastManager toastSuccess:[NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Deleted file: \"%@\"", nil, bundle, @"delete file confirmation alert"), self.name]];
     }];
     
     @weakify(self);
@@ -99,7 +100,7 @@
         @strongify(self);
         [self.toastManager endToast];
         [tableViewController.viewModel.collectionController insertObjects:@[self]];
-        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"Error deleting file \"%@\"", @"Error deleting file alert view title"), self.name];
+        NSString *title = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Error deleting file \"%@\"", nil, bundle, @"Error deleting file alert view title"), self.name];
         [UIAlertController showAlertWithTitle:title message:error.localizedDescription];
     }];
 }

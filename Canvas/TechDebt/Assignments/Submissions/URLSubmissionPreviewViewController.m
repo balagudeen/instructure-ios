@@ -166,7 +166,7 @@
         [self dismiss:nil];
     }
     else {
-        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"%@ is not a valid URL", nil), textField.text];
+        NSString *message = [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%@ is not a valid URL", nil, [NSBundle bundleForClass:self.class], nil), textField.text];
         [UIAlertController showAlertWithTitle:nil message:message];
     }
 }

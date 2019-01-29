@@ -24,23 +24,23 @@ open class CalendarDayListViewController: UITableViewController {
     // ---------------------------------------------
     // MARK: - Constants
     // ---------------------------------------------
-    let noResultsPadding: CGFloat = 50
-    var didFinishRefreshing: ()->() = { }
+    @objc let noResultsPadding: CGFloat = 50
+    @objc var didFinishRefreshing: ()->() = { }
 
     // ---------------------------------------------
     // MARK: - Instance Variables
     // ---------------------------------------------
     // Public
 
-    open var routeToURL: RouteToURL!
-    open var colorForContextID: ColorForContextID!
+    @objc open var routeToURL: RouteToURL!
+    @objc open var colorForContextID: ColorForContextID!
     fileprivate var session: Session!
     fileprivate var toastManager: ToastManager?
 
     // Private
-    var eventsCollection: FetchedCollection<CalendarEvent>!
-    var favCoursesCollection: FetchedCollection<Course>!
-    var allCoursesCollection: FetchedCollection<Course>!
+    var eventsCollection: FetchedCollection<CalendarEvent>?
+    var favCoursesCollection: FetchedCollection<Course>?
+    var allCoursesCollection: FetchedCollection<Course>?
     
     var refresher: Refresher? {
         didSet {
@@ -58,7 +58,7 @@ open class CalendarDayListViewController: UITableViewController {
     }
 
     fileprivate var calendar: Calendar = Calendar.current
-    internal var day: Date? {
+    @objc internal var day: Date? {
         didSet {
             let noResultsExplanation = wittyResponses[Int(arc4random_uniform(UInt32(wittyResponses.count)))]
             emptyView?.lblExplanation.text = noResultsExplanation
@@ -67,11 +67,11 @@ open class CalendarDayListViewController: UITableViewController {
 
     // Private
     // Views
-    var emptyView: NoResultsView? = nil
-    var noResultsLabel: UILabel? = nil
+    @objc var emptyView: NoResultsView? = nil
+    @objc var noResultsLabel: UILabel? = nil
 
     // Date Formatters
-    var dateFormatter = DateFormatter()
+    @objc var dateFormatter = DateFormatter()
 
     // ---------------------------------------------
     // MARK: - External Closures
@@ -97,7 +97,7 @@ open class CalendarDayListViewController: UITableViewController {
     // ---------------------------------------------
     // MARK: - Lifecycle
     // ---------------------------------------------
-    open static func new(_ session: Session, date: Date, routeToURL: @escaping RouteToURL, colorForContextID: @escaping ColorForContextID) -> CalendarDayListViewController {
+    @objc open static func new(_ session: Session, date: Date, routeToURL: @escaping RouteToURL, colorForContextID: @escaping ColorForContextID) -> CalendarDayListViewController {
         let controller = CalendarDayListViewController(nibName: nil, bundle: nil)
         controller.session = session
         controller.routeToURL = routeToURL
@@ -115,14 +115,14 @@ open class CalendarDayListViewController: UITableViewController {
             toastManager = ToastManager(navigationBar: nav)
         }
 
-        favCoursesCollection = try! Course.favoritesCollection(session)
-        favCoursesDisposable = favCoursesCollection.collectionUpdates
+        favCoursesCollection = try? Course.favoritesCollection(session)
+        favCoursesDisposable = favCoursesCollection?.collectionUpdates
             .observe(on: UIScheduler())
             .observeValues { [weak self] _ in
                 self?.updateCalendarEvents()
             }.map(ScopedDisposable.init)
         
-        allCoursesCollection = try! Course.allCoursesCollection(session)
+        allCoursesCollection = try? Course.allCoursesCollection(session)
         
         updateCalendarEvents()
 
@@ -136,26 +136,26 @@ open class CalendarDayListViewController: UITableViewController {
 
         tableView.backgroundColor = UIColor.calendarDayDetailBackgroundColor
         tableView.tableFooterView = UIView()
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 94.0
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         self.refresher?.refresh(false)
-        NotificationCenter.default.addObserver(self, selector: #selector(CalendarDayListViewController.contentSizeCategoryChanged(_:)), name: NSNotification.Name.UIContentSizeCategoryDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CalendarDayListViewController.contentSizeCategoryChanged(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
     }
 
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIContentSizeCategoryDidChange, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIContentSizeCategory.didChangeNotification, object: nil)
     }
 
     // User selected a new default font size in preferences
-    func contentSizeCategoryChanged(_ notification: Notification) {
+    @objc func contentSizeCategoryChanged(_ notification: Notification) {
         tableView.reloadData()
     }
     
@@ -173,15 +173,16 @@ open class CalendarDayListViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     // ---------------------------------------------
     open override func numberOfSections(in tableView: UITableView) -> Int {
-        return eventsCollection.numberOfSections()
+        return eventsCollection?.numberOfSections() ?? 0
     }
 
     open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let eventsPresent = eventsCollection.numberOfItemsInSection(section) > 0
+        let numItems = eventsCollection?.numberOfItemsInSection(section) ?? 0
+        let eventsPresent = numItems > 0
         tableView.isUserInteractionEnabled = eventsPresent
         emptyView?.alpha = eventsPresent ? 0.0 : 1.0
 
-        return eventsCollection.numberOfItemsInSection(section)
+        return numItems
     }
 
     fileprivate lazy var bundle: Bundle = {
@@ -191,7 +192,7 @@ open class CalendarDayListViewController: UITableViewController {
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: CalendarDayListCell! = tableView.dequeueReusableCell(withIdentifier: CalendarDayListCell.ReuseID) as? CalendarDayListCell
         if cell == nil {
-            let topLevelObjects = bundle.loadNibNamed("CalendarDayListCell", owner: self, options: [AnyHashable: Any]())!
+            let topLevelObjects = bundle.loadNibNamed("CalendarDayListCell", owner: self, options: [AnyHashable: Any]() as! [UINib.OptionsKey : Any])!
             cell = topLevelObjects[0] as! CalendarDayListCell
         }
 
@@ -199,8 +200,10 @@ open class CalendarDayListViewController: UITableViewController {
         return cell
     }
 
-    func configureCell(_ cell: CalendarDayListCell, indexPath: IndexPath) {
-        let calEvent = eventsCollection[indexPath]
+    @objc func configureCell(_ cell: CalendarDayListCell, indexPath: IndexPath) {
+        guard let calEvent = eventsCollection?[indexPath] else {
+            return
+        }
         cell.titleLabel.text = calEvent.title
         cell.dueLabel.text = calEvent.dueText()
         cell.typeImage.image = calEvent.typeImage()
@@ -224,8 +227,7 @@ open class CalendarDayListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
 
         CanvasAnalytics.logEvent("calendar_event_selected")
-        let calEvent = eventsCollection[indexPath]
-        if let routeToURL = routeToURL, let url = calEvent.routingURL {
+        if let calEvent = eventsCollection?[indexPath], let routeToURL = routeToURL, let url = calEvent.routingURL {
             routeToURL(url)
         }
     }
@@ -233,27 +235,37 @@ open class CalendarDayListViewController: UITableViewController {
     // ---------------------------------------------
     // MARK: - Data Methods
     // ---------------------------------------------
-    open func reloadData() {
+    @objc open func reloadData() {
         self.refresher?.refresh(true)
     }
     
     fileprivate var eventsDisposable: Disposable?
 
-    func updateCalendarEvents() {
-        let startDate = day!.startOfDay(calendar)
-        let endDate = day! + 1.daysComponents
-        eventsCollection = try! CalendarEvent.collectionByDueDate(session, startDate: startDate, endDate: endDate, contextCodes: selectedContextCodes())
-        refresher = try! CalendarEvent.refresher(session, startDate: startDate, endDate: endDate, contextCodes: selectedContextCodes())
+    @objc func updateCalendarEvents() {
+        guard let day = day else {
+            eventsCollection = nil
+            refresher = nil
+            eventsDisposable?.dispose()
+            tableView.reloadData()
+            return
+        }
+        let startDate = day.startOfDay(calendar)
+        let endDate = day + 1.daysComponents
+        eventsCollection = try? CalendarEvent.collectionByDueDate(session, startDate: startDate, endDate: endDate, contextCodes: selectedContextCodes())
+        refresher = try? CalendarEvent.refresher(session, startDate: startDate, endDate: endDate, contextCodes: selectedContextCodes())
         refresher?.refresh(false)
-        eventsDisposable = eventsCollection.collectionUpdates
+        eventsDisposable = eventsCollection?.collectionUpdates
             .observe(on: UIScheduler())
             .observeValues { [unowned self] updates in
                 self.tableView?.reloadData()
             }.map(ScopedDisposable.init)
     }
 
-    open func selectedContextCodes() -> [String] {
-        guard let collection = !favCoursesCollection.isEmpty ? favCoursesCollection : allCoursesCollection else { return [] }
+    @objc open func selectedContextCodes() -> [String] {
+        let anyFavorites = favCoursesCollection?.isEmpty == false
+        guard let collection = anyFavorites ? favCoursesCollection : allCoursesCollection else {
+            return []
+        }
         var contextCodes: [String] = []
         for i in 0..<collection.numberOfItemsInSection(0) {
             let indexPath = IndexPath(row: i, section: 0)
@@ -263,13 +275,13 @@ open class CalendarDayListViewController: UITableViewController {
         return contextCodes
     }
 
-    func updateEmptyView() {
+    @objc func updateEmptyView() {
         let isRefreshing = refresher?.isRefreshing ?? false
         let emptyVisible = tableView.numberOfSections == 0 && !isRefreshing
         setEmptyViewVisible(emptyVisible)
     }
     
-    func setEmptyViewVisible(_ visible: Bool) {
+    @objc func setEmptyViewVisible(_ visible: Bool) {
         emptyView?.isHidden = !visible
     }
     

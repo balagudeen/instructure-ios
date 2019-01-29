@@ -26,7 +26,7 @@ extension CGColor {
 
 extension UIColor {
     
-    public static func colorFromHexString(_ hex: String) -> UIColor? {
+    @objc public static func colorFromHexString(_ hex: String) -> UIColor? {
         let justTheNumber = hex
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .trimmingCharacters(in: CharacterSet(charactersIn: "#"))
@@ -62,7 +62,7 @@ extension UIColor {
         return UIColor(red: CGFloat(r)/255, green: CGFloat(g)/255, blue: CGFloat(b)/255, alpha: 1.0)
     }
     
-    public var hex: String {
+    @objc public var hex: String {
         let components = cgColor.components
         
         let r: CGFloat = components.red

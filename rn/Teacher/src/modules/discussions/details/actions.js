@@ -95,6 +95,17 @@ export let Actions = (api: CanvasApi): * => ({
   deletePendingReplies: createAction('discussions.details.deletePendingReplies', (discussionID) => ({
     discussionID,
   })),
+  rateEntry: createAction('discussions.details.rateEntry', (context: string, contextID: string, discussionID: string, entryID: string, rating: number, path: Array<number>) => {
+    return {
+      promise: api.rateEntry(context, contextID, discussionID, entryID, rating),
+      context,
+      contextID,
+      discussionID,
+      entryID,
+      rating,
+      path,
+    }
+  }),
 })
 
 export default (Actions(canvas): *)

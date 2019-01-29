@@ -47,7 +47,9 @@
 + (void)loadAnnotationPreviewForFile:(CKIFile *)file fromViewController:(UIViewController *)presentingViewController {
     NSString *previewURLPath = [file.previewURLPath substringFromIndex:1];
     if ([self filePreviewableWithAnnotations:file]) {
-        [SVProgressHUD show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD show];
+        });
         
         // redirect hackyness
         CKIClient *baseClient = [[TheKeymaster currentClient] copy];
@@ -69,11 +71,13 @@
                 NSURL *goodURL = components.URL;
                 if (goodURL != nil) {
                     // NEW ANNOTATIONS FTW!
-                    [CanvadocsPDFDocumentPresenter loadPDFViewController:goodURL with:[AppAnnotationsConfiguration canvasAndSpeedgraderConfig] completed:^(UIViewController *pdfViewController, NSArray *errors) {
-                        [SVProgressHUD dismiss];
-                        if (pdfViewController != nil) {
-                            [presentingViewController presentViewController:[[UINavigationController alloc] initWithRootViewController:pdfViewController] animated:YES completion:nil];
-                        }
+                    [CanvadocsPDFDocumentPresenter loadPDFViewController:goodURL with:[AppAnnotationsConfiguration canvasAndSpeedgraderConfig] showAnnotationBarButton:false onSaveStateChange:nil completed:^(UIViewController *pdfViewController, NSArray *errors) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [SVProgressHUD dismiss];
+                            if (pdfViewController != nil) {
+                                [presentingViewController presentViewController:[[UINavigationController alloc] initWithRootViewController:pdfViewController] animated:YES completion:nil];
+                            }
+                        });
                     }];
                 } else {
                     // WTF Happened!
@@ -84,9 +88,11 @@
                 UINavigationController *controller = (UINavigationController *)[[UIStoryboard storyboardWithName:@"Storyboard-WebBrowser" bundle:[NSBundle bundleForClass:[self class]]] instantiateInitialViewController];
                 WebBrowserViewController *browser = controller.viewControllers[0];
                 browser.request = request;
-                [presentingViewController presentViewController:controller animated:YES completion:^{
-                    [SVProgressHUD dismiss];
-                }];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [presentingViewController presentViewController:controller animated:YES completion:^{
+                        [SVProgressHUD dismiss];
+                    }];
+                });
                 return nil;
             }
         }];
@@ -97,8 +103,9 @@
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
             if (httpResponse.statusCode != 302) { // Always hits here when redirecting, so ignore that
                 [SVProgressHUD dismiss];
-                NSString *title = NSLocalizedString(@"Couldn't Load Submission", @"error title for failure to load a file submission");
-                NSString *message = NSLocalizedString(@"We had a problem loading the submission. Please try again later.", @"error message for failure to load a file submission");
+                NSBundle *bundle = [NSBundle bundleForClass:self.class];
+                NSString *title = NSLocalizedStringFromTableInBundle(@"Couldn't Load Submission", nil, bundle, @"error title for failure to load a file submission");
+                NSString *message = NSLocalizedStringFromTableInBundle(@"We had a problem loading the submission. Please try again later.", nil, bundle, @"error message for failure to load a file submission");
                 [UIAlertController showAlertWithTitle:title message:message];
             }
         }];

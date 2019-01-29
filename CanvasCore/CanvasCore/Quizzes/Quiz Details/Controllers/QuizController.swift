@@ -25,6 +25,7 @@ class QuizController {
     let service: QuizService
     
     fileprivate (set) var quiz: Quiz?
+    fileprivate (set) var submission: QuizSubmission?
     
     var quizUpdated: (QuizResult)->() = {_ in } {
         didSet {
@@ -40,11 +41,14 @@ class QuizController {
     }
     
     func refreshQuiz() {
-        service.getQuiz { quizResult in
+        service.getQuiz { [weak self] quizResult in
             if let quiz = quizResult.value?.content {
-                self.quiz = quiz
+                self?.quiz = quiz
             }
-            self.quizUpdated(quizResult)
+            self?.service.getSubmission { submissionResult in
+                self?.submission = submissionResult.value?.content
+                self?.quizUpdated(quizResult)
+            }
         }
     }
     

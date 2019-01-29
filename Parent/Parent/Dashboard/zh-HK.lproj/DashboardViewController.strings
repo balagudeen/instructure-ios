@@ -7,9 +7,9 @@
 /* Class = "UIButton"; accessibilityLabel = "Settings"; ObjectID = "LhY-UH-BvJ"; */
 "LhY-UH-BvJ.accessibilityLabel" = "設定";
 
+/* Class = "UITabBarItem"; title = "Alerts"; ObjectID = "nta-AM-F42"; */
+"nta-AM-F42.title" = "提醒";
+
 /* Class = "UITabBarItem"; title = "Week"; ObjectID = "W2P-Wd-gLR"; */
 "W2P-Wd-gLR.title" = "週";
-
-/* Class = "UITabBarItem"; title = "Alerts"; ObjectID = "nta-AM-F42"; */
-"nta-AM-F42.title" = "警示";
 

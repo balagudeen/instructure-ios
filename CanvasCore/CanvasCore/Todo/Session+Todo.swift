@@ -32,7 +32,7 @@ let kitDBFailedToLoadErrorDescription = NSLocalizedString("There was a problem l
 // MARK: - Session for current user Calendar Events
 // ---------------------------------------------
 extension Session {
-    func todosManagedObjectContext() throws -> NSManagedObjectContext {
+    @objc func todosManagedObjectContext() throws -> NSManagedObjectContext {
         guard let model = NSManagedObjectModel(named: kitModelName, inBundle: Bundle(for: Todo.self)) else {
             throw NSError(subdomain: kitSubdomain, code: kitFailedToLoadErrorCode, title: kitFailedToLoadErrorDescription, description: kitDBFailedToLoadErrorDescription)
         }

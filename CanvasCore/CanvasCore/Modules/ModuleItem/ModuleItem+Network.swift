@@ -23,7 +23,7 @@ import ReactiveSwift
 
 
 extension ModuleItem {
-    public static var getModuleItemsParameters: [String: Any] {
+    @objc public static var getModuleItemsParameters: [String: Any] {
         return ["include": ["content_details", "mastery_paths"]]
     }
 

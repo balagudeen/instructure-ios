@@ -23,11 +23,11 @@ class TextAnswerCell: UITableViewCell {
     @IBOutlet var textAnswerLabel: UILabel!
     @IBOutlet var selectionStatusImageView: UIImageView!
     
-    class var ReuseID: String {
+    @objc class var ReuseID: String {
         return "TextAnswerCellReuseID"
     }
     
-    class var Nib: UINib {
+    @objc class var Nib: UINib {
         return UINib(nibName: "TextAnswerCell", bundle: Bundle(for: self.classForCoder()))
     }
     
@@ -37,11 +37,11 @@ class TextAnswerCell: UITableViewCell {
         selectionStatusImageView.tintColor = Brand.current.secondaryTintColor
     }
     
-    class var font: UIFont {
-        return UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+    @objc class var font: UIFont {
+        return UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
     }
     
-    class func heightWithText(_ text: String, boundsWidth width: CGFloat) -> CGFloat {
+    @objc class func heightWithText(_ text: String, boundsWidth width: CGFloat) -> CGFloat {
         let insets = UIEdgeInsets(top: 15.0, left: 40.0, bottom: 15.0, right: 40.0)
         let labelBoundsWidth = width - insets.left - insets.right
         let textSize = font.sizeOfString(text, constrainedToWidth: labelBoundsWidth)

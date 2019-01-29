@@ -103,14 +103,14 @@ extension Page {
 
         // MARK: - Properties
 
-        open let webView: CanvasWebView
+        @objc open let webView: CanvasWebView
 
         open var refresher: Refresher
         open var observer: ManagedObjectObserver<Page>
-        open let route: (UIViewController, URL) -> Void
-        open let url: String
+        @objc open let route: (UIViewController, URL) -> Void
+        @objc open let url: String
         open let contextID: ContextID
-        open let session: Session
+        @objc open let session: Session
 
         // MARK: - Initializers
 
@@ -152,8 +152,8 @@ extension Page {
 
             self.view.addSubview(webView)
             webView.translatesAutoresizingMaskIntoConstraints = false
-            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[webView]-0-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: ["webView": webView]))
-            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[webView]-0-|", options: NSLayoutFormatOptions(rawValue:0), metrics: nil, views: ["webView": webView]))
+            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[webView]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue:0), metrics: nil, views: ["webView": webView]))
+            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[webView]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue:0), metrics: nil, views: ["webView": webView]))
 
             // Ensure that view doesn't hider under navbar
             self.automaticallyAdjustsScrollViewInsets = false
@@ -182,12 +182,12 @@ extension Page {
 
         // MARK: - Helpers
 
-        func showLockExplanation(lockExplanation: String?) {
+        @objc func showLockExplanation(lockExplanation: String?) {
             // Strip HTML tags from lock explanation
             var explanation = NSLocalizedString("This page is currently locked and not viewable.", tableName: "Localizable", bundle: .core, value: "", comment: "The HTML page is currently not viewable by the user because it has been locked by the teacher.")
             if let encodedData = lockExplanation?.data(using: .utf8) {
                 do {
-                    explanation = try NSAttributedString(data: encodedData, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute:String.Encoding.utf8.rawValue], documentAttributes: nil).string
+                    explanation = try NSAttributedString(data: encodedData, options: convertToNSAttributedStringDocumentReadingOptionKeyDictionary([convertFromNSAttributedStringDocumentAttributeKey(NSAttributedString.DocumentAttributeKey.documentType):convertFromNSAttributedStringDocumentType(NSAttributedString.DocumentType.html), convertFromNSAttributedStringDocumentAttributeKey(NSAttributedString.DocumentAttributeKey.characterEncoding):String.Encoding.utf8.rawValue]), documentAttributes: nil).string
                     explanation = explanation.replacingOccurrences(of: "\n", with: "")
                 } catch { print("Error stripping HTML from lockedExplanation") }
             }
@@ -195,7 +195,7 @@ extension Page {
             webView.loadHTMLString("<i>\(explanation)</i>", baseURL: nil)
         }
 
-        func configureObserver() {
+        @objc func configureObserver() {
             observer.signal.observe(on: UIScheduler()).observeValues { [weak self] change, page in
                 switch change {
                 case .insert, .update:
@@ -207,8 +207,8 @@ extension Page {
             }
         }
 
-        func configureRefresher() {
-            refresher.refreshControl.addTarget(self, action: #selector(DetailViewController.refresh), for: UIControlEvents.valueChanged)
+        @objc func configureRefresher() {
+            refresher.refreshControl.addTarget(self, action: #selector(DetailViewController.refresh), for: UIControl.Event.valueChanged)
             webView.scrollView.addSubview(refresher.refreshControl)
 
             refresher.refreshingCompleted.observeValues { [weak self] error in
@@ -216,7 +216,7 @@ extension Page {
             }
         }
 
-        func renderBodyForPage(page: Page) {
+        @objc func renderBodyForPage(page: Page) {
             guard !page.lockedForUser else {
                 showLockExplanation(lockExplanation: page.lockExplanation)
                 return
@@ -224,15 +224,15 @@ extension Page {
             webView.loadHTMLString(PageTemplateRenderer.htmlStringForPage(page, viewportWidth: view.bounds.width), baseURL: session.baseURL)
         }
 
-        open func refresh() {
+        @objc open func refresh() {
             refresher.refresh(true)
         }
         
-        func jsScrollToHashTag(_ fragment: String) -> String {
+        @objc func jsScrollToHashTag(_ fragment: String) -> String {
             return String(format: "window.location.href='#%@';", fragment)
         }
 
-        func relaunchRequest(_ request: URLRequest) {
+        @objc func relaunchRequest(_ request: URLRequest) {
             DispatchQueue.global(qos: .default).async {
                 DispatchQueue.main.async {
                     self.webView.load(request)
@@ -242,3 +242,18 @@ extension Page {
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSAttributedStringDocumentReadingOptionKeyDictionary(_ input: [String: Any]) -> [NSAttributedString.DocumentReadingOptionKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.DocumentReadingOptionKey(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringDocumentAttributeKey(_ input: NSAttributedString.DocumentAttributeKey) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringDocumentType(_ input: NSAttributedString.DocumentType) -> String {
+	return input.rawValue
+}

@@ -60,11 +60,11 @@ enum CanvadocsHighlightColor: String {
 
 
 @objc public class AppAnnotationsConfiguration: NSObject {
-    public class func canvasAndSpeedgraderConfig() -> PSPDFConfiguration {
+    @objc public class func canvasAndSpeedgraderConfig() -> PSPDFConfiguration {
         return canvasAppConfiguration
     }
     
-    public class func teacherConfig(bottomInset: CGFloat) -> PSPDFConfiguration {
+    @objc public class func teacherConfig(bottomInset: CGFloat) -> PSPDFConfiguration {
         return teacherAppConfiguration(bottomInset: bottomInset)
     }
 }
@@ -79,14 +79,13 @@ func applySharedAppConfiguration(to builder: PSPDFConfigurationBuilder) {
     builder.isRenderAnimationEnabled = true
     builder.shouldHideNavigationBarWithUserInterface = false
     builder.shouldHideStatusBarWithUserInterface = false
-    builder.applicationActivities = [PSPDFActivityTypeOpenIn, PSPDFActivityTypeGoToPage, PSPDFActivityTypeSearch]
-    builder.editableAnnotationTypes = [.stamp, .highlight, .freeText, .strikeOut, .ink, .square]
+    builder.editableAnnotationTypes = [.stamp, .highlight, .freeText, .strikeOut, .ink, .eraser, .square]
     builder.naturalDrawingAnnotationEnabled = true
 
     builder.propertiesForAnnotations = [
         .stamp: [["color"]],
         .highlight: [["color"]],
-        PSPDFAnnotationStateVariantIdentifier(.ink, .inkVariantPen): [["color"]],
+        .ink: [["color"]],
         .square: [["color"]],
         .circle: [["color"]],
         .line: [["color"]],

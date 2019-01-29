@@ -25,7 +25,7 @@ import {
 } from 'react-native'
 import i18n from 'format-message'
 import { Text } from '../../../common/text'
-import Images from '../../../images'
+import icon from '../../../images/inst-icons'
 import A11yGroup from '../../../common/components/A11yGroup'
 import { type CourseGradeInfo } from '../../../utils/course-grades'
 
@@ -80,6 +80,12 @@ export default class CourseCard extends Component<Props, State> {
 
   render () {
     const { course, grade, showGrade } = this.props
+    const enrollment = course.enrollments && course.enrollments.find(e => e.type === 'student')
+    const hideTotalGrade = course.hide_final_grades || (
+      enrollment && enrollment.has_grading_periods &&
+      enrollment.totals_for_all_grading_periods_option === false &&
+      enrollment.current_grading_period_id == null
+    )
     let gradeDisplay = null
     if (showGrade) {
       if (grade && grade.currentDisplay) {
@@ -110,11 +116,19 @@ export default class CourseCard extends Component<Props, State> {
               />
               { showGrade &&
                 <View style={styles.gradePill}>
-                  <Text
-                    numberOfLines={2}
-                    style={[styles.gradeText, { color: this.props.color }]}>
-                    { gradeDisplay }
-                  </Text>
+                  {hideTotalGrade ? (
+                    <Image
+                      source={icon('lock', 'solid')}
+                      style={[ styles.gradeLock, { tintColor: this.props.color } ]}
+                      testID={`course-${course.id}-grades-locked`}
+                    />
+                  ) : (
+                    <Text
+                      numberOfLines={2}
+                      style={[styles.gradeText, { color: this.props.color }]}>
+                      { gradeDisplay }
+                    </Text>
+                  )}
                 </View>
               }
               <TouchableHighlight
@@ -126,7 +140,7 @@ export default class CourseCard extends Component<Props, State> {
                 underlayColor='#ffffff00'
                 testID={`course-card.kabob-${course.id}`}
               >
-                <Image style={styles.kabob} source={Images.kabob} />
+                <Image style={styles.kabob} source={icon('more')} />
               </TouchableHighlight>
             </View>
             <View style={styles.titleWrapper} accessible={false}>
@@ -191,6 +205,7 @@ const styles = StyleSheet.create({
     right: 8,
     width: 18,
     height: 18,
+    tintColor: 'white',
   },
   titleWrapper: {
     flex: 1,
@@ -216,10 +231,15 @@ const styles = StyleSheet.create({
     left: 8,
     paddingLeft: 6,
     paddingRight: 6,
-    borderRadius: 8,
+    borderRadius: 14,
   },
   gradeText: {
     fontSize: 14,
     fontWeight: '600',
+  },
+  gradeLock: {
+    height: 14,
+    marginVertical: 3,
+    width: 14,
   },
 })

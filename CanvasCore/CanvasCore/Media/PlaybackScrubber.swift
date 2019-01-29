@@ -21,13 +21,13 @@ import Foundation
 
 class PlaybackScrubber: UIControl {
     fileprivate var duration: TimeInterval = 1.0
-    var currentTime: TimeInterval = 0.0001
+    @objc var currentTime: TimeInterval = 0.0001
     
     @IBOutlet var trackView: UIView!
     @IBOutlet var currentTimeLabel: UILabel!
     @IBOutlet var timeRemainingLabel: UILabel!
     
-    lazy var scrubber: CALayer = {
+    @objc lazy var scrubber: CALayer = {
         let layer = CALayer()
         layer.frame = CGRect(x: 0, y: 0, width: 2, height: 15)
         layer.backgroundColor = self.tintColor.cgColor
@@ -36,7 +36,7 @@ class PlaybackScrubber: UIControl {
         return layer
     }()
     
-    func update(_ duration: TimeInterval, currentTime: TimeInterval) {
+    @objc func update(_ duration: TimeInterval, currentTime: TimeInterval) {
         if scrubbingTime != nil {
             return
         }
@@ -57,7 +57,7 @@ class PlaybackScrubber: UIControl {
     
     
     var scrubbingTime: TimeInterval?
-    func scrubGesture(_ gesture: UILongPressGestureRecognizer) {
+    @objc func scrubGesture(_ gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
             let touchPoint = gesture.location(in: self)
@@ -85,7 +85,7 @@ class PlaybackScrubber: UIControl {
         }
     }
     
-    var scrubberPosition: CGPoint {
+    @objc var scrubberPosition: CGPoint {
         var track = convert(trackView.frame, from: trackView.superview)
         let scrub = scrubber.frame
         track.size.width -= scrub.size.width
@@ -98,19 +98,19 @@ class PlaybackScrubber: UIControl {
         return CGPoint(x: x, y: y)
     }
     
-    func updateUI() {
+    @objc func updateUI() {
         updateScrubberPosition()
         updateLabels()
     }
     
-    func updateScrubberPosition() {
+    @objc func updateScrubberPosition() {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         scrubber.position = scrubberPosition
         CATransaction.commit()
     }
     
-    func updateLabels() {
+    @objc func updateLabels() {
         let t = scrubbingTime ?? currentTime
         currentTimeLabel.text = t.formatted()
         let remaining = (duration - t)

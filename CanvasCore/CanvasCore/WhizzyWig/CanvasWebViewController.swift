@@ -20,17 +20,18 @@ import ReactiveSwift
 import ReactiveCocoa
 
 open class CanvasWebViewController: UIViewController, PageViewEventViewControllerLoggingProtocol {
-    public let webView: CanvasWebView
-    public var pageViewName: String?
+    @objc public let webView: CanvasWebView
+    @objc public var pageViewName: String?
     private let showDoneButton: Bool
     private let showShareButton: Bool
+    @objc public var showReloadButton: Bool = true
     
     let canBack: DynamicProperty<Bool>
     let canForward: DynamicProperty<Bool>
     let isLoading: DynamicProperty<Bool>
     let webTitle: DynamicProperty<String>
     
-    public init(webView: CanvasWebView = CanvasWebView(), showDoneButton: Bool = false, showShareButton: Bool = false) {
+    @objc public init(webView: CanvasWebView = CanvasWebView(), showDoneButton: Bool = false, showShareButton: Bool = false) {
         self.webView = webView
         self.showDoneButton = showDoneButton
         self.showShareButton = showShareButton
@@ -44,7 +45,6 @@ open class CanvasWebViewController: UIViewController, PageViewEventViewControlle
 
         webView.requestClose = { [weak self] in self?.done() }
         webView.presentingViewController = self
-        buildUI()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -63,6 +63,7 @@ open class CanvasWebViewController: UIViewController, PageViewEventViewControlle
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
+        buildUI()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -81,7 +82,7 @@ open class CanvasWebViewController: UIViewController, PageViewEventViewControlle
     
     // MARK: initialize UI
     
-    func buildUI() {
+    @objc func buildUI() {
         if self.showDoneButton {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         }
@@ -90,22 +91,25 @@ open class CanvasWebViewController: UIViewController, PageViewEventViewControlle
         updateToolbarItems()
     }
     
-    func updateToolbarItems() {
+    @objc func updateToolbarItems() {
         let back = UIBarButtonItem(image: .icon(.backward), style: .plain, target: webView, action: #selector(WKWebView.goBack))
         back.reactive.isEnabled <~ canBack.producer.skipNil()
         
         let forward = UIBarButtonItem(image: .icon(.forward), style: .plain, target: webView, action: #selector(WKWebView.goForward))
         forward.reactive.isEnabled <~ canForward.producer.skipNil()
         
-        let loadingActivity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let loadingActivity = UIActivityIndicatorView(style: .gray)
         loadingActivity.reactive.isAnimating <~ isLoading.producer.skipNil()
 
         let loading = UIBarButtonItem(customView: loadingActivity)
         let space: () -> UIBarButtonItem = {
             return UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         }
-        
-        let reload = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(WKWebView.reload))
+
+        var reload: UIBarButtonItem?
+        if showReloadButton {
+            reload = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(WKWebView.reload))
+        }
 
         var share: UIBarButtonItem?
         if showShareButton {
@@ -123,7 +127,7 @@ open class CanvasWebViewController: UIViewController, PageViewEventViewControlle
             space(),
             loading
         ]
-        toolbarItems = barItems.flatMap { $0 }
+        toolbarItems = barItems.compactMap { $0 }
     }
 
     // MARK: Actions

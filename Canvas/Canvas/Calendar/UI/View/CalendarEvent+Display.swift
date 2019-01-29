@@ -21,7 +21,7 @@ import CanvasCore
 
 extension CalendarEvent {
 
-    public func dueText() -> String {
+    @objc public func dueText() -> String {
         guard let startAt = startAt, let endAt = endAt else {
             return ""
         }
@@ -33,7 +33,7 @@ extension CalendarEvent {
         }
     }
 
-    public func typeImage() -> UIImage {
+    @objc public func typeImage() -> UIImage {
         switch self.type {
         case .assignment:
             return .icon(.assignment)

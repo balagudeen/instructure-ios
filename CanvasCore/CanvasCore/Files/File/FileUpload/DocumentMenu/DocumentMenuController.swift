@@ -81,7 +81,7 @@ extension DocumentMenuController where Self: UIViewController {
         present(documentMenu, animated: true, completion: nil)
     }
 
-    public func presentImagePickerController(sourceType: UIImagePickerControllerSourceType, mediaTypes: [String]) {
+    public func presentImagePickerController(sourceType: UIImagePickerController.SourceType, mediaTypes: [String]) {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = sourceType

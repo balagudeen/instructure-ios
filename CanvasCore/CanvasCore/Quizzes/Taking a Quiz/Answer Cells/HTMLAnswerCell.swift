@@ -23,25 +23,25 @@ import UIKit
 // TODO: share this dup'ed stuff with whizzy wig cell
 class HTMLAnswerCell: UITableViewCell {
     
-    class var ReuseID: String {
+    @objc class var ReuseID: String {
         return "HTMLAnswerCellReuseID"
     }
     
-    class var Nib: UINib {
+    @objc class var Nib: UINib {
         return UINib(nibName: "HTMLAnswerCell", bundle: Bundle(for: self.classForCoder()))
     }
     
-    var indexPath = IndexPath(row: 0, section: 0)
-    var cellSizeUpdated: (IndexPath)->() = {_ in }
+    @objc var indexPath = IndexPath(row: 0, section: 0)
+    @objc var cellSizeUpdated: (IndexPath)->() = {_ in }
     
-    var minHeight: CGFloat = 43.0
-    var maxHeight: CGFloat = 2048.0
+    @objc var minHeight: CGFloat = 43.0
+    @objc var maxHeight: CGFloat = 2048.0
     
     @IBOutlet var whizzyWigView: WhizzyWigView!
     @IBOutlet var whizzyWigViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet var selectionStatusImageView: UIImageView!
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
@@ -76,7 +76,7 @@ class HTMLAnswerCell: UITableViewCell {
     }
     
     
-    var expectedHeight: CGFloat {
+    @objc var expectedHeight: CGFloat {
         get {
             return whizzyWigViewHeightConstraint.constant + (15 * 2) + (9 * 2)
         }

@@ -52,6 +52,10 @@ class CanvasQuizService: QuizService {
     func getQuiz(_ completed: @escaping (QuizResult)->()) {
         let _ = makeRequest(quizRequest(), completed: completed)
     }
+
+    func getSubmission(_ completed: @escaping (QuizSubmissionResult)->()) {
+        let _ = makeRequest(submissionRequest(), completed: completed)
+    }
     
     func getSubmissions(_ completed: @escaping (QuizSubmissionsResult)->()) {
         let _ = makeRequest(submissionsRequest(), completed: completed)
@@ -80,6 +84,11 @@ class CanvasQuizService: QuizService {
     func submissionsRequest() -> Request<[QuizSubmission]> {
         let path = apiPath/"submissions"
         return Request(auth: session, method: .GET, path: path, parameters: nil, parseResponse: extractSubmissions)
+    }
+
+    func submissionRequest() -> Request<QuizSubmission> {
+        let path = apiPath/"submission"
+        return Request(auth: session, method: .GET, path: path, parameters: nil, parseResponse: extractFirstSubmission)
     }
     
     func postSubmissionRequest() -> Request<QuizSubmission> {

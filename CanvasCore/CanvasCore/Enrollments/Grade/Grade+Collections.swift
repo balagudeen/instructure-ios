@@ -22,18 +22,18 @@ import CoreData
 
 
 extension Grade {
-    static func coursePredicate(_ courseID: String) -> NSPredicate {
+    @objc static func coursePredicate(_ courseID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "course.id", courseID)
     }
 
-    static func gradingPeriodPredicate(_ gradingPeriodID: String?) -> NSPredicate {
+    @objc static func gradingPeriodPredicate(_ gradingPeriodID: String?) -> NSPredicate {
         guard let gradingPeriodID = gradingPeriodID else {
             return NSPredicate(format: "%K == nil", "gradingPeriodID")
         }
         return NSPredicate(format: "%K == %@", "gradingPeriodID", gradingPeriodID)
     }
 
-    static func predicate(_ courseID: String, gradingPeriodID: String?) -> NSPredicate {
+    @objc static func predicate(_ courseID: String, gradingPeriodID: String?) -> NSPredicate {
         let gradingPeriod = Grade.gradingPeriodPredicate(gradingPeriodID)
         let course = Grade.coursePredicate(courseID)
         return NSCompoundPredicate(andPredicateWithSubpredicates: [gradingPeriod, course])

@@ -24,7 +24,7 @@ import ReactiveSwift
 
 
 extension DiscussionTopic {
-    public static func predicate(_ discussionTopicID: String) -> NSPredicate {
+    @objc public static func predicate(_ discussionTopicID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "id", discussionTopicID)
     }
 

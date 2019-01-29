@@ -147,8 +147,8 @@ public class NewSubmissionViewModel: NSObject, NewSubmissionViewModelType, NewSu
         sessionAssignment.value = (session, assignment)
     }
 
-    private let tappedTurnInProperty = MutableProperty()
-    public func tappedTurnIn() {
+    private let tappedTurnInProperty = MutableProperty(())
+    @objc public func tappedTurnIn() {
         tappedTurnInProperty.value = ()
     }
 
@@ -163,7 +163,7 @@ public class NewSubmissionViewModel: NSObject, NewSubmissionViewModelType, NewSu
     }
 
     private let selectedUploadableProperty = MutableProperty<Uploadable?>(nil)
-    public func selected(uploadable: Uploadable) {
+    @objc public func selected(uploadable: Uploadable) {
         selectedUploadableProperty.value = uploadable
     }
 
@@ -197,7 +197,7 @@ private func apiPathForFileSubmissions(in session: Session, for assignment: Assi
             }
             return overrides
                 .lazy
-                .flatMap(groupID)
+                .compactMap(groupID)
                 .first
         }
         

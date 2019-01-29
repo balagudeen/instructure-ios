@@ -24,13 +24,13 @@ class QuestionHeaderView: UITableViewHeaderFooterView {
     @IBOutlet fileprivate var flagButton: UIButton!
     @IBOutlet fileprivate var numberLabel: UILabel!
 
-    static var questionNumberFormatter: NumberFormatter = {
+    @objc static var questionNumberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .none
         return formatter
     }()
     
-    var flagged: Bool {
+    @objc var flagged: Bool {
         get {
             return flagButton?.isSelected ?? false
         } set {
@@ -50,13 +50,13 @@ class QuestionHeaderView: UITableViewHeaderFooterView {
         }
     }
     
-    var questionFlagged: ()->() = {}
+    @objc var questionFlagged: ()->() = {}
     
-    class var ReuseID: String {
+    @objc class var ReuseID: String {
         return "QuestionHeaderViewReuseID"
     }
     
-    class var Nib: UINib {
+    @objc class var Nib: UINib {
         return UINib(nibName: "QuestionHeaderView", bundle: Bundle(for: self.classForCoder()))
     }
     
@@ -65,7 +65,7 @@ class QuestionHeaderView: UITableViewHeaderFooterView {
         flagButton?.tintColor = Brand.current.secondaryTintColor
         
         isAccessibilityElement = true
-        accessibilityTraits |= UIAccessibilityTraitHeader
+        accessibilityTraits = [ accessibilityTraits, UIAccessibilityTraits.header ]
         accessibilityElements = []
         
         let toggleName = NSLocalizedString("Toggle Flag", tableName: "Localizable", bundle: .core, value: "", comment: "Toggle flag accessiblity action")
@@ -96,7 +96,7 @@ class QuestionHeaderView: UITableViewHeaderFooterView {
 // MARK: Accessibility
 extension QuestionHeaderView {
     
-    func heightWithText(width: CGFloat) -> CGFloat {
+    @objc func heightWithText(width: CGFloat) -> CGFloat {
         let insets = UIEdgeInsets(top: 15.0, left: 40.0, bottom: 15.0, right: 40.0)
         let labelBoundsWidth = width - insets.left - insets.right
         let text = numberLabel.text ?? ""
@@ -104,7 +104,7 @@ extension QuestionHeaderView {
         return ceil(textSize.height + insets.top + insets.bottom)
     }
     
-    func updateAccessibilityLabel() {
+    @objc func updateAccessibilityLabel() {
         var label = ""
         if let number = questionNumber {
             let question = NSLocalizedString("Question", tableName: "Localizable", bundle: .core, value: "", comment: "accessibility label for a quiz question")
@@ -117,7 +117,7 @@ extension QuestionHeaderView {
         accessibilityLabel = label.trimmingCharacters(in: .whitespaces)
     }
     
-    func postFlagChangedA11yNotification() {
+    @objc func postFlagChangedA11yNotification() {
         guard let number = questionNumber else { return }
         let notification: String
         if flagged {
@@ -126,6 +126,6 @@ extension QuestionHeaderView {
             notification = NSLocalizedString("Question \(number) Unflagged", tableName: "Localizable", bundle: .core, value: "", comment: "state for unflagged question")
         }
         
-        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, notification)
+        UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: notification)
     }
 }

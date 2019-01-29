@@ -25,7 +25,7 @@ class ModuleDetailDataSource<ModuleVM: TableViewCellViewModel, ModuleItemVM: Tab
     let prerequisiteModulesCollection: FetchedCollection<Module>
     let itemsCollection: FetchedCollection<ModuleItem>
 
-    var collectionDidChange: (Void) -> Void = { }
+    @objc var collectionDidChange: () -> Void = { }
 
     let moduleViewModelFactory: (Module)->ModuleVM
     let itemViewModelFactory: (ModuleItem)->ModuleItemVM

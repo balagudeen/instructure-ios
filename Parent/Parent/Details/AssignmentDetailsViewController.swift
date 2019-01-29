@@ -45,10 +45,10 @@ extension EventDetailsViewModel {
 
 class AssignmentDetailsViewController: AssignmentDetailViewController {
     var disposable: Disposable?
-    let courseID: String
-    let assignmentID: String
+    @objc let courseID: String
+    @objc let assignmentID: String
 
-    init(session: Session, studentID: String, courseID: String, assignmentID: String) throws {
+    @objc init(session: Session, studentID: String, courseID: String, assignmentID: String) throws {
         self.courseID = courseID
         self.assignmentID = assignmentID
         super.init()

@@ -40,19 +40,19 @@ extension Status {
 }
 
 class StatusCell: UITableViewCell {
-    static let reuseID = "StatusCell"
+    @objc static let reuseID = "StatusCell"
     
-    let avatarImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
-    let nameLabel = UILabel()
+    @objc let avatarImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 42, height: 42))
+    @objc let nameLabel = UILabel()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
         
         avatarImage.layer.cornerRadius = 20
         avatarImage.clipsToBounds = true
-        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
+        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         nameLabel.textColor = #colorLiteral(red: 0.1764705882, green: 0.231372549, blue: 0.2705882353, alpha: 1)
         
         let vertStack = UIStackView()

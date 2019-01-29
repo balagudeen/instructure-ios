@@ -28,15 +28,15 @@ public class PageTemplateRenderer: NSObject {
     
     fileprivate override init() { }
     
-    static var templateUrl: URL {
+    @objc static var templateUrl: URL {
         return Bundle(for: Page.self).url(forResource: "PageTemplate", withExtension: "html")!
     }
 
-    static func htmlStringForPage(_ page: Page, viewportWidth: CGFloat) -> String {
+    @objc static func htmlStringForPage(_ page: Page, viewportWidth: CGFloat) -> String {
         return htmlString(title: page.title, body: page.body ?? "", viewportWidth: viewportWidth)
     }
     
-    public class func htmlString(title: String? = nil, body: String, viewportWidth: CGFloat) -> String {
+    @objc public class func htmlString(title: String? = nil, body: String, viewportWidth: CGFloat) -> String {
         let htmlTitle = title
             .map { "<h1 id=\"title\">\($0)</h1>" }
             ?? ""
@@ -47,6 +47,7 @@ public class PageTemplateRenderer: NSObject {
         template = template.replacingOccurrences(of: "{$PAGE_BODY$}", with: body)
         template = template.replacingOccurrences(of: "{$PRIMARY_BUTTON_COLOR$}", with: Brand.current.primaryButtonColor.hex)
         template = template.replacingOccurrences(of: "{$LTI_LAUNCH_TEXT$}", with: NSLocalizedString("Launch External Tool", comment: ""))
+        template = template.replacingOccurrences(of: "{$CONTENT_DIRECTION}", with: UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? "rtl" : "ltr")
 
         let jquery = (body.contains("$(") || body.contains("$."))
             ? "<script defer src=\"https://code.jquery.com/jquery-1.9.1.min.js\"></script>"

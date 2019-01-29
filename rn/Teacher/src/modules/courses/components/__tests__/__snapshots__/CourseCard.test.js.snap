@@ -98,7 +98,7 @@ exports[`renders 1`] = `
           <Image
             source={
               Object {
-                "testUri": "../../../src/images/kabob.png",
+                "uri": "moreLine",
               }
             }
             style={
@@ -106,6 +106,7 @@ exports[`renders 1`] = `
                 "height": 18,
                 "position": "absolute",
                 "right": 8,
+                "tintColor": "white",
                 "top": 10,
                 "width": 18,
               }
@@ -266,7 +267,7 @@ exports[`renders with a grade 1`] = `
           style={
             Object {
               "backgroundColor": "white",
-              "borderRadius": 8,
+              "borderRadius": 14,
               "flex": 1,
               "left": 8,
               "maxWidth": 120,
@@ -329,7 +330,7 @@ exports[`renders with a grade 1`] = `
           <Image
             source={
               Object {
-                "testUri": "../../../src/images/kabob.png",
+                "uri": "moreLine",
               }
             }
             style={
@@ -337,6 +338,7 @@ exports[`renders with a grade 1`] = `
                 "height": 18,
                 "position": "absolute",
                 "right": 8,
+                "tintColor": "white",
                 "top": 10,
                 "width": 18,
               }
@@ -497,7 +499,7 @@ exports[`renders with a grade even if the grade does not exist 1`] = `
           style={
             Object {
               "backgroundColor": "white",
-              "borderRadius": 8,
+              "borderRadius": 14,
               "flex": 1,
               "left": 8,
               "maxWidth": 120,
@@ -560,7 +562,7 @@ exports[`renders with a grade even if the grade does not exist 1`] = `
           <Image
             source={
               Object {
-                "testUri": "../../../src/images/kabob.png",
+                "uri": "moreLine",
               }
             }
             style={
@@ -568,6 +570,7 @@ exports[`renders with a grade even if the grade does not exist 1`] = `
                 "height": 18,
                 "position": "absolute",
                 "right": 8,
+                "tintColor": "white",
                 "top": 10,
                 "width": 18,
               }
@@ -732,7 +735,7 @@ exports[`renders with empty image url 1`] = `
           <Image
             source={
               Object {
-                "testUri": "../../../src/images/kabob.png",
+                "uri": "moreLine",
               }
             }
             style={
@@ -740,6 +743,7 @@ exports[`renders with empty image url 1`] = `
                 "height": 18,
                 "position": "absolute",
                 "right": 8,
+                "tintColor": "white",
                 "top": 10,
                 "width": 18,
               }
@@ -916,7 +920,7 @@ exports[`renders with image url 1`] = `
           <Image
             source={
               Object {
-                "testUri": "../../../src/images/kabob.png",
+                "uri": "moreLine",
               }
             }
             style={
@@ -924,6 +928,7 @@ exports[`renders with image url 1`] = `
                 "height": 18,
                 "position": "absolute",
                 "right": 8,
+                "tintColor": "white",
                 "top": 10,
                 "width": 18,
               }
@@ -1088,7 +1093,7 @@ exports[`renders without image url 1`] = `
           <Image
             source={
               Object {
-                "testUri": "../../../src/images/kabob.png",
+                "uri": "moreLine",
               }
             }
             style={
@@ -1096,6 +1101,7 @@ exports[`renders without image url 1`] = `
                 "height": 18,
                 "position": "absolute",
                 "right": 8,
+                "tintColor": "white",
                 "top": 10,
                 "width": 18,
               }

@@ -51,30 +51,33 @@ private func != <T>(lhs: T?, rhs: T?) -> Bool where T: Equatable {
 
 public class CanvadocView: UIView {
     
-    weak var pdfViewController: PSPDFViewController?
-    var bottomInset = CGFloat(0.0)
+    @objc weak var pdfViewController: PSPDFViewController?
+
+    @objc var bottomInset = CGFloat(0.0)
     
-    fileprivate let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    fileprivate let activityIndicator = UIActivityIndicatorView(style: .gray)
     fileprivate let openInButton = UIButton()
     fileprivate var docInteractionController: UIDocumentInteractionController?
     
     private let toolbar = UIToolbar()
     private let flexibleToolbarContainer = PSPDFFlexibleToolbarContainer()
     
-    var config: Dictionary<String, Any> = [:] {
+    @objc var config: Dictionary<String, Any> = [:] {
         didSet {
             if let inset = config["drawerInset"] as? CGFloat {
                 bottomInset = inset
             }
             if config["previewPath"] as? String != oldValue["previewPath"] as? String {
                 removePDFViewFromView()
-                bringSubview(toFront: activityIndicator)
+                bringSubviewToFront(activityIndicator)
             }
             setNeedsLayout()
         }
     }
     
-    var previewPath: String {
+    @objc var onSaveStateChange: RCTDirectEventBlock?
+    
+    @objc var previewPath: String {
         if let path = config["previewPath"] as? String {
             return path.substring(from: path.index(path.startIndex, offsetBy: 1)) // lop off beginning forward slash to avoid dupes
         } else {
@@ -82,13 +85,13 @@ public class CanvadocView: UIView {
         }
     }
     
-    var fallbackURL: URL? {
+    @objc var fallbackURL: URL? {
         guard let url = config["fallbackURL"] as? String else { return nil}
         return URL(string: url)
     }
-    var fallbackLocalURL: URL? = nil
+    @objc var fallbackLocalURL: URL? = nil
     
-    var filename: String? {
+    @objc var filename: String? {
         return config["filename"] as? String
     }
     
@@ -142,13 +145,13 @@ public class CanvadocView: UIView {
     private func embed(pdfViewController: PSPDFViewController) {
         guard let parentVC = parentViewController else { return }
         guard self.pdfViewController == nil else { return }
-        
-        parentVC.addChildViewController(pdfViewController)
+
+        self.pdfViewController = pdfViewController
+        parentVC.addChild(pdfViewController)
         addSubview(pdfViewController.view)
         pdfViewController.view.frame = self.getPDFViewControllerFrame()
-        pdfViewController.didMove(toParentViewController: parentVC)
-        self.pdfViewController = pdfViewController
-        
+        pdfViewController.didMove(toParent: parentVC)
+
         if let presenter = pdfViewController.delegate as? CanvadocsPDFDocumentPresenter, let metadata = presenter.metadata, metadata.annotationMetadata.enabled {
             addSubview(toolbar)
             
@@ -157,7 +160,7 @@ public class CanvadocView: UIView {
             annotationToolbar.supportedToolbarPositions = [.positionInTopBar]
             annotationToolbar.isDragEnabled = false
             annotationToolbar.showDoneButton = false
-            
+
             flexibleToolbarContainer.flexibleToolbar = annotationToolbar
             flexibleToolbarContainer.overlaidBar = toolbar
             addSubview(flexibleToolbarContainer)
@@ -170,10 +173,10 @@ public class CanvadocView: UIView {
     private func removePDFViewFromView() {
         toolbar.removeFromSuperview()
         flexibleToolbarContainer.removeFromSuperview()
-        pdfViewController?.willMove(toParentViewController: nil)
-        pdfViewController?.removeFromParentViewController()
+        pdfViewController?.willMove(toParent: nil)
+        pdfViewController?.removeFromParent()
         pdfViewController?.view.removeFromSuperview()
-        pdfViewController?.didMove(toParentViewController: nil)
+        pdfViewController?.didMove(toParent: nil)
         pdfViewController = nil
     }
     
@@ -197,7 +200,7 @@ public class CanvadocView: UIView {
             components.path = (components.path as NSString).deletingLastPathComponent
             
             if let goodURL = components.url {
-                CanvadocsPDFDocumentPresenter.loadPDFViewController(goodURL, with: teacherAppConfiguration(bottomInset: me.bottomInset)) { [weak self] (pdfViewController, errors) in
+                CanvadocsPDFDocumentPresenter.loadPDFViewController(goodURL, with: teacherAppConfiguration(bottomInset: me.bottomInset), showAnnotationBarButton: true, onSaveStateChange: self?.onSaveStateChange) { [weak self] (pdfViewController, errors) in
                     if let pdfViewController = pdfViewController as? PSPDFViewController {
                         self?.activityIndicator.stopAnimating()
                         self?.embed(pdfViewController: pdfViewController)
@@ -232,7 +235,8 @@ public class CanvadocView: UIView {
         if let vc = pdfViewController, let presenter = vc.delegate as? CanvadocsPDFDocumentPresenter {
             annotationsEnabled = presenter.metadata!.annotationMetadata.enabled
         }
-        return CGRect(x: 0, y: annotationsEnabled ? 33.0 : 0, width: bounds.width, height: annotationsEnabled ? bounds.height-33.0 : bounds.height)
+        let offset: CGFloat = 42
+        return CGRect(x: 0, y: annotationsEnabled ? offset : 0, width: bounds.width, height: annotationsEnabled ? bounds.height-offset : bounds.height)
     }
     
     fileprivate func setScrollEnabled(_ enabled: Bool) {
@@ -255,17 +259,22 @@ public class CanvadocView: UIView {
         task.resume()
     }
     
-    func openInButtonTapped() {
+    @objc func openInButtonTapped() {
         guard let fallbackLocalURL = fallbackLocalURL else { return }
         
         docInteractionController = UIDocumentInteractionController(url: fallbackLocalURL)
         docInteractionController?.delegate = self
         docInteractionController?.presentOpenInMenu(from: openInButton.frame, in: self, animated: true)
     }
+    
+    @objc public func syncAnnotations() {
+        guard let presenter = pdfViewController?.delegate as? CanvadocsPDFDocumentPresenter else { return }
+        presenter.annotationProvider?.syncAllAnnotations()
+    }
 }
 
 extension CanvadocView: PSPDFAnnotationStateManagerDelegate {
-    public func annotationStateManager(_ manager: PSPDFAnnotationStateManager, didChangeState oldState: AnnotationString?, to newState: AnnotationString?, variant oldVariant: AnnotationString?, to newVariant: AnnotationString?) {
+    public func annotationStateManager(_ manager: PSPDFAnnotationStateManager, didChangeState oldState: AnnotationString?, to newState: AnnotationString?, variant oldVariant: AnnotationVariantString?, to newVariant: AnnotationVariantString?) {
         if let _ = newState {
             setScrollEnabled(false)
         } else {
@@ -298,4 +307,4 @@ extension CanvadocView: URLSessionDownloadDelegate {
     }
 }
 
-extension CanvadocView: UIDocumentInteractionControllerDelegate { }
+extension CanvadocView: UIDocumentInteractionControllerDelegate {}

@@ -25,17 +25,26 @@
 /* No comment provided by engineer. */
 "Choose One" = "Chwazi Yonn";
 
+/* Connectivity alert close text */
+"Close" = "Fèmen";
+
 /* No comment provided by engineer. */
 "Continue Editing" = "Kontinye Edisyon";
 
 /* No comment provided by engineer. */
 "Describe the feature here" = "Dekri fonksyon an la";
 
+/* No comment provided by engineer. */
+"describe your problem" = "dekri pwoblèm ou an";
+
 /* Dismiss login expired/revoked alert button */
 "Dismiss" = "Rejte";
 
 /* No comment provided by engineer. */
 "Emergency" = "Ijans";
+
+/* No comment provided by engineer. */
+"enter a subject" = "antre yon sijè";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "Antre deskripsyon tikè";
@@ -76,14 +85,20 @@
 /* No comment provided by engineer. */
 "OK" = "DAKO";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "retire itilizatè";
+
 /* No comment provided by engineer. */
 "Report a Problem" = "Rapòte yon Pwoblèm";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "Mande yon Fonksyon";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "Demann lan Echwe!";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "Mande yon Fonksyon";
+"select the impact" = "seleksyone enpak la";
 
 /* Button to select the severity of the ticket */
 "Select ticket impact level" = "Seleksyone nivo enpak tikè";
@@ -106,18 +121,15 @@
 /* No comment provided by engineer. */
 "Thanks, your request was received!" = "Mèsi, nou resevwa demann ou an!";
 
+/* No comment provided by engineer. */
+"Trouble logging in" = "Difikilte pou konekte";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "Nou paka konbekte a Canvas. Eske w te verifye koneksyon entènèt ou a?";
+
+/* Connectivity alert title */
+"Whoops!" = "Whoops!";
+
 /* when the access token has been revoked */
 "Your login has expired or has been removed by the server. Please log in again." = "Koneksyon ou a ekspire oswa sèvè a te retire li. Tanpri konekte ankò.";
-
-/* No comment provided by engineer. */
-"describe your problem" = "dekri pwoblèm ou an";
-
-/* No comment provided by engineer. */
-"enter a subject" = "antre yon sijè";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "retire itilizatè";
-
-/* No comment provided by engineer. */
-"select the impact" = "seleksyone enpak la";
 

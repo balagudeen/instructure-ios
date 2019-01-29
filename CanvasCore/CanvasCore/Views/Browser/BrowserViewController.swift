@@ -22,7 +22,7 @@ import WebKit
 /** This was built specifically for choosing a URL for assignment submission, but could be general purpose with a little love.
  */
 open class BrowserViewController: UIViewController {
-    open static func presentFromViewController(_ viewController: UIViewController, completion: (()->())? = nil) -> BrowserViewController {
+    @objc open static func presentFromViewController(_ viewController: UIViewController, completion: (()->())? = nil) -> BrowserViewController {
         let browser = BrowserViewController(nibName: nil, bundle: nil)
         let nav = UINavigationController(rootViewController: browser)
         
@@ -30,7 +30,7 @@ open class BrowserViewController: UIViewController {
         return browser
     }
     
-    open var url: URL? {
+    @objc open var url: URL? {
         didSet {
             if isViewLoaded {
                 if let url = url {
@@ -40,8 +40,8 @@ open class BrowserViewController: UIViewController {
         }
     }
     
-    open var didSelectURLForSubmission: (URL)->() = { _ in }
-    open var didCancel: ()->() = { }
+    @objc open var didSelectURLForSubmission: (URL)->() = { _ in }
+    @objc open var didCancel: ()->() = { }
     
     fileprivate var webView: WKWebView! {
         get {
@@ -75,7 +75,7 @@ open class BrowserViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Go", tableName: "Localizable", bundle: Bundle(for: type(of: self)), value: "", comment: "navigate"), style: .done, target: self, action: #selector(BrowserViewController.go(_:)))
     }
     
-    func go(_ sender: AnyObject?) {
+    @objc func go(_ sender: AnyObject?) {
         if let url: URL = parseURLForInput(titleView.text) {
             self.url = url
             titleView.resignFirstResponder()
@@ -86,7 +86,7 @@ open class BrowserViewController: UIViewController {
         }
     }
     
-    func cancelEditingURL(_ sender: AnyObject?) {
+    @objc func cancelEditingURL(_ sender: AnyObject?) {
         titleView.resignFirstResponder()
         titleView.text = currentWebviewURL?.absoluteString ?? url?.absoluteString ?? ""
     }
@@ -99,7 +99,7 @@ open class BrowserViewController: UIViewController {
         return url
     }
     
-    func submit(_ sender: AnyObject?) {
+    @objc func submit(_ sender: AnyObject?) {
         let urlForSubmission = currentWebviewURL ?? parseURLForInput(titleView.text)
         if let url = urlForSubmission {
             dismiss(animated: true) {
@@ -108,13 +108,13 @@ open class BrowserViewController: UIViewController {
         }
     }
     
-    func cancelTurnIn(_ sender: AnyObject?) {
+    @objc func cancelTurnIn(_ sender: AnyObject?) {
         dismiss(animated: true) {
             self.didCancel()
         }
     }
     
-    func installTapoutView() {
+    @objc func installTapoutView() {
         tapoutView?.removeFromSuperview()
         
         // add a tap-out view

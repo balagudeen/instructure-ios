@@ -40,6 +40,14 @@ Array [
 ]
 `;
 
+exports[`ZSSRichTextEditor loads with rtl direction when in rtl 1`] = `
+Array [
+  Array [
+    "zss_editor.setCustomCSS('body { direction: rtl; }');",
+  ],
+]
+`;
+
 exports[`ZSSRichTextEditor notifies when editor focused 1`] = `Array []`;
 
 exports[`ZSSRichTextEditor paste catches error and pastes clipboard if network call fails 1`] = `
@@ -145,15 +153,7 @@ exports[`ZSSRichTextEditor renders 1`] = `
 exports[`ZSSRichTextEditor responds when zss editor loads 1`] = `
 Array [
   Array [
-    "zss_editor.setCustomCSS('');",
-  ],
-]
-`;
-
-exports[`ZSSRichTextEditor sets custom css on web view loaded 1`] = `
-Array [
-  Array [
-    "zss_editor.init();",
+    "zss_editor.setCustomCSS('body { direction: ltr; }');",
   ],
 ]
 `;

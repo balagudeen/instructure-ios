@@ -114,21 +114,25 @@ exports[`anonymous grading doesnt show users names 1`] = `
       </View>
       <View
         style={
-          Object {
-            "alignSelf": "center",
-            "backgroundColor": "transparent",
-            "borderColor": "#c7c7cc",
-            "borderRightWidth": 2,
-            "borderTopWidth": 2,
-            "height": 10,
-            "marginLeft": 7,
-            "transform": Array [
-              Object {
-                "rotate": "45deg",
-              },
-            ],
-            "width": 10,
-          }
+          Array [
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#c7c7cc",
+              "borderRightWidth": 2,
+              "borderTopWidth": 2,
+              "height": 10,
+              "marginLeft": 7,
+              "width": 10,
+            },
+            Object {
+              "transform": Array [
+                Object {
+                  "rotate": "45deg",
+                },
+              ],
+            },
+          ]
         }
       />
     </View>
@@ -281,21 +285,25 @@ exports[`excused row renders correctly 1`] = `
       </Text>
       <View
         style={
-          Object {
-            "alignSelf": "center",
-            "backgroundColor": "transparent",
-            "borderColor": "#c7c7cc",
-            "borderRightWidth": 2,
-            "borderTopWidth": 2,
-            "height": 10,
-            "marginLeft": 7,
-            "transform": Array [
-              Object {
-                "rotate": "45deg",
-              },
-            ],
-            "width": 10,
-          }
+          Array [
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#c7c7cc",
+              "borderRightWidth": 2,
+              "borderTopWidth": 2,
+              "height": 10,
+              "marginLeft": 7,
+              "width": 10,
+            },
+            Object {
+              "transform": Array [
+                Object {
+                  "rotate": "45deg",
+                },
+              ],
+            },
+          ]
         }
       />
     </View>
@@ -448,21 +456,25 @@ exports[`late graded row renders correctly 1`] = `
       </Text>
       <View
         style={
-          Object {
-            "alignSelf": "center",
-            "backgroundColor": "transparent",
-            "borderColor": "#c7c7cc",
-            "borderRightWidth": 2,
-            "borderTopWidth": 2,
-            "height": 10,
-            "marginLeft": 7,
-            "transform": Array [
-              Object {
-                "rotate": "45deg",
-              },
-            ],
-            "width": 10,
-          }
+          Array [
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#c7c7cc",
+              "borderRightWidth": 2,
+              "borderTopWidth": 2,
+              "height": 10,
+              "marginLeft": 7,
+              "width": 10,
+            },
+            Object {
+              "transform": Array [
+                Object {
+                  "rotate": "45deg",
+                },
+              ],
+            },
+          ]
         }
       />
     </View>
@@ -584,21 +596,25 @@ exports[`missing ungraded row renders correctly 1`] = `
       </View>
       <View
         style={
-          Object {
-            "alignSelf": "center",
-            "backgroundColor": "transparent",
-            "borderColor": "#c7c7cc",
-            "borderRightWidth": 2,
-            "borderTopWidth": 2,
-            "height": 10,
-            "marginLeft": 7,
-            "transform": Array [
-              Object {
-                "rotate": "45deg",
-              },
-            ],
-            "width": 10,
-          }
+          Array [
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#c7c7cc",
+              "borderRightWidth": 2,
+              "borderTopWidth": 2,
+              "height": 10,
+              "marginLeft": 7,
+              "width": 10,
+            },
+            Object {
+              "transform": Array [
+                Object {
+                  "rotate": "45deg",
+                },
+              ],
+            },
+          ]
         }
       />
     </View>
@@ -689,21 +705,25 @@ exports[`submitted not_graded row renders correctly 1`] = `
       </View>
       <View
         style={
-          Object {
-            "alignSelf": "center",
-            "backgroundColor": "transparent",
-            "borderColor": "#c7c7cc",
-            "borderRightWidth": 2,
-            "borderTopWidth": 2,
-            "height": 10,
-            "marginLeft": 7,
-            "transform": Array [
-              Object {
-                "rotate": "45deg",
-              },
-            ],
-            "width": 10,
-          }
+          Array [
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#c7c7cc",
+              "borderRightWidth": 2,
+              "borderTopWidth": 2,
+              "height": 10,
+              "marginLeft": 7,
+              "width": 10,
+            },
+            Object {
+              "transform": Array [
+                Object {
+                  "rotate": "45deg",
+                },
+              ],
+            },
+          ]
         }
       />
     </View>
@@ -870,21 +890,25 @@ exports[`submitted ungraded row renders correctly 1`] = `
       </View>
       <View
         style={
-          Object {
-            "alignSelf": "center",
-            "backgroundColor": "transparent",
-            "borderColor": "#c7c7cc",
-            "borderRightWidth": 2,
-            "borderTopWidth": 2,
-            "height": 10,
-            "marginLeft": 7,
-            "transform": Array [
-              Object {
-                "rotate": "45deg",
-              },
-            ],
-            "width": 10,
-          }
+          Array [
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#c7c7cc",
+              "borderRightWidth": 2,
+              "borderTopWidth": 2,
+              "height": 10,
+              "marginLeft": 7,
+              "width": 10,
+            },
+            Object {
+              "transform": Array [
+                Object {
+                  "rotate": "45deg",
+                },
+              ],
+            },
+          ]
         }
       />
     </View>
@@ -1006,21 +1030,25 @@ exports[`unsubmitted ungraded row renders correctly 1`] = `
       </View>
       <View
         style={
-          Object {
-            "alignSelf": "center",
-            "backgroundColor": "transparent",
-            "borderColor": "#c7c7cc",
-            "borderRightWidth": 2,
-            "borderTopWidth": 2,
-            "height": 10,
-            "marginLeft": 7,
-            "transform": Array [
-              Object {
-                "rotate": "45deg",
-              },
-            ],
-            "width": 10,
-          }
+          Array [
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#c7c7cc",
+              "borderRightWidth": 2,
+              "borderTopWidth": 2,
+              "height": 10,
+              "marginLeft": 7,
+              "width": 10,
+            },
+            Object {
+              "transform": Array [
+                Object {
+                  "rotate": "45deg",
+                },
+              ],
+            },
+          ]
         }
       />
     </View>

@@ -20,6 +20,7 @@ import { StyleSheet } from 'react-native'
 import color, { isDark } from '../common/colors'
 
 export type BrandingConfiguration = {
+  link: string,
   navBarColor: string,
   navBarButtonColor: string,
   navBarTextColor: string,
@@ -31,6 +32,7 @@ export type BrandingConfiguration = {
 }
 
 export const branding: BrandingConfiguration = {
+  link: color.link,
   navBarColor: color.navBarColor,
   navBarButtonColor: color.primaryButtonText,
   navBarTextColor: color.primaryButtonText,
@@ -43,6 +45,7 @@ export const branding: BrandingConfiguration = {
 
 const updates = []
 export function setupBrandingFromNativeBrandingInfo (obj: Object): void {
+  branding.link = obj[`ic-link-color`] || branding.link
   branding.navBarColor = obj[`ic-brand-global-nav-bgd`] || branding.navBarColor
   branding.primaryButtonTextColor = obj[`ic-brand-button--primary-text`] || branding.primaryButtonTextColor
   branding.primaryButtonColor = obj[`ic-brand-button--primary-bgd`] || branding.primaryButtonColor
@@ -53,6 +56,7 @@ export function setupBrandingFromNativeBrandingInfo (obj: Object): void {
   branding.headerImage = obj[`ic-brand-header-image`] || branding.headerImage
 
   //  now that we have branding data, set colors object as well
+  color.link = branding.link
   color.navBarColor = branding.navBarColor
   color.navBarButtonColor = branding.navBarButtonColor
   color.navBarTextColor = branding.navBarTextColor

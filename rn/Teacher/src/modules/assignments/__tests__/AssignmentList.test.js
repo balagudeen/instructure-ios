@@ -163,7 +163,7 @@ test('selected quiz', () => {
   const navigator = templates.navigator({
     show: jest.fn(),
   })
-  const assignment = Object.assign(group.assignments[0], { quiz_id: '1' })
+  const assignment = Object.assign(group.assignments[0], { quiz_id: '1', discussion_topic: null })
   const assignmentGroup = Object.assign(defaultProps.assignmentGroups[0], { assignments: [assignment] })
   const props = {
     ...defaultProps,
@@ -174,7 +174,7 @@ test('selected quiz', () => {
   )
   let button = tree.find(`[testID="assignment-list.assignment-list-row.cell-${assignment.id}"]`)
   button.simulate('press')
-  expect(navigator.show).toHaveBeenCalledWith('/courses/987654321/quizzes/1')
+  expect(navigator.show).toHaveBeenCalledWith(assignment.html_url)
 })
 
 test('filter button only shows when there are grading periods', () => {
@@ -227,7 +227,9 @@ test('applyFilter will apply a new filter', () => {
   tree.update()
 
   expect(tree.find('Heading1').props().children).toEqual(gradingPeriod.title)
-  expect(tree.find('SectionList').props().sections[0].data).toEqual(groupOne.assignments)
+  const sections = tree.find('SectionList').props().sections
+  expect(sections.length).toEqual(1)
+  expect(sections[0].data).toEqual(groupOne.assignments)
 })
 
 test('applyFilter will call refreshlist with the grading period id when it has no assignmentRefs', async () => {
@@ -239,7 +241,7 @@ test('applyFilter will call refreshlist with the grading period id when it has n
 
   tree.instance().updateFilter(0)
 
-  expect(defaultProps.refreshAssignmentList).toHaveBeenCalledWith(course.id, gradingPeriod.id)
+  expect(defaultProps.refreshAssignmentList).toHaveBeenCalledWith(course.id, gradingPeriod.id, true)
 })
 
 test('applyFilter doesnt apply any filter when the cancel button is pressed', () => {
@@ -317,6 +319,37 @@ test('does not select first item on empty data', () => {
   expect(instance.didSelectFirstItem).toBe(false)
 })
 
+test('does not select first item when doNotSelectFirstItem is set to  true', () => {
+  defaultProps.doNotSelectFirstItem = true
+  let tree = shallow(
+    <AssignmentList {...defaultProps} />
+  )
+
+  let instance = tree.instance()
+  instance.didSelectFirstItem = false
+  instance.isRegularScreenDisplayMode = true
+  instance.selectedAssignment = jest.fn()
+  instance.selectFirstListItemIfNecessary()
+
+  expect(instance.selectedAssignment).toHaveBeenCalledTimes(0)
+  expect(instance.didSelectFirstItem).toBe(false)
+})
+
+test('select first item when doNotSelectFirstItem is not set', () => {
+  let tree = shallow(
+    <AssignmentList {...defaultProps} />
+  )
+
+  let instance = tree.instance()
+  instance.didSelectFirstItem = false
+  instance.isRegularScreenDisplayMode = true
+  instance.selectedAssignment = jest.fn()
+  instance.selectFirstListItemIfNecessary()
+
+  expect(instance.selectedAssignment).toHaveBeenCalledTimes(1)
+  expect(instance.didSelectFirstItem).toBe(true)
+})
+
 test('onTraitCollectionChange calls trait collection properties', () => {
   defaultProps.navigator.traitCollection = jest.fn()
   let tree = shallow(
@@ -385,7 +418,7 @@ test('calls getGradesForGradingPeriod when a filter is updated', async () => {
 test('calls refreshAssignmentList when a filter is updated', () => {
   const tree = shallow(<AssignmentList {...defaultProps} />)
   tree.instance().updateFilter(0)
-  expect(defaultProps.refreshAssignmentList).toHaveBeenCalledWith(defaultProps.courseID, gradingPeriod.id)
+  expect(defaultProps.refreshAssignmentList).toHaveBeenCalledWith(defaultProps.courseID, gradingPeriod.id, true)
 })
 
 test('tries to request app store review when closing', () => {
@@ -407,4 +440,28 @@ test('tries to request app store review when closing', () => {
   tree.unmount()
   expect(NativeModules.AppStoreReview.handleSuccessfulSubmit)
     .toHaveBeenCalled()
+})
+
+test('calls getGradesForGradingPeriod when refreshed', async () => {
+  let grades = templates.enrollment().grades
+  let promise = Promise.resolve(grades)
+  getGradesForGradingPeriod.mockReturnValue(promise)
+
+  let tree = shallow(
+    <AssignmentList {...defaultProps} showTotalScore />
+  )
+
+  // Called once when the filter is set
+  tree.instance().updateFilter(0)
+  expect(getGradesForGradingPeriod).toHaveBeenCalled()
+
+  getGradesForGradingPeriod.mockClear()
+
+  // Called again when we refresh
+  tree.find('SectionList').simulate('Refresh')
+  expect(getGradesForGradingPeriod).toHaveBeenCalledWith(defaultProps.courseID, 'self', gradingPeriod.id)
+
+  await promise
+  await tree.update()
+  expect(tree.find('[testID="assignment-list.total-grade"] Text').props().children).toEqual(`${grades.current_score}%`)
 })

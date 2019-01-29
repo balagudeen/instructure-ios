@@ -21,14 +21,16 @@ import TechDebt
 import CanvasCore
 import Marshal
 import CanvasKeymaster
+import Core
+import StudentReborn
 
 var currentSession: Session? {
     return CanvasKeymaster.the().currentClient?.authSession
 }
 
-extension Router {
+extension TechDebt.Router {
     
-    func addCanvasRoutes(_ handleError: @escaping (NSError)->()) {
+    @objc func addCanvasRoutes(_ handleError: @escaping (NSError)->()) {
         func addContextRoute(_ contexts: [ContextID.Context], subPath: String, file: String = #file, line: UInt = #line, handler: @escaping (ContextID, [String: Any]) throws -> UIViewController?) {
             for context in contexts {
                 addRoute("/\(context.pathComponent)/:contextID"/subPath) { parameters, _ in
@@ -78,7 +80,45 @@ extension Router {
         addContextRoute([.course], subPath: "assignments") { contextID, _ in
             return HelmViewController(
                 moduleName: "/courses/:courseID/assignments",
-                props: ["courseID": contextID.id]
+                props: ["courseID": contextID.id, "doNotSelectFirstItem": false]
+            )
+        }
+
+        addContextRoute([.course], subPath: "assignments/:assignmentID") { contextID, params in
+            if FeatureFlags.featureFlagEnabled(.newStudentAssignmentView), let url = params["url"] as? URL,
+                !((params["query"] as? [String: Any])?["module_item_id"] is String),
+                (params["assignmentID"] as? String) != "syllabus" {
+                return StudentReborn.router.match(.parse(url))
+            }
+
+            if let url = params["url"] as? URL, let old = URL(string: url.absoluteString.replacingOccurrences(of: "/assignments/", with: "/old-assignments/")) {
+                return Router.shared().controller(forHandling: old)
+            }
+            return nil
+        }
+
+        addContextRoute([.course], subPath: "assignments/:assignmentID/submissions/:userID") { contextID, params in
+            if FeatureFlags.featureFlagEnabled(.newStudentAssignmentView), let url = params["url"] as? URL {
+                return StudentReborn.router.match(.parse(url))
+            }
+
+            if let url = params["url"] as? URL, let old = URL(string: url.absoluteString.replacingOccurrences(of: "/assignments/", with: "/old-assignments/")) {
+                return Router.shared().controller(forHandling: old)
+            }
+            return nil
+        }
+
+        addContextRoute([.course], subPath: "assignments/:assignmentID/fileupload") { contextID, params in
+            if FeatureFlags.featureFlagEnabled(.newStudentAssignmentView), let url = params["url"] as? URL {
+                return StudentReborn.router.match(.parse(url))
+            }
+            return nil
+        }
+        
+        addContextRoute([.course], subPath: "assignments-fromHomeTab") { contextID, _ in
+            return HelmViewController(
+                moduleName: "/courses/:courseID/assignments",
+                props: ["courseID": contextID.id, "doNotSelectFirstItem": true]
             )
         }
         
@@ -146,7 +186,7 @@ extension Router {
             return nil
         }
 
-        let downloadFile: RouteHandler = { parameters, _ in
+        let downloadFile: TechDebt.RouteHandler = { parameters, _ in
             guard let parameters = parameters else {
                 return nil
             }
@@ -170,6 +210,7 @@ extension Router {
         addRoute("/users/:userID/files/:fileIdent/download", handler: downloadFile)
         addRoute("/files/:fileIdent/download", handler: downloadFile)
         addRoute("/files/:fileIdent", handler: downloadFile)
+        addRoute("/files/:fileIdent/old", handler: downloadFile)
 
         // The :ignored part is usually users_{id}, but canvas ignores it, it can be anything and
         // you will still see your files, and the actual folder path doesn't start until after it.
@@ -257,6 +298,10 @@ extension Router {
             return try PagesHomeViewController(session: currentSession, contextID: contextID, listViewModelFactory: pagesListViewModelFactory, route: route)
         }
 
+        // addContextRoute([.course], subPath: "quizzes") { contextID, _ in
+        //      return QuizListController.create(contextID: contextID, route: route)
+        // }
+
         addContextRoute([.course], subPath: "external_tools/:toolID") { contextID, params in
             guard let url = params["url"] as? URL,
                     let session = currentSession,
@@ -315,7 +360,7 @@ extension Router {
             if !modulesAreHome, modulesTab?.hidden ?? false {
                 let message = NSLocalizedString("That page has been disabled for this course", comment: "")
                 let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("Dismiss", comment: ""), style: UIAlertActionStyle.default, handler: nil))
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Dismiss", comment: ""), style: UIAlertAction.Style.default, handler: nil))
                 return alert
             }
             let controller = try ModulesTableViewController(session: currentSession, courseID: contextID.id, route: route)
@@ -355,6 +400,13 @@ extension Router {
             }
             return eventVC
         }
+
+        addRoute("/logs") { params, _ in
+            if let params = params, let url = params["url"] as? URL {
+                return StudentReborn.router.match(.parse(url))
+            }
+            return nil
+        }
         
         addContextRoute([.course], subPath: "users/:userID") { (contextID, parameters) -> UIViewController? in
             guard let userID = try? parameters.stringID("userID") else { return nil }
@@ -388,6 +440,17 @@ extension Router {
                 ]
             )
         }
+    }
+}
+
+extension TechDebt.Router: RouterProtocol {
+    public func route(to url: URLComponents, from: UIViewController, options: Core.Router.RouteOptions? = nil) {
+        guard let url = url.url else { return }
+        var opts = [AnyHashable: Any]()
+        if options?.contains(.modal) == true {
+            opts["modal"] = true
+        }
+        route(from: from, to: url, withOptions: opts)
     }
 }
 

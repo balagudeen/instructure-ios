@@ -576,11 +576,7 @@ export class QuizEdit extends Component<Props, any> {
     let updatedAssignment = this.state.assignment
     if (this.state.quiz.quiz_type === 'assignment' && this.state.assignment) {
       updatedAssignment = this.datesEditor.updateAssignment({ ...this.state.assignment })
-      let overrides = {
-        id: updatedAssignment.id,
-        assignment_overrides: updatedAssignment.assignment_overrides,
-      }
-      this.props.updateAssignment(this.props.courseID, overrides, this.props.assignment)
+      this.props.updateAssignment(this.props.courseID, updatedAssignment, this.props.assignment)
     }
 
     const updatedQuiz = this.datesEditor.updateAssignment({ ...this.state.quiz })

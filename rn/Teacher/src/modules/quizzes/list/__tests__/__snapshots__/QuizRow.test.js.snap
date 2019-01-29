@@ -232,7 +232,7 @@ exports[`QuizRow renders 1`] = `
             20 pts
           </Text>
           <Text
-            accessible={true}
+            accessible={false}
             allowFontScaling={true}
             ellipsizeMode="tail"
             style={
@@ -311,21 +311,25 @@ exports[`QuizRow renders 1`] = `
       >
         <View
           style={
-            Object {
-              "alignSelf": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "#c7c7cc",
-              "borderRightWidth": 2,
-              "borderTopWidth": 2,
-              "height": 10,
-              "marginLeft": 7,
-              "transform": Array [
-                Object {
-                  "rotate": "45deg",
-                },
-              ],
-              "width": 10,
-            }
+            Array [
+              Object {
+                "alignSelf": "center",
+                "backgroundColor": "transparent",
+                "borderColor": "#c7c7cc",
+                "borderRightWidth": 2,
+                "borderTopWidth": 2,
+                "height": 10,
+                "marginLeft": 7,
+                "width": 10,
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotate": "45deg",
+                  },
+                ],
+              },
+            ]
           }
         />
       </View>
@@ -566,7 +570,7 @@ exports[`QuizRow renders multiple question count 1`] = `
             20 pts
           </Text>
           <Text
-            accessible={true}
+            accessible={false}
             allowFontScaling={true}
             ellipsizeMode="tail"
             style={
@@ -645,21 +649,25 @@ exports[`QuizRow renders multiple question count 1`] = `
       >
         <View
           style={
-            Object {
-              "alignSelf": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "#c7c7cc",
-              "borderRightWidth": 2,
-              "borderTopWidth": 2,
-              "height": 10,
-              "marginLeft": 7,
-              "transform": Array [
-                Object {
-                  "rotate": "45deg",
-                },
-              ],
-              "width": 10,
-            }
+            Array [
+              Object {
+                "alignSelf": "center",
+                "backgroundColor": "transparent",
+                "borderColor": "#c7c7cc",
+                "borderRightWidth": 2,
+                "borderTopWidth": 2,
+                "height": 10,
+                "marginLeft": 7,
+                "width": 10,
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotate": "45deg",
+                  },
+                ],
+              },
+            ]
           }
         />
       </View>
@@ -900,7 +908,7 @@ exports[`QuizRow renders published 1`] = `
             20 pts
           </Text>
           <Text
-            accessible={true}
+            accessible={false}
             allowFontScaling={true}
             ellipsizeMode="tail"
             style={
@@ -979,21 +987,25 @@ exports[`QuizRow renders published 1`] = `
       >
         <View
           style={
-            Object {
-              "alignSelf": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "#c7c7cc",
-              "borderRightWidth": 2,
-              "borderTopWidth": 2,
-              "height": 10,
-              "marginLeft": 7,
-              "transform": Array [
-                Object {
-                  "rotate": "45deg",
-                },
-              ],
-              "width": 10,
-            }
+            Array [
+              Object {
+                "alignSelf": "center",
+                "backgroundColor": "transparent",
+                "borderColor": "#c7c7cc",
+                "borderRightWidth": 2,
+                "borderTopWidth": 2,
+                "height": 10,
+                "marginLeft": 7,
+                "width": 10,
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotate": "45deg",
+                  },
+                ],
+              },
+            ]
           }
         />
       </View>
@@ -1235,7 +1247,7 @@ exports[`QuizRow renders selected 1`] = `
             20 pts
           </Text>
           <Text
-            accessible={true}
+            accessible={false}
             allowFontScaling={true}
             ellipsizeMode="tail"
             style={
@@ -1314,21 +1326,25 @@ exports[`QuizRow renders selected 1`] = `
       >
         <View
           style={
-            Object {
-              "alignSelf": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "#c7c7cc",
-              "borderRightWidth": 2,
-              "borderTopWidth": 2,
-              "height": 10,
-              "marginLeft": 7,
-              "transform": Array [
-                Object {
-                  "rotate": "45deg",
-                },
-              ],
-              "width": 10,
-            }
+            Array [
+              Object {
+                "alignSelf": "center",
+                "backgroundColor": "transparent",
+                "borderColor": "#c7c7cc",
+                "borderRightWidth": 2,
+                "borderTopWidth": 2,
+                "height": 10,
+                "marginLeft": 7,
+                "width": 10,
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotate": "45deg",
+                  },
+                ],
+              },
+            ]
           }
         />
       </View>
@@ -1569,7 +1585,7 @@ exports[`QuizRow renders single question count 1`] = `
             20 pts
           </Text>
           <Text
-            accessible={true}
+            accessible={false}
             allowFontScaling={true}
             ellipsizeMode="tail"
             style={
@@ -1648,21 +1664,25 @@ exports[`QuizRow renders single question count 1`] = `
       >
         <View
           style={
-            Object {
-              "alignSelf": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "#c7c7cc",
-              "borderRightWidth": 2,
-              "borderTopWidth": 2,
-              "height": 10,
-              "marginLeft": 7,
-              "transform": Array [
-                Object {
-                  "rotate": "45deg",
-                },
-              ],
-              "width": 10,
-            }
+            Array [
+              Object {
+                "alignSelf": "center",
+                "backgroundColor": "transparent",
+                "borderColor": "#c7c7cc",
+                "borderRightWidth": 2,
+                "borderTopWidth": 2,
+                "height": 10,
+                "marginLeft": 7,
+                "width": 10,
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotate": "45deg",
+                  },
+                ],
+              },
+            ]
           }
         />
       </View>
@@ -1903,7 +1923,7 @@ exports[`QuizRow renders unpublished 1`] = `
             20 pts
           </Text>
           <Text
-            accessible={true}
+            accessible={false}
             allowFontScaling={true}
             ellipsizeMode="tail"
             style={
@@ -1982,21 +2002,25 @@ exports[`QuizRow renders unpublished 1`] = `
       >
         <View
           style={
-            Object {
-              "alignSelf": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "#c7c7cc",
-              "borderRightWidth": 2,
-              "borderTopWidth": 2,
-              "height": 10,
-              "marginLeft": 7,
-              "transform": Array [
-                Object {
-                  "rotate": "45deg",
-                },
-              ],
-              "width": 10,
-            }
+            Array [
+              Object {
+                "alignSelf": "center",
+                "backgroundColor": "transparent",
+                "borderColor": "#c7c7cc",
+                "borderRightWidth": 2,
+                "borderTopWidth": 2,
+                "height": 10,
+                "marginLeft": 7,
+                "width": 10,
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotate": "45deg",
+                  },
+                ],
+              },
+            ]
           }
         />
       </View>
@@ -2257,21 +2281,25 @@ exports[`QuizRow renders without points possible 1`] = `
       >
         <View
           style={
-            Object {
-              "alignSelf": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "#c7c7cc",
-              "borderRightWidth": 2,
-              "borderTopWidth": 2,
-              "height": 10,
-              "marginLeft": 7,
-              "transform": Array [
-                Object {
-                  "rotate": "45deg",
-                },
-              ],
-              "width": 10,
-            }
+            Array [
+              Object {
+                "alignSelf": "center",
+                "backgroundColor": "transparent",
+                "borderColor": "#c7c7cc",
+                "borderRightWidth": 2,
+                "borderTopWidth": 2,
+                "height": 10,
+                "marginLeft": 7,
+                "width": 10,
+              },
+              Object {
+                "transform": Array [
+                  Object {
+                    "rotate": "45deg",
+                  },
+                ],
+              },
+            ]
           }
         />
       </View>

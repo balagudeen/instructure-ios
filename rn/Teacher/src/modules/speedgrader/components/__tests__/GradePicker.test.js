@@ -242,7 +242,7 @@ describe('GradePicker', () => {
     expect(defaultProps.gradeSubmission).toHaveBeenCalledWith('3', '2', '4', '1', '80%')
   })
 
-  it('doesnt show the excuse student button and has default value if the student is already excused', () => {
+  it('does not show the excuse student button and has default value if the student is already excused', () => {
     let tree = renderer.create(
       <GradePicker {...defaultProps} excused={true} />
     ).toJSON()
@@ -252,6 +252,32 @@ describe('GradePicker', () => {
 
     expect(AlertIOS.prompt.mock.calls[0][2].length).toEqual(3)
     expect(AlertIOS.prompt.mock.calls[0][4]).not.toEqual('')
+  })
+
+  it('does not do anything if the student is already excused and ok is pressed', () => {
+    AlertIOS.prompt = jest.fn((title, message, buttons) => buttons[1].onPress('Excused'))
+    const spy = jest.fn()
+    let tree = renderer.create(
+      <GradePicker {...defaultProps} excused={true} gradeSubmission={spy} />
+    ).toJSON()
+
+    let button = explore(tree).selectByID('grade-picker.button') || {}
+    button.props.onPress()
+
+    expect(spy.mock.calls.length).toBe(0)
+  })
+
+  it('calls gradeSubmission for a previously excused submission if ok is pressed and the prompt value no longer equals Excused', () => {
+    AlertIOS.prompt = jest.fn((title, message, buttons) => buttons[1].onPress('Excuse'))
+    const spy = jest.fn()
+    let tree = renderer.create(
+      <GradePicker {...defaultProps} excused={true} gradeSubmission={spy} />
+    ).toJSON()
+
+    let button = explore(tree).selectByID('grade-picker.button') || {}
+    button.props.onPress()
+
+    expect(spy.mock.calls.length).toBe(1)
   })
 
   it('shows the current grade as the default value of the prompt when not excused', () => {

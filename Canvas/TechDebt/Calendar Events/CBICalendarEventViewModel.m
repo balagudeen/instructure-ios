@@ -34,7 +34,7 @@
         RAC(self, syllabusDate) = RACObserve(self, model.startAt);
         RAC(self, subtitle) = [RACObserve(self, model.startAt) map:^id(NSDate *unformattedDueDate) {
             if (!unformattedDueDate) {
-                return NSLocalizedString(@"No due date", @"String for when assignment has no due date");
+                return NSLocalizedStringFromTableInBundle(@"No due date", nil, [NSBundle bundleForClass:self.class], @"String for when assignment has no due date");
             }
             static NSDateFormatter *formatter;
             static dispatch_once_t onceToken;

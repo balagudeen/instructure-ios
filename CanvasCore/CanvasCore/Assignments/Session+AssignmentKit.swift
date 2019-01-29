@@ -30,7 +30,7 @@ let assignmentKitFailedToLoadErrorDescription = "Failed to load \(assignmentKitM
 let assignmentKitDBFailedToLoadErrorDescription = NSLocalizedString("There was a problem loading the AssignmentKit database file.", tableName: "Localizable", bundle: .core, value: "", comment: "AssignmentKit database load failure message")
 
 extension Session {
-    public func assignmentsManagedObjectContext(_ scope: String? = nil) throws -> NSManagedObjectContext {
+    @objc public func assignmentsManagedObjectContext(_ scope: String? = nil) throws -> NSManagedObjectContext {
         guard let model = NSManagedObjectModel(named: assignmentKitModelName, inBundle: Bundle(for: Assignment.self))?.mutableCopy() as? NSManagedObjectModel else {
             throw NSError(subdomain: assignmentKitSubdomain, code: assignmentKitFailedToLoadErrorCode, title: assignmentKitFailedToLoadErrorDescription, description: assignmentKitDBFailedToLoadErrorDescription)
         }

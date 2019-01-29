@@ -23,11 +23,11 @@ import ReactiveCocoa
 
 class SubmitAnnotatedAssignmentViewController: UITableViewController {
 
-    var annotatedFileURL: URL!
-    var session: Session!
-    var defaultCourseID: String?
-    var defaultAssignmentID: String?
-    var didSubmitAssignment: ()->Void = { }
+    @objc var annotatedFileURL: URL!
+    @objc var session: Session!
+    @objc var defaultCourseID: String?
+    @objc var defaultAssignmentID: String?
+    @objc var didSubmitAssignment: ()->Void = { }
     var observer: ManagedObjectObserver<Upload>?
 
     let newSubmissionViewModel: NewSubmissionViewModelType = NewSubmissionViewModel()
@@ -38,7 +38,7 @@ class SubmitAnnotatedAssignmentViewController: UITableViewController {
     fileprivate var submissionUploadCompletedDisposable: Disposable?
     fileprivate var submissionUploadFailedDisposable: Disposable?
 
-    var course: Course? {
+    @objc var course: Course? {
         didSet {
             if course == nil {
                 assignment = nil
@@ -55,7 +55,7 @@ class SubmitAnnotatedAssignmentViewController: UITableViewController {
         }
     }
     // The picked assignment to display
-    var assignment: Assignment? {
+    @objc var assignment: Assignment? {
         didSet {
             assignmentCell.detailTextLabel?.text = assignment?.name ?? ""
             navigationItem.rightBarButtonItem?.isEnabled = (course != nil && assignment != nil)
@@ -122,7 +122,7 @@ class SubmitAnnotatedAssignmentViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    func submit(_ button: UIBarButtonItem) {
+    @objc func submit(_ button: UIBarButtonItem) {
         guard let assignment = assignment else { return }
 
         navigationItem.leftBarButtonItem?.isEnabled = false
@@ -132,7 +132,7 @@ class SubmitAnnotatedAssignmentViewController: UITableViewController {
         assignmentCell.isUserInteractionEnabled = false
         assignmentCell.textLabel?.textColor = UIColor.lightGray
 
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        let activityIndicator = UIActivityIndicatorView(style: .white)
         activityIndicator.startAnimating()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
 
@@ -189,14 +189,17 @@ class SubmitAnnotatedAssignmentViewController: UITableViewController {
                 }
             }
 
+            let outputURL = URL(fileURLWithPath: outputPath)
+            let processor = PSPDFProcessor(configuration: configuration, securityOptions: nil)
             do {
-                let outputURL = URL(fileURLWithPath: outputPath)
-                try PSPDFProcessor.generatePDF(from: configuration, securityOptions: nil, outputFileURL: outputURL, progressBlock: nil)
+                try processor.write(toFileURL: outputURL)
                 DispatchQueue.main.async {
                     completion(outputURL)
                 }
             } catch {
-                print("Error generating new file with flattened annotations: \(error)")
+                DispatchQueue.main.async {
+                    self.handleSubmitError(error.localizedDescription)
+                }
             }
         }
     }

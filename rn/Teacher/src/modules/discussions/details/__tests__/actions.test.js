@@ -332,3 +332,30 @@ test('deletePendingReplies', () => {
     },
   })
 })
+
+test('it rates an entry', async () => {
+  let context = 'courses'
+  let contextID = '1'
+  let discussionID = '2'
+  let entryID = '3'
+  let rating = 1
+
+  let api = { rateEntry: apiResponse(null, { status: 204 }) }
+  let actions = Actions(api)
+  let action = actions.rateEntry('courses', '1', '2', '3', 1)
+
+  let results = await testAsyncAction(action)
+  expect(results).toMatchObject([{
+    type: actions.rateEntry.toString(),
+    pending: true,
+  }, {
+    type: actions.rateEntry.toString(),
+    payload: {
+      context,
+      contextID,
+      discussionID,
+      entryID,
+      rating,
+    },
+  }])
+})

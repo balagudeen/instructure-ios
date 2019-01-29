@@ -17,7 +17,6 @@
 import UIKit
 import CanvasKeymaster
 import React
-import SVGKit
 
 public typealias ModuleName = String
 
@@ -43,10 +42,10 @@ public struct HelmViewControllerFactory {
 @objc(HelmManager)
 open class HelmManager: NSObject {
 
-    public static let shared = HelmManager()
-    public var bridge: RCTBridge!
-    public var onReactLoginComplete: () -> Void = {}
-    public var onReactReload: () -> Void = {}
+    @objc public static let shared = HelmManager()
+    @objc public var bridge: RCTBridge!
+    @objc public var onReactLoginComplete: () -> Void = {}
+    @objc public var onReactReload: () -> Void = {}
 
     @objc
     public func loginComplete() {
@@ -54,8 +53,8 @@ open class HelmManager: NSObject {
     }
 
     private var viewControllers = NSMapTable<NSString, HelmViewController>(keyOptions: .strongMemory, valueOptions: .weakMemory)
-    private(set) var defaultScreenConfiguration: [ModuleName: [String: Any]] = [:]
-    fileprivate(set) var masterModules = Set<ModuleName>()
+    @objc private(set) var defaultScreenConfiguration: [ModuleName: [String: Any]] = [:]
+    @objc fileprivate(set) var masterModules = Set<ModuleName>()
     private var nativeViewControllerFactories: [ModuleName: HelmViewControllerFactory] = [:]
 
     fileprivate var pushTransitioningDelegate = PushTransitioningDelegate()
@@ -67,15 +66,15 @@ open class HelmManager: NSObject {
         setupNotifications()
     }
 
-    func setupNotifications() {
+    @objc func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(reactWillReload), name: Notification.Name("RCTJavaScriptWillStartLoadingNotification"), object: nil)
     }
 
-    open func reload() {
+    @objc open func reload() {
         bridge.reload()
     }
 
-    open func reactWillReload() {
+    @objc open func reactWillReload() {
         // Clean up happens on log out for UI tests
         if uiTesting {
             onReactReload()
@@ -88,7 +87,7 @@ open class HelmManager: NSObject {
 
     //  MARK: - Screen Configuration
 
-    open func registerNativeViewController(for moduleName: ModuleName, factory: @escaping HelmViewControllerFactory.Builder, withCustomPresentation presentation: HelmViewControllerFactory.Presenter? = nil) {
+    @objc open func registerNativeViewController(for moduleName: ModuleName, factory: @escaping HelmViewControllerFactory.Builder, withCustomPresentation presentation: HelmViewControllerFactory.Presenter? = nil) {
         nativeViewControllerFactories[moduleName] = HelmViewControllerFactory(builder: factory, presenter: presentation)
     }
 
@@ -96,7 +95,7 @@ open class HelmManager: NSObject {
         viewControllers.setObject(screen, forKey: screen.screenInstanceID as NSString)
     }
 
-    open func setScreenConfig(_ config: [String: Any], forScreenWithID screenInstanceID: String, hasRendered: Bool) {
+    @objc open func setScreenConfig(_ config: [String: Any], forScreenWithID screenInstanceID: String, hasRendered: Bool) {
         if let vc = viewControllers.object(forKey: screenInstanceID as NSString) {
             vc.screenConfig = HelmScreenConfig(config: config)
             vc.screenConfigRendered = hasRendered
@@ -108,13 +107,13 @@ open class HelmManager: NSObject {
         }
     }
 
-    open func setDefaultScreenConfig(_ config: [String: Any], forModule module: ModuleName) {
+    @objc open func setDefaultScreenConfig(_ config: [String: Any], forModule module: ModuleName) {
         defaultScreenConfiguration[module] = config
     }
 
     //  MARK: - Navigation
 
-    public func pushFrom(_ sourceModule: ModuleName, destinationModule: ModuleName, withProps props: [String: Any], options: [String: Any], callback: (() -> Void)? = nil) {
+    @objc public func pushFrom(_ sourceModule: ModuleName, destinationModule: ModuleName, withProps props: [String: Any], options: [String: Any], callback: (() -> Void)? = nil) {
         guard let topViewController = topMostViewController() else { return }
 
         let viewController: UIViewController
@@ -263,7 +262,7 @@ open class HelmManager: NSObject {
         }
     }
 
-    open func popFrom(_ sourceModule: ModuleName, callback: (() -> Void)? = nil) {
+    @objc open func popFrom(_ sourceModule: ModuleName, callback: (() -> Void)? = nil) {
         guard let topViewController = topMostViewController() else {
             callback?()
             return
@@ -294,7 +293,7 @@ open class HelmManager: NSObject {
         callback?()
     }
 
-    public func present(_ module: ModuleName, withProps props: [String: Any], options: [String: Any], callback: (() -> Void)? = nil) {
+    @objc public func present(_ module: ModuleName, withProps props: [String: Any], options: [String: Any], callback: (() -> Void)? = nil) {
         guard let current = topMostViewController() else {
             callback?()
             return
@@ -374,14 +373,14 @@ open class HelmManager: NSObject {
         }
     }
 
-    open func dismiss(_ options: [String: Any], callback: (() -> Void)? = nil) {
+    @objc open func dismiss(_ options: [String: Any], callback: (() -> Void)? = nil) {
         // TODO: maybe not always dismiss the top - UIKit allows dismissing things not the top, dismisses all above
         guard let vc = topMostViewController() else { return }
         let animated = options["animated"] as? Bool ?? true
         vc.dismiss(animated: animated, completion: callback)
     }
 
-    open func dismissAllModals(_ options: [String: Any], callback: (() -> Void)? = nil) {
+    @objc open func dismissAllModals(_ options: [String: Any], callback: (() -> Void)? = nil) {
         // TODO: maybe not always dismiss the top - UIKit allows dismissing things not the top, dismisses all above
         guard let vc = UIApplication.shared.keyWindow?.rootViewController, vc.presentedViewController != nil else {
             callback?()
@@ -392,7 +391,7 @@ open class HelmManager: NSObject {
         vc.dismiss(animated: animated, completion: callback)
     }
 
-    public func traitCollection(_ moduleName: String, callback: @escaping RCTResponseSenderBlock) {
+    @objc public func traitCollection(_ moduleName: String, callback: @escaping RCTResponseSenderBlock) {
         var top = topMostViewController()
         //  FIXME: - fix sourceController method, something named more appropriate
         if let svc = top as? HelmSplitViewController, let sourceController = svc.sourceController(moduleName: moduleName) {
@@ -413,7 +412,7 @@ open class HelmManager: NSObject {
         callback([result])
     }
     
-    public func cleanup(callback: (() -> Void)?) {
+    @objc public func cleanup(callback: (() -> Void)?) {
         dismissAllModals(["animated": false]) { [weak self] in
             // Cleanup is mainly used in rn reload situations or in ui testing
             // There is a bug where the view controllers are sometimes leaked, and I cannot for the life of me figure out why
@@ -430,7 +429,7 @@ open class HelmManager: NSObject {
 }
 
 extension HelmManager {
-    func navigationControllerForSplitViewControllerPush(splitViewController: HelmSplitViewController?, sourceModule: ModuleName, destinationModule: ModuleName, props: [String: Any], options: [String: Any]) -> UINavigationController? {
+    @objc func navigationControllerForSplitViewControllerPush(splitViewController: HelmSplitViewController?, sourceModule: ModuleName, destinationModule: ModuleName, props: [String: Any], options: [String: Any]) -> UINavigationController? {
 
         if let detailViewController = splitViewController?.detailTopHelmViewController, detailViewController.moduleName == sourceModule {
             return splitViewController?.detailHelmNavigationController ?? splitViewController?.detailNavigationController
@@ -452,21 +451,21 @@ extension HelmManager {
 }
 
 extension HelmManager {
-    open func topMostViewController() -> UIViewController? {
+    @objc open func topMostViewController() -> UIViewController? {
         return UIApplication.shared.keyWindow?.rootViewController?.topMostViewController()
     }
 
-    open func topNavigationController() -> UINavigationController? {
+    @objc open func topNavigationController() -> UINavigationController? {
         return topMostViewController()?.navigationController
     }
 
-    open func topTabBarController() -> UITabBarController? {
+    @objc open func topTabBarController() -> UITabBarController? {
         return topMostViewController()?.tabBarController
     }
 }
 
 extension UIViewController {
-    func topMostViewController() -> UIViewController? {
+    @objc func topMostViewController() -> UIViewController? {
         if let presented = presentedViewController {
             return presented.topMostViewController()
         } else if let tabBarSelected = (self as? UITabBarController)?.selectedViewController {
@@ -480,14 +479,15 @@ extension UIViewController {
 }
 
 extension HelmManager {
-
-    static func narBarTitleViewFromImagePath(_ imagePath: Any) -> UIView? {
+    @objc static func narBarTitleViewFromImagePath(_ imagePath: Any) -> UIView? {
         var titleView: UIView? = nil
         switch (imagePath) {
         case is String:
             if let path = imagePath as? String {
-                if let url = URL(string: path), (path as NSString).pathExtension == "svg" {
-                    titleView = SVGImageView(url: url)
+                if let url = URL(string: path), url.pathExtension == "svg" {
+                    let view = SVGImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 44), url: url)
+                    view.heightAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+                    titleView = view
                 } else {
                     let imageView = UIImageView()
                     imageView.kf.setImage(with: URL(string: path))
@@ -505,7 +505,15 @@ extension HelmManager {
         guard let view = titleView else { return nil }
 
         view.contentMode = .scaleAspectFit
-        view.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        return view
+        if #available(iOS 11, *) {
+            view.widthAnchor.constraint(equalToConstant: 44).isActive = true
+            return view
+        } else {
+            view.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+            let container = UIView()
+            container.addSubview(view)
+            container.frame = view.frame
+            return container
+        }
     }
 }

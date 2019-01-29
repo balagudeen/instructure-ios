@@ -21,7 +21,7 @@ import UIKit
 import AVFoundation
 
 public class AudioRecorderViewController: SmallModalNavigationController {
-    public static func present(from viewController: UIViewController, completeButtonTitle: String) -> AudioRecorderViewController {
+    @objc public static func present(from viewController: UIViewController, completeButtonTitle: String) -> AudioRecorderViewController {
         return present(from: viewController, completeButtonTitle: completeButtonTitle, permissionDelegate: AVAudioSession.sharedInstance())
     }
 
@@ -45,11 +45,11 @@ public class AudioRecorderViewController: SmallModalNavigationController {
         return me
     }
 
-    var audioRecorderView: AudioRecorderView {
+    @objc var audioRecorderView: AudioRecorderView {
         return viewControllers.first!.view as! AudioRecorderView
     }
     
-    public var cancelButtonTapped: ()->() {
+    @objc public var cancelButtonTapped: ()->() {
         set {
             audioRecorderView.didCancel = newValue
         } get {
@@ -57,7 +57,7 @@ public class AudioRecorderViewController: SmallModalNavigationController {
         }
     }
     
-    public var didFinishRecordingAudioFile: (URL)->() {
+    @objc public var didFinishRecordingAudioFile: (URL)->() {
         set {
             audioRecorderView.didFinishRecordingAudioFile = newValue
         } get {

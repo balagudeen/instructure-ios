@@ -22,6 +22,7 @@ import ReactiveSwift
 import Kingfisher
 import TechDebt
 import CanvasCore
+import Core
 
 func rootViewController(_ session: Session) -> UIViewController {
     let tabs = CanvasTabBarController()
@@ -54,6 +55,9 @@ func rootViewController(_ session: Session) -> UIViewController {
     let selectedTab = UserPreferences.landingPage(session.user.id)
     tabs.selectedIndex = selectedTab.tabIndex
 
+    if FeatureFlags.featureFlagEnabled(.newStudentAssignmentView) {
+        tabs.tabBar.useGlobalNavStyle()
+    }
     return tabs
 }
 

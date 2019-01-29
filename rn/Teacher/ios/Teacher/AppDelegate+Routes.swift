@@ -19,7 +19,7 @@ import CanvasCore
 import CanvasKeymaster
 
 extension AppDelegate {
-    func registerNativeRoutes() {
+    @objc func registerNativeRoutes() {
         HelmManager.shared.registerNativeViewController(for: "/attendance", factory: { props in
             guard
                 let destinationURL = (props["launchURL"] as? String).flatMap(URL.init(string:)),

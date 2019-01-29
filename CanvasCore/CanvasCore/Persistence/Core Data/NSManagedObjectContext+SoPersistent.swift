@@ -20,7 +20,7 @@ import CoreData
 
 
 extension NSManagedObjectModel {
-    public convenience init?(named: String, inBundle bundle: Bundle = Bundle.main) {
+    @objc public convenience init?(named: String, inBundle bundle: Bundle = Bundle.main) {
         guard let url = bundle.url(forResource: named, withExtension: "momd") else { return nil }
         
         self.init(contentsOf: url)
@@ -69,7 +69,7 @@ extension NSManagedObjectContext {
         persistentStoreCoordinator = psc
     }
     
-    var persistentStoreCoordinatorFRD: NSPersistentStoreCoordinator {
+    @objc var persistentStoreCoordinatorFRD: NSPersistentStoreCoordinator {
         guard let psc =
             persistentStoreCoordinator
             ?? parent?.persistentStoreCoordinator
@@ -82,7 +82,7 @@ extension NSManagedObjectContext {
         return psc
     }
     
-    public func saveFRD() throws {
+    @objc public func saveFRD() throws {
         try save()
         
         var parent = self.parent
@@ -96,7 +96,7 @@ extension NSManagedObjectContext {
         return String(format: "%p", self)
     }
     
-    func observeChangesFromContext(_ key: String, context: NSManagedObjectContext) {
+    @objc func observeChangesFromContext(_ key: String, context: NSManagedObjectContext) {
         self.userInfo[key] = NotificationCenter.default.addObserver(forName: NSNotification.Name.NSManagedObjectContextDidSave, object: context, queue: nil) { [weak self] note in
             
             // move changes off the source contexts queue so we can control the locking order
@@ -118,7 +118,7 @@ extension NSManagedObjectContext {
         }
     }
     
-    public var syncContext: NSManagedObjectContext {
+    @objc public var syncContext: NSManagedObjectContext {
         var sync: NSManagedObjectContext!
         
         performAndWait {
@@ -145,7 +145,7 @@ private let SyncContextKey = "YeOldeSyncContext"
 private let MainContextObserverKey = "YeOldeMainContextObserver"
 
 extension NSManagedObjectContext {
-    public func saveOrRollback() -> Bool {
+    @objc public func saveOrRollback() -> Bool {
         do {
             try save()
             return true
@@ -155,7 +155,7 @@ extension NSManagedObjectContext {
         }
     }
     
-    public func performChanges(_ block: @escaping () -> ()) {
+    @objc public func performChanges(_ block: @escaping () -> ()) {
         perform {
             block()
             _ = self.saveOrRollback()

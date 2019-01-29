@@ -118,9 +118,9 @@ export default class RubricItem extends Component<RubricItemProps, RubricItemSta
     })
   }
 
-  showToolTip = (value: ?number, { x, y, width }: { x: number, y: number, width: number }) => {
+  showToolTip = (itemID: string, { x, y, width }: { x: number, y: number, width: number }) => {
     const rubricItem = this.props.rubricItem
-    const rating = rubricItem.ratings.find(rating => rating.points === value)
+    const rating = rubricItem.ratings.find(rating => rating.id === itemID)
     if (rating && this.props.showToolTip) {
       this.props.showToolTip({ x: x + width / 2, y }, rating.description)
     }
@@ -140,10 +140,19 @@ export default class RubricItem extends Component<RubricItemProps, RubricItemSta
     return (
       <View style={styles.container}>
         <Text style={styles.description}>{rubricItem.description}</Text>
+        {rubricItem.ignore_for_scoring &&
+          <Text
+            style={styles.noScoreText}
+            testID={`rubric-item.${rubricItem.id}-no-score`}
+          >
+            {i18n('This criterion will not impact the score.')}
+          </Text>
+        }
         <View style={styles.ratings}>
           {!freeFormCriterionComments && rubricItem.ratings.slice().reverse().map(rating => (
             <CircleToggle
               key={rating.id}
+              itemID={rating.id}
               style={styles.circle}
               on={this.state.selectedOption === rating.points}
               value={rating.points}
@@ -227,6 +236,11 @@ const styles = StyleSheet.create({
   },
   description: {
     fontWeight: '600',
+  },
+  noScoreText: {
+    marginTop: 2,
+    fontSize: 12,
+    color: colors.grey5,
   },
   ratings: {
     flexDirection: 'row',

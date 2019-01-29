@@ -29,7 +29,7 @@ let enrollmentKitFailedToLoadErrorDescription = "Failed to load \(enrollmentKitM
 let enrollmentKitDBFailedToLoadErrorDescription = NSLocalizedString("There was a problem loading the EnrollmentKit database file.", tableName: "Localizable", bundle: .core, value: "", comment: "EnrollmentKit Database Load Failure Message")
 
 extension Session {
-    public func enrollmentManagedObjectContext(_ scope: String? = nil) throws -> NSManagedObjectContext {
+    @objc public func enrollmentManagedObjectContext(_ scope: String? = nil) throws -> NSManagedObjectContext {
         let model = NSManagedObjectModel(named: enrollmentKitModelName, inBundle: Bundle(for: Course.self))?.mutableCopy() as! NSManagedObjectModel
         let storeName = scope == nil ? enrollmentKitModelName : "\(enrollmentKitModelName)_\(scope!)"
         let storeID = StoreID(storeName: storeName, model: model,
@@ -49,20 +49,20 @@ extension Session {
     }
     
     // for objc compatability
-    public func colorForCourse(_ courseID: String) -> UIColor {
+    @objc public func colorForCourse(_ courseID: String) -> UIColor {
         return color(for: .course(withID: courseID))
     }
     
     // for objc compatability
-    public func colorForGroup(_ groupID: String) -> UIColor {
+    @objc public func colorForGroup(_ groupID: String) -> UIColor {
         return color(for: .group(withID: groupID))
     }
     
-    public func course(id courseID: String) -> Course? {
+    @objc public func course(id courseID: String) -> Course? {
         return enrollmentsDataSource[.course(withID: courseID)] as? Course
     }
     
-    public func group(id groupID: String) -> Group? {
+    @objc public func group(id groupID: String) -> Group? {
         return enrollmentsDataSource[.group(withID: groupID)] as? Group
     }
 

@@ -77,7 +77,10 @@ class QuizTakeabilityController {
                 switch quiz.attemptLimit {
                 case .count(let limit):
                     if lastSubmission.attempt >= limit && lastSubmission.workflowState != .Untaken && lastSubmission.attemptsLeft == 0 {
-                        // You had your chance, and you probably ended up screwing up anyways :P 
+                        if let url = quizController.urlForViewingResultsForAttempt(lastSubmission.attempt) {
+                            takeability = .viewResults(url)
+                            return
+                        }
                         takeability = .notTakeable(reason: .attemptLimitReached)
                         return
                     }
@@ -116,7 +119,7 @@ class QuizTakeabilityController {
             }
             
             if quiz.lockedForUser {
-                takeability = .notTakeable(reason: .other(quiz.lockExplanation ?? "This quiz is locked."))
+                takeability = .notTakeable(reason: .locked)
             } else {
                 takeability = .retake
             }
@@ -124,12 +127,15 @@ class QuizTakeabilityController {
     }
     
     func refreshTakeability() {
-        service.getSubmissions() { result in
+        service.getSubmissions() { [weak self] result in
             switch result {
             case .success(let submissionPage):
-                self.updateTakeability(submissionPage.content)
+                self?.updateTakeability(submissionPage.content)
             case .failure(let error):
                 print("error getting the submissions \(error)")
+                if error.domain == NSURLErrorDomain && error.code == NSURLErrorNotConnectedToInternet {
+                    self?.takeability = .notTakeable(reason: .offline)
+                }
             }
         }
     }

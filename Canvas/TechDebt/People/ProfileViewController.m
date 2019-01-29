@@ -150,8 +150,8 @@ CGFloat square(CGFloat x){return x*x;}
     [self.avatarButton setAdjustsImageWhenHighlighted:NO];
     [self.avatarButton setContentMode:UIViewContentModeCenter];
     self.avatarButton.accessibilityIdentifier = @"profile_photo_button";
-    self.avatarButton.accessibilityLabel = NSLocalizedString(@"Change Profile Image", @"button to change user's profile image");
-    
+    self.avatarButton.accessibilityLabel = NSLocalizedStringFromTableInBundle(@"Change Profile Image", nil, [NSBundle bundleForClass:self.class], @"button to change user's profile image");
+
     [self updateForUser];
     
     UITapGestureRecognizer *chooseCoverPicture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseCoverPhoto)];
@@ -278,8 +278,8 @@ CGFloat square(CGFloat x){return x*x;}
     }
     self.emailLabel.text = self.user.primaryEmail;
     [self.nameLabel setText:self.user.displayName];
-    
-    self.title = NSLocalizedString(@"Profile", @"Title for profile screen");
+
+    self.title = NSLocalizedStringFromTableInBundle(@"Profile", nil, [NSBundle bundleForClass:self.class], @"Title for profile screen");
     BOOL isPersonalProfile = [self isPersonalProfile];
     self.avatarButton.enabled = isPersonalProfile;
 }
@@ -300,11 +300,36 @@ CGFloat square(CGFloat x){return x*x;}
 
 - (IBAction)pickAvatar:(id)sender
 {
+    [self.loadingIndicator startAnimating];
+    __weak ProfileViewController *weakSelf = self;
+    RACSignal *getUser = [[CKIClient currentClient] fetchResponseAtPath:@"api/v1/users/self" parameters:nil modelClass:[CKIUser class] context:nil];
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    [getUser subscribeNext:^(CKIUser *user) {
+        NSNumber *permission = user.permissions[@"can_update_avatar"];
+        if ([permission isKindOfClass:[NSNumber class]] && [permission boolValue]) {
+            [weakSelf showAvatarOptions:sender];
+        } else {
+            NSString *title = NSLocalizedStringFromTableInBundle(@"Permission Denied", nil, bundle, nil);
+            NSString *message = NSLocalizedStringFromTableInBundle(@"You are not allowed to change your avatar at this time.", nil, bundle, nil);
+            [UIAlertController showAlertWithTitle:title message:message];
+        }
+    } error:^(NSError * _Nullable error) {
+        NSString *title = NSLocalizedStringFromTableInBundle(@"Network Error", nil, bundle, nil);
+        NSString *message = NSLocalizedStringFromTableInBundle(@"Something went wrong. Please try again.", nil, bundle, nil);
+        [UIAlertController showAlertWithTitle:title message:message];
+    } completed:^{
+        [weakSelf.loadingIndicator stopAnimating];
+    }];
+}
+
+- (void)showAvatarOptions:(id)sender
+{
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     UIButton *avatarButton = (UIButton *)sender;
-    CKActionSheetWithBlocks *actionSheet = [[CKActionSheetWithBlocks alloc] initWithTitle:NSLocalizedString(@"Choose Profile Picture", nil)];
+    CKActionSheetWithBlocks *actionSheet = [[CKActionSheetWithBlocks alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Choose Profile Picture", nil, bundle, nil)];
     
     __weak __typeof(&*self)weakSelf = self;
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Build Avatar", @"Link to building panda avatar") handler:^{
+    [actionSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Build Avatar", nil, bundle, @"Link to building panda avatar") handler:^{
         PandatarBuilderViewController *pandatarBuilderViewController = [[PandatarBuilderViewController alloc] init];
         __weak PandatarBuilderViewController *pandatarBuilder = pandatarBuilderViewController;
       pandatarBuilderViewController.doneBuilding = ^(UIImage *tehPandatar) {
@@ -320,7 +345,7 @@ CGFloat square(CGFloat x){return x*x;}
     }];
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [actionSheet addButtonWithTitle:NSLocalizedString(@"Take Photo", @"Button label for taking a photo") handler:^{
+        [actionSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Take Photo", nil, bundle, @"Button label for taking a photo") handler:^{
             UIImagePickerController *imagePicker = [UIImagePickerController new];
             imagePicker.delegate = self;
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -331,7 +356,7 @@ CGFloat square(CGFloat x){return x*x;}
         }];
     }
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-        [actionSheet addButtonWithTitle:NSLocalizedString(@"Choose Photo", @"Button label for choosing a photo") handler:^{
+        [actionSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Choose Photo", nil, bundle, @"Button label for choosing a photo") handler:^{
             UIImagePickerController *imagePicker = [UIImagePickerController new];
             imagePicker.delegate = self;
             imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -343,10 +368,10 @@ CGFloat square(CGFloat x){return x*x;}
             [self presentViewController:imagePicker animated:YES completion:nil];
         }];
     }
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Add Cover Photo", nil) handler:^{
+    [actionSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Add Cover Photo", nil, bundle, nil) handler:^{
         [self chooseCoverPhoto];
     }];
-    [actionSheet addCancelButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+    [actionSheet addCancelButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, nil)];
     if (self.tabBarController) {
         [actionSheet showFromTabBar:self.tabBarController.tabBar];
     } else {
@@ -360,19 +385,15 @@ CGFloat square(CGFloat x){return x*x;}
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
     NSLog(@"Image Selected");
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [self imagePicker:picker pickedImage:image];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self imagePicker:picker pickedImage:image];
+    }];
 }
 
 - (void)imagePicker:(UIImagePickerController *)imagePicker pickedImage:(UIImage *)image {
-    [self setImage:image];
     NSURL *imageFileURL = [self saveImageToFile:image];
     
     self.avatarButton.highlighted = YES;
-    
-    if (self.profileImageSelected){
-        self.profileImageSelected(image);
-    }
     
     UIActivityIndicatorView *activityIndicator = [UIActivityIndicatorView new];
     CGFloat x = CGRectGetMidX(self.avatarButton.bounds) - (activityIndicator.frame.size.width / 2.0f);
@@ -383,21 +404,20 @@ CGFloat square(CGFloat x){return x*x;}
     
     __weak CKCanvasAPI *weakAPI = self.canvasAPI;
     __weak ProfileViewController *weakSelf = self;
-    void (^gotPhoto)(UIImage*) = ^void(UIImage *backdropImage) {
-        self.headerImageView.image = nil;
-        if (backdropImage) {
-            self.headerImageView.image = backdropImage;
-        } else {
-            self.headerImageView.image = [image applyLightEffect];
-        }
-    };
     [self.canvasAPI postAvatarNamed:nil fileURL:imageFileURL block:^(NSError *error, BOOL isFinalValue, CKAttachment *attachment) {
-        
         if (isFinalValue) {
-            [weakSelf.avatarButton setImage:image forState:UIControlStateNormal];
+            if (error) {
+                [activityIndicator stopAnimating];
+                [activityIndicator removeFromSuperview];
+                weakSelf.avatarButton.highlighted = NO;
+                NSBundle *bundle = [NSBundle bundleForClass:self.class];
+                NSString *title = NSLocalizedStringFromTableInBundle(@"Error", nil, bundle, nil);
+                NSString *message = NSLocalizedStringFromTableInBundle(@"Unable to upload to server", nil, bundle, @"message saying that avatar couldn't be loaded to server");
+                [UIAlertController showAlertWithTitle:title message:message];
+                return;
+            }
 
-            Session *session = [CKIClient currentClient].authSession;
-            [session backdropPhoto:gotPhoto];
+            [weakSelf setImage:image];
             weakSelf.canvasAPI.user.avatarURL = attachment.directDownloadURL;
             [weakAPI updateLoggedInUserAvatarWithURL:attachment.directDownloadURL block:^(NSError *error, BOOL isFinalValue, NSDictionary *dictionary) {
                 if (error) {
@@ -409,24 +429,6 @@ CGFloat square(CGFloat x){return x*x;}
             [activityIndicator removeFromSuperview];
             weakSelf.avatarButton.highlighted = NO;
         }
-        if (error) {
-            NSString *title = NSLocalizedString(@"Error", nil);
-            NSString *message = NSLocalizedString(@"Unable to upload to server", @"message saying that avatar couldn't be loaded to server");
-            [UIAlertController showAlertWithTitle:title message:message];
-            return;
-        }
-        
-        [weakSelf.avatarButton setImage:image forState:UIControlStateNormal];
-        Session *session = [CKIClient currentClient].authSession;
-        
-        [session backdropPhoto:gotPhoto];
-        weakSelf.canvasAPI.user.avatarURL = attachment.directDownloadURL;
-        [weakAPI updateLoggedInUserAvatarWithURL:attachment.directDownloadURL block:^(NSError *error, BOOL isFinalValue, NSDictionary *dictionary) {
-            if (error) {
-                NSLog(@"Error setting default avatar: %@", error.localizedDescription);
-            }
-        }];
-        
     }];
 }
 

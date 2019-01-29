@@ -26,20 +26,20 @@ import ReactiveSwift
 import Marshal
 
 extension Assignment {
-    public static func collectionCacheKey(_ context: NSManagedObjectContext, courseID: String, gradingPeriodID: String? = nil) -> String {
-        return cacheKey(context, [courseID, gradingPeriodID].flatMap { $0 })
+    @objc public static func collectionCacheKey(_ context: NSManagedObjectContext, courseID: String, gradingPeriodID: String? = nil) -> String {
+        return cacheKey(context, [courseID, gradingPeriodID].compactMap { $0 })
     }
     
-    public static func predicate(_ courseID: String) -> NSPredicate {
+    @objc public static func predicate(_ courseID: String) -> NSPredicate {
         return NSPredicate(format:"%K == %@", "courseID", courseID)
     }
 
-    public static func predicate(_ courseID: String, gradingPeriodID: String) -> NSPredicate {
+    @objc public static func predicate(_ courseID: String, gradingPeriodID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@ && %K == %@", "courseID", courseID, "gradingPeriodID", gradingPeriodID)
     }
 
     // Only meant to be used in conjunction with another predicate in a compound predicate
-    public static func predicate(withName name: String) -> NSPredicate {
+    @objc public static func predicate(withName name: String) -> NSPredicate {
         return NSPredicate(format: "%K LIKE[cd] %@", "name", name)
     }
     
@@ -115,7 +115,7 @@ extension Assignment {
         return SignalProducerRefresher(refreshSignalProducer: sync, scope: session.refreshScope, cacheKey: key)
     }
 
-    public static func invalidateCache(_ session: Session, courseID: String) throws {
+    @objc public static func invalidateCache(_ session: Session, courseID: String) throws {
         let context = try session.assignmentsManagedObjectContext()
         session.refreshScope.invalidateCache(collectionCacheKey(context, courseID: courseID), refresh: false)
         for gradingPeriodID in try GradingPeriod.gradingPeriodIDs(session, courseID: courseID, excludingGradingPeriodID: nil) {

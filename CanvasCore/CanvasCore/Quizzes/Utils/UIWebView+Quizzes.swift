@@ -19,7 +19,7 @@
 import Foundation
 
 extension UIWebView {
-    func scalePageToFit() {
+    @objc func scalePageToFit() {
         let docWidth = Int(self.stringByEvaluatingJavaScript(from: "$(document).width()") ?? String(describing: UIScreen.main.bounds.size.width))
         
         if docWidth == nil || docWidth == 0 {

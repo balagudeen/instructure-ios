@@ -28,7 +28,7 @@ import Result
 open class EnrollmentsDataSource: NSObject {
     public let enrollmentsObserver: ManagedObjectsObserver<Enrollment, ContextID>
     
-    init(context: NSManagedObjectContext) throws {
+    @objc init(context: NSManagedObjectContext) throws {
         let fetch = NSFetchRequest<Enrollment>(entityName: "Enrollment")
         fetch.returnsObjectsAsFaults = false
         fetch.includesPropertyValues = true
@@ -100,7 +100,7 @@ extension Session {
         static var scopedEnrollmentsDataSource = "scopedEnrollmentsDataSource"
     }
     
-    public var enrollmentsDataSource: EnrollmentsDataSource {
+    @objc public var enrollmentsDataSource: EnrollmentsDataSource {
         get {
             guard let source: EnrollmentsDataSource = getAssociatedObject(&Associated.enrollmentsDataSource) else {
                 
@@ -114,7 +114,7 @@ extension Session {
         }
     }
 
-    public func enrollmentsDataSource(withScope scope: String) -> EnrollmentsDataSource {
+    @objc public func enrollmentsDataSource(withScope scope: String) -> EnrollmentsDataSource {
         guard let sources: NSMutableDictionary = getAssociatedObject(&Associated.scopedEnrollmentsDataSource) else {
 
             let context = try! enrollmentManagedObjectContext(scope)

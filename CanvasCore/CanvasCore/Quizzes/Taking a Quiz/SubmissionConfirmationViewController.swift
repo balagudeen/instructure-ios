@@ -26,9 +26,9 @@ enum SubmissionViewState {
 
 class SubmissionConfirmationViewController: UIViewController {
 
-    var requiresLockdownBrowserForViewingResults: Bool = false
-    var resultsURL: URL?
-    var customLoadingText: String?
+    @objc var requiresLockdownBrowserForViewingResults: Bool = false
+    @objc var resultsURL: URL?
+    @objc var customLoadingText: String?
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var statusImageView: UIImageView!
@@ -43,7 +43,7 @@ class SubmissionConfirmationViewController: UIViewController {
         return UIImage(named: "error", in: Bundle(for: SubmissionConfirmationViewController.self), compatibleWith: nil)!
     }
     
-    init(resultsURL: URL?, requiresLockdownBrowserForViewingResults: Bool) {
+    @objc init(resultsURL: URL?, requiresLockdownBrowserForViewingResults: Bool) {
         self.resultsURL = resultsURL
         self.requiresLockdownBrowserForViewingResults = requiresLockdownBrowserForViewingResults
         super.init(nibName: "SubmissionConfirmationViewController", bundle: Bundle(for: SubmissionConfirmationViewController.self))
@@ -116,7 +116,7 @@ class SubmissionConfirmationViewController: UIViewController {
     
     // MARK: Actions
     
-    func doneTapped(_ button: UIBarButtonItem?) {
+    @objc func doneTapped(_ button: UIBarButtonItem?) {
         self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil) // go back 2 screens
     }
     
@@ -126,7 +126,12 @@ class SubmissionConfirmationViewController: UIViewController {
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", tableName: "Localizable", bundle: .core, value: "", comment: ""), style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         } else if let resultsURL = resultsURL {
-            UIApplication.shared.open(resultsURL, options: [:], completionHandler: nil)
+            UIApplication.shared.open(resultsURL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

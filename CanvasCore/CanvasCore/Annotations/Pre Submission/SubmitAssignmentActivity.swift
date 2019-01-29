@@ -20,13 +20,13 @@ import UIKit
 
 
 class SubmitAssignmentActivity: UIActivity {
-    let session: Session
-    let defaultCourseID: String?
-    let defaultAssignmentID: String?
-    var fileURL: URL?
-    var didSubmitAssignment: ()->Void = { }
+    @objc let session: Session
+    @objc let defaultCourseID: String?
+    @objc let defaultAssignmentID: String?
+    @objc var fileURL: URL?
+    @objc var didSubmitAssignment: ()->Void = { }
 
-    init(session: Session, defaultCourseID: String?, defaultAssignmentID: String?, assignmentSubmitted: @escaping ()->Void) {
+    @objc init(session: Session, defaultCourseID: String?, defaultAssignmentID: String?, assignmentSubmitted: @escaping ()->Void) {
         self.session = session
         self.defaultCourseID = defaultCourseID
         self.defaultAssignmentID = defaultAssignmentID
@@ -34,8 +34,8 @@ class SubmitAssignmentActivity: UIActivity {
         super.init()
     }
 
-    override var activityType: UIActivityType? {
-        return UIActivityType(rawValue: "submit-assignment-to-canvas")
+    override var activityType: UIActivity.ActivityType? {
+        return UIActivity.ActivityType(rawValue: "submit-assignment-to-canvas")
     }
 
     override var activityTitle : String? {

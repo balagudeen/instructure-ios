@@ -15,7 +15,7 @@
 //
 
 public class GradientView: UIView {
-    public var colors: [UIColor] = [] {
+    @objc public var colors: [UIColor] = [] {
         didSet {
             gradient.colors = colors.map { $0.cgColor }
         }

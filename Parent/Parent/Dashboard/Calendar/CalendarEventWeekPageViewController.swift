@@ -23,7 +23,7 @@ typealias EventWeekPageSelectCalendarEventAction = (_ session: Session, _ observ
 
 class CalendarEventWeekPageViewController: UIViewController {
 
-    static var headerDateFormatter: DateFormatter = {
+    @objc static var headerDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d"
         return dateFormatter
@@ -32,15 +32,15 @@ class CalendarEventWeekPageViewController: UIViewController {
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var nextWeekButton: UIButton!
     @IBOutlet weak var prevWeekButton: UIButton!
-    var pageViewController: UIPageViewController?
+    @objc var pageViewController: UIPageViewController?
 
-    var session: Session!
-    var studentID: String!
-    var initialReferenceDate: Date!
-    var currentStartDate: Date?
-    var contextCodes: [String]!
+    @objc var session: Session!
+    @objc var studentID: String!
+    @objc var initialReferenceDate: Date!
+    @objc var currentStartDate: Date?
+    @objc var contextCodes: [String]!
 
-    var selectCalendarEventAction: EventWeekPageSelectCalendarEventAction? = nil {
+    @objc var selectCalendarEventAction: EventWeekPageSelectCalendarEventAction? = nil {
         didSet {
             guard let viewControllers = pageViewController?.viewControllers else {
                 return
@@ -58,14 +58,14 @@ class CalendarEventWeekPageViewController: UIViewController {
     // MARK: - Initializers
     // ---------------------------------------------
     fileprivate static let defaultStoryboardName = "CalendarEventWeekPageViewController"
-    static func new(_ storyboardName: String = defaultStoryboardName, session: Session, studentID: String, contextCodes: [String] = [], initialReferenceDate: Date = Date()) -> CalendarEventWeekPageViewController {
+    @objc static func new(_ storyboardName: String = defaultStoryboardName, session: Session, studentID: String, contextCodes: [String] = [], initialReferenceDate: Date = Date()) -> CalendarEventWeekPageViewController {
         guard let controller = UIStoryboard(name: storyboardName, bundle: Bundle(for: self)).instantiateInitialViewController() as? CalendarEventWeekPageViewController else {
             fatalError("Initial ViewController is not of type CalendarEventWeekPageViewController")
         }
         
         controller.session = session
         controller.studentID = studentID
-        controller.initialReferenceDate = initialReferenceDate.dateOnSundayAtTheBeginningOfTheWeek
+        controller.initialReferenceDate = initialReferenceDate
         controller.currentStartDate = controller.initialReferenceDate
         controller.contextCodes = contextCodes
         
@@ -120,17 +120,19 @@ class CalendarEventWeekPageViewController: UIViewController {
     // ---------------------------------------------
     // MARK: - Update View
     // ---------------------------------------------
-    func updateHeaderTitle() {
+    @objc func updateHeaderTitle() {
         guard let viewController = pageViewController?.viewControllers?[0] as? CalendarEventListViewController else {
             fatalError("View Controller in a CalendarEventWeekPageViewController should always be of type CalendarEventListViewController")
         }
 
         let formatter = CalendarEventWeekPageViewController.headerDateFormatter
-        headerLabel.text = "\(formatter.string(from: viewController.startDate)) - \(formatter.string(from: viewController.endDate - 1.secondsComponents))"
+        let startFormatted = formatter.string(from: viewController.startDate)
+        let endFormatted = formatter.string(from: viewController.endDate - 1.secondsComponents)
+        headerLabel.text = "\(startFormatted) - \(endFormatted)"
         headerLabel.accessibilityIdentifier = "week_header_label"
-        headerLabel.accessibilityLabel = String(format: NSLocalizedString("%@ to %@", comment: "Something to Something"), formatter.string(from: viewController.startDate), formatter.string(from: viewController.endDate))
+        headerLabel.accessibilityLabel = String(format: NSLocalizedString("%@ to %@", comment: ""), startFormatted, endFormatted)
+        headerLabel.accessibilityTraits = UIAccessibilityTraits.header
         headerLabel.textColor = UIColor.white
-
     }
 
     // ---------------------------------------------
@@ -166,14 +168,14 @@ class CalendarEventWeekPageViewController: UIViewController {
         })
     }
 
-    func close(_ sender: UIBarButtonItem) {
+    @objc func close(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
 
     // ---------------------------------------------
     // MARK: - Helper Functions
     // ---------------------------------------------
-    func eventListController(_ startDate: Date) -> CalendarEventListViewController {
+    @objc func eventListController(_ startDate: Date) -> CalendarEventListViewController {
         currentStartDate = startDate
         let endDate = startDate + Calendar.current.numberOfDaysInWeek.daysComponents
 

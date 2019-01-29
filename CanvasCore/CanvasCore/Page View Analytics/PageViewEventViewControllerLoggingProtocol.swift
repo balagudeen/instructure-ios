@@ -62,11 +62,11 @@ public extension PageViewEventViewControllerLoggingProtocol {
 }
 
 @objc public class PageViewEventLoggerLegacySupport: NSObject, PageViewEventViewControllerLoggingProtocol {
-    public func start() {
+    @objc public func start() {
         startTrackingTimeOnViewController()
     }
     
-    public func stop(eventName: String) {
+    @objc public func stop(eventName: String) {
         stopTrackingTimeOnViewController(eventName: eventName)
     }
 }

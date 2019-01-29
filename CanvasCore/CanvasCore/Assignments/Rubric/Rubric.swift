@@ -38,12 +38,12 @@ import Marshal
 
 
 extension Rubric {
-    public static func uniquePredicateForObject(_ assignmentID: String) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ assignmentID: String) throws -> NSPredicate {
         let assignmentID: String = assignmentID
         return NSPredicate(format: "%K == %@", "assignmentID", assignmentID)
     }
     
-    public func updateValues(_ rubricCriterionsJSON: [JSONObject], rubricSettingsJSON: JSONObject, assignmentID: String, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ rubricCriterionsJSON: [JSONObject], rubricSettingsJSON: JSONObject, assignmentID: String, inContext context: NSManagedObjectContext) throws {
         self.assignmentID = assignmentID
         title = try rubricSettingsJSON <| "title"
         freeFormCriterionComments = (try rubricSettingsJSON  <| "free_form_criterion_comments") ?? false

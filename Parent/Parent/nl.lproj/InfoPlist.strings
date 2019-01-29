@@ -1,12 +1,12 @@
-/* (No Comment) */
+/* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "Koppel foto's en video's aan berichten en gespreksposts of lever ze in als onderdeel van de opdracht.";
 
-/* (No Comment) */
+/* Privacy - Microphone Usage Description */
 "NSMicrophoneUsageDescription" = "Koppel audio-opnamen aan berichten en gespreksposts of lever ze in als onderdeel van de opdracht.";
 
-/* (No Comment) */
+/* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Koppel foto's en video's aan berichten en gespreksposts of lever ze in als onderdeel van de opdracht.";
 
-/* (No Comment) */
+/* Privacy - Photo Library Usage Description */
 "NSPhotoLibraryUsageDescription" = "Koppel foto's en video's aan berichten en gespreksposts of lever ze in als onderdeel van de opdracht.";
 

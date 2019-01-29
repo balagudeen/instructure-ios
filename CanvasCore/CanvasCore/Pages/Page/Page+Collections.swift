@@ -34,7 +34,7 @@ extension Page {
         session.refreshScope.invalidateCache(key)
     }
 
-    var routingUrl: URL {
+    @objc var routingUrl: URL {
         let path = contextID.apiPath + "/pages/" + url
         return URL(fileURLWithPath: path)
     }
@@ -71,7 +71,7 @@ extension Page {
     open class TableViewController: CanvasCore.TableViewController, PageViewEventViewControllerLoggingProtocol {
 
         fileprivate (set) open var collection: FetchedCollection<Page>
-        var route: (UIViewController, URL)->()
+        @objc var route: (UIViewController, URL)->()
         fileprivate var contextID: ContextID
 
         public init(session: Session, contextID: ContextID, viewModelFactory: @escaping (Session, Page) -> ColorfulViewModel, route: @escaping (UIViewController, URL) -> ()) throws {
@@ -81,7 +81,7 @@ extension Page {
 
             super.init()
 
-            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
             tableView.estimatedRowHeight = 44.0
 
             self.refresher = try Page.refresher(session, contextID: contextID)

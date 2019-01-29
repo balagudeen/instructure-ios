@@ -23,9 +23,9 @@ class SettingsObserveeCell: UITableViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
 
-    var highlightColor = UIColor.white
+    @objc var highlightColor = UIColor.white
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
         stylize()
@@ -53,7 +53,7 @@ class SettingsObserveeCell: UITableViewCell {
         self.backgroundColor = highlighted ? highlightColor : UIColor.white
     }
 
-    func stylize() {
+    @objc func stylize() {
         selectionStyle = .none
         
         guard let imageView = avatarImageView else {

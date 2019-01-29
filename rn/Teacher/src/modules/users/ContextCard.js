@@ -35,6 +35,7 @@ import RowSeparator from '../../common/components/rows/RowSeparator'
 import { graphql } from 'react-apollo'
 import query from '../../canvas-api-v2/queries/ContextCard.js'
 import _ from 'lodash'
+import * as app from '../app'
 
 type ContextCardOwnProps = {
   courseID: string,
@@ -49,13 +50,18 @@ type ContextCardDataProps = {
   submissions: SubmissionV2[],
   courseColor: string,
   loading: boolean,
+  permissions: {
+    sendMessages: boolean,
+    viewAllGrades: boolean,
+    viewAnalytics: boolean,
+  },
 }
 
 type ContextCardProps = ContextCardOwnProps & ContextCardDataProps
 
-export class ContextCard extends Component< ContextCardProps, any> {
+export class ContextCard extends Component<ContextCardProps> {
   renderHeader () {
-    const { course, user, enrollment, isStudent, canViewAnalytics } = this.props
+    const { course, user, enrollment, isStudent, permissions = {} } = this.props
     let sectionName
     if (enrollment) {
       const section = enrollment.section
@@ -85,14 +91,16 @@ export class ContextCard extends Component< ContextCardProps, any> {
           <View>
             <Heading1>{course.name}</Heading1>
             { sectionName && <Text testID='context-card.section-name' style={{ marginVertical: 4, fontSize: 14 }}>{i18n('Section: {sectionName}', { sectionName })}</Text> }
-            <SubTitle testID='context-card.last-activity'>
-              {enrollment && i18n(`Last activity on {lastActivity, date, 'MMMM d'} at {lastActivity, time, short}`, {
-                lastActivity: new Date(enrollment.last_activity_at),
-              })}
-            </SubTitle>
+            {enrollment && enrollment.last_activity_at && !app.isStudent() &&
+              <SubTitle testID='context-card.last-activity'>
+                {i18n(`Last activity on {lastActivity, date, 'MMMM d'} at {lastActivity, time, short}`, {
+                  lastActivity: new Date(enrollment.last_activity_at),
+                })}
+              </SubTitle>
+            }
           </View>
         </View>
-        {isStudent && canViewAnalytics && user.analytics && enrollment && enrollment.grades &&
+        {isStudent && permissions.viewAnalytics && user.analytics && enrollment && enrollment.grades &&
           <View style={styles.headerSection}>
             <Heading1 style={{ marginBottom: 16 }}>{i18n('Submissions')}</Heading1>
             <View style={styles.line}>
@@ -147,13 +155,15 @@ export class ContextCard extends Component< ContextCardProps, any> {
   }
 
   render () {
+    const { course, user, submissions, isStudent, permissions = {} } = this.props
+
     const screenProps = {
-      rightBarButtons: [{
+      rightBarButtons: permissions.sendMessages || isStudent === false ? [{
         action: this._emailContact,
         image: Images.smallMail,
         testID: 'context-card.email-contact',
-        accessibilityLabel: i18n('Email Contact'),
-      }],
+        accessibilityLabel: i18n('Send message'),
+      }] : [],
       navBarStyle: this.props.navigator.isModal ? undefined : 'dark',
     }
 
@@ -165,8 +175,6 @@ export class ContextCard extends Component< ContextCardProps, any> {
       return <Screen {...screenProps }><ErrorView error={this.props.error} /></Screen>
     }
 
-    const { course, user, submissions, isStudent, canViewGrades } = this.props
-
     return (
       <Screen
         title={user.name}
@@ -175,7 +183,7 @@ export class ContextCard extends Component< ContextCardProps, any> {
       >
         <FlatList
           ListHeaderComponent={this.renderHeader()}
-          data={isStudent && canViewGrades ? submissions : []}
+          data={isStudent && permissions.viewAllGrades ? submissions : []}
           renderItem={this.renderItem}
           keyExtractor={this._keyExtractor}
           ItemSeparatorComponent={RowSeparator}
@@ -280,10 +288,8 @@ export function props (props: any) {
   const submissions = (_.get(course, 'submissions.edges') || []).map(e => e.submission).filter(Boolean)
   const isStudent = enrollment.type === 'StudentEnrollment'
   const permissions = course.permissions || {}
-  const canViewAnalytics = permissions.viewAnalytics
-  const canViewGrades = permissions.viewAllGrades
 
-  return { course, user, enrollment, submissions, isStudent, canViewAnalytics, canViewGrades, loading: data.loading }
+  return { course, user, enrollment, submissions, isStudent, permissions, loading: data.loading }
 }
 
 export default graphql(query, {

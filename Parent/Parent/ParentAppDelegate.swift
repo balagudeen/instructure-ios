@@ -19,7 +19,7 @@ import CanvasCore
 import CanvasKeymaster
 //import Fabric
 import Crashlytics
-import BugsnagReactNative
+//import Firebase
 import UserNotifications
 
 let TheKeymaster = CanvasKeymaster.the()
@@ -29,14 +29,14 @@ let ParentAppRefresherTTL: TimeInterval = 5.minutes
 class ParentAppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var session: Session?
-    let loginConfig = LoginConfiguration(mobileVerifyName: "iosParent",
+    @objc var session: Session?
+    @objc let loginConfig = LoginConfiguration(mobileVerifyName: "iosParent",
                                          logo: UIImage(named: "parent-logomark")!,
                                          fullLogo: UIImage(named: "parent-logo")!,
                                          supportsCanvasNetworkLogin: false,
                                          whatsNewURL: "https://s3.amazonaws.com/tr-learncanvas/docs/WhatsNewCanvasParent.pdf")
     
-    var visibleController: UIViewController {
+    @objc var visibleController: UIViewController {
         guard var vc = window?.rootViewController else { ❨╯°□°❩╯⌢"No root view controller?!" }
         
         while vc.presentedViewController != nil {
@@ -45,15 +45,13 @@ class ParentAppDelegate: UIResponder, UIApplicationDelegate {
         return vc
     }
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        if (uiTesting) {
-            BuddyBuildSDK.setup()
-        } else {
-            configureBugSnag()
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        if !uiTesting {
             setupCrashlytics()
         }
         
         ResetAppIfNecessary()
+        //FirebaseApp.configure()
         
         TheKeymaster.fetchesBranding = false
         TheKeymaster.delegate = loginConfig
@@ -79,7 +77,11 @@ class ParentAppDelegate: UIResponder, UIApplicationDelegate {
         AppStoreReview.handleLaunch()
     }
 
-    func showLoadingState() {
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        LocalizationManager.closed()
+    }
+
+    @objc func showLoadingState() {
         guard let window = self.window else { return }
         if let root = window.rootViewController, let tag = root.tag, tag == "LaunchScreenPlaceholder" { return }
         let placeholder = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateViewController(withIdentifier: "LaunchScreen")
@@ -90,28 +92,7 @@ class ParentAppDelegate: UIResponder, UIApplicationDelegate {
         }, completion:nil)
     }
     
-    func configureBugSnag() {
-        let configuration = BugsnagConfiguration()
-        configuration.add { (data, report) -> Bool in
-            var user = Dictionary<String, String>()
-            let region = Locale.current.regionCode
-            if let session = self.session, region != "CA" {
-                user["baseURL"] = session.baseURL.absoluteString
-                user["id"] = session.user.id
-                report.addMetadata(user, toTabWithName: "user")
-            }
-            return true
-        }
-        BugsnagReactNative.start(with: configuration)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FakeCrash"), object: nil, queue: nil) { _  in
-            let exception = NSException(name:NSExceptionName(rawValue: "FakeException"),
-                                        reason:"The red coats are coming, the red coats are coming!",
-                                        userInfo:nil)
-            Bugsnag.notify(exception)
-        }
-    }
-    
-    func openCanvasURL(_ url: URL) -> Bool {
+    @objc func openCanvasURL(_ url: URL) -> Bool {
         if url.scheme == "canvas-parent" {
             if let _ = session {
                 Router.sharedInstance.route(visibleController, toURL: url, modal: false)
@@ -125,7 +106,7 @@ class ParentAppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
     
-    func routeToRemindable(from response: UNNotificationResponse) {
+    @objc func routeToRemindable(from response: UNNotificationResponse) {
         let userInfo = response.notification.request.content.userInfo
         if let urlString = userInfo[RemindableActionURLKey] as? String, let url = URL(string: urlString) {
             Router.sharedInstance.route(visibleController, toURL: url, modal: true)
@@ -136,23 +117,24 @@ class ParentAppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: Post launch setup
 extension ParentAppDelegate {
     
-    func postLaunchSetup() {
+    @objc func postLaunchSetup() {
         prepareReactNative()
         setupDefaultErrorHandling()
+        CanvasAnalytics.setHandler(self)
     }
 }
 
 // MARK: Logging in/out
 extension ParentAppDelegate {
     
-    func addClearCacheGesture(_ view: UIView) {
+    @objc func addClearCacheGesture(_ view: UIView) {
         let clearCacheGesture = UITapGestureRecognizer(target: self, action: #selector(clearCache))
         clearCacheGesture.numberOfTapsRequired = 3
         clearCacheGesture.numberOfTouchesRequired = 4
         view.addGestureRecognizer(clearCacheGesture)
     }
     
-    func clearCache() {
+    @objc func clearCache() {
         URLCache.shared.removeAllCachedResponses()
         let alert = UIAlertController(title: NSLocalizedString("Cache cleared", comment: ""), message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "OK Button Title"), style: .default, handler: nil))
@@ -163,7 +145,7 @@ extension ParentAppDelegate {
 // MARK: SoErroneous
 extension ParentAppDelegate {
     
-    func alertUser(of error: NSError, from presentingViewController: UIViewController?) {
+    @objc func alertUser(of error: NSError, from presentingViewController: UIViewController?) {
         guard let presentFrom = presentingViewController else { return }
         
         DispatchQueue.main.async {
@@ -181,7 +163,7 @@ extension ParentAppDelegate {
         }
     }
     
-    func setupDefaultErrorHandling() {
+    @objc func setupDefaultErrorHandling() {
         CanvasCore.ErrorReporter.setErrorHandler({ error, presentingViewController in
             self.alertUser(of: error, from: presentingViewController)
             
@@ -193,7 +175,7 @@ extension ParentAppDelegate {
     
     
     
-    func handleError(_ error: NSError) {
+    @objc func handleError(_ error: NSError) {
         ErrorReporter.reportError(error, from: window?.rootViewController)
     }
 }
@@ -201,24 +183,39 @@ extension ParentAppDelegate {
 // MARK: Crashlytics
 extension ParentAppDelegate {
     
-    func setupCrashlytics() {
+    @objc func setupCrashlytics() {
         guard let _ = Bundle.main.object(forInfoDictionaryKey: "Fabric") else {
             NSLog("WARNING: Crashlytics was not properly initialized.");
             return
         }
         
         //Fabric.with([Crashlytics.self])
+        CanvasCrashlytics.setupForReactNative()
     }
 }
 
+extension ParentAppDelegate: CanvasAnalyticsHandler {
+    func handleEvent(_ name: String, parameters: [String : Any]?) {
+       // Analytics.logEvent(name, parameters: parameters)
+    }
+}
 
 extension ParentAppDelegate: NativeLoginManagerDelegate {
     func didLogin(_ client: CKIClient) {
-        self.session = client.authSession
+        let session = client.authSession
+        self.session = session
         
         // UX requires that students are given color schemes in a specific order.
         // The method call below ensures that we always start with the first color scheme.
         ColorCoordinator.clearColorSchemeDictionary()
+        // TODO: use logged in locale
+        // LocalizationManager.setCurrentLocale(client.locale)
+
+        let countryCode: String? = Locale.current.regionCode
+        if countryCode != "CA" {
+            let crashlyticsUserId = "\(session.user.id)@\(session.baseURL.host ?? session.baseURL.absoluteString)"
+            Crashlytics.sharedInstance().setUserIdentifier(crashlyticsUserId)
+        }
     }
     
     func didLogout(_ controller: UIViewController) {

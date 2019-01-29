@@ -61,12 +61,12 @@ import Marshal
 
 extension Page: SynchronizedModel {
     
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let url: String = try json <| "html_url"
         return NSPredicate(format: "%K == %@", "htmlURL", url)
     }
 
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         url             = try json <| "url"
         htmlURL         = try json <| "html_url"
         title           = try json <| "title"

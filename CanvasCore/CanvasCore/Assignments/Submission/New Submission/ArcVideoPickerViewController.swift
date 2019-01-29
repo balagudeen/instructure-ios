@@ -20,8 +20,8 @@ import WebKit
 
 public class ArcVideoPickerViewController: UIViewController {
     
-    let arcLTIURL: URL
-    let videoPickedAction: (URL)->()
+    @objc let arcLTIURL: URL
+    @objc let videoPickedAction: (URL)->()
     
     // Reverting back to UIWebView because can actually get the request httpBody, WKWebView didn't work for that
     private let webView: UIWebView
@@ -30,7 +30,7 @@ public class ArcVideoPickerViewController: UIViewController {
     ///
     /// - parameter arcLTIURL:          The arc lti launch URL. See `Assignment`s function to create one.
     /// - parameter videoPickedAction:  The handler to be executed after picking a video. This class dismisses itself automatically prior to calling this handler.
-    public init(arcLTIURL: URL, videoPickedAction: @escaping (URL)->() = { _ in }) {
+    @objc public init(arcLTIURL: URL, videoPickedAction: @escaping (URL)->() = { _ in }) {
         self.webView = UIWebView(frame: .zero)
         self.arcLTIURL = arcLTIURL
         self.videoPickedAction = videoPickedAction
@@ -67,13 +67,13 @@ public class ArcVideoPickerViewController: UIViewController {
         }
     }
     
-    func close() {
+    @objc func close() {
         navigationController?.popViewController(animated: true)
     }
 }
 
 extension ArcVideoPickerViewController: UIWebViewDelegate {
-    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
         
         if request.url?.absoluteString.contains("success/external_tool_dialog") == true {
             // This is a poor mans way to parse a form body. It works though, and works well!

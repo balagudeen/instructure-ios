@@ -24,7 +24,7 @@ class VolumeLevelMeterView: UIView {
         return CAReplicatorLayer.classForCoder()
     }
     
-    lazy var tick: CALayer = {
+    @objc lazy var tick: CALayer = {
         let tick = CALayer()
         tick.backgroundColor = UIColor.white.cgColor
         tick.frame = CGRect(x: -4, y: 1.5, width: 4, height: self.bounds.size.height - 3.0)
@@ -46,7 +46,7 @@ class VolumeLevelMeterView: UIView {
         layer.cornerRadius = 3
     }
     
-    var level: Int = 0 {
+    @objc var level: Int = 0 {
         didSet {
             let replicator = layer as! CAReplicatorLayer
             

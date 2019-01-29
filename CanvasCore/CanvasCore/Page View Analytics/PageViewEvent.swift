@@ -35,6 +35,8 @@ public struct PageViewEvent: Codable {
     var attributes = PageViewEventDictionary()
     let timestamp: String
     let userID: String
+    let guid = UUID().uuidString
+
     
     init(eventName: String, attributes: PageViewEventDictionary? = nil, userID: String, timestamp: String = PageViewEvent.ISOTimeStamp(), eventDuration: TimeInterval = 0) {
         self.eventName = eventName

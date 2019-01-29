@@ -34,7 +34,7 @@ open class CollectionCollectionViewDataSource<C: Collection, VM: CollectionViewC
     open let viewModelFactory: (C.Object)->VM
     fileprivate var disposable: Disposable?
     
-    weak var collectionView: UICollectionView? {
+    @objc weak var collectionView: UICollectionView? {
         didSet {
             oldValue?.dataSource = nil
             collectionView?.dataSource = self

@@ -13,10 +13,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-    
-    
 
 import Foundation
+import UIKit
 
 class TableSectionHeaderView: UIView {
     fileprivate let label = UILabel()
@@ -24,7 +23,7 @@ class TableSectionHeaderView: UIView {
     fileprivate var horizontalConstraints: [NSLayoutConstraint] = []
     fileprivate var verticalConstraints: [NSLayoutConstraint] = []
 
-    var text = "" {
+    @objc var text = "" {
         didSet {
             label.text = text
             accessibilityLabel = text
@@ -43,7 +42,7 @@ class TableSectionHeaderView: UIView {
         setup()
     }
 
-    func setup() {
+    @objc func setup() {
         backgroundColor = UIColor(r: 232, g: 232, b: 232)
 
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -55,12 +54,12 @@ class TableSectionHeaderView: UIView {
         isAccessibilityElement = true
     }
 
-    func updateViewConstraints() {
+    @objc func updateViewConstraints() {
         removeConstraints(horizontalConstraints)
         removeConstraints(verticalConstraints)
 
-        horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[subview]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["subview": label])
-        verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[subview]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["subview": label])
+        horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[subview]-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["subview": label])
+        verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[subview]-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["subview": label])
 
         addConstraints(horizontalConstraints)
         addConstraints(verticalConstraints)

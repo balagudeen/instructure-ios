@@ -31,6 +31,7 @@ const {
   deletePendingReplies,
   markAllAsRead,
   markEntryAsRead,
+  rateEntry,
 } = DetailActions
 const { refreshAnnouncements } = AnnouncementListActions
 const {
@@ -582,6 +583,62 @@ describe('refreshSingleDiscussion', () => {
     expect(discussions(state, actionRefresh)).toEqual({
       [discussion.id]: {
         data: discussion,
+      },
+    })
+  })
+
+  it('detects and sets isAnnouncement flag', () => {
+    let discussion = template.discussion()
+    let state = {
+      [discussion.id]: {
+        data: discussion,
+      },
+    }
+
+    let actionRefresh = {
+      type: refreshSingleDiscussion.toString(),
+      payload: {
+        courseID: '1',
+        result: {
+          data: template.discussion({ subscription_hold: 'topic_is_announcement' }),
+        },
+        discussionID: discussion.id,
+      },
+    }
+    expect(discussions(state, actionRefresh)).toEqual({
+      [discussion.id]: {
+        isAnnouncement: true,
+        data: {
+          ...template.discussion({ subscription_hold: 'topic_is_announcement' }),
+        },
+      },
+    })
+  })
+
+  it('sets isAnnouncement flag to false if subscription_hold is the wrong value', () => {
+    let discussion = template.discussion()
+    let state = {
+      [discussion.id]: {
+        data: discussion,
+      },
+    }
+
+    let actionRefresh = {
+      type: refreshSingleDiscussion.toString(),
+      payload: {
+        courseID: '1',
+        result: {
+          data: template.discussion({ subscription_hold: 'not_in_group' }),
+        },
+        discussionID: discussion.id,
+      },
+    }
+    expect(discussions(state, actionRefresh)).toEqual({
+      [discussion.id]: {
+        isAnnouncement: false,
+        data: {
+          ...template.discussion({ subscription_hold: 'not_in_group' }),
+        },
       },
     })
   })
@@ -1483,6 +1540,139 @@ describe('createEntry', () => {
 
     let expected = [template.discussionReply({ id: '1', replies: [c] })]
     expect(result).toEqual(expected)
+  })
+
+  describe('rateEntry', () => {
+    it('optimistically updates', () => {
+      let state = {
+        '1': {
+          data: {
+            ...template.discussion({ id: '1' }),
+            replies: [template.discussionReply({
+              id: '2',
+              replies: [template.discussionReply({ id: '3', rating_sum: 0 })],
+            })],
+          },
+          entry_ratings: {
+            '3': 0,
+          },
+        },
+      }
+
+      let action = {
+        type: rateEntry.toString(),
+        pending: true,
+        payload: {
+          context: 'courses',
+          contextID: '1',
+          discussionID: '1',
+          entryID: '2',
+          rating: 1,
+          path: [0],
+        },
+      }
+
+      let newState = discussions(state, action)
+      expect(newState['1'].data.replies[0].rating_sum).toEqual(1)
+      expect(newState['1'].entry_ratings['2']).toEqual(1)
+      expect(newState['1'].data.replies[0].replies.length).toEqual(1)
+    })
+
+    it('reverts the rating on error', () => {
+      let state = {
+        '1': {
+          data: {
+            ...template.discussion({ id: '1' }),
+            replies: [template.discussionReply({ id: '2', rating_sum: 1 })],
+          },
+          entry_ratings: {
+            '2': 1,
+          },
+        },
+      }
+
+      let action = {
+        type: rateEntry.toString(),
+        error: true,
+        payload: {
+          context: 'courses',
+          contextID: '1',
+          discussionID: '1',
+          entryID: '2',
+          rating: 1,
+          path: [0],
+        },
+      }
+
+      let newState = discussions(state, action)
+      expect(newState['1'].data.replies[0].rating_sum).toEqual(0)
+      expect(newState['1'].entry_ratings['2']).toEqual(0)
+    })
+
+    it('reverts removal of a rating on error', () => {
+      let state = {
+        '1': {
+          data: {
+            ...template.discussion({ id: '1' }),
+            replies: [template.discussionReply({ id: '2', rating_sum: 0 })],
+          },
+          entry_ratings: {
+            '2': 0,
+          },
+        },
+      }
+
+      let action = {
+        type: rateEntry.toString(),
+        error: true,
+        payload: {
+          context: 'courses',
+          contextID: '1',
+          discussionID: '1',
+          entryID: '2',
+          rating: 0,
+          path: [0],
+        },
+      }
+
+      let newState = discussions(state, action)
+      expect(newState['1'].data.replies[0].rating_sum).toEqual(1)
+      expect(newState['1'].entry_ratings['2']).toEqual(1)
+    })
+  })
+
+  it('works on nested replies', () => {
+    let state = {
+      '1': {
+        data: {
+          ...template.discussion({ id: '1' }),
+          replies: [template.discussionReply({
+            id: '2',
+            replies: [template.discussionReply({ id: '3', rating_sum: 0 })],
+          })],
+        },
+        entry_ratings: {
+          '3': 0,
+        },
+      },
+    }
+
+    let action = {
+      type: rateEntry.toString(),
+      pending: true,
+      payload: {
+        context: 'courses',
+        contextID: '1',
+        discussionID: '1',
+        entryID: '3',
+        rating: 1,
+        path: [0, 0],
+      },
+    }
+
+    let newState = discussions(state, action)
+    expect(newState['1'].data.replies[0].replies[0].rating_sum).toEqual(1)
+    expect(newState['1'].entry_ratings['3']).toEqual(1)
   })
 })
 

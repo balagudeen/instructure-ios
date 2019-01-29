@@ -60,8 +60,9 @@ export default class RatingRequest extends React.PureComponent<Props, State> {
 
   componentDidMount () {
     const update = () => {
-      NativeModules.AppStoreReview.getState().then(values =>
+      NativeModules.AppStoreReview.getState().then(values => {
         this.setState(values)
+      }
       )
     }
     update()
@@ -159,6 +160,12 @@ export default class RatingRequest extends React.PureComponent<Props, State> {
               onDateChange={this.setLastRequestDate}
             />
           }
+          <RowSeparator />
+          <Text style={styles.paragraph}>
+            Dashboard prompt for App Store rating are only prompted when it has been at
+            least 120 days since the last request. Clearing this, or setting it
+            to long ago is prerequisite to seeing a prompt.
+          </Text>
           <RowSeparator />
           { isStudent() ? (
             <View>

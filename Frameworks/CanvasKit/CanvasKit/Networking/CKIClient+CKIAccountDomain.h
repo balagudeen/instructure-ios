@@ -19,6 +19,6 @@
 
 @interface CKIClient (CKIAccountDomain)
 
-+ (RACSignal *)fetchAccountDomains;
++ (RACSignal *)fetchAccountDomains:(NSString *)query;
 
 @end

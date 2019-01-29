@@ -83,17 +83,18 @@ func colorfulToDoViewModel(session: Session, toDoItem: Todo) -> ColorfulViewMode
 
 class ToDoListViewController: FetchedTableViewController<Todo>, PageViewEventViewControllerLoggingProtocol {
 
-    let session: Session
-    let route: (UIViewController, URL)->()
+    @objc let session: Session
+    @objc let route: (UIViewController, URL)->()
 
-    init(session: Session, route: @escaping (UIViewController, URL)->()) throws {
+    @objc init(session: Session, route: @escaping (UIViewController, URL)->()) throws {
         self.session = session
         self.route = route
         super.init()
 
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50.0
 
+        self.emptyView = Bundle.main.loadNibNamed("ToDoEmptyView", owner: self, options: nil)?.first as? UIView
         prepare(try Todo.allTodos(session), refresher: try Todo.refresher(session)) { todo in colorfulToDoViewModel(session: session, toDoItem: todo) }
     }
 

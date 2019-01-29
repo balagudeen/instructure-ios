@@ -25,17 +25,17 @@ import ReactiveSwift
 
 extension Assignment {
     
-    public static func detailsCacheKey(_ context: NSManagedObjectContext, courseID: String, id: String) -> String {
+    @objc public static func detailsCacheKey(_ context: NSManagedObjectContext, courseID: String, id: String) -> String {
         return cacheKey(context, [courseID, id])
     }
 
-    public static func invalidateDetailsCache(session: Session, courseID: String, id: String) throws {
+    @objc public static func invalidateDetailsCache(session: Session, courseID: String, id: String) throws {
         let context = try session.assignmentsManagedObjectContext()
         let key = detailsCacheKey(context, courseID: courseID, id: id)
         session.refreshScope.invalidateCache(key)
     }
     
-    public static func predicate(_ courseID: String, assignmentID: String) -> NSPredicate {
+    @objc public static func predicate(_ courseID: String, assignmentID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@ && %K == %@", "courseID", courseID, "id", assignmentID)
     }
     

@@ -32,7 +32,7 @@ enum AnnouncementDetailsCellViewModel: TableViewCellViewModel {
 
     static func tableViewDidLoad(_ tableView: UITableView) {
         tableView.separatorStyle = .none
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
         tableView.register(UINib(nibName: "DetailsInfoCell", bundle: nil), forCellReuseIdentifier: TitleCellReuseIdentifier)
         tableView.register(UINib(nibName: "DetailsAttachmentCell", bundle: nil), forCellReuseIdentifier: AttachmentCellReuseIdentifier)
@@ -71,7 +71,7 @@ enum AnnouncementDetailsCellViewModel: TableViewCellViewModel {
             .title(discussionTopic.title),
             attachmentInfo,
             .message(baseURL, discussionTopic.message)
-        ].flatMap { $0 }
+        ].compactMap { $0 }
     }
 }
 
@@ -90,7 +90,7 @@ func ==(lhs: AnnouncementDetailsCellViewModel, rhs: AnnouncementDetailsCellViewM
 class AnnouncementDetailsViewController: DiscussionTopic.DetailViewController {
     var disposable: Disposable?
 
-    init(session: Session, studentID: String, courseID: String, announcementID: String) throws {
+    @objc init(session: Session, studentID: String, courseID: String, announcementID: String) throws {
         super.init()
         let observer = try DiscussionTopic.observer(session, studentID: studentID, courseID: courseID, discussionTopicID: announcementID)
         let refresher = try DiscussionTopic.refresher(session, studentID: studentID, courseID: courseID, discussionTopicID: announcementID)

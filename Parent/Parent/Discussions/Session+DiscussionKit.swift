@@ -28,7 +28,7 @@ let discussionKitFailedToLoadErrorDescription = NSLocalizedString("Failed to loa
 let discussionKitDBFailedToLoadErrorDescription = NSLocalizedString("There was a problem loading the DiscussionKit database file.", tableName: "Localizable", bundle: .core, value: "", comment: "DiscussionKit Database Load Failure Message")
 
 extension Session {
-    public func discussionsManagedObjectContext(_ scope: String? = nil) throws -> NSManagedObjectContext {
+    @objc public func discussionsManagedObjectContext(_ scope: String? = nil) throws -> NSManagedObjectContext {
         guard let model = NSManagedObjectModel(named: discussionKitModelName, inBundle: Bundle(for: DiscussionTopic.self))?.mutableCopy() as? NSManagedObjectModel else {
             throw NSError(subdomain: discussionKitSubdomain, code: discussionKitFailedToLoadErrorCode, title: discussionKitFailedToLoadErrorDescription, description: discussionKitFailedToLoadErrorDescription)
         }

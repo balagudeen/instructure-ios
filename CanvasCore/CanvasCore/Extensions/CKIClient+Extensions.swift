@@ -19,13 +19,13 @@ import Foundation
 private var sessionAssociationKey: UInt8 = 0
 
 extension CKIUser {
-    func sessionUser() -> SessionUser {
+    @objc func sessionUser() -> SessionUser {
         return SessionUser(id: id, name: name, loginID: loginID, sortableName: sortableName, email: email, avatarURL: avatarURL)
     }
 }
 
 extension CKIClient {
-    public var authSession: Session {
+    @objc public var authSession: Session {
         if let session = objc_getAssociatedObject(self, &sessionAssociationKey) as? Session {
             return session
         }

@@ -28,7 +28,7 @@ import CoreData
 
 
 extension Assignment {
-    public var allowedSubmissionUTIs: [String] {
+    @objc public var allowedSubmissionUTIs: [String] {
         return Assignment.allowedSubmissionUTIs(submissionTypes, allowedExtensions: allowedExtensions)
     }
 

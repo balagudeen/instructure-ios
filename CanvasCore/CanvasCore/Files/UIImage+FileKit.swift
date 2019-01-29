@@ -17,7 +17,7 @@
 
 
 extension UIImage {
-    public static func FileKitImageNamed(_ name: String) -> UIImage {
+    @objc public static func FileKitImageNamed(_ name: String) -> UIImage {
         guard let image = UIImage(named: name, in: .core, compatibleWith: nil) else { ❨╯°□°❩╯⌢"Cannot load image named \(name) from FileKit.framework" }
 
         return image

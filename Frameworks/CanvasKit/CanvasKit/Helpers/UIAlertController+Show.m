@@ -22,6 +22,10 @@
     UIViewController *top = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     while (top.presentedViewController != nil) {
         top = top.presentedViewController;
+        if ([top isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *nav = (UINavigationController *)top;
+            top = [nav topViewController];
+        }
     }
     
     return top;

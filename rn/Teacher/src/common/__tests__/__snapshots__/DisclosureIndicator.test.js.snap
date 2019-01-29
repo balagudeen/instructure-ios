@@ -3,21 +3,51 @@
 exports[`renders disclosure indiciator correctly 1`] = `
 <View
   style={
-    Object {
-      "alignSelf": "center",
-      "backgroundColor": "transparent",
-      "borderColor": "#c7c7cc",
-      "borderRightWidth": 2,
-      "borderTopWidth": 2,
-      "height": 10,
-      "marginLeft": 7,
-      "transform": Array [
-        Object {
-          "rotate": "45deg",
-        },
-      ],
-      "width": 10,
-    }
+    Array [
+      Object {
+        "alignSelf": "center",
+        "backgroundColor": "transparent",
+        "borderColor": "#c7c7cc",
+        "borderRightWidth": 2,
+        "borderTopWidth": 2,
+        "height": 10,
+        "marginLeft": 7,
+        "width": 10,
+      },
+      Object {
+        "transform": Array [
+          Object {
+            "rotate": "45deg",
+          },
+        ],
+      },
+    ]
+  }
+/>
+`;
+
+exports[`renders properly in rtl 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignSelf": "center",
+        "backgroundColor": "transparent",
+        "borderColor": "#c7c7cc",
+        "borderRightWidth": 2,
+        "borderTopWidth": 2,
+        "height": 10,
+        "marginLeft": 7,
+        "width": 10,
+      },
+      Object {
+        "transform": Array [
+          Object {
+            "rotate": "-45deg",
+          },
+        ],
+      },
+    ]
   }
 />
 `;

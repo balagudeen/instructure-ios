@@ -21,7 +21,7 @@ import Foundation
 private let pi = CGFloat.pi
 
 public extension CAShapeLayer {
-    static func pathForAngle(_ angle: CGFloat) -> UIBezierPath {
+    @objc static func pathForAngle(_ angle: CGFloat) -> UIBezierPath {
         let path = UIBezierPath()
 
         // starting point
@@ -35,13 +35,13 @@ public extension CAShapeLayer {
         return path
     }
 
-    static func layerForCircleView(_ width: CGFloat = 16.0, color: UIColor) -> CAShapeLayer {
+    @objc static func layerForCircleView(_ width: CGFloat = 16.0, color: UIColor) -> CAShapeLayer {
         let layer = CAShapeLayer()
         layer.path = pathForAngle(1.5 * pi).cgPath
         layer.fillColor = UIColor.clear.cgColor
         layer.strokeColor = color.cgColor
         layer.lineWidth = width
-        layer.lineCap = kCALineCapButt
+        layer.lineCap = CAShapeLayerLineCap.butt
 
         return layer
     }

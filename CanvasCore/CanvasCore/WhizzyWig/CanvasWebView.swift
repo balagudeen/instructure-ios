@@ -18,6 +18,8 @@ import WebKit
 import CanvasKeymaster
 import CanvasKit
 import ReactiveSwift
+import Result
+import Core
 
 public class CanvasWebView: WKWebView {
     
@@ -33,24 +35,36 @@ public class CanvasWebView: WKWebView {
     }
     
     fileprivate class MessageHandler: NSObject, WKScriptMessageHandler {
-        weak var webView: CanvasWebView?
+        @objc weak var webView: CanvasWebView?
+        enum Name: String, CaseIterable {
+            case dismiss
+            case canvas
+            case height
+            case loadFrameSource
+        }
 
-        init(webView: CanvasWebView) {
+        @objc init(webView: CanvasWebView) {
             self.webView = webView
             super.init()
         }
 
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-            switch message.name {
-            case "dismiss":
+            guard let name = MessageHandler.Name(rawValue: message.name) else {
+                return
+            }
+            switch name {
+            case .dismiss:
                 webView?.requestClose?()
-            case "canvas":
+            case .canvas:
                 webView?.onMessage?(["body": message.body])
-            case "height":
+            case .height:
                 guard let height = message.body as? [String: Any] else { return }
                 webView?.onHeightChange?(height)
-            default:
-                break
+            case .loadFrameSource:
+                guard let src = message.body as? String else {
+                    return
+                }
+                webView?.loadFrame(src: src)
             }
         }
     }
@@ -66,6 +80,18 @@ public class CanvasWebView: WKWebView {
     
     @objc
     public var onHeightChange: (([String: Any]) -> Void)?
+
+    @objc
+    public var onRefresh: (() -> Void)? {
+        didSet {
+            if onRefresh != nil {
+                let refreshControl = UIRefreshControl()
+                refreshControl.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
+                self.refreshControl = refreshControl
+                scrollView.addSubview(refreshControl)
+            }
+        }
+    }
     
     @objc
     public var onError: ((Error) -> Void)?
@@ -77,8 +103,8 @@ public class CanvasWebView: WKWebView {
 
     fileprivate var externalToolLaunchDisposable: Disposable?
 
-    public var margin: Double = 0
-    
+    fileprivate var refreshControl: UIRefreshControl?
+
     @objc
     public func setNavigationHandler(routeToURL: @escaping (URL) -> Void) {
         navigation = .external(routeToURL)
@@ -118,10 +144,11 @@ public class CanvasWebView: WKWebView {
         }
     }
     
-    public init(config: WKWebViewConfiguration) {
+    @objc public init(config: WKWebViewConfiguration) {
         // Make the user agent look like Safari as best we can to work around Google OAuth restrictions.
         // Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.3 Mobile/15E217 Safari/605.1
         config.applicationNameForUserAgent = "Version/\(UIDevice.current.systemVersion) Mobile/15E217 Safari/605.1"
+        config.processPool = CoreWebView.processPool
         super.init(frame: .zero, configuration: config)
         translatesAutoresizingMaskIntoConstraints = false
         navigationDelegate = self
@@ -133,9 +160,9 @@ public class CanvasWebView: WKWebView {
         config.allowsInlineMediaPlayback = true
         self.init(config: config)
 
-        config.userContentController.add(MessageHandler(webView: self), name: "dismiss")
-        config.userContentController.add(MessageHandler(webView: self), name: "canvas")
-        config.userContentController.add(MessageHandler(webView: self), name: "height")
+        for message in MessageHandler.Name.allCases {
+            config.userContentController.add(MessageHandler(webView: self), name: message.rawValue)
+        }
 
         if let jsPath = Bundle.core.url(forResource: "CanvasWebView", withExtension: "js"),
             let js = try? String(contentsOf: jsPath, encoding: .utf8) {
@@ -171,14 +198,15 @@ public class CanvasWebView: WKWebView {
         }
     }
     
-    public func htmlContentHeight(completionHandler: @escaping (CGFloat) -> Void) {
-        evaluateJavaScript("document.getElementById('_end_').offsetTop") { result, error in
+    @objc public func htmlContentHeight(completionHandler: @escaping (CGFloat) -> Void) {
+        evaluateJavaScript("document.documentElement.scrollHeight") { result, error in
             guard let height = result as? NSNumber else { completionHandler(0.0); return }
             completionHandler(CGFloat(height))
         }
     }
 
     fileprivate func handle(error: Error) {
+        stopRefreshing()
         (error as NSError).userInfo.forEach { key, value in print("\(key) => \(value)") }
         
         let e = error as NSError
@@ -189,7 +217,7 @@ public class CanvasWebView: WKWebView {
             if let scheme = url.scheme, ["https", "http"].contains(scheme) {
                 return
             }
-            UIApplication.shared.open(url, options: [:], completionHandler: { success in
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { success in
                 if success {
                     self.requestClose?()
                 } else {
@@ -201,16 +229,27 @@ public class CanvasWebView: WKWebView {
         }
     }
 
-    /*
-     Sets the document body margin to self.margin
+    @objc
+    fileprivate func handleRefresh(_ control: UIRefreshControl) {
+        onRefresh?()
+    }
 
-     Most of the time a 0 margin (default) is preferred to make aligning
-     with sibling views easier but occasionally a margin is necessary so this
-     allows us to set the margin after the document loads.
-     */
-    fileprivate func updateMargin() {
-        let js = "document.body.style.margin = '\(margin)px'"
-        evaluateJavaScript(js, completionHandler: nil)
+    /// Reloads `self` with an authenticated url for `src`
+    @objc func loadFrame(src: String) {
+        guard let session = CanvasKeymaster.the().currentClient?.authSession, let url = URL(string: src) else {
+            return
+        }
+
+        session.getAuthenticatedURL(forURL: url) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let url):
+                    self?.load(URLRequest(url: url))
+                case .failure(let error):
+                    self?.onError?(error)
+                }
+            }
+        }
     }
 }
 
@@ -229,8 +268,10 @@ extension CanvasWebView: WKNavigationDelegate {
             }
             return decisionHandler(.cancel)
         }
-        
-        if Secrets.openExternalResourceIfNecessary(aURL: request.url) {
+
+        // FIXME: Workaround for Harvard's video player
+        if let url = request.url, url.absoluteString.contains("harvard.edu/engage/player/watch.html") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
             return decisionHandler(.cancel)
         }
         
@@ -265,8 +306,13 @@ extension CanvasWebView: WKNavigationDelegate {
         }
     }
 
+    @objc
+    public func stopRefreshing() {
+        refreshControl?.endRefreshing()
+    }
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        updateMargin()
+        stopRefreshing()
         finishedLoading?()
     }
 
@@ -295,4 +341,9 @@ extension CanvasWebView: WKUIDelegate {
     public func webViewDidClose(_ webView: WKWebView) {
         requestClose?()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

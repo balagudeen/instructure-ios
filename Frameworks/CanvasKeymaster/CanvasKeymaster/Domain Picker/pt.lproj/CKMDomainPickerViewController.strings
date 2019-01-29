@@ -1,20 +1,11 @@
-/* Class = "UILabel"; text = "Title"; ObjectID = "7VQ-qv-Wtk"; */
-"7VQ-qv-Wtk.text" = "Título";
-
 /* Class = "UILabel"; text = "Label"; ObjectID = "7tl-s1-0wg"; */
 "7tl-s1-0wg.text" = "Rótulo";
 
+/* Class = "UILabel"; text = "Title"; ObjectID = "7VQ-qv-Wtk"; */
+"7VQ-qv-Wtk.text" = "Título";
+
 /* Class = "UILabel"; text = "Canvas Login"; ObjectID = "7yY-o5-DSG"; */
 "7yY-o5-DSG.text" = "Login Canvas";
-
-/* Class = "UILabel"; text = "Previous Logins"; ObjectID = "Kpj-4f-cdc"; */
-"Kpj-4f-cdc.text" = "Logins anteriores";
-
-/* Class = "UIButton"; normalTitle = "http://example.instructure.com"; ObjectID = "OcW-eP-myo"; */
-"OcW-eP-myo.normalTitle" = "http://example.instructure.com";
-
-/* Class = "UILabel"; text = "Label"; ObjectID = "UqJ-Ob-4nT"; */
-"UqJ-Ob-4nT.text" = "Rótulo";
 
 /* Class = "UIButton"; accessibilityLabel = "cancel"; ObjectID = "aHi-ya-AL9"; */
 "aHi-ya-AL9.accessibilityLabel" = "cancelar";
@@ -31,8 +22,17 @@
 /* Class = "UILabel"; text = "Title"; ObjectID = "jsr-jq-3y0"; */
 "jsr-jq-3y0.text" = "Título";
 
+/* Class = "UILabel"; text = "Previous Logins"; ObjectID = "Kpj-4f-cdc"; */
+"Kpj-4f-cdc.text" = "Logins anteriores";
+
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "nTZ-ii-mqn"; */
 "nTZ-ii-mqn.text" = "Subtítulo";
+
+/* Class = "UIButton"; normalTitle = "http://example.instructure.com"; ObjectID = "OcW-eP-myo"; */
+"OcW-eP-myo.normalTitle" = "http://example.instructure.com";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "UqJ-Ob-4nT"; */
+"UqJ-Ob-4nT.text" = "Rótulo";
 
 /* Class = "UITextField"; placeholder = "Find your school or district"; ObjectID = "xzj-lX-iaI"; */
 "xzj-lX-iaI.placeholder" = "Encontrar a sua escola ou distrito";

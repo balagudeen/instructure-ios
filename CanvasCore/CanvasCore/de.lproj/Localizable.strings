@@ -16,6 +16,9 @@
 /* Confirmations alerting user of unanswered questions */
 "%d questions not answered" = "%d Unbeantwortete Fragen";
 
+/* web content failed to load */
+"⚠️ Error Loading Content" = "⚠️ Fehler beim Laden von Content";
+
 /* Accessiblity hint for question drawer button */
 "0 Questions Answered" = "0 Fragen beantwortet";
 
@@ -38,14 +41,14 @@
 /* option to view results for all grading periods */
 "All Grading Periods" = "Alle Benotungszeiträume";
 
-/* all pages segmented control title */
-"All Pages" = "Alle Seiten";
-
 /* No comment provided by engineer. */
 "All notifications are currently disabled." = "Alle Benachrichtigungen sind derzeit deaktiviert.";
 
 /* No comment provided by engineer. */
 "All notifications are currently enabled." = "Alle Benachrichtigungen sind derzeit aktiviert.";
+
+/* all pages segmented control title */
+"All Pages" = "Alle Seiten";
 
 /* No comment provided by engineer. */
 "Allow Notifications in Settings" = "Benachrichtigungen in den Einstellungen erlauben";
@@ -56,8 +59,14 @@
 /* Default error message displayed when a file fails to upload */
 "An error occured, please try again." = "Ein Fehler ist aufgetreten. Bitte versuchen Sie es noch einmal.";
 
+/* No comment provided by engineer. */
+"An unexpected error has occurred." = "Ein unerwarteter Fehler ist aufgetreten.";
+
 /* an unknown error's message */
 "An unknown error has occurred." = "Es ist ein unbekannter Fehler aufgetreten.";
+
+/* No comment provided by engineer. */
+"Answers will not be submitted while offline." = "Antworten werden nicht gesendet, während Sie offline sind.";
 
 /* Question to confirm user wants to navigate away from a quiz. */
 "Are you sure you want to leave this quiz?" = "Sind Sie sicher, dass Sie dieses Quiz wirklich verlassen wollen?";
@@ -67,6 +76,9 @@
 
 /* No comment provided by engineer. */
 "Are you sure you would like to delete this comment?" = "Wollen Sie diesen Kommentar wirklich löschen?";
+
+/* label to be read for visually impaired users with assignment types */
+"assignment" = "Aufgabe";
 
 /* No comment provided by engineer. */
 "Attendance" = "Anwesenheit";
@@ -104,9 +116,6 @@
 /* Description for Chat communication channel */
 "Chat" = "Chat";
 
-/* No comment provided by engineer. */
-"Choose Date" = "Datum wählen";
-
 /* Choose a file */
 "Choose a File" = "Eine Datei auswählen";
 
@@ -122,8 +131,11 @@
 /* Pick a video from library */
 "Choose a Video" = "Ein Video wählen";
 
-/* Label indicating that the question is a multiple dropdown answer question and answer must be chosen. */
-"Choose your answers below" = "Wählen Sie Ihre Antworten unten";
+/* No comment provided by engineer. */
+"Choose Date" = "Datum wählen";
+
+/* No comment provided by engineer. */
+"Close App" = "App schließen";
 
 /* No comment provided by engineer. */
 "Collapse" = "Ausblenden";
@@ -186,8 +198,8 @@
 /* message for delete dialog of audio recorder */
 "Delete recording?" = "Aufzeichnung löschen?";
 
-/* Designer role */
-"Designer" = "Designer";
+/* label to be read for visually impaired users with discusstion topic assignment types */
+"discussion topic" = "Diskussionsthema";
 
 /* Notification display name for discussions group */
 "Discussions" = "Diskussionen";
@@ -214,26 +226,29 @@
 /* Data encoding error title */
 "Encoding Error" = "Verschlüsselungsfehler";
 
+/* No comment provided by engineer. */
+"End Act as User" = "„Handeln als Benutzer“ beenden";
+
+/* Default text for essay cell */
+"Enter answer..." = "Antwort eingeben...";
+
 /* Text submission option */
 "Enter Text" = "Text eingeben";
 
 /* Placeholder for URL */
 "Enter URL..." = "URL eingeben...";
 
-/* Default text for essay cell */
-"Enter answer..." = "Antwort eingeben...";
-
 /* Prompt for text upload */
 "Enter your submission..." = "Geben Sie Ihre Abgabe ein ...";
 
-/* Title for quiz loading error */
-"Error Loading Quiz" = "Fehler beim Laden des Tests";
-
-/* Error title for parsing assignment data from server */
-"Error Updating Assignment" = "Fehler beim Aktualisieren der Aufgabe";
+/* No comment provided by engineer. */
+"Error" = "Fehler";
 
 /* error message for when the cache management database fails to load */
 "Error loading cache management database." = "Beim Laden der Speichermanagement-Datenbank ist ein Fehler aufgetreten.";
+
+/* Title for quiz loading error */
+"Error Loading Quiz" = "Fehler beim Laden des Tests";
 
 /* No comment provided by engineer. */
 "Error parsing the Roll Call response. Expected (e), received (a)" = "Fehler beim Analysieren der Roll Call-Antwort. Erwartet (e), empfangen (a)";
@@ -250,6 +265,9 @@
 /* No comment provided by engineer. */
 "Error retrieving tool launch URL" = "Fehler beim Abrufen des URL zum Starten des Tools";
 
+/* Error title for parsing assignment data from server */
+"Error Updating Assignment" = "Fehler beim Aktualisieren der Aufgabe";
+
 /* rollcall status error */
 "Error: No data returned from the rollcall api." = "Fehler: Keine Daten von der Rollcall-API zurückgegeben.";
 
@@ -262,17 +280,20 @@
 /* Error message when the server returns a invalid response */
 "Expected a response in the 200-299 range. Got %@" = "Eine Antwort erwartet im Bereich 200-299. Erhalten %@";
 
+/* label to be read for visually impaired users with external tool assignment types */
+"external tool" = "Externes Tool";
+
 /* File upload failed */
 "Failed" = "Fehlgeschlagen";
-
-/* Error when submitting an assignment */
-"Failed to Submit" = "Einreichen fehlgeschlagen";
 
 /* No comment provided by engineer. */
 "Failed to find image at path" = "Bild mit dem Pfad konnte nicht gefunden werden.";
 
 /* Error Message when the app can't load an object model from the database */
 "Failed to load (discussionKitModelName) NSManagedObjectModel" = "Laden von (discussionKitModelName) fehlgeschlagen NSManagedObjectModel";
+
+/* Error when submitting an assignment */
+"Failed to Submit" = "Einreichen fehlgeschlagen";
 
 /* No comment provided by engineer. */
 "Failed to write image" = "Fehler beim Schreiben des Bilds";
@@ -316,6 +337,12 @@
 /* Indigo course color button */
 "Indigo" = "Indigo";
 
+/* No comment provided by engineer. */
+"Internet Connection Offline" = "Internet-Verbindung offline";
+
+/* No comment provided by engineer. */
+"Invalid date received from API." = "Ungültiges Datum von API empfangen.";
+
 /* Mark student late
    Student is present in class */
 "Late" = "Verspätet";
@@ -336,13 +363,15 @@
 "LightPink" = "LightPink";
 
 /* Label indicating that the quiz lock date was reached and the quiz is auto submitting */
-"Lock Date Reached\nSubmitting" = "Sperrdatum erreicht\nEinreichen ...";
-
-/* Title for when another tool called Lockdown Browser is required to take a quiz */
-"Lockdown Browser Required" = "Lockdown-Browser erforderlich";
+"Lock Date Reached
+Submitting" = "Sperrdatum erreicht
+Einreichen...";
 
 /* Detail label for when a tool called Lockdown Browser is required to take the quiz */
 "Lockdown Browser is required for viewing your results. Please open the quiz in Lockdown Browser to continue." = "Der Lockdown-Browser ist für die Anzeige Ihrer Ergebnisse erforderlich. Bitte öffnen Sie den Test im Lockdown-Browser, um fortzufahren.";
+
+/* Title for when another tool called Lockdown Browser is required to take a quiz */
+"Lockdown Browser Required" = "Lockdown-Browser erforderlich";
 
 /* No comment provided by engineer. */
 "Mark All as Present" = "Alle als „Anwesend“ markieren";
@@ -392,9 +421,6 @@
 
 /* OK Button Title */
 "OK" = "OK";
-
-/* Observer role */
-"Observer" = "Beobachter";
 
 /* No comment provided by engineer. */
 "Open in Safari" = "In Safari öffnen";
@@ -460,17 +486,20 @@
 /* accessibility label for a quiz question */
 "Question" = "Frage";
 
-/* Shows question position */
-"Question %@" = "Frage %@";
-
 /* state for a question that has been flagged */
 "Question (number) Flagged" = "Frage (Nummer) markiert";
 
 /* state for unflagged question */
 "Question (number) Unflagged" = "Frage (Nummer) unmarkiert";
 
+/* Shows question position */
+"Question %@" = "Frage %@";
+
 /* label for the number of questions */
 "Questions" = "Fragen";
+
+/* label to be read for visually impaired users with quiz assignment types */
+"quiz" = "Quiz";
 
 /* Title for alert that shows when a quiz hits the due date */
 "Quiz Due" = "Quiz fällig";
@@ -535,17 +564,14 @@
 /* button for retaking quiz */
 "Retake Quiz" = "Quiz wiederholen";
 
-/* Description for SMS communication channel */
-"SMS" = "SMS";
-
 /* Notification display name for scheduling group */
 "Scheduling" = "Zeitplanung";
 
-/* Indicates that a matching quiz question needs to have an answer selected */
-"Select Answer" = "Antwort auswählen";
-
 /* Label indicating that the question is a multiple answer question and more than 1 answer can be correct */
 "Select all that apply" = "Wählen Sie alles aus, was zutreffend ist";
+
+/* Indicates that a matching quiz question needs to have an answer selected */
+"Select Answer" = "Antwort auswählen";
 
 /* No comment provided by engineer. */
 "Select to change the roll call date" = "Auswählen, um das Roll Call-Datum zu ändern";
@@ -562,6 +588,9 @@
 /* Text for a button that toggles to show a timer for a timed quiz */
 "Show Timer" = "Timer anzeigen";
 
+/* Description for SMS communication channel */
+"SMS" = "SMS";
+
 /* Error message displayed when the file is unrecognized. */
 "Something went wrong. Check the file format and try again." = "Etwas ging schief. Überprüfen Sie das Dateiformat, und versuchen Sie es erneut.";
 
@@ -574,11 +603,11 @@
 /* stop recording button a11y label */
 "Stop" = "Stopp";
 
+/* No comment provided by engineer. */
+"Stop acting as..." = "Aufhören, als Benutzer [...] zu handeln";
+
 /* File upload was stopped */
 "Stopped" = "Angehalten";
-
-/* Student role */
-"Student" = "Student";
 
 /* No comment provided by engineer. */
 "Style" = "Stil";
@@ -600,8 +629,11 @@
 /* Label for indication of submitting quiz */
 "Submitting Quiz" = "Quiz einreichen";
 
-/* TA role */
-"TA" = "Lehrassistent";
+/* Take a photo submission choice */
+"Take a Photo" = "Ein Foto machen";
+
+/* Take a video submission choice */
+"Take a Video" = "Ein Video aufnehmen";
 
 /* Take a photo or video submission choice */
 "Take Photo or Video" = "Foto oder Video aufnehmen";
@@ -609,23 +641,17 @@
 /* Button for taking the quiz */
 "Take Quiz" = "Sich dem Quiz stellen";
 
-/* Take a photo submission choice */
-"Take a Photo" = "Ein Foto machen";
-
-/* Take a video submission choice */
-"Take a Video" = "Ein Video aufnehmen";
-
-/* Teacher role */
-"Teacher" = "Dozent";
-
 /* Teal course color button */
 "Teal" = "Blaugrün";
 
-/* This shouldn't ever happen. */
-"The Pages are gone!? Why are the pages always gone?" = "Die Seiten sind weg!? Warum werden die Seiten immer weg?";
+/* No comment provided by engineer. */
+"The app needs to restart to use the new language settings. Please relaunch the app." = "Die Anwendung muss neu gestartet werden, um die neuen Spracheinstellungen zu übernehmen. Bitte starten Sie die App erneut.";
 
 /* Error message for a file missing */
 "The file does not exist." = "Die Datei existiert nicht.";
+
+/* This shouldn't ever happen. */
+"The Pages are gone!? Why are the pages always gone?" = "Die Seiten sind weg!? Warum werden die Seiten immer weg?";
 
 /* Description for alert that shows when the quiz hits the due date */
 "The quiz is due in 1 minute. Would you like to submit now and be on time or continue taking the quiz and possibly be late?" = "Das Quiz muss in 1 Minute eingereicht werden. Möchten Sie es jetzt einreichen, um ganz sicher zu gehen, oder möchten Sie weiterarbeiten und so ein verspätetes Einreichen riskieren?";
@@ -720,6 +746,9 @@
 /* Message when telling the user they can't take the quiz because the quiz is locked */
 "This quiz is locked." = "Das Quiz ist gesperrt.";
 
+/* No comment provided by engineer. */
+"This quiz is not available offline." = "Dieses Quiz ist offline nicht verfügbar.";
+
 /* label for the time limit */
 "Time Limit" = "Zeitbeschränkung";
 
@@ -771,11 +800,17 @@
 /* Upcoming assignments */
 "Upcoming" = "Demnächst";
 
+/* No comment provided by engineer. */
+"Updated Language Settings" = "Aktualisierte Spracheinstellungen";
+
 /* File upload submission option */
 "Upload File" = "Datei hochladen";
 
 /* Message displayed while a file is being uploaded */
 "Uploading file..." = "Datei wird hochgeladen ...";
+
+/* File upload in progress */
+"uploading..." = "Wird hochgeladen ...";
 
 /* permission denied button a11y hint */
 "User has denied record permission" = "Benutzer hat keine Aufnahmegenehmigung erteilt";
@@ -807,24 +842,12 @@
 /* permission was rejected */
 "You must grant (appName) Microphone access in the Settings app in order to record audio." = "Für eine Audioaufzeichnung müssen Sie (appName) in der Einstellungs-App Mikrofonzugriffsrechte erteilen.";
 
+/* No comment provided by engineer. */
+"You will stop acting as %@ and return to your account." = "Sie hören auf, als %@ zu handeln, und kehren zu Ihrem Konto zurück.";
+
+/* No comment provided by engineer. */
+"You will stop acting as this user and return to your account." = "Sie hören auf, als dieser Benutzer zu handeln, und kehren zu Ihrem Konto zurück.";
+
 /* Error description for file out of space */
 "Your device is out of storage space. Please free up space and try again." = "Der Speicher Ihres Geräts ist voll. Bitte geben Sie Speicherplatz frei, und versuchen Sie es erneut.";
-
-/* label to be read for visually impaired users with assignment types */
-"assignment" = "Aufgabe";
-
-/* label to be read for visually impaired users with discusstion topic assignment types */
-"discussion topic" = "Diskussionsthema";
-
-/* label to be read for visually impaired users with external tool assignment types */
-"external tool" = "Externes Tool";
-
-/* label to be read for visually impaired users with quiz assignment types */
-"quiz" = "Quiz";
-
-/* File upload in progress */
-"uploading..." = "Wird hochgeladen ...";
-
-/* web content failed to load */
-"⚠️ Error Loading Content" = "⚠️ Fehler beim Laden von Content";
 

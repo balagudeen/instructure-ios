@@ -32,7 +32,7 @@ let peepKitDBFailedToLoadErrorDescription = NSLocalizedString("There was a probl
 // MARK: - Session for current user observees
 // ---------------------------------------------
 extension Session {
-    func observeesManagedObjectContext() throws -> NSManagedObjectContext {
+    @objc func observeesManagedObjectContext() throws -> NSManagedObjectContext {
         guard let model = NSManagedObjectModel(named: "Peeps", inBundle: Bundle(for: User.self))?.mutableCopy() as? NSManagedObjectModel else {
             throw NSError(subdomain: peepKitSubdomain, code: peepKitFailedToLoadErrorCode, title: peepKitFailedToLoadErrorDescription, description: peepKitFailedToLoadErrorDescription)
         }
@@ -51,7 +51,7 @@ private let peepsErrorMessage = NSLocalizedString("There was an error loading th
 // MARK: - Session for current user observees
 // ---------------------------------------------
 extension Session {
-    public func peepsManagedObjectContext() throws -> NSManagedObjectContext {
+    @objc public func peepsManagedObjectContext() throws -> NSManagedObjectContext {
         guard let model = NSManagedObjectModel(named: "Peeps", inBundle: .core) else {
             throw NSError(subdomain: "Peeps", code: 10002, sessionID: sessionID, apiURL: nil, title: nil, description: peepsErrorMessage, failureReason: "Error loading Peeps.xcdatamodel", data: nil)
         }

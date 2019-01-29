@@ -31,8 +31,8 @@
     if (self.count == 1) {
         return self[0];
     }
-    
-    NSString *andMoreStringTemplate = NSLocalizedString(@"%d more", @"In the context 'Joe, Fred, ((25 more))'");
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    NSString *andMoreStringTemplate = NSLocalizedStringFromTableInBundle(@"%d more", nil, bundle, @"In the context 'Joe, Fred, ((25 more))'");
     NSString *trailerTemplate = [joiner stringByAppendingString:andMoreStringTemplate];
     
     CGFloat roughTailerLength = [trailerTemplate sizeWithAttributes:@{NSFontAttributeName: font}].width;
@@ -65,7 +65,7 @@
         currentWidth = [result sizeWithAttributes:@{NSFontAttributeName: font}].width;
     }
     if (includedEntries == 0) {
-        [result appendFormat:NSLocalizedString(@"%d %@", @"A number and a collective noun, like '5 pigs'"), self.count, collectiveNoun];
+        [result appendFormat:NSLocalizedStringFromTableInBundle(@"%d %@", nil, bundle, @"A number and a collective noun, like '5 pigs'"), self.count, collectiveNoun];
     }
     else if (includedEntries < self.count) {
         [result appendFormat:trailerTemplate, self.count - includedEntries];

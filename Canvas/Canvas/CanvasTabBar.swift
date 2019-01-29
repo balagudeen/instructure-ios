@@ -37,7 +37,7 @@ class CanvasTabBarController: UITabBarController {
     }
     
     // Should be called when from the delegate method shouldSelectViewController
-    func logShouldSelectViewController(viewController: UIViewController) {
+    @objc func logShouldSelectViewController(viewController: UIViewController) {
         let map = ["dashboard_selected", "calendar_selected", "todo_list_selected", "notifications_selected", "inbox_selected"]
         if let index = viewControllers?.index(of: viewController),
             selectedViewController != viewController {

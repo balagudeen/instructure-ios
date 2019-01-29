@@ -35,9 +35,9 @@ class QuizSubmissionTimerController: NSObject {
     let timedQuizSubmissionService: TimedQuizSubmissionService
     var submission: QuizSubmission?
     
-    fileprivate (set) var timerTime = 0
-    var timerTick: (_ currentTime: Int)->() = { _ in }
-    var timeExpired: ()->() = {}
+    @objc fileprivate (set) var timerTime = 0
+    @objc var timerTick: (_ currentTime: Int)->() = { _ in }
+    @objc var timeExpired: ()->() = {}
     
     fileprivate var timer: Timer?
     fileprivate var timeSyncTimer: Timer?
@@ -56,17 +56,17 @@ class QuizSubmissionTimerController: NSObject {
         
         syncStartingTime()
         syncTimeWithServer()
-        NotificationCenter.default.addObserver(self, selector: #selector(QuizSubmissionTimerController.applicationBecameActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(QuizSubmissionTimerController.applicationBecameActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         startTimers()
     }
     
-    func stopTimedSubmission() {
+    @objc func stopTimedSubmission() {
         invalidateTimers()
         NotificationCenter.default.removeObserver(self)
     }
     
-    func applicationBecameActive() {
+    @objc func applicationBecameActive() {
         syncStartingTime()
         syncTimeWithServer()
         
@@ -76,10 +76,10 @@ class QuizSubmissionTimerController: NSObject {
     
     fileprivate func startTimers() {
         timer = Timer(timeInterval: 1.0, target: self, selector: #selector(QuizSubmissionTimerController.updateTimer), userInfo: nil, repeats: true)
-        RunLoop.main.add(timer!, forMode: RunLoopMode.commonModes)
+        RunLoop.main.add(timer!, forMode: RunLoop.Mode.common)
         
         timeSyncTimer = Timer(timeInterval: 30.0, target: self, selector: #selector(QuizSubmissionTimerController.syncTimeWithServer), userInfo: nil, repeats: true)
-        RunLoop.main.add(timeSyncTimer!, forMode: RunLoopMode.commonModes)
+        RunLoop.main.add(timeSyncTimer!, forMode: RunLoop.Mode.common)
     }
     
     fileprivate func invalidateTimers() {
@@ -114,7 +114,7 @@ class QuizSubmissionTimerController: NSObject {
         }
     }
     
-    func updateTimer() {
+    @objc func updateTimer() {
         if quiz.timed {
             timerTime -= 1
         } else {
@@ -129,7 +129,7 @@ class QuizSubmissionTimerController: NSObject {
         }
     }
     
-    func syncTimeWithServer() {
+    @objc func syncTimeWithServer() {
         if quiz.timed {
             timedQuizSubmissionService.getTimeRemaining { [weak self] result in
                 if let secondsLeft = result.value {

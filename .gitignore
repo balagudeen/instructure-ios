@@ -61,3 +61,6 @@ yarn-error.log
 /rn/modules/instructure-canvas-api/package/
 *.tgz
 build
+
+# Frameworks
+ios-frameworks/

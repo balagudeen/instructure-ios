@@ -18,7 +18,7 @@ import CanvasCore
 import Marshal
 
 extension ParentAppDelegate: RCTBridgeDelegate {
-    func prepareReactNative() {
+    @objc func prepareReactNative() {
         NativeLoginManager.shared().delegate = self
         NativeLoginManager.shared().app = .parent
         HelmManager.shared.bridge = RCTBridge(delegate: self, launchOptions: nil)
@@ -69,7 +69,7 @@ extension ParentAppDelegate: RCTBridgeDelegate {
                 guard let color = RCTConvert.uiColor(props["color"]) else { return }
                 controller?.navigationController?.navigationBar.barTintColor = color
                 controller?.navigationController?.navigationBar.tintColor = .white
-                controller?.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+                controller?.navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: UIColor.white])
             }
             
             return controller
@@ -90,7 +90,7 @@ extension ParentAppDelegate: RCTBridgeDelegate {
     }
     
     // Use this if the moduleName maps cleanly to a native route we already have set up.
-    open func registerScreen(_ moduleName: ModuleName) {
+    @objc open func registerScreen(_ moduleName: ModuleName) {
         HelmManager.shared.registerNativeViewController(for: moduleName, factory: { props in
             guard let url = propsURL(props) else { return nil }
             return Router.sharedInstance.viewControllerForURL(url)
@@ -105,4 +105,10 @@ func propsURL(_ props: [String: Any]) -> URL? {
 func hrefProp(_ props: [String: Any]) -> String? {
     guard let location = props["location"] as? [String: Any] else { return nil }
     return location["href"] as? String
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

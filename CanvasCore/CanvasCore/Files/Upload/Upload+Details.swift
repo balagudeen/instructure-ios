@@ -18,7 +18,7 @@
 
 
 extension Upload {
-    public static func predicate(id: String) -> NSPredicate {
+    @objc public static func predicate(id: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "id", id)
     }
 }

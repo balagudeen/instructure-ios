@@ -19,6 +19,7 @@
 import { CoursesActions } from '../actions'
 import { CourseSettingsActions } from '../settings/actions'
 import { EnrollmentsActions } from '../../enrollments/actions'
+import { PermissionsActions } from '../../permissions/actions'
 import { courses as coursesReducer } from '../courses-reducer'
 import { apiResponse, apiError } from '../../../../test/helpers/apiMock'
 import { testAsyncReducer } from '../../../../test/helpers/async'
@@ -458,13 +459,58 @@ describe('getCoursePermissions', () => {
   })
 })
 
+describe('updateContextPermissions', () => {
+  it('should set the permissions if the context is a course', () => {
+    let action = {
+      type: PermissionsActions().updateContextPermissions.toString(),
+      payload: {
+        contextName: 'courses',
+        contextID: '1',
+        result: {
+          data: { post_to_forum: false },
+        },
+      },
+    }
+
+    let state = {
+      '1': {},
+    }
+    let newState = coursesReducer(state, action)
+    expect(newState).toMatchObject({
+      '1': {
+        permissions: { post_to_forum: false },
+      },
+    })
+  })
+
+  it('should not set the permissions if the context is not a course', () => {
+    let action = {
+      type: PermissionsActions().updateContextPermissions.toString(),
+      payload: {
+        contextName: 'groups',
+        contextID: '1',
+        result: {
+          data: { send_messages: true },
+        },
+      },
+    }
+
+    let state = {
+      '1': {},
+    }
+    let newState = coursesReducer(state, action)
+    expect(newState).toMatchObject(state)
+  })
+})
+
 describe('refresh single course', () => {
-  it('no existing permissions', () => {
+  it('no existing data', () => {
     let action = {
       type: CoursesActions().refreshCourse.toString(),
       payload: {
         result: {
           data: {
+            id: '1',
             permissions: {
               create_announcement: true,
               create_discussion_topic: true,
@@ -473,7 +519,7 @@ describe('refresh single course', () => {
           },
         },
         context: 'courses',
-        contextID: '1',
+        courseID: '1',
       },
     }
 
@@ -486,7 +532,13 @@ describe('refresh single course', () => {
           'assignmentGroups': { 'pending': 0, 'refs': [] },
           'attendanceTool': { 'pending': 0 },
           'color': '#FFFFFF00',
-          'course': {},
+          'course': {
+            'id': '1',
+            'permissions': {
+              'create_announcement': true,
+              'create_discussion_topic': true,
+            },
+          },
           'discussions': { 'pending': 0, 'refs': [] },
           'enabledFeatures': [],
           'enrollments': { 'pending': 0, 'refs': [] },
@@ -495,21 +547,25 @@ describe('refresh single course', () => {
           'groups': { 'pending': 0, 'refs': [] },
           'oldColor': '#FFFFFF00',
           'pending': 0,
-          'permissions': {},
+          'permissions': {
+            'create_announcement': true,
+            'create_discussion_topic': true,
+          },
           'quizzes': { 'pending': 0, 'refs': [] },
           'tabs': { 'pending': 0, 'tabs': [] },
         },
-        'undefined': { 'permissions': { 'create_announcement': true, 'create_discussion_topic': true } },
       }
     )
   })
 
-  it('existing permissions', () => {
+  it('existing data', () => {
     let action = {
       type: CoursesActions().refreshCourse.toString(),
       payload: {
         result: {
           data: {
+            id: '1',
+            name: 'Course 2',
             permissions: {
               create_announcement: false,
               create_discussion_topic: true,
@@ -518,7 +574,7 @@ describe('refresh single course', () => {
           },
         },
         context: 'courses',
-        contextID: '1',
+        courseID: '1',
       },
     }
 
@@ -528,7 +584,15 @@ describe('refresh single course', () => {
         'assignmentGroups': { 'pending': 0, 'refs': [] },
         'attendanceTool': { 'pending': 0 },
         'color': '#FFFFFF00',
-        'course': {},
+        'course': {
+          'id': '1',
+          'name': 'Course 1',
+          'somethingImportant': true,
+          'permissions': {
+            'create_announcement': true,
+            'create_discussion_topic': false,
+          },
+        },
         'discussions': { 'pending': 0, 'refs': [] },
         'enabledFeatures': [],
         'enrollments': { 'pending': 0, 'refs': [] },
@@ -537,11 +601,10 @@ describe('refresh single course', () => {
         'groups': { 'pending': 0, 'refs': [] },
         'oldColor': '#FFFFFF00',
         'pending': 0,
-        'permissions': {},
+        'permissions': { 'create_announcement': true, 'create_discussion_topic': false },
         'quizzes': { 'pending': 0, 'refs': [] },
         'tabs': { 'pending': 0, 'tabs': [] },
       },
-      'undefined': { 'permissions': { 'create_announcement': false, 'create_discussion_topic': true } },
     }
     let newState = coursesReducer(state, action)
     expect(newState).toMatchObject(
@@ -551,7 +614,11 @@ describe('refresh single course', () => {
           'assignmentGroups': { 'pending': 0, 'refs': [] },
           'attendanceTool': { 'pending': 0 },
           'color': '#FFFFFF00',
-          'course': {},
+          'course': {
+            'id': '1',
+            'name': 'Course 2',
+            'somethingImportant': true,
+          },
           'discussions': { 'pending': 0, 'refs': [] },
           'enabledFeatures': [],
           'enrollments': { 'pending': 0, 'refs': [] },
@@ -560,11 +627,10 @@ describe('refresh single course', () => {
           'groups': { 'pending': 0, 'refs': [] },
           'oldColor': '#FFFFFF00',
           'pending': 0,
-          'permissions': {},
+          'permissions': { 'create_announcement': false, 'create_discussion_topic': true },
           'quizzes': { 'pending': 0, 'refs': [] },
           'tabs': { 'pending': 0, 'tabs': [] },
         },
-        'undefined': { 'permissions': { 'create_announcement': false, 'create_discussion_topic': true } },
       }
     )
   })

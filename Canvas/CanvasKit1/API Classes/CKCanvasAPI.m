@@ -1237,14 +1237,13 @@ NSString *CKDownloadsInProgressDirectory(void);
                 if (error3) {
                     NSLog(@"Error finalizing file upload: %@", error3);
                     block(error3, isFinalValue3, nil);
+                    return;
                 }
                 
                 block(nil, isFinalValue3, attachedFile);
-                return;
             }];
         }];
     }];
-    
 }
 
 /**
@@ -1360,10 +1359,7 @@ NSString *CKDownloadsInProgressDirectory(void);
  */
 - (void)confirmFileUploadedToURL:(NSURL *)fileURL block:(CKAttachmentBlock)block {
     
-    NSDictionary *headers = @{@"Content-Length": @"0"};
-    
-    NSDictionary *options = @{CKAPIHTTPMethodKey: @"POST",
-                             CKAPIHTTPHeadersKey: headers};
+    NSDictionary *options = @{CKAPIHTTPMethodKey: @"GET"};
     
     [self runForURL:fileURL
             options:options

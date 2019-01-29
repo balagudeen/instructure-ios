@@ -36,12 +36,12 @@ import Marshal
 
 extension RubricCriterion {
     
-    public static func uniquePredicateForObject(_ assignmentID: String, json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ assignmentID: String, json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("id") ?? ""
         return NSPredicate(format: "%K == %@ && %K == %@", "id", id, "assignmentID", assignmentID)
     }
     
-    public func updateValues(_ json: JSONObject, assignmentID: String, position: NSNumber, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, assignmentID: String, position: NSNumber, inContext context: NSManagedObjectContext) throws {
         id = try json.stringID("id")
         criterionDescription = try json <| "description"
         longDescription = try json <| "long_description"

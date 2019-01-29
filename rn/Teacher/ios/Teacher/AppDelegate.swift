@@ -21,14 +21,15 @@ import UserNotifications
 import PSPDFKit
 //import Fabric
 import Crashlytics
+//import Firebase
 import CanvasCore
+import Core
 import React
-import BugsnagReactNative
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
-    let loginConfig = LoginConfiguration(mobileVerifyName: "iosTeacher", logo: UIImage(named: "teacher-logomark")!, fullLogo: UIImage(named: "teacher-logo")!)
+    @objc let loginConfig = LoginConfiguration(mobileVerifyName: "iosTeacher", logo: UIImage(named: "teacher-logomark")!, fullLogo: UIImage(named: "teacher-logo")!)
     var window: UIWindow?
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -37,18 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
 
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        BuddyBuildSDK.uiTestsDidReceiveRemoteNotification(userInfo)
-    }
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        if (uiTesting) {
-            BuddyBuildSDK.setup()
-        } else {
-            BugsnagReactNative.start()
-            //Fabric.with([Crashlytics.self, Answers.self])
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        if !uiTesting {
+            setupCrashlytics()
         }
         ResetAppIfNecessary()
+        //FirebaseApp.configure()
         setupForPushNotifications()
         preparePSPDFKit()
         window = MasqueradableWindow(frame: UIScreen.main.bounds)
@@ -59,12 +54,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         DispatchQueue.main.async {
             self.prepareReactNative()
             self.initiateLoginProcess()
+            CanvasAnalytics.setHandler(self)
         }
         
         return true
     }
     
-    func prepareReactNative() {
+    @objc func prepareReactNative() {
         HelmManager.shared.bridge = RCTBridge(delegate: self, launchOptions: nil)
         registerNativeRoutes()
         HelmManager.shared.onReactLoginComplete = {
@@ -82,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     
-    func showLoadingState() {
+    @objc func showLoadingState() {
         guard let window = self.window else { return }
         if let root = window.rootViewController, let tag = root.tag, tag == "LaunchScreenPlaceholder" { return }
         let placeholder = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateViewController(withIdentifier: "LaunchScreen")
@@ -93,19 +89,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }, completion:nil)
     }
     
-    func preparePSPDFKit() {
-        guard let key = Secrets.fetch(.teacherPSPDFKit) else { return }
+    @objc func preparePSPDFKit() {
+        guard let key = Secret.teacherPSPDFKitLicense.string else { return }
         PSPDFKit.setLicenseKey(key)
     }
     
-    func initiateLoginProcess() {
+    @objc func initiateLoginProcess() {
         CanvasKeymaster.the().fetchesBranding = true
         CanvasKeymaster.the().delegate = loginConfig
         
         NativeLoginManager.shared().delegate = self
     }
     
-    func setupForPushNotifications() {
+    @objc func setupForPushNotifications() {
         NotificationKitController.setupForPushNotifications(delegate: self)
     }
     
@@ -127,8 +123,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             AppStoreReview.handleLaunch()
         }
     }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        LocalizationManager.closed()
+    }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         StartupManager.shared.enqueueTask {
             guard let rootView = app.keyWindow?.rootViewController as? RootTabBarController, let tabViewControllers = rootView.viewControllers else { return }
             for (index, vc) in tabViewControllers.enumerated() {
@@ -153,6 +153,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 }
 
+extension AppDelegate: CanvasAnalyticsHandler {
+    func handleEvent(_ name: String, parameters: [String : Any]?) {
+       // Analytics.logEvent(name, parameters: parameters)
+    }
+}
 
 extension AppDelegate: RCTBridgeDelegate {
     func sourceURL(for bridge: RCTBridge!) -> URL! {
@@ -161,11 +166,26 @@ extension AppDelegate: RCTBridgeDelegate {
     }
 }
 
-
 extension AppDelegate: NativeLoginManagerDelegate {
     func didLogin(_ client: CKIClient) {
         if let brandingInfo = client.branding?.jsonDictionary() as? [String: Any] {
             Brand.setCurrent(Brand(webPayload: brandingInfo), applyInWindow: window)
+            // copy to new Core.Brand
+            if let data = try? JSONSerialization.data(withJSONObject: brandingInfo) {
+                let response = try! JSONDecoder().decode(APIBrandVariables.self, from: data)
+                Core.Brand.shared = Core.Brand(response: response)
+            }
+        }
+
+        if let locale = client.effectiveLocale {
+            LocalizationManager.setCurrentLocale(locale)
+        }
+
+        let countryCode: String? = Locale.current.regionCode
+        if countryCode != "CA" {
+            let session = client.authSession
+            let crashlyticsUserId = "\(session.user.id)@\(session.baseURL.host ?? session.baseURL.absoluteString)"
+            Crashlytics.sharedInstance().setUserIdentifier(crashlyticsUserId)
         }
     }
     
@@ -175,5 +195,19 @@ extension AppDelegate: NativeLoginManagerDelegate {
         UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
             window.rootViewController = controller
         }, completion:nil)
+    }
+}
+
+// MARK: Crashlytics
+extension AppDelegate {
+
+    @objc func setupCrashlytics() {
+        guard let _ = Bundle.main.object(forInfoDictionaryKey: "Fabric") else {
+            NSLog("WARNING: Crashlytics was not properly initialized.");
+            return
+        }
+
+        //Fabric.with([Crashlytics.self, Answers.self])
+        CanvasCrashlytics.setupForReactNative()
     }
 }

@@ -17,7 +17,7 @@
 import Foundation
 
 extension Bundle {
-    static var core: Bundle {
+    @objc static var core: Bundle {
         return Bundle(identifier: "com.instructure.CanvasCore")!
     }
 }

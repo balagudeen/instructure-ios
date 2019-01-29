@@ -34,7 +34,7 @@ class DetailsInfoCell: UITableViewCell {
         submissionLabel.accessibilityIdentifier = "event_detail_submission"
     }
 
-    func setShowsSubmissionInfo(_ showsInfo: Bool) {
+    @objc func setShowsSubmissionInfo(_ showsInfo: Bool) {
         if showsInfo {
             submissionInfoVisibilityConstraint.constant = showingSubmissionInfoConstraintValue
             submissionLabel.isHidden = false

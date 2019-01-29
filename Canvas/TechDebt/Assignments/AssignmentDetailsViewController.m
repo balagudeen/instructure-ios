@@ -59,7 +59,7 @@
     };
     
     [self.view addSubview:self.webView];
-    self.webView.frame = CGRectInset(self.view.bounds, 16, 0);
+    self.webView.frame = CGRectInset(self.view.bounds, 0, 0);
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     [self loadDetailsForAssignment];
@@ -127,20 +127,22 @@
     if (self.assignment == nil) {
         return;
     }
-    
-    NSString *detailPlaceholder = [NSString stringWithFormat:@"<span style=\"color: #999999;\">%@</span>", NSLocalizedString(@"This assignment has no details.", @"message displayed in the details section if there is no comment.")];
+
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+
+    NSString *detailPlaceholder = [NSString stringWithFormat:@"<span style=\"color: #999999;\">%@</span>", NSLocalizedStringFromTableInBundle(@"This assignment has no details.", nil, bundle, @"message displayed in the details section if there is no comment.")];
     NSString *details = self.assignment.assignmentDescription ?: detailPlaceholder;
     
     if (self.prependAssignmentInfoToContent) {
         NSString *dueDateString;
         if (self.assignment.dueDate == nil) {
-            dueDateString = NSLocalizedString(@"No due date", "Indicates an assignment does not have a due date");
+            dueDateString = NSLocalizedStringFromTableInBundle(@"No due date", nil, bundle, "Indicates an assignment does not have a due date");
         } else {
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
             dateFormat.dateStyle = NSDateFormatterMediumStyle;
             dateFormat.timeStyle = NSDateFormatterShortStyle;
 
-            dueDateString = [NSString stringWithFormat: NSLocalizedString(@"Due: %@", "Due date label indicating when an assignment is due"), [dateFormat stringFromDate:self.assignment.dueDate]];
+            dueDateString = [NSString stringWithFormat: NSLocalizedStringFromTableInBundle(@"Due: %@", nil, bundle, "Due date label indicating when an assignment is due"), [dateFormat stringFromDate:self.assignment.dueDate]];
         }
         
         if (self.assignment.name) {

@@ -17,7 +17,7 @@
 import UIKit
 
 public extension UISplitViewController {
-    var masterNavigationController: UINavigationController? {
+    @objc var masterNavigationController: UINavigationController? {
         get {
             if let navigationController = self.viewControllers.first as? UINavigationController {
                 return navigationController
@@ -26,7 +26,7 @@ public extension UISplitViewController {
         }
     }
     
-    var detailNavigationController: UINavigationController? {
+    @objc var detailNavigationController: UINavigationController? {
         get {
             if let navigationController = self.viewControllers.last as? UINavigationController, self.viewControllers.count > 1 {
                 return navigationController
@@ -35,7 +35,7 @@ public extension UISplitViewController {
         }
     }
     
-    var masterTopViewController: UIViewController? {
+    @objc var masterTopViewController: UIViewController? {
         get {
             if let navigationController = self.viewControllers.first as? UINavigationController {
                 if let topViewController = navigationController.topMostViewController() {
@@ -46,7 +46,7 @@ public extension UISplitViewController {
         }
     }
     
-    var detailTopViewController: UIViewController? {
+    @objc var detailTopViewController: UIViewController? {
         get {
             if let navigationController = self.viewControllers.last as? UINavigationController, self.viewControllers.count > 1 {
                 if let topViewController = navigationController.topMostViewController() {

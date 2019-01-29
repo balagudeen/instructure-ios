@@ -286,21 +286,25 @@ exports[`AnnouncementsList renders 1`] = `
               >
                 <View
                   style={
-                    Object {
-                      "alignSelf": "center",
-                      "backgroundColor": "transparent",
-                      "borderColor": "#c7c7cc",
-                      "borderRightWidth": 2,
-                      "borderTopWidth": 2,
-                      "height": 10,
-                      "marginLeft": 7,
-                      "transform": Array [
-                        Object {
-                          "rotate": "45deg",
-                        },
-                      ],
-                      "width": 10,
-                    }
+                    Array [
+                      Object {
+                        "alignSelf": "center",
+                        "backgroundColor": "transparent",
+                        "borderColor": "#c7c7cc",
+                        "borderRightWidth": 2,
+                        "borderTopWidth": 2,
+                        "height": 10,
+                        "marginLeft": 7,
+                        "width": 10,
+                      },
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "rotate": "45deg",
+                          },
+                        ],
+                      },
+                    ]
                   }
                 />
               </View>
@@ -445,21 +449,25 @@ exports[`AnnouncementsList renders 1`] = `
               >
                 <View
                   style={
-                    Object {
-                      "alignSelf": "center",
-                      "backgroundColor": "transparent",
-                      "borderColor": "#c7c7cc",
-                      "borderRightWidth": 2,
-                      "borderTopWidth": 2,
-                      "height": 10,
-                      "marginLeft": 7,
-                      "transform": Array [
-                        Object {
-                          "rotate": "45deg",
-                        },
-                      ],
-                      "width": 10,
-                    }
+                    Array [
+                      Object {
+                        "alignSelf": "center",
+                        "backgroundColor": "transparent",
+                        "borderColor": "#c7c7cc",
+                        "borderRightWidth": 2,
+                        "borderTopWidth": 2,
+                        "height": 10,
+                        "marginLeft": 7,
+                        "width": 10,
+                      },
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "rotate": "45deg",
+                          },
+                        ],
+                      },
+                    ]
                   }
                 />
               </View>
@@ -725,21 +733,25 @@ exports[`AnnouncementsList renders while refreshing 1`] = `
               >
                 <View
                   style={
-                    Object {
-                      "alignSelf": "center",
-                      "backgroundColor": "transparent",
-                      "borderColor": "#c7c7cc",
-                      "borderRightWidth": 2,
-                      "borderTopWidth": 2,
-                      "height": 10,
-                      "marginLeft": 7,
-                      "transform": Array [
-                        Object {
-                          "rotate": "45deg",
-                        },
-                      ],
-                      "width": 10,
-                    }
+                    Array [
+                      Object {
+                        "alignSelf": "center",
+                        "backgroundColor": "transparent",
+                        "borderColor": "#c7c7cc",
+                        "borderRightWidth": 2,
+                        "borderTopWidth": 2,
+                        "height": 10,
+                        "marginLeft": 7,
+                        "width": 10,
+                      },
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "rotate": "45deg",
+                          },
+                        ],
+                      },
+                    ]
                   }
                 />
               </View>
@@ -884,21 +896,25 @@ exports[`AnnouncementsList renders while refreshing 1`] = `
               >
                 <View
                   style={
-                    Object {
-                      "alignSelf": "center",
-                      "backgroundColor": "transparent",
-                      "borderColor": "#c7c7cc",
-                      "borderRightWidth": 2,
-                      "borderTopWidth": 2,
-                      "height": 10,
-                      "marginLeft": 7,
-                      "transform": Array [
-                        Object {
-                          "rotate": "45deg",
-                        },
-                      ],
-                      "width": 10,
-                    }
+                    Array [
+                      Object {
+                        "alignSelf": "center",
+                        "backgroundColor": "transparent",
+                        "borderColor": "#c7c7cc",
+                        "borderRightWidth": 2,
+                        "borderTopWidth": 2,
+                        "height": 10,
+                        "marginLeft": 7,
+                        "width": 10,
+                      },
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "rotate": "45deg",
+                          },
+                        ],
+                      },
+                    ]
                   }
                 />
               </View>
@@ -1065,21 +1081,25 @@ exports[`AnnouncementsList renders with no create_announcement permission 1`] = 
               >
                 <View
                   style={
-                    Object {
-                      "alignSelf": "center",
-                      "backgroundColor": "transparent",
-                      "borderColor": "#c7c7cc",
-                      "borderRightWidth": 2,
-                      "borderTopWidth": 2,
-                      "height": 10,
-                      "marginLeft": 7,
-                      "transform": Array [
-                        Object {
-                          "rotate": "45deg",
-                        },
-                      ],
-                      "width": 10,
-                    }
+                    Array [
+                      Object {
+                        "alignSelf": "center",
+                        "backgroundColor": "transparent",
+                        "borderColor": "#c7c7cc",
+                        "borderRightWidth": 2,
+                        "borderTopWidth": 2,
+                        "height": 10,
+                        "marginLeft": 7,
+                        "width": 10,
+                      },
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "rotate": "45deg",
+                          },
+                        ],
+                      },
+                    ]
                   }
                 />
               </View>
@@ -1224,21 +1244,25 @@ exports[`AnnouncementsList renders with no create_announcement permission 1`] = 
               >
                 <View
                   style={
-                    Object {
-                      "alignSelf": "center",
-                      "backgroundColor": "transparent",
-                      "borderColor": "#c7c7cc",
-                      "borderRightWidth": 2,
-                      "borderTopWidth": 2,
-                      "height": 10,
-                      "marginLeft": 7,
-                      "transform": Array [
-                        Object {
-                          "rotate": "45deg",
-                        },
-                      ],
-                      "width": 10,
-                    }
+                    Array [
+                      Object {
+                        "alignSelf": "center",
+                        "backgroundColor": "transparent",
+                        "borderColor": "#c7c7cc",
+                        "borderRightWidth": 2,
+                        "borderTopWidth": 2,
+                        "height": 10,
+                        "marginLeft": 7,
+                        "width": 10,
+                      },
+                      Object {
+                        "transform": Array [
+                          Object {
+                            "rotate": "45deg",
+                          },
+                        ],
+                      },
+                    ]
                   }
                 />
               </View>

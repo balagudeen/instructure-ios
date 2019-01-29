@@ -21,6 +21,7 @@ import {
   ActionSheetIOS,
   AlertIOS,
   NativeModules,
+  I18nManager,
 } from 'react-native'
 import renderer from 'react-test-renderer'
 
@@ -45,9 +46,6 @@ jest
   .mock('LayoutAnimation', () => ({
     easeInEaseOut: jest.fn(),
   }))
-  .mock('../../../app', () => ({
-    isTeacher: jest.fn(),
-  }))
   .mock('../../../../redux/middleware/error-handler', () => {
     return { alertError: jest.fn() }
   })
@@ -59,7 +57,7 @@ describe('DiscussionDetails', () => {
   let props: Props
   beforeEach(() => {
     jest.clearAllMocks()
-    app.isTeacher = jest.fn(() => true)
+    app.setCurrentApp('teacher')
     let discussion = template.discussion({ id: '1', replies: [template.discussionReply()], participants: { [template.userDisplay().id]: template.userDisplay() } })
     props = {
       refresh: jest.fn(),
@@ -82,6 +80,7 @@ describe('DiscussionDetails', () => {
       markAllAsRead: jest.fn(),
       markEntryAsRead: jest.fn(),
       unreadEntries: [],
+      permissions: { post_to_forum: true },
     }
   })
 
@@ -94,7 +93,7 @@ describe('DiscussionDetails', () => {
   })
 
   it('renders in student app', () => {
-    app.isTeacher = jest.fn(() => false)
+    app.setCurrentApp('student')
     testRender(props)
   })
 
@@ -119,7 +118,7 @@ describe('DiscussionDetails', () => {
   })
 
   it('renders closed discussion as student', () => {
-    app.isTeacher = jest.fn(() => false)
+    app.setCurrentApp('student')
     props.discussion.locked_for_user = true
     testRender(props)
   })
@@ -149,10 +148,9 @@ describe('DiscussionDetails', () => {
       rootNodePath: [0, 0, 0, 0],
       maxReplyNodeDepth: 2,
       unread_entries: [],
-      entry_ratings: {},
     })
 
-    let rootNodes = instance.rootRepliesData(discussion, [0, 0, 0, 0])
+    let rootNodes = instance.rootRepliesData(discussion, [0, 0, 0, 0], props)
     let expected = [{
       ...aaaa,
       depth: 0,
@@ -708,17 +706,13 @@ describe('DiscussionDetails', () => {
   })
 
   it('marks discussion as viewed', () => {
+    app.setCurrentApp('student')
     const spy = jest.fn()
     NativeModules.ModuleItemsProgress.viewedDiscussion = spy
-    props.discussion = null
     props.context = 'courses'
     props.contextID = '1'
     props.discussionID = '2'
-    const screen = shallow(<DiscussionDetails {...props} />)
-    const discussion = template.discussion({ id: '2' })
-
-    screen.setProps({ discussion })
-
+    shallow(<DiscussionDetails {...props} />)
     expect(spy).toHaveBeenCalledWith('1', '2')
   })
 
@@ -742,6 +736,19 @@ describe('DiscussionDetails', () => {
     screen.setProps({ discussion })
     screen.setProps({ discussion })
     expect(props.navigator.replace).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders properly in rtl', () => {
+    I18nManager.isRTL = true
+    testRender(props)
+    I18nManager.isRTL = false
+  })
+
+  it('doesnt render the reply button when the permission is disabled', () => {
+    testRender({
+      ...props,
+      permissions: { post_to_forum: false },
+    })
   })
 
   function testRender (props: any) {
@@ -775,6 +782,7 @@ describe('mapStateToProps', () => {
           '1': {
             color: '#fff',
             course: course,
+            permissions: { post_to_forum: true },
           },
         },
         assignments: {
@@ -797,8 +805,8 @@ describe('mapStateToProps', () => {
       courseName: 'Course',
       courseColor: '#fff',
       assignment,
-      isAnnouncement: false,
       entryRatings: { '4': 1 },
+      permissions: { post_to_forum: true },
     })
   })
 
@@ -878,6 +886,46 @@ describe('mapStateToProps', () => {
       isAnnouncement: true,
     })
   })
+
+  it('handles isAnnouncement appState prop', () => {
+    const discussion = template.discussion({ id: '1', assignment_id: '1' })
+    const course = template.course({ id: '1' })
+    const state: AppState = template.appState({
+      entities: {
+        ...template.appState().entities,
+        discussions: {
+          '1': {
+            data: discussion,
+            pending: 1,
+            error: null,
+            isAnnouncement: true,
+          },
+        },
+        courses: {
+          '1': {
+            course: course,
+          },
+        },
+        assignments: {
+          '2': {
+            data: null,
+          },
+        },
+      },
+    })
+
+    expect(
+      mapStateToProps(state, { context: 'courses', contextID: '1', discussionID: '1' })
+    ).toMatchObject({
+      discussion,
+      pending: 1,
+      error: null,
+      context: 'courses',
+      contextID: '1',
+      discussionID: '1',
+      isAnnouncement: true,
+    })
+  })
 })
 
 describe('shouldRefresh', () => {
@@ -889,6 +937,7 @@ describe('shouldRefresh', () => {
         unread_count: 0,
       }),
       unreadEntries: null,
+      permissions: { post_to_forum: true },
     }
 
     props.allow_rating = false

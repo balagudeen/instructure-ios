@@ -15,7 +15,6 @@
 //
 
 import UIKit
-import SVGKit
 import React
 import Kingfisher
 
@@ -28,9 +27,9 @@ protocol HelmScreen {
 }
 
 class HelmTitleView: UIView {
-    var contentStackView: UIStackView!
-    var titleLabel: UILabel!
-    var subtitleLabel: UILabel!
+    @objc var contentStackView: UIStackView!
+    @objc var titleLabel: UILabel!
+    @objc var subtitleLabel: UILabel!
     
     public override func willMove(toSuperview: UIView?) {
         if #available(iOS 11.0, *) {
@@ -74,9 +73,9 @@ class HelmTitleView: UIView {
 }
 
 public class HelmNavigationItem: UINavigationItem {
-    var reactRightBarButtonItems: [UIBarButtonItem] = []
-    var nativeLeftBarButtonItems: [UIBarButtonItem] = []
-    var reactLeftBarButtonItems: [UIBarButtonItem] = [] {
+    @objc var reactRightBarButtonItems: [UIBarButtonItem] = []
+    @objc var nativeLeftBarButtonItems: [UIBarButtonItem] = []
+    @objc var reactLeftBarButtonItems: [UIBarButtonItem] = [] {
         didSet {
             super.leftBarButtonItems = combinedLeftItems
         }
@@ -124,9 +123,9 @@ public class HelmNavigationItem: UINavigationItem {
 
 public final class HelmViewController: UIViewController, HelmScreen, PageViewEventViewControllerLoggingProtocol {
     
-    public let moduleName: String
-    let screenInstanceID: String
-    public var props: Props
+    @objc public let moduleName: String
+    @objc let screenInstanceID: String
+    @objc public var props: Props
     var screenConfig: HelmScreenConfig = HelmScreenConfig(config: [:]) {
         didSet {
             self.screenConfig.moduleName = self.moduleName
@@ -145,26 +144,26 @@ public final class HelmViewController: UIViewController, HelmScreen, PageViewEve
         }
     }
     
-    public var statusBarStyle: UIStatusBarStyle = .default {
+    @objc public var statusBarStyle: UIStatusBarStyle = .default {
         didSet {
             if (statusBarStyle != oldValue) {
                 statusBarDirty = true
             }
         }
     }
-    public var statusBarHidden: Bool = false {
+    @objc public var statusBarHidden: Bool = false {
         didSet {
             if (statusBarHidden != oldValue) {
                 statusBarDirty = true
             }
         }
     }
-    public var statusBarUpdateAnimation: UIStatusBarAnimation = .fade
+    @objc public var statusBarUpdateAnimation: UIStatusBarAnimation = .fade
     fileprivate var statusBarDirty: Bool = false
     
-    private(set) public var isVisible: Bool = false
+    @objc private(set) public var isVisible: Bool = false
 
-    var screenConfigRendered: Bool = false {
+    @objc var screenConfigRendered: Bool = false {
         didSet {
             if screenConfigRendered {
                 screenDidRender()
@@ -173,12 +172,12 @@ public final class HelmViewController: UIViewController, HelmScreen, PageViewEve
             }
         }
     }
-    var onReadyToPresent: () -> Void = { }
+    @objc var onReadyToPresent: () -> Void = { }
     
     
     // MARK: - Initialization
     
-    public init(moduleName: String, props: Props) {
+    @objc public init(moduleName: String, props: Props) {
         self.moduleName = moduleName
         
         if let screenInstanceID = props["screenInstanceID"] as? String {
@@ -240,7 +239,7 @@ public final class HelmViewController: UIViewController, HelmScreen, PageViewEve
     
     // MARK: - Status bar
     
-    func updateStatusBarIfNeeded() {
+    @objc func updateStatusBarIfNeeded() {
         guard (statusBarDirty) else { return }
         defer { statusBarDirty = false }
         
@@ -298,19 +297,23 @@ public final class HelmViewController: UIViewController, HelmScreen, PageViewEve
     }
     
     // MARK: - Styles
-    public func handleStyles() {
+    @objc public func handleStyles() {
         if let title = screenConfig[PropKeys.title] as? String {
             if let subtitle = screenConfig[PropKeys.subtitle] as? String, subtitle.count > 0 {
                 if(twoLineTitleView == nil) {
                     twoLineTitleView = self.titleView(with: title, and: subtitle, given: screenConfig)
                     twoLineTitleView?.isAccessibilityElement = true
-                    twoLineTitleView?.accessibilityTraits = UIAccessibilityTraitHeader
+                    twoLineTitleView?.accessibilityTraits = UIAccessibilityTraits.header
                     navigationItem.titleView = twoLineTitleView
                     navigationItem.title = nil
                 }
-                twoLineTitleView?.titleLabel.text = title
-                twoLineTitleView?.subtitleLabel.text = subtitle
-                twoLineTitleView?.accessibilityLabel = "\(title), \(subtitle)"
+                
+                if let titleView = twoLineTitleView {
+                    styleTitleViewLabels(titleLabel: titleView.titleLabel, subtitleLabel: titleView.subtitleLabel)
+                    titleView.titleLabel.text = title
+                    titleView.subtitleLabel.text = subtitle
+                    titleView.accessibilityLabel = "\(title), \(subtitle)"
+                }
             }
             self.title = title
         }
@@ -382,18 +385,20 @@ public final class HelmViewController: UIViewController, HelmScreen, PageViewEve
         } else {
             if screenConfig[PropKeys.navBarStyle] as? String == "dark" {
                 navigationController?.syncTintColor(.white)
+            } else if screenConfig[PropKeys.navBarStyle] as? String == "light" {
+                navigationController?.syncTintColor(Brand.current.linkColor)
             }
         }
         
         if let c = screenConfig["navBarTitleColor"], let titleColor = RCTConvert.uiColor(c) {
-            navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: titleColor]
+            navigationController?.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: titleColor])
         }
         
         func barButtonItems(fromConfig config: [[String: Any]]) -> [UIBarButtonItem] {
             var items: [UIBarButtonItem] = []
             for buttonConfig in config {
                 let styleConfig = buttonConfig["style"] as? String
-                let style: UIBarButtonItemStyle = styleConfig == "done" ? .done : .plain
+                let style: UIBarButtonItem.Style = styleConfig == "done" ? .done : .plain
                 let barButtonItem: UIBarButtonItem
                 if let imageConfig = buttonConfig["image"] as? [String: Any],
                     let imageSource = RCTConvert.rctImageSource(imageConfig),
@@ -426,7 +431,7 @@ public final class HelmViewController: UIViewController, HelmScreen, PageViewEve
                         width = w * scale
                     }
                     button.frame = CGRect(x: 0, y: 0, width: width, height: height)
-                    button.imageEdgeInsets = UIEdgeInsetsMake(-1, -width, 1, 0)
+                    button.imageEdgeInsets = UIEdgeInsets.init(top: -1, left: -width, bottom: 1, right: 0)
                     button.addTarget(self, action: #selector(barButtonTapped(_:)), for: .touchUpInside)
                     if let action = buttonConfig["action"] as? NSString {
                         button.setAssociatedObject(action, forKey: &Associated.barButtonAction)
@@ -543,7 +548,6 @@ public final class HelmViewController: UIViewController, HelmScreen, PageViewEve
         if let testID = screenConfig["testID"] as? String {
             titleView.accessibilityIdentifier = testID + ".nav-bar-title-view"
         }
-        styleTitleViewLabels(titleLabel: titleView.titleLabel, subtitleLabel: titleView.subtitleLabel)
         return titleView
     }
     
@@ -591,13 +595,13 @@ public final class HelmViewController: UIViewController, HelmScreen, PageViewEve
         subtitleLabel.textAlignment = .center
     }
     
-    func barButtonTapped(_ barButton: UIBarButtonItem) {
+    @objc func barButtonTapped(_ barButton: UIBarButtonItem) {
         if let action: NSString = barButton.getAssociatedObject(&Associated.barButtonAction) {
             HelmManager.shared.bridge.enqueueJSCall("RCTDeviceEventEmitter.emit", args: [action])
         }
     }
     
-    func dismissTapped(_ barButton: UIBarButtonItem) {
+    @objc func dismissTapped(_ barButton: UIBarButtonItem) {
         HelmManager.shared.dismiss(["animated": true])
     }
     
@@ -608,7 +612,7 @@ public final class HelmViewController: UIViewController, HelmScreen, PageViewEve
         }
     }
     
-    override public func willMove(toParentViewController parent: UIViewController?) {
+    override public func willMove(toParent parent: UIViewController?) {
         // setting these values in viewWillAppear and/or viewWillDisappear don't animate
         // This is the only place where they animate reliably
         if parent == nil {
@@ -623,7 +627,7 @@ public final class HelmViewController: UIViewController, HelmScreen, PageViewEve
             }
             self.navigationController?.navigationBar.isTranslucent = translucent
         }
-        super.willMove(toParentViewController: parent)
+        super.willMove(toParent: parent)
     }
 }
 
@@ -632,7 +636,7 @@ fileprivate struct Associated {
 }
 
 extension UIViewController {
-    public func addModalDismissButton(buttonTitle: String?) {
+    @objc public func addModalDismissButton(buttonTitle: String?) {
         var dismissTitle = NSLocalizedString("Done", tableName: nil, bundle: .core, value: "Done", comment: "")
         if let buttonTitle = buttonTitle {
             dismissTitle = buttonTitle
@@ -647,11 +651,17 @@ extension UIViewController {
         }
     }
     
-    func dismissModalWithAnimation() {
+    @objc func dismissModalWithAnimation() {
         dismissModal(animated: true)
     }
     
-    func dismissModal(animated: Bool) {
+    @objc func dismissModal(animated: Bool) {
         dismiss(animated: animated, completion: nil)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

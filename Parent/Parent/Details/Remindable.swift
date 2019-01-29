@@ -104,11 +104,11 @@ extension Assignment: Remindable {
         return dateFormatter
     }()
 
-    var reminderTitle: String {
+    @objc var reminderTitle: String {
         return NSLocalizedString("Assignment reminder", comment: "")
     }
 
-    var reminderBody: String {
+    @objc var reminderBody: String {
         if let dueDate = due {
             return String(format: NSLocalizedString("%@ is due at %@", comment: ""), name, Assignment.dueDateFormatter.string(from: dueDate))
         } else {
@@ -116,7 +116,7 @@ extension Assignment: Remindable {
         }
     }
 
-    var defaultReminderDate: Date {
+    @objc var defaultReminderDate: Date {
         if let dueDate = due {
             return dueDate - 1.daysComponents // 1 day before the assignment is due
         } else {
@@ -133,7 +133,7 @@ extension CalendarEvent: Remindable {
         return dateFormatter
     }()
 
-    var reminderTitle: String {
+    @objc var reminderTitle: String {
         switch type {
         case .assignment where endAt != nil,
              .quiz where endAt != nil,
@@ -144,7 +144,7 @@ extension CalendarEvent: Remindable {
         }
     }
 
-    var reminderBody: String {
+    @objc var reminderBody: String {
         guard let title = title else {
             return ""
         }
@@ -162,7 +162,7 @@ extension CalendarEvent: Remindable {
         }
     }
 
-    var defaultReminderDate: Date {
+    @objc var defaultReminderDate: Date {
         guard let startAt = startAt else { return Date()+1.weeksComponents }
         switch type {
         case .assignment:

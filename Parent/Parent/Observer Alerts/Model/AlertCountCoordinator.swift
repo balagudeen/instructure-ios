@@ -22,7 +22,7 @@ open class AlertCountCoordinator: ManagedObjectCountObserver<Alert> {
     fileprivate let session: Session
     fileprivate let studentID: String
 
-    public init(session: Session, studentID: String, predicate: NSPredicate, alertCountUpdated: @escaping (Int)->Void) {
+    @objc public init(session: Session, studentID: String, predicate: NSPredicate, alertCountUpdated: @escaping (Int)->Void) {
         self.session = session
         self.studentID = studentID
         let context = try! session.alertsManagedObjectContext()
@@ -30,7 +30,7 @@ open class AlertCountCoordinator: ManagedObjectCountObserver<Alert> {
         super.init(predicate: predicate, inContext: context, objectCountUpdated: alertCountUpdated)
     }
 
-    open func refresh() {
+    @objc open func refresh() {
         guard let remote = try? Alert.getAlerts(session, studentID: studentID) else { return }
         let sync = Alert.syncSignalProducer(inContext: context, fetchRemote: remote)
         let _ = sync.start { event in

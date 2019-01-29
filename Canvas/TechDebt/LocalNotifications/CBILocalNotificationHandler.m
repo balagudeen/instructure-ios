@@ -40,7 +40,7 @@ static NSInteger const CBILocalNotificationNumberMinutesInDay = (CBILocalNotific
 {
     NSDate *reminderDate = [assignment.dueAt dateByAddingTimeInterval:-CBILocalNotificationNumberSecondsInMinute * minutes];
     
-    [self scheduleLocalNotificationWithBody:[NSString stringWithFormat:NSLocalizedString(@"%@ is due in %@", @"local notification countdown alert") , assignment.name, [self dueDateFromMinuteOffset:minutes]] fireDate:reminderDate userInfo:[self userInfoDictionaryForAssignment:assignment]];
+    [self scheduleLocalNotificationWithBody:[NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%@ is due in %@", nil, [NSBundle bundleForClass:self.class], @"local notification countdown alert") , assignment.name, [self dueDateFromMinuteOffset:minutes]] fireDate:reminderDate userInfo:[self userInfoDictionaryForAssignment:assignment]];
 }
 
 - (void)scheduleLocalNotificationWithBody:(NSString *)body fireDate:(NSDate *)fireDate userInfo:(NSDictionary *)userInfo {
@@ -78,31 +78,32 @@ static NSInteger const CBILocalNotificationNumberMinutesInDay = (CBILocalNotific
 }
 
 - (NSString *)dueDateFromMinuteOffset:(NSUInteger)minutes {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     // return minutes string if less than 60
     if (minutes <= 1) {
-        return [NSString stringWithFormat:NSLocalizedString(@"%tu minute", @"offset for less than one minute"), minutes];
+        return [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%tu minute", nil, bundle, @"offset for less than one minute"), minutes];
     }
     
     if (minutes < CBILocalNotificationNumberMinutesInHour) {
-        return [NSString stringWithFormat:NSLocalizedString(@"%tu minutes", @"offset for under an hour"), minutes];
+        return [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%tu minutes", nil, bundle, @"offset for under an hour"), minutes];
     }
     
     // return hours string if less than 24
     NSUInteger numHours = minutes/CBILocalNotificationNumberMinutesInHour;
     if (numHours <= 1) {
-        return [NSString stringWithFormat:NSLocalizedString(@"%tu hour", @"offset for an hour"), numHours];
+        return [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%tu hour", nil, bundle, @"offset for an hour"), numHours];
     }
     
     if (minutes < CBILocalNotificationNumberMinutesInDay) {
-        return [NSString stringWithFormat:NSLocalizedString(@"%tu hours", @"offset for number of hours"), numHours];
+        return [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%tu hours", nil, bundle, @"offset for number of hours"), numHours];
     }
     
     NSUInteger numDays = minutes/CBILocalNotificationNumberMinutesInDay;
     if (numDays <= 1) {
-        return [NSString stringWithFormat:NSLocalizedString(@"%tu day", @"offset for one day"), numDays];
+        return [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%tu day", nil, bundle, @"offset for one day"), numDays];
     }
     
-    return [NSString stringWithFormat:NSLocalizedString(@"%tu days", @"offset for number of days"), numDays];
+    return [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"%tu days", nil, bundle, @"offset for number of days"), numDays];
 }
 
 - (NSString *)canvasURLForAssignment:(CKIAssignment *)assignment {

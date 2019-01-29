@@ -59,7 +59,7 @@ open class LandingPageViewController: UITableViewController {
     // MARK: - Inits
     // ---------------------------------------------
     
-    init (currentUserID: String) {
+    @objc init (currentUserID: String) {
         currentUsersID = currentUserID
         currentLandingPageSettingsDictionary = [:]
         currentUserLandingPageSettings = LandingPageOptions.courses
@@ -108,7 +108,7 @@ open class LandingPageViewController: UITableViewController {
         let cell = UITableViewCell()
         cell.textLabel?.text = landingPageOptions[indexPath.row].description
         if currentUserLandingPageSettings == landingPageOptions[indexPath.row] {
-            cell.accessoryType  = UITableViewCellAccessoryType.checkmark
+            cell.accessoryType  = UITableViewCell.AccessoryType.checkmark
             cell.setSelected(true, animated: false)
         }
         return cell
@@ -130,7 +130,7 @@ open class LandingPageViewController: UITableViewController {
     }
     
     open override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+        tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.none
     }
     
 }

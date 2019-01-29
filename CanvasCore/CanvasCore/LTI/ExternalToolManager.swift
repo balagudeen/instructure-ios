@@ -24,8 +24,7 @@ private let error = NSError(subdomain: "CanvasCore",
                             description: NSLocalizedString("Error retrieving tool launch URL", comment: ""))
 
 public class ExternalToolManager: NSObject {
-
-    public static let shared = ExternalToolManager()
+    @objc public static let shared = ExternalToolManager()
 
     private var disposable: Disposable?
 
@@ -63,18 +62,18 @@ public class ExternalToolManager: NSObject {
         getSessionlessLaunchURL(forLaunchURL: launchURL.ensureHTTPS(), in: session) { [weak self, weak viewController] url, pageViewPath, error in
             guard let me = self, let vc = viewController else { return }
             if let url = url {
-                me.present(url, pageViewPath: pageViewPath, from: vc) { [weak self] error in
+                me.present(url, pageViewPath: pageViewPath, from: vc) { [weak self] in
                     self?.markViewed(launchURL, session: session)
                     completionHandler?()
                 }
                 return
             }
             if let error = error {
-                if error.code == 401, let fallbackURL = fallbackURL {
+                if let fallbackURL = fallbackURL {
                     // There's a bug with the API that is causing 401 errors which "should" never happen.
                     // So when this happens, load the Canvas Web version.
                     // Example: https://instructure.atlassian.net/browse/MBL-9506
-                    me.showAuthenticatedURL(fallbackURL, in: session, from: vc) { [weak self] error in
+                    me.showAuthenticatedURL(fallbackURL, in: session, from: vc) { [weak self] in
                         self?.markViewed(launchURL, session: session)
                         completionHandler?()
                     }
@@ -85,7 +84,7 @@ public class ExternalToolManager: NSObject {
         }
     }
 
-    func constructPageViewPath(url: URL) -> String? {
+    @objc func constructPageViewPath(url: URL) -> String? {
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let toolID = components?.queryItems?.findFirst({ (item) -> Bool in
             return item.name == "id"
@@ -134,8 +133,8 @@ public class ExternalToolManager: NSObject {
         }
     }
 
-    public func showAuthenticatedURL(_ url: URL, in session: Session, from viewController: UIViewController, completionHandler: (() -> Void)? = nil) {
-        getAuthenticatedFallbackURL(forURL: url, in: session) { [weak self, weak viewController] result in
+    @objc public func showAuthenticatedURL(_ url: URL, in session: Session, from viewController: UIViewController, completionHandler: (() -> Void)? = nil) {
+        session.getAuthenticatedURL(forURL: url) { [weak self, weak viewController] result in
             guard let me = self, let vc = viewController else { return }
             switch result {
             case .success(let newURL):
@@ -144,40 +143,6 @@ public class ExternalToolManager: NSObject {
                 me.present(url,  pageViewPath: nil, from: vc, completionHandler: completionHandler)
             }
         }
-    }
-
-    private func getAuthenticatedFallbackURL(forURL url: URL, in session: Session, completionHandler: @escaping (Result<URL, NSError>) -> Void) {
-        let authRequest: URLRequest
-        do {
-            let returnURL = url.appending(value: "borderless", forQueryParameter: "display") ?? url
-            let params = [
-                "return_to": returnURL.absoluteString,
-            ]
-            authRequest = try session.GET("/login/session_token", parameters: params, encoding: .url, authorized: true)
-        } catch let error as NSError {
-            completionHandler(.failure(error))
-            return
-        }
-
-        disposable?.dispose()
-        disposable = session.JSONSignalProducer(authRequest)
-            .take(first: 1)
-            .flatMap(.latest) { json in
-                attemptProducer { () -> URL in
-                    let url: URL = try json <| "session_url"
-                    return url
-                }
-            }
-            .start { event in
-                switch event {
-                case .value(let url):
-                    completionHandler(.success(url))
-                case .failed(let error):
-                    completionHandler(.failure(error))
-                default:
-                    break
-                }
-            }
     }
 
     private func getSessionlessLaunchRequestURL(_ session: Session, launchURL: URL) -> URL? {
@@ -230,7 +195,7 @@ public class ExternalToolManager: NSObject {
         guard let idRange = retrieve.range(of: "[0-9]+", options: .regularExpression, range: nil, locale: nil) else {
             return nil
         }
-        return retrieve[idRange]
+        return String(retrieve[idRange])
     }
 
     private func markViewed(_ launchURL: URL, session: Session) {
@@ -270,9 +235,9 @@ extension URL {
 
 public class ExternalToolSafariViewController: SFSafariViewController, PageViewEventViewControllerLoggingProtocol {
     
-    var eventName: String = ""
+    @objc var eventName: String = ""
     
-    init(url: URL, eventName: String?) {
+    @objc init(url: URL, eventName: String?) {
         super.init(url: url, entersReaderIfAvailable: false)
         self.eventName = eventName ?? url.path
     }

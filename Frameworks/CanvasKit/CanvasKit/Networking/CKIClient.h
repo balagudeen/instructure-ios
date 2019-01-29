@@ -47,6 +47,11 @@ extern NSString *const CKIClientAccessTokenExpiredNotification;
 @property (nonatomic, readonly) NSString *accessToken;
 
 /**
+ THe current effective locale (if logged in)
+*/
+@property (nonatomic, readonly, nullable) NSString *effectiveLocale;
+
+/**
  The user that is currently logged in via this client.
  */
 @property (nonatomic, readonly) CKIUser *currentUser;
@@ -140,6 +145,7 @@ extern NSString *const CKIClientAccessTokenExpiredNotification;
  @param context the context for the created object(s)
  */
 - (RACSignal *)fetchResponseAtPath:(NSString *)path parameters:(NSDictionary *)parameters modelClass:(Class)modelClass context:(id<CKIContext>)context;
+- (RACSignal *)fetchResponseAtPath:(NSString *)path parameters:(NSDictionary *)parameters modelClass:(Class)modelClass context:(id<CKIContext>)context exhaust:(BOOL)exhaust;
 /**
  Fetch a paginated response from the given JSON API endpoint.
  

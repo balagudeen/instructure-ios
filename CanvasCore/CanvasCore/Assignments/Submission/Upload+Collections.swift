@@ -23,14 +23,14 @@ import CoreData
 
 
 extension Upload {
-    public static func inProgress(_ session: Session) throws -> [Upload] {
+    @objc public static func inProgress(_ session: Session) throws -> [Upload] {
         let context = try session.assignmentsManagedObjectContext()
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName(context))
         request.predicate = NSPredicate(format: "%K == nil", "terminatedAt")
         return try context.fetch(request) as? [Upload] ?? []
     }
 
-    public static func activeBackgroundSessionIdentifiers(_ session: Session) throws -> [String] {
+    @objc public static func activeBackgroundSessionIdentifiers(_ session: Session) throws -> [String] {
         let context = try session.assignmentsManagedObjectContext()
 
         guard let entity = NSEntityDescription.entity(forEntityName: entityName(context), in: context) else {
@@ -53,13 +53,13 @@ extension Upload {
         return ids
     }
 
-    public static func inProgressFetch(_ session: Session, identifier: String) throws -> NSFetchRequest<Upload> {
+    @objc public static func inProgressFetch(_ session: Session, identifier: String) throws -> NSFetchRequest<Upload> {
         let context = try session.assignmentsManagedObjectContext()
         let predicate = NSPredicate(format: "%K == %@ && %K == nil", "backgroundSessionID", identifier, "terminatedAt")
         return context.fetch(predicate, sortDescriptors: ["startedAt".ascending])
     }
 
-    public static func inProgressFRC(_ session: Session, identifier: String) throws -> NSFetchedResultsController<Upload> {
+    @objc public static func inProgressFRC(_ session: Session, identifier: String) throws -> NSFetchedResultsController<Upload> {
         let context = try session.assignmentsManagedObjectContext()
         let request = try inProgressFetch(session, identifier: identifier)
         return NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)

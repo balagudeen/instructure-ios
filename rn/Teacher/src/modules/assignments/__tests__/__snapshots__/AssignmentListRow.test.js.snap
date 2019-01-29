@@ -219,21 +219,25 @@ exports[`renders correctly 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>
@@ -463,21 +467,25 @@ exports[`renders correctly assignment icon 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>
@@ -707,21 +715,25 @@ exports[`renders correctly discussion icon 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>
@@ -951,21 +963,25 @@ exports[`renders correctly not published icon 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>
@@ -1195,21 +1211,25 @@ exports[`renders correctly published icon 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>
@@ -1439,21 +1459,25 @@ exports[`renders correctly quiz icon 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>
@@ -1683,21 +1707,25 @@ exports[`renders correctly with closed due dates 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>
@@ -1964,21 +1992,25 @@ exports[`renders correctly with needs_grading_count 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>
@@ -2208,21 +2240,25 @@ exports[`renders correctly with needs_grading_count and set to not_graded 1`] = 
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>
@@ -2452,21 +2488,25 @@ exports[`renders correctly with open due dates 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>
@@ -2696,21 +2736,25 @@ exports[`renders correctly with selected props 1`] = `
           >
             <View
               style={
-                Object {
-                  "alignSelf": "center",
-                  "backgroundColor": "transparent",
-                  "borderColor": "#c7c7cc",
-                  "borderRightWidth": 2,
-                  "borderTopWidth": 2,
-                  "height": 10,
-                  "marginLeft": 7,
-                  "transform": Array [
-                    Object {
-                      "rotate": "45deg",
-                    },
-                  ],
-                  "width": 10,
-                }
+                Array [
+                  Object {
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "borderColor": "#c7c7cc",
+                    "borderRightWidth": 2,
+                    "borderTopWidth": 2,
+                    "height": 10,
+                    "marginLeft": 7,
+                    "width": 10,
+                  },
+                  Object {
+                    "transform": Array [
+                      Object {
+                        "rotate": "45deg",
+                      },
+                    ],
+                  },
+                ]
               }
             />
           </View>

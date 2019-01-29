@@ -63,14 +63,14 @@ static UIImage *(^iconForSubmissionType)(NSString *) = ^(NSString *submissionTyp
     if (self) {
         RAC(self, date) = RACObserve(self, model.submittedAt);
         RAC(self, name) = [RACObserve(self, model) map:^id(CKISubmission *submission) {
-            
+            NSBundle *bundle = [NSBundle bundleForClass:self.class];
             NSDictionary *namesForTypes = @{
-                CKISubmissionTypeOnlineTextEntry : NSLocalizedString(@"Text Submission", @"Title for a text submission cell"),
-                CKISubmissionTypeQuiz: NSLocalizedString(@"Quiz", @"A short test taken by students"),
-                CKISubmissionTypeExternalTool: NSLocalizedString(@"External Tool", @"Title for an external tool submission"),
-                CKISubmissionTypeLTILaunch: NSLocalizedString(@"LTI Tool", @"Title for an LTI launch submitted as an assignment"),
-                CKISubmissionTypeMediaRecording: NSLocalizedString(@"Media Submission", @"Title for a media submission"),
-                CKISubmissionTypeDiscussion: NSLocalizedString(@"Discussion Entry", @"Title for discussion entry submission"),
+                CKISubmissionTypeOnlineTextEntry : NSLocalizedStringFromTableInBundle(@"Text Submission", nil, bundle, @"Title for a text submission cell"),
+                CKISubmissionTypeQuiz: NSLocalizedStringFromTableInBundle(@"Quiz", nil, bundle, @"A short test taken by students"),
+                CKISubmissionTypeExternalTool: NSLocalizedStringFromTableInBundle(@"External Tool", nil, bundle, @"Title for an external tool submission"),
+                CKISubmissionTypeLTILaunch: NSLocalizedStringFromTableInBundle(@"LTI Tool", nil, bundle, @"Title for an LTI launch submitted as an assignment"),
+                CKISubmissionTypeMediaRecording: NSLocalizedStringFromTableInBundle(@"Media Submission", nil, bundle, @"Title for a media submission"),
+                CKISubmissionTypeDiscussion: NSLocalizedStringFromTableInBundle(@"Discussion Entry", nil, bundle, @"Title for discussion entry submission"),
             };
             
             if (namesForTypes[submission.submissionType]) {
@@ -85,7 +85,7 @@ static UIImage *(^iconForSubmissionType)(NSString *) = ^(NSString *submissionTyp
             }
             else if (submission.attachments.count > 1) {
                 // TODO: use localizeable pluralization plist stuffs
-                NSString *template = NSLocalizedString(@"%u files", @"Label indicating multiple files are attached to a single homework submission. %u will be a positive number, and will not be '1'");
+                NSString *template = NSLocalizedStringFromTableInBundle(@"%u files", nil, bundle, @"Label indicating multiple files are attached to a single homework submission. %u will be a positive number, and will not be '1'");
                 return [NSString stringWithFormat:template, submission.attachments.count];
             }
             return @"";
@@ -154,6 +154,7 @@ static UIImage *(^iconForSubmissionType)(NSString *) = ^(NSString *submissionTyp
     if ([self.model.submissionType isEqualToString:CKISubmissionTypeOnlineTextEntry]) {
         NSString *body = self.model.body ?: @"";
         CanvasWebViewController *web = [[CanvasWebViewController alloc] initWithWebView:[CanvasWebView new] showDoneButton:YES showShareButton:NO];
+        web.showReloadButton = NO;
         web.pageViewName = self.model.htmlURL.absoluteString ?: self.model.previewURL.absoluteString;
         @weakify(web);
         [web.webView loadWithHtml:body title:nil baseURL:TheKeymaster.currentClient.baseURL routeToURL:^(NSURL * _Nonnull url) {

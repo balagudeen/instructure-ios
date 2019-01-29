@@ -25,17 +25,26 @@
 /* No comment provided by engineer. */
 "Choose One" = "Bitte eins auswählen";
 
+/* Connectivity alert close text */
+"Close" = "Schließen";
+
 /* No comment provided by engineer. */
 "Continue Editing" = "Weiter bearbeiten";
 
 /* No comment provided by engineer. */
 "Describe the feature here" = "Beschreibe hier die Funktion.";
 
+/* No comment provided by engineer. */
+"describe your problem" = "Beschreibe dein Problem";
+
 /* Dismiss login expired/revoked alert button */
 "Dismiss" = "Ablehnen";
 
 /* No comment provided by engineer. */
 "Emergency" = "Notfall";
+
+/* No comment provided by engineer. */
+"enter a subject" = "Gib ein Thema ein.";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "Gib die Ticketbeschreibung ein.";
@@ -76,14 +85,20 @@
 /* No comment provided by engineer. */
 "OK" = "OK";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "Benutzer entfernen";
+
 /* No comment provided by engineer. */
 "Report a Problem" = "Ein Problem melden";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "Ein Feature anfordern";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "Anfrage fehlgeschlagen.";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "Ein Feature anfordern";
+"select the impact" = "Wähle die Auswirkung.";
 
 /* Button to select the severity of the ticket */
 "Select ticket impact level" = "Wähle die Ticketauswirkungsstufe.";
@@ -106,18 +121,15 @@
 /* No comment provided by engineer. */
 "Thanks, your request was received!" = "Danke sehr. Wir haben Ihre Anfrage erhalten.";
 
+/* No comment provided by engineer. */
+"Trouble logging in" = "Probleme beim Anmelden?";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "Wir haben zurzeit keine Verbindung zu Canvas. Haben Sie Ihre Internetverbindung überprüft?";
+
+/* Connectivity alert title */
+"Whoops!" = "Ups!";
+
 /* when the access token has been revoked */
 "Your login has expired or has been removed by the server. Please log in again." = "Deine Anmeldung ist abgelaufen oder wurde vom Server entfernt. Bitte erneut anmelden";
-
-/* No comment provided by engineer. */
-"describe your problem" = "Beschreibe dein Problem";
-
-/* No comment provided by engineer. */
-"enter a subject" = "Gib ein Thema ein.";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "Benutzer entfernen";
-
-/* No comment provided by engineer. */
-"select the impact" = "Wähle die Auswirkung.";
 

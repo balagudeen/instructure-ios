@@ -44,7 +44,7 @@ extension MasteryPathAssignment {
 
 class MasteryPathSelectOptionViewController: UIViewController {
 
-    let session: Session
+    @objc let session: Session
     fileprivate let itemWithMasteryPaths: ModuleItem
     fileprivate let masteryPathsItem: MasteryPathsItem
     fileprivate let masteryPathsItemObserver: ManagedObjectObserver<MasteryPathsItem>
@@ -54,9 +54,9 @@ class MasteryPathSelectOptionViewController: UIViewController {
 
     fileprivate let optionSegmentedControl: UISegmentedControl
     fileprivate let selectOptionButton: UIButton
-    fileprivate let selectOptionActivityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+    fileprivate let selectOptionActivityIndicator = UIActivityIndicatorView(style: .white)
 
-    init(session: Session, moduleID: String, itemIDWithMasteryPaths: String) throws {
+    @objc init(session: Session, moduleID: String, itemIDWithMasteryPaths: String) throws {
         self.session = session
         let context = try session.soEdventurousManagedObjectContext()
         if let
@@ -111,10 +111,10 @@ class MasteryPathSelectOptionViewController: UIViewController {
         toolbar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         toolbar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
-        tableViewController.willMove(toParentViewController: self)
-        addChildViewController(tableViewController)
+        tableViewController.willMove(toParent: self)
+        addChild(tableViewController)
         view.addSubview(tableViewController.view)
-        tableViewController.didMove(toParentViewController: self)
+        tableViewController.didMove(toParent: self)
 
         let tableView = tableViewController.view as! UITableView
         tableView.delegate = self
@@ -132,7 +132,7 @@ class MasteryPathSelectOptionViewController: UIViewController {
         let isStudent = enrollment?.roles?.contains(EnrollmentRoles.Student) ?? false
         if isStudent && assignmentSets.count != 0 {
             selectOptionButton.backgroundColor = enrollment?.color.value
-            selectOptionButton.setTitle(String(format: NSLocalizedString("Select Option %d", comment: "Button title to select a certain assignment set option"), optionSegmentedControl.selectedSegmentIndex+1), for: UIControlState())
+            selectOptionButton.setTitle(String(format: NSLocalizedString("Select Option %d", comment: "Button title to select a certain assignment set option"), optionSegmentedControl.selectedSegmentIndex+1), for: UIControl.State())
             selectOptionButton.addTarget(self, action: #selector(selectOptionTapped), for: .touchUpInside)
             view.addSubview(selectOptionButton)
             selectOptionButton.translatesAutoresizingMaskIntoConstraints = false
@@ -152,7 +152,7 @@ class MasteryPathSelectOptionViewController: UIViewController {
         }
     }
 
-    func optionChanged() {
+    @objc func optionChanged() {
         let idx = optionSegmentedControl.selectedSegmentIndex
         let assignmentSet = assignmentSets[idx]
         do {
@@ -162,13 +162,13 @@ class MasteryPathSelectOptionViewController: UIViewController {
             print("Error switching assignment sets: \(error)")
         }
 
-        selectOptionButton.setTitle(String(format: NSLocalizedString("Select Option %d", comment: "Button title to select a certain assignment set option"), optionSegmentedControl.selectedSegmentIndex+1), for: UIControlState())
+        selectOptionButton.setTitle(String(format: NSLocalizedString("Select Option %d", comment: "Button title to select a certain assignment set option"), optionSegmentedControl.selectedSegmentIndex+1), for: UIControl.State())
     }
 
-    func selectOptionTapped() {
+    @objc func selectOptionTapped() {
         let idx = optionSegmentedControl.selectedSegmentIndex
         let assignmentSet = assignmentSets[idx]
-        selectOptionButton.setTitle("", for: UIControlState())
+        selectOptionButton.setTitle("", for: UIControl.State())
         selectOptionActivityIndicator.startAnimating()
         do {
             try itemWithMasteryPaths.selectMasteryPath(session: session, assignmentSetID: assignmentSet.id).startWithResult { [weak self] result in

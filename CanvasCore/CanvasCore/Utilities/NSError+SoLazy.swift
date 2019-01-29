@@ -21,7 +21,7 @@ import Foundation
 import Marshal
 
 extension NSError {
-    public convenience init(subdomain: String, code: Int = 0, sessionID: String? = nil, apiURL: URL? = nil, title: String? = nil, description: String, failureReason: String? = nil, data: Data? = nil, file: String = #file, line: UInt = #line) {
+    @objc public convenience init(subdomain: String, code: Int = 0, sessionID: String? = nil, apiURL: URL? = nil, title: String? = nil, description: String, failureReason: String? = nil, data: Data? = nil, file: String = #file, line: UInt = #line) {
 
         var userInfo: [String: Any] = [
             NSLocalizedDescriptionKey: description,
@@ -39,27 +39,27 @@ extension NSError {
         self.init(domain: "com.instructure." + subdomain, code: code, userInfo: userInfo)
     }
     
-    public var title: String? {
+    @objc public var title: String? {
         return (userInfo[ErrorTitleKey] as? String)
     }
     
-    public var fileName: String {
+    @objc public var fileName: String {
         return (userInfo[ErrorFileNameKey] as? String) ?? "Unknown"
     }
     
-    public var lineNumber: UInt {
+    @objc public var lineNumber: UInt {
         return (userInfo[ErrorLineNumberKey] as? UInt) ?? 0
     }
     
-    public var subdomain: String {
+    @objc public var subdomain: String {
         return (userInfo[ErrorLineNumberKey] as? String) ?? "unknown"
     }
     
-    public var sessionID: String {
+    @objc public var sessionID: String {
         return (userInfo[ErrorSessionIDKey] as? String) ?? "Unknown"
     }
 
-    public var data: String? {
+    @objc public var data: String? {
         if let string = userInfo[ErrorDataKey] as? String {
             return string
         }
@@ -69,7 +69,7 @@ extension NSError {
         return nil
     }
     
-    public var url: String {
+    @objc public var url: String {
         return (userInfo[ErrorURLKey] as? URL)
             .flatMap({ $0.absoluteString }) ?? ""
     }
@@ -79,13 +79,13 @@ extension NSError {
 // MARK: Alert
 
 extension NSError {
-    public var underlyingErrors: [NSError] {
+    @objc public var underlyingErrors: [NSError] {
         return (userInfo[NSUnderlyingErrorKey] as? [NSError])
             ?? (userInfo[NSUnderlyingErrorKey] as? NSError).map { [$0] }
             ?? []
     }
     
-    public var reportDescription: String {
+    @objc public var reportDescription: String {
         var report = "===== Error Report \(domain)–\(code) =====\n"
         
         for (key, value) in userInfo {
@@ -122,7 +122,7 @@ extension NSError {
         self.init(subdomain: "SoLazy", description: errorDescription, failureReason: reason, file: file, line: line)
     }
     
-    public func addingInfo(_ file: String = #file, line: UInt = #line) -> NSError {
+    @objc public func addingInfo(_ file: String = #file, line: UInt = #line) -> NSError {
         guard userInfo[ErrorFileNameKey] == nil else { return self }
         
         var info = userInfo

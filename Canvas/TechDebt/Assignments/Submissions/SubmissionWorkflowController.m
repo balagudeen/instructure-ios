@@ -54,6 +54,7 @@
 }
 
 - (void)present {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     if (self.legacyAssignment.type == CKAssignmentTypeQuiz) {
         
         CKAssignment *assignment = self.legacyAssignment;
@@ -65,11 +66,11 @@
         
         self.cancelAction = ^(void) {
         };
-        NSString *alertTitle = NSLocalizedString(@"Quiz Alert", @"Title for alert notifying users that support for quizzes on mobile is limited.");
-        NSString *message = NSLocalizedString(@"Currently there is limited quiz support on mobile", @"Message telling users that quiz support on mobile is limited");
-        NSString *moreInfoButtonText = NSLocalizedString(@"More Info", @"Button title for selecting to view more info about the limitations of mobile quizzes");
-        NSString *continueButtonText = NSLocalizedString(@"Continue", @"Button title for selecting to continue on to quiz. The will appear in the alert view notfifying the user of mobile quiz limitations.");
-        NSString *cancelButtonText = NSLocalizedString(@"Cancel", @"Cancel button title");
+        NSString *alertTitle = NSLocalizedStringFromTableInBundle(@"Quiz Alert", nil, bundle, @"Title for alert notifying users that support for quizzes on mobile is limited.");
+        NSString *message = NSLocalizedStringFromTableInBundle(@"Currently there is limited quiz support on mobile", nil, bundle, @"Message telling users that quiz support on mobile is limited");
+        NSString *moreInfoButtonText = NSLocalizedStringFromTableInBundle(@"More Info", nil, bundle, @"Button title for selecting to view more info about the limitations of mobile quizzes");
+        NSString *continueButtonText = NSLocalizedStringFromTableInBundle(@"Continue", nil, bundle, @"Button title for selecting to continue on to quiz. The will appear in the alert view notfifying the user of mobile quiz limitations.");
+        NSString *cancelButtonText = NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, @"Cancel button title");
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle message:message preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:moreInfoButtonText style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -127,8 +128,8 @@
                     [self showMediaRecorderPicker];
                 }
                 else {
-                    NSString *title = NSLocalizedString(@"Can't submit media", @"Setup only allows media but no Kaltura instance error title");
-                    NSString *message = NSLocalizedString(@"Your school's configuration does not allow the type of submission selected for this assignment", @"Media submission type selected with no Kaltura set up");
+                    NSString *title = NSLocalizedStringFromTableInBundle(@"Can't submit media", nil, bundle, @"Setup only allows media but no Kaltura instance error title");
+                    NSString *message = NSLocalizedStringFromTableInBundle(@"Your school's configuration does not allow the type of submission selected for this assignment", nil, bundle, @"Media submission type selected with no Kaltura set up");
                     [UIAlertController showAlertWithTitle:title message:message];
                 }
                 break;
@@ -142,10 +143,10 @@
                 break;
             case CKSubmissionTypeExternalTool:
             {
-                UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Can't load tool", nil)
-                                                                                    message:NSLocalizedString(@"This assignment doesn't appear to be a valid external tool or is misconfigured.", nil)
+                UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTableInBundle(@"Can't load tool", nil, bundle, nil)
+                                                                                    message:NSLocalizedStringFromTableInBundle(@"This assignment doesn't appear to be a valid external tool or is misconfigured.", nil, bundle, nil)
                                                                              preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", nil) style:UIAlertActionStyleDefault handler:nil];
+                UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:NSLocalizedStringFromTableInBundle(@"Dismiss", nil, bundle, nil) style:UIAlertActionStyleDefault handler:nil];
                 [errorAlert addAction:dismissAction];
                 if (self.legacyAssignment.url == nil) {
                     [self.viewController presentViewController:errorAlert animated:YES completion:nil];
@@ -214,7 +215,7 @@
 static void showErrorForAssignment(NSError *error, NSString *assignmentName) {
     UIApplication *application = [UIApplication sharedApplication];
     
-    NSString *template = NSLocalizedString(@"Upload to assignment \"%@\" failed", @"Error message");
+    NSString *template = NSLocalizedStringFromTableInBundle(@"Upload to assignment \"%@\" failed", nil, [NSBundle bundleForClass:SubmissionWorkflowController.class], @"Error message");
     NSString *message = [NSString stringWithFormat:template, assignmentName];
     if (application.applicationState == UIApplicationStateBackground) {
         UNMutableNotificationContent *content = [UNMutableNotificationContent new];
@@ -238,40 +239,41 @@ static void deleteFiles(NSArray *fileURLs) {
 }
 
 - (void)showSubmissionTypePicker {
-    CKActionSheetWithBlocks *sheet = [[CKActionSheetWithBlocks alloc] initWithTitle:NSLocalizedString(@"Choose a submission type", nil)];
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    CKActionSheetWithBlocks *sheet = [[CKActionSheetWithBlocks alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"Choose a submission type", nil, bundle, nil)];
     
     CKSubmissionType submissionTypes = self.legacyAssignment.submissionTypes;
     
     if (submissionTypes & CKSubmissionTypeOnlineUpload) {
-        [sheet addButtonWithTitle:NSLocalizedString(@"File upload", @"File upload submission type") handler:^{
+        [sheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"File upload", nil, bundle, @"File upload submission type") handler:^{
             [self showSubmissionLibrary];
         }];
         
         if (self.arcLTIToolID.length > 0) {
-            [sheet addButtonWithTitle:NSLocalizedString(@"Arc", @"Assignment submission type for selecting an Arc video") handler:^{
+            [sheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Arc", nil, bundle, @"Assignment submission type for selecting an Arc video") handler:^{
                 [self showArcPicker];
             }];
         }
     }
     if (submissionTypes & CKSubmissionTypeMediaRecording) {
         if (self.allowsMediaSubmission) {
-            [sheet addButtonWithTitle:NSLocalizedString(@"Media recording", @"Media recording submission type") handler:^{
+            [sheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Media recording", nil, bundle, @"Media recording submission type") handler:^{
                 [self showMediaRecorderPicker];
             }];
         }
     }
     if (submissionTypes & CKSubmissionTypeOnlineTextEntry) {
-        [sheet addButtonWithTitle:NSLocalizedString(@"Text entry", @"Text entry submission type") handler:^{
+        [sheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Text entry", nil, bundle, @"Text entry submission type") handler:^{
             [self showTextInput];
         }];
     }
     if (submissionTypes & CKSubmissionTypeOnlineURL) {
-        [sheet addButtonWithTitle:NSLocalizedString(@"Online URL", @"Online URL submission type") handler:^{
+        [sheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Online URL", nil, bundle, @"Online URL submission type") handler:^{
             [self showURLInput];
         }];
     }
     
-    [sheet addCancelButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+    [sheet addCancelButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, nil)];
     
     if (self.viewController.tabBarController) {
         [sheet showFromTabBar:self.viewController.tabBarController.tabBar];
@@ -282,20 +284,21 @@ static void deleteFiles(NSArray *fileURLs) {
 }
 
 - (void)showMediaRecorderPicker {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     CKActionSheetWithBlocks *picker = [[CKActionSheetWithBlocks alloc] initWithTitle:nil];
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [picker addButtonWithTitle:NSLocalizedString(@"Record video", nil) handler:^{
+        [picker addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Record video", nil, bundle, nil) handler:^{
             [self showVideoRecorderWithSourceType:UIImagePickerControllerSourceTypeCamera];
         }];
     }
-    [picker addButtonWithTitle:NSLocalizedString(@"Choose video", @"action sheet text for picking video from library") handler:^{
+    [picker addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Choose video", nil, bundle, @"action sheet text for picking video from library") handler:^{
         [self showVideoRecorderWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }];
-    [picker addButtonWithTitle:NSLocalizedString(@"Record audio", nil) handler:^{
+    [picker addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Record audio", nil, bundle, nil) handler:^{
         [self showAudioRecorder];
     }];
-    [picker addCancelButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+    [picker addCancelButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, nil)];
     
     if (self.viewController.tabBarController) {
         [picker showFromTabBar:self.viewController.tabBarController.tabBar];
@@ -346,12 +349,13 @@ static void deleteFiles(NSArray *fileURLs) {
     
     CKOverlayViewController *overlay = [[CKOverlayViewController alloc] initWithView:audioRecorder];
     UIViewController *rootController = self.viewController.view.window.rootViewController;
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     
-    [audioRecorder.leftButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
+    [audioRecorder.leftButton setTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, nil) forState:UIControlStateNormal];
     audioRecorder.leftButton.hidden = NO;
     [audioRecorder.leftButton addTarget:rootController action:@selector(dismissOverlayController) forControlEvents:UIControlEventTouchUpInside];
     
-    [audioRecorder.rightButton setTitle:NSLocalizedString(@"Use", nil) forState:UIControlStateNormal];
+    [audioRecorder.rightButton setTitle:NSLocalizedStringFromTableInBundle(@"Use", nil, bundle, nil) forState:UIControlStateNormal];
     audioRecorder.rightButton.hidden = NO;
     [audioRecorder.rightButton addTarget:self action:@selector(takeAudioFromRecorder) forControlEvents:UIControlEventTouchUpInside];
     
@@ -485,33 +489,33 @@ static void deleteFiles(NSArray *fileURLs) {
     
     __weak typeof(self) weakSelf = self;
     controller.onSubmitBlock = ^(NSArray *urls) {
-        
-        CKAssignment *assignment = weakSelf.legacyAssignment;
-        
-        for (NSURL *url in urls) {
-            if (![assignment allowsExtension:[url pathExtension]]) {
-                [UIAlertController showAlertWithTitle:[assignment notAllowedAlertTitle:[url pathExtension]] message:[assignment notAllowedAlertMessage]];
-                [application endBackgroundTask:backgroundTask];
-                return;
-            }
-        }
-        
-        CKCanvasAPI *canvasAPI = weakSelf.canvasAPI;
-        [weakSelf reportProgress:0.0];
-        [canvasAPI postFileURLs:urls asSubmissionForAssignment:assignment
-                  progressBlock:^(float progress) {
-                      [weakSelf reportProgress:progress];
-                  }
-                completionBlock:^(NSError *error, BOOL isFinalValue, CKSubmission *submission) {
-                    if (error) {
-                        showErrorForAssignment(error, assignment.name);
-                    }
-                    [weakSelf reportCompletionWithSubmission:submission error:error];
-                    deleteFiles(urls);
-                    
+        [weakSelf.viewController dismissViewControllerAnimated:YES completion:^{
+            CKAssignment *assignment = weakSelf.legacyAssignment;
+
+            for (NSURL *url in urls) {
+                if (![assignment allowsExtension:[url pathExtension]]) {
+                    [UIAlertController showAlertWithTitle:[assignment notAllowedAlertTitle:[url pathExtension]] message:[assignment notAllowedAlertMessage]];
                     [application endBackgroundTask:backgroundTask];
-                }];
-        [weakSelf.viewController dismissViewControllerAnimated:YES completion:NULL];
+                    return;
+                }
+            }
+
+            CKCanvasAPI *canvasAPI = weakSelf.canvasAPI;
+            [weakSelf reportProgress:0.0];
+            [canvasAPI postFileURLs:urls asSubmissionForAssignment:assignment
+                      progressBlock:^(float progress) {
+                          [weakSelf reportProgress:progress];
+                      }
+                    completionBlock:^(NSError *error, BOOL isFinalValue, CKSubmission *submission) {
+                        if (error) {
+                            showErrorForAssignment(error, assignment.name);
+                        }
+                        [weakSelf reportCompletionWithSubmission:submission error:error];
+                        deleteFiles(urls);
+
+                        [application endBackgroundTask:backgroundTask];
+                    }];
+        }];
     };
 }
 

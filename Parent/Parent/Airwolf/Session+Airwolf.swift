@@ -23,7 +23,7 @@ import CoreData
 import CanvasCore
 
 extension Session {
-    public func airwolfManagedObjectContext() throws -> NSManagedObjectContext {
+    @objc public func airwolfManagedObjectContext() throws -> NSManagedObjectContext {
         guard let model = NSManagedObjectModel(named: "Airwolf", inBundle: Bundle(for: Student.self))?.mutableCopy() as? NSManagedObjectModel else {
             throw NSError(subdomain: "Airwolf", description: "Failed to load Airwolf NSManagedObjectModel")
         }

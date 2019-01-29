@@ -139,7 +139,7 @@ open class NotificationKitController {
                         }
                     } else {
                         // There's no need to look at the data at this point, if it's able to fetch the data then we don't need to setup the notification preferences, the only way a value gets there is if the values get setup
-                        registrationCompletion(RegisterPushNotificationTokenResult.success())
+                        registrationCompletion(RegisterPushNotificationTokenResult.success(()))
                     }
                 })
             }
@@ -200,7 +200,7 @@ open class NotificationKitController {
                                                     // error
                                                     registrationCompletion(.failure(updateNotificationPreferencesSetupResult.error!))
                                                 } else {
-                                                    registrationCompletion(.success())
+                                                    registrationCompletion(.success(()))
                                                 }
                                             })
                                         }

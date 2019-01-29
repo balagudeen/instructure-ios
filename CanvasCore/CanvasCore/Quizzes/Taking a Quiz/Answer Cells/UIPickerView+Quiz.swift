@@ -21,7 +21,7 @@ let sizingLabel = UILabel()
 extension UIPickerView {
     
     // Measures all of the titles and returns the height of the tallest one
-    func heightForTitles(titles: [String]) -> CGFloat {
+    @objc func heightForTitles(titles: [String]) -> CGFloat {
         sizingLabel.numberOfLines = 0
         let width = self.frame.width
         return titles.reduce(0.0, { (memo, value) -> CGFloat in
@@ -35,7 +35,7 @@ extension UIPickerView {
         })
     }
     
-    func titleView(title: String) -> UIView {
+    @objc func titleView(title: String) -> UIView {
         let label = UILabel()
         label.text = title
         label.numberOfLines = 0

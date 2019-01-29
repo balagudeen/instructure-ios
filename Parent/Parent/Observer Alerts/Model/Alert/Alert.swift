@@ -35,7 +35,7 @@ public final class Alert: NSManagedObject {
     @NSManaged internal (set) public var thresholdID: String
 
     @NSManaged fileprivate var primitiveType: String
-    static let typeKey = "type"
+    @objc static let typeKey = "type"
     internal (set) public var type: AlertThresholdType {
         get {
             willAccessValue(forKey: Alert.typeKey)
@@ -59,12 +59,12 @@ public final class Alert: NSManagedObject {
 }
 
 extension Alert: SynchronizedModel {
-    public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
+    @objc public static func uniquePredicateForObject(_ json: JSONObject) throws -> NSPredicate {
         let id: String = try json.stringID("id")
         return NSPredicate(format: "%K == %@", "id", id)
     }
 
-    public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
+    @objc public func updateValues(_ json: JSONObject, inContext context: NSManagedObjectContext) throws {
         id = try json.stringID("id")
         observerID = try json.stringID("observer_id")
         studentID = try json.stringID("user_id")

@@ -25,11 +25,11 @@ import ReactiveSwift
 
 extension Submission {
     
-    public static func detailsCacheKey(_ context: NSManagedObjectContext, courseID: String, assignmentID: String, userID: String) -> String {
+    @objc public static func detailsCacheKey(_ context: NSManagedObjectContext, courseID: String, assignmentID: String, userID: String) -> String {
         return cacheKey(context, [courseID, assignmentID, userID])
     }
     
-    public static func predicate(_ courseID: String, assignmentID: String, userID: String) -> NSPredicate {
+    @objc public static func predicate(_ courseID: String, assignmentID: String, userID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@ && %K == %@ && %K == %@", "courseID", courseID, "assignmentID", assignmentID, "userID", userID)
     }
     

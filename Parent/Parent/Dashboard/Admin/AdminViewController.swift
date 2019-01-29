@@ -15,13 +15,14 @@
 //
 
 import Foundation
+import UIKit
 
 class AdminViewController : UIViewController {
     @IBOutlet weak var actAsUserButton: UIButton!
     @IBOutlet weak var directionsLabel: UILabel!
     @IBOutlet weak var welcomeLabel: UILabel!
     
-    var actAsUserHandler: (() -> Void)?
+    @objc var actAsUserHandler: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()

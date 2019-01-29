@@ -22,7 +22,7 @@ class BadgeView: UIView {
     fileprivate let minimumSize: CGFloat = 20.0
     fileprivate let padding: CGFloat = 5.0
 
-    var badgeValue: Int = 0 {
+    @objc var badgeValue: Int = 0 {
         didSet {
             if badgeValue <= 0 {
                 self.isHidden = true

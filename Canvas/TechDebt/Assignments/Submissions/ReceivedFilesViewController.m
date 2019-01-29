@@ -23,8 +23,8 @@
 #import "UIAlertController+TechDebt.h"
 #import "ReceivedFilesViewController.h"
 #import "DocumentLibraryView.h"
-
 #import "CBIDropbox.h"
+@import CanvasCore;
 
 @interface ReceivedFilesViewController () <DocumentLibraryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *libraryContainer;
@@ -63,7 +63,7 @@ static NSURL *receivedFilesFolder() {
     
     NSURL *oldLibraryFolder = [documentsURL URLByAppendingPathComponent:@"SubmissionLibrary"];
     NSURL *libraryFolder = [documentsURL URLByAppendingPathComponent:@"ReceivedFiles"];
-    
+
     // Move the old library, or create a new one
     if (![fileManager moveItemAtURL:oldLibraryFolder toURL:libraryFolder error:NULL]) {
         [fileManager createDirectoryAtURL:libraryFolder withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -80,8 +80,9 @@ static NSURL *receivedFilesFolder() {
     NSURL *newURL = [self addItemAtURLToReceivedFiles:url error:error];
     
     if (newURL) {
-        NSString *title = NSLocalizedString(@"File received", nil);
-        NSString *messageTemplate = NSLocalizedString(@"'%@' is now ready to submit to assignments", @"%@ will be replaced by the filename");
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
+        NSString *title = NSLocalizedStringFromTableInBundle(@"File received", nil, bundle, nil);
+        NSString *messageTemplate = NSLocalizedStringFromTableInBundle(@"'%@' is now ready to submit to assignments", nil, bundle, @"%@ will be replaced by the filename");
         NSString *message = [NSString stringWithFormat:messageTemplate, url.lastPathComponent];
         [UIAlertController showAlertWithTitle:title message:message];
         [[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
@@ -124,17 +125,15 @@ static NSURL *receivedFilesFolder() {
 {
     [super viewDidLoad];
     
-    if (!_submitButtonTitle) {
-        _submitButtonTitle = submitButton.title;
-    }
-    
     self.numberOfImportOptions = 1;
+
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     
     libraryView = [[DocumentLibraryView alloc] initWithFrame:libraryContainer.bounds];
     libraryView.translatesAutoresizingMaskIntoConstraints = NO;
     libraryView.delegate = self;
     [self populateLibraryViewItems];
-    libraryView.noItemsHelpString = NSLocalizedString(@"You have no files available for upload. To add files from other apps, find a file in another app, then find the \"Open In\" button to open it in Canvas. You can also tap and hold on attachments in the Mail app to open them in Canvas.", @"An explanation of how to transfer files to the Canvas app.");
+    libraryView.noItemsHelpString = NSLocalizedStringFromTableInBundle(@"To add a file from another app, open the file in that app and tap the Share icon. Then select the Copy to Student option. To add an attachment from the Mail app, tap and hold the attachment, then tap the Canvas icon.", nil, bundle, nil);
     [libraryContainer addSubview:libraryView];
     [NSLayoutConstraint activateConstraints:@[
         [libraryView.topAnchor constraintEqualToAnchor:libraryContainer.topAnchor],
@@ -143,11 +142,11 @@ static NSURL *receivedFilesFolder() {
         [libraryView.rightAnchor constraintEqualToAnchor:libraryContainer.rightAnchor],
     ]];
 
-    self.navigationItem.title = NSLocalizedString(@"Select file(s)", @"Title for a file picker window");
+    self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"Select file(s)", nil, bundle, @"Title for a file picker window");
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss:)];
     toggleSelectionButton.accessibilityTraits = UIAccessibilityTraitButton;
-    toggleSelectionButton.accessibilityLabel = NSLocalizedString(@"Select or deselect", nil);
-    toggleSelectionButton.accessibilityHint = NSLocalizedString(@"Toggles selection of current item", nil);
+    toggleSelectionButton.accessibilityLabel = NSLocalizedStringFromTableInBundle(@"Select or deselect", nil, bundle, nil);
+    toggleSelectionButton.accessibilityHint = NSLocalizedStringFromTableInBundle(@"Toggles selection of current item", nil, bundle, nil);
     
     [self updateSubmitButton];
 }
@@ -185,12 +184,6 @@ static NSURL *receivedFilesFolder() {
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
     return UIStatusBarAnimationSlide;
 }
-
-- (void)setSubmitButtonTitle:(NSString *)submitButtonTitle {
-    _submitButtonTitle = [submitButtonTitle copy];
-    [self updateSubmitButton];
-}
-
 
 - (void)populateLibraryViewItems {
     NSFileManager *manager = [[NSFileManager alloc] init];
@@ -244,14 +237,16 @@ static NSURL *receivedFilesFolder() {
 }
 
 - (void)resetFilenameLabelWithItem:(NSURL *)item {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     if (item == nil) {
         filenameLabel.text = @"";
     }
+
     if ([item isEqual:photoSelectionURL]) {
-        filenameLabel.text = NSLocalizedString(@"Import from camera", nil);
+        filenameLabel.text = NSLocalizedStringFromTableInBundle(@"Import from camera", nil, bundle, nil);
     }
     else if ([item isEqual:dropboxSelectionURL]) {
-        filenameLabel.text = NSLocalizedString(@"Import from Dropbox", nil);
+        filenameLabel.text = NSLocalizedStringFromTableInBundle(@"Import from Dropbox", nil, bundle, nil);
     }
     else {
         filenameLabel.text = [item.lastPathComponent stringByDeletingPathExtension];
@@ -307,12 +302,11 @@ static NSURL *receivedFilesFolder() {
 
 - (void)updateSubmitButton
 {
-    NSString *formatString = NSLocalizedString(@"%@ (%d)", @"Button to submit files to an assignment");
-    submitButton.title = [NSString stringWithFormat:formatString, _submitButtonTitle, libraryView.selectedItems.count];
+    NSString *formatString = NSLocalizedStringFromTableInBundle(@"Submit (%d)", nil, [NSBundle bundleForClass:self.class], @"Button to submit files to an assignment");
+    submitButton.title = [NSString stringWithFormat:formatString, libraryView.selectedItems.count];
     if (libraryView.selectedItems.count == 0) {
         submitButton.enabled = NO;
-    }
-    else {
+    } else {
         submitButton.enabled = YES;
     }
 }
@@ -325,17 +319,18 @@ static NSURL *receivedFilesFolder() {
 }
 
 - (IBAction)tappedTrashButton:(UIBarButtonItem *)sender {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     NSURL *selectedItem = self.libraryView.frontItem;
     if (selectedItem == nil) {
         return;
     }
     
     sender.enabled = NO;
-    
+
     CKActionSheetWithBlocks *actionSheet = [[CKActionSheetWithBlocks alloc] initWithTitle:
-                                            NSLocalizedString(@"Remove this file?",
+                                            NSLocalizedStringFromTableInBundle(@"Remove this file?", nil, bundle,
                                                               @"Button title for confirming a file deletion")];
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Remove", @"Confirmation for removing a file")
+    [actionSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Remove", nil, bundle, @"Confirmation for removing a file")
                             handler:^{
                                 NSFileManager *fileManager = [NSFileManager new];
                                 NSError *error;
@@ -348,7 +343,7 @@ static NSURL *receivedFilesFolder() {
                                 }
                             }];
     actionSheet.destructiveButtonIndex = actionSheet.numberOfButtons - 1;
-    [actionSheet addCancelButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel button title")];
+    [actionSheet addCancelButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, @"Cancel button title")];
     
     actionSheet.dismissalBlock = ^{
         sender.enabled = YES;
@@ -383,17 +378,19 @@ static NSURL *receivedFilesFolder() {
 
 - (void)tappedCameraURL {
     BOOL cameraAvailable = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     if (cameraAvailable) {
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
         CKActionSheetWithBlocks *actionSheet = [[CKActionSheetWithBlocks alloc] initWithTitle:nil];
-        [actionSheet addButtonWithTitle:NSLocalizedString(@"Take Photo or Video...", nil) handler:^{
+        [actionSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Take Photo or Video...", nil, bundle, nil) handler:^{
             [self showVideoRecorderWithSourceType:UIImagePickerControllerSourceTypeCamera];
         }];
-        [actionSheet addButtonWithTitle:NSLocalizedString(@"Choose from Library...", nil) handler:^{
+        [actionSheet addButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Choose from Library...", nil, bundle, nil) handler:^{
             [self showImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
         }];
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-            [actionSheet addCancelButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+            [actionSheet addCancelButtonWithTitle:NSLocalizedStringFromTableInBundle(@"Cancel", nil, bundle, nil)];
         }
         
         [actionSheet showFromRect:filenameLabel.bounds inView:filenameLabel animated:YES];
@@ -450,6 +447,7 @@ static NSURL *receivedFilesFolder() {
         if (!image) {
             image = info[UIImagePickerControllerOriginalImage];
         }
+        image = [UIImage fixOrientation:image];
         NSData *imageData = UIImageJPEGRepresentation(image, 0.7);
         
         NSURL *tempDir = [NSURL fileURLWithPath:NSTemporaryDirectory()];

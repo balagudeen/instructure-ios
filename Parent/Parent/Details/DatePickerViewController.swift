@@ -21,11 +21,11 @@ import CanvasCore
 
 class DatePickerViewController: UIViewController {
 
-    let datePicker: UIDatePicker = UIDatePicker()
-    let datePickerHeight: CGFloat = 216.0
+    @objc let datePicker: UIDatePicker = UIDatePicker()
+    @objc let datePickerHeight: CGFloat = 216.0
 
-    var cancelAction: ()->() = { }
-    var doneAction: (Date)->() = { _ in }
+    @objc var cancelAction: ()->() = { }
+    @objc var doneAction: (Date)->() = { _ in }
 
     convenience init() {
         self.init(nibName: nil, bundle: nil)
@@ -41,14 +41,14 @@ class DatePickerViewController: UIViewController {
 
         datePicker.minimumDate = Date() + 1.minutesComponents
         datePicker.maximumDate = Date() + 1.yearsComponents
-        datePicker.datePickerMode = UIDatePickerMode.dateAndTime
+        datePicker.datePickerMode = UIDatePicker.Mode.dateAndTime
         view.addSubview(datePicker)
 
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.accessibilityIdentifier = "assignment_date_picker"
 
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[picker]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["picker": datePicker]))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[top][picker(216)]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["top": self.topLayoutGuide, "picker": datePicker]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[picker]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["picker": datePicker]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[top][picker(216)]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["top": self.topLayoutGuide, "picker": datePicker]))
 
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(DatePickerViewController.cancel(_:)))
         cancelButton.accessibilityIdentifier = "date_picker_cancel_button"
@@ -64,14 +64,14 @@ class DatePickerViewController: UIViewController {
         return .lightContent
     }
 
-    func cancel(_ button: UIBarButtonItem) {
-        dismiss(animated: true, completion: { [unowned self] _ in
+    @objc func cancel(_ button: UIBarButtonItem) {
+        dismiss(animated: true, completion: { [unowned self] in
             self.cancelAction()
         })
     }
 
-    func done(_ button: UIBarButtonItem) {
-        dismiss(animated: true, completion: { [unowned self] _ in
+    @objc func done(_ button: UIBarButtonItem) {
+        dismiss(animated: true, completion: { [unowned self] in
             self.doneAction(self.datePicker.date)
         })
     }

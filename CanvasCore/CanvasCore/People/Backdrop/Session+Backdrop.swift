@@ -25,7 +25,7 @@ extension Session {
         static var backdrop: Int = 0
     }
     
-    var backdropKey: String {
+    @objc var backdropKey: String {
         return "\(sessionID)-backdrop"
     }
     
@@ -55,13 +55,13 @@ extension Session {
             .map { $0 } // map it 2 optional
     }
 
-    public func backdropPhoto(_ completion: @escaping (UIImage?) -> ()) {
+    @objc public func backdropPhoto(_ completion: @escaping (UIImage?) -> ()) {
         backdropPhoto
             .observe(on: UIScheduler())
             .startWithResult { completion($0.value!) }
     }
     
-    public func updateBackdropFileFromServer(_ completed: @escaping (Bool)->()) {
+    @objc public func updateBackdropFileFromServer(_ completed: @escaping (Bool)->()) {
         getBackdropOnServer(self)
             .observe(on: UIScheduler())
             .on(failed: { err in print(err.debugDescription); completed(false) })

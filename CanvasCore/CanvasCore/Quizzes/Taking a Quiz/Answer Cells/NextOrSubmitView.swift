@@ -36,9 +36,9 @@ class NextOrSubmitView: UIView {
         }
     }
     
-    var onNextOrSubmit: ()->() = {}
+    @objc var onNextOrSubmit: ()->() = {}
     
-    func doNextOrSubmit(_ button: UIButton) {
+    @objc func doNextOrSubmit(_ button: UIButton) {
         onNextOrSubmit()
     }
     
@@ -47,7 +47,7 @@ class NextOrSubmitView: UIView {
         
         let me = nib.instantiate(withOwner: nil, options: nil).first as! NextOrSubmitView
         
-        me.submitButton.setTitle(nextOrSubmit.labelText, for: UIControlState())
+        me.submitButton.setTitle(nextOrSubmit.labelText, for: UIControl.State())
         me.submitButton.makeItBlue()
         me.submitButton.addTarget(target, action: action, for: .touchUpInside)
         

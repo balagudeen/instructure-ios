@@ -25,16 +25,16 @@ import CanvasCore
 
 class AlertCell: UITableViewCell {
 
-    static let iconImageDiameter: CGFloat = 36.0
-    static let iconImageSubtractor: CGFloat = 15.0
+    @objc static let iconImageDiameter: CGFloat = 36.0
+    @objc static let iconImageSubtractor: CGFloat = 15.0
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var iconImageView: UIImageView!
 
-    var highlightColor = UIColor.white
-    var alert: Alert? = nil
-    var session : Session? = nil
+    @objc var highlightColor = UIColor.white
+    @objc var alert: Alert? = nil
+    @objc var session : Session? = nil
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -55,7 +55,7 @@ class AlertCell: UITableViewCell {
         contentView.backgroundColor = highlighted ? highlightColor : UIColor.white
     }
 
-    func dismiss(_ obj: Any?) {
+    @objc func dismiss(_ obj: Any?) {
         guard let _alert = alert, let _session = session else { return }
 
         _alert.dismiss(_session)

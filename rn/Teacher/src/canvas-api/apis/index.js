@@ -35,6 +35,7 @@ import * as files from './files'
 import * as accounts from './accounts'
 import * as userCustomData from './user-custom-data'
 import * as pageViewEvents from './page-view-events'
+import * as permissionsApi from './permissions'
 
 export default {
   ...accountApi,
@@ -56,4 +57,5 @@ export default {
   ...accounts,
   ...userCustomData,
   ...pageViewEvents,
+  ...permissionsApi,
 }

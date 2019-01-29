@@ -33,7 +33,7 @@ protocol DatePickerDelegate: NSObjectProtocol {
 
 class DatePickerViewController: UIViewController {
     
-    var initialDate = Date() {
+    @objc var initialDate = Date() {
         didSet {
             selectedDate = initialDate
         }
@@ -53,26 +53,26 @@ class DatePickerViewController: UIViewController {
     fileprivate var latestDate: Date!
     fileprivate var selectedDate = Date()
     
-    static var monthHeaderFormatter: DateFormatter = {
+    @objc static var monthHeaderFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "MMMM", options: 0, locale: Locale.current)
         return dateFormatter
     }()
     
-    static var yearFormatter: DateFormatter = {
+    @objc static var yearFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "YYYY", options: 0, locale: Locale.current)
         return dateFormatter
     }()
 
-    static var a11yDayFormatter: DateFormatter = {
+    @objc static var a11yDayFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         dateFormatter.dateStyle = .medium
         return dateFormatter
     }()
 
-    static var a11yMonthFormatter: DateFormatter = {
+    @objc static var a11yMonthFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "MMMM YYYY", options: 0, locale: Locale.current)
         return dateFormatter
@@ -114,7 +114,7 @@ class DatePickerViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(DatePickerDateCell.self, forCellWithReuseIdentifier: "DateCell")
-        collectionView.register(DatePickerMonthHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "MonthHeaderView")
+        collectionView.register(DatePickerMonthHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MonthHeaderView")
         
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
@@ -159,7 +159,7 @@ class DatePickerViewController: UIViewController {
         layout.invalidateLayout()
     }
     
-    func done(_ sender: Any?) {
+    @objc func done(_ sender: Any?) {
         dismiss(animated: true, completion: {
             if !self.calendar.isDate(self.selectedDate, inSameDayAs: self.initialDate) {
                 self.delegate?.didSelectDate(self.selectedDate)
@@ -167,7 +167,7 @@ class DatePickerViewController: UIViewController {
         })
     }
     
-    func scroll(to date: Date, animated: Bool) {
+    @objc func scroll(to date: Date, animated: Bool) {
         guard date > earliestDate && date < latestDate else { return }
         let components = calendar.dateComponents([.month, .day], from: earliestDate, to: date)
         
@@ -215,7 +215,7 @@ extension DatePickerViewController: UICollectionViewDataSource {
             cell.label.text = "\(day)"
             cell.label.accessibilityLabel = DatePickerViewController.a11yDayFormatter.string(from: cellDate)
             cell.isToday = calendar.isDateInToday(cellDate)
-            cell.label.accessibilityTraits = cell.isToday ? UIAccessibilityTraitSelected : UIAccessibilityTraitNone
+            cell.label.accessibilityTraits = cell.isToday ? UIAccessibilityTraits.selected : UIAccessibilityTraits.none
             cell.setIsHighlighted(calendar.isDate(selectedDate, inSameDayAs: cellDate))
         } else {
             cell.label.text = ""
@@ -235,7 +235,7 @@ extension DatePickerViewController: UICollectionViewDataSource {
         view.yearLabel.accessibilityElementsHidden = true
         view.yearLabel.text = DatePickerViewController.yearFormatter.string(from: firstDayInSection)
         view.monthLabel.text = DatePickerViewController.monthHeaderFormatter.string(from: firstDayInSection)
-        view.monthLabel.accessibilityTraits = UIAccessibilityTraitHeader
+        view.monthLabel.accessibilityTraits = UIAccessibilityTraits.header
         view.monthLabel.accessibilityLabel = DatePickerViewController.a11yMonthFormatter.string(from: firstDayInSection)
         
         return view
@@ -283,7 +283,7 @@ extension DatePickerViewController: UICollectionViewDelegateFlowLayout {
         header.setNeedsLayout()
         header.layoutIfNeeded()
         
-        let size = header.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+        let size = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
         
         return size
     }

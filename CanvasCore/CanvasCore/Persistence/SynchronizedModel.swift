@@ -45,7 +45,7 @@ extension SynchronizedModel where Self: NSManagedObject {
     public static func upsert(inContext context: NSManagedObjectContext, postProcess: @escaping (Self, JSONObject) throws -> () = { _,_ in }, jsonArray: [JSONObject], completion: @escaping (Result<[Self], NSError>) -> Void) {
         context.perform {
             do {
-                let models: [Self] = try jsonArray.flatMap { json in
+                let models: [Self] = try jsonArray.compactMap { json in
                     let model: Self = (try context.findOne(withPredicate: uniquePredicateForObject(json)) ?? create(inContext: context))
                     
                     // Historically we failed if _any_ of the models failed

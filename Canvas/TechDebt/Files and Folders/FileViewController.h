@@ -29,8 +29,9 @@
 @property (nonatomic) CKAttachment *file;
 @property uint64_t fileIdent;
 
-// A possible assignment id can be passed through as a query param
-@property uint64_t assignmentID;
+// A possible can be passed through as a query param
+@property (nullable, nonatomic, strong) NSString* courseID;
+@property (nullable, nonatomic, strong) NSString* assignmentID;
 
 @property (nonatomic) float downloadProgress;
 @property (nonatomic, copy) NSURL *url;

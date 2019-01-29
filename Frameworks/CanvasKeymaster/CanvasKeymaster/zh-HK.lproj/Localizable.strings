@@ -25,17 +25,26 @@
 /* No comment provided by engineer. */
 "Choose One" = "選擇一個";
 
+/* Connectivity alert close text */
+"Close" = "關閉";
+
 /* No comment provided by engineer. */
 "Continue Editing" = "繼續編輯";
 
 /* No comment provided by engineer. */
 "Describe the feature here" = "請形容這功能";
 
+/* No comment provided by engineer. */
+"describe your problem" = "請形容您的問題";
+
 /* Dismiss login expired/revoked alert button */
 "Dismiss" = "取消";
 
 /* No comment provided by engineer. */
 "Emergency" = "緊急事件";
+
+/* No comment provided by engineer. */
+"enter a subject" = "輸入主題";
 
 /* Text view to enter the description of the ticket */
 "Enter ticket description" = "輸入票單形容";
@@ -62,7 +71,7 @@
 "I need help but it's not urgent" = "我需要幫助但情況並不緊急";
 
 /* No comment provided by engineer. */
-"Invalid Canvas URL." = "Canvas URL 無效。\t";
+"Invalid Canvas URL." = "Canvas URL 無效。	";
 
 /* No comment provided by engineer. */
 "Invalid User Agent." = "用戶代理無效。";
@@ -76,14 +85,20 @@
 /* No comment provided by engineer. */
 "OK" = "確定";
 
+/* Placeholder for delete icon in Multi User Table View Cell */
+"remove user" = "移除使用者";
+
 /* No comment provided by engineer. */
 "Report a Problem" = "報告問題";
+
+/* No comment provided by engineer. */
+"Request a Feature" = "請求功能";
 
 /* No comment provided by engineer. */
 "Request Failed!" = "請求失敗！";
 
 /* No comment provided by engineer. */
-"Request a Feature" = "請求功能";
+"select the impact" = "選擇影響";
 
 /* Button to select the severity of the ticket */
 "Select ticket impact level" = "選擇票單影響程度";
@@ -106,18 +121,15 @@
 /* No comment provided by engineer. */
 "Thanks, your request was received!" = "謝謝，您的請求已經被接收！";
 
+/* No comment provided by engineer. */
+"Trouble logging in" = "登入問題";
+
+/* Connectivity alert message */
+"We can't connect to Canvas. Have you checked your internet connection?" = "我們無法連接至 Canvas。您有否檢查您的網絡連接？";
+
+/* Connectivity alert title */
+"Whoops!" = "抱歉！";
+
 /* when the access token has been revoked */
 "Your login has expired or has been removed by the server. Please log in again." = "您的登入已經過時或已被服務器移除。請重新登入。";
-
-/* No comment provided by engineer. */
-"describe your problem" = "請形容您的問題";
-
-/* No comment provided by engineer. */
-"enter a subject" = "輸入主題";
-
-/* Placeholder for delete icon in Multi User Table View Cell */
-"remove user" = "移除使用者";
-
-/* No comment provided by engineer. */
-"select the impact" = "選擇影響";
 

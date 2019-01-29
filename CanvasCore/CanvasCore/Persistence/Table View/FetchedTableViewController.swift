@@ -27,7 +27,7 @@ open class FetchedTableViewController<M: NSManagedObject>: TableViewController {
         super.init()
     }
 
-    public override init(style: UITableViewStyle) {
+    @objc public override init(style: UITableView.Style) {
         super.init(style: style)
     }
 
@@ -43,7 +43,7 @@ open class FetchedTableViewController<M: NSManagedObject>: TableViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
     }
 }

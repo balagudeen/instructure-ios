@@ -21,7 +21,7 @@ import Foundation
 
 
 extension QuizIntroViewController {
-    public convenience init(session: Session, quizURL: URL, quizID: String) {
+    @objc public convenience init(session: Session, quizURL: URL, quizID: String) {
         let components = NSURLComponents(url:quizURL, resolvingAgainstBaseURL: false)
         components?.path = nil
         components?.query = nil

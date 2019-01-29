@@ -29,11 +29,11 @@ extension FileNode {
         return NSPredicate(format:"%K == %@", "rawContextID", contextID.canvasContextID)
     }
     
-    public static func hiddenForUserPredicate(_ hiddenForUser: Bool) -> NSPredicate {
+    @objc public static func hiddenForUserPredicate(_ hiddenForUser: Bool) -> NSPredicate {
         return NSPredicate(format:"%K == %@", "hiddenForUser", hiddenForUser as CVarArg)
     }
     
-    public static func folderIDPredicate(_ folderID: String?) -> NSPredicate {
+    @objc public static func folderIDPredicate(_ folderID: String?) -> NSPredicate {
         if let folderID = folderID {
             return NSPredicate(format:"%K == %@", "parentFolderID", folderID)
         } else {
@@ -41,7 +41,7 @@ extension FileNode {
         }
     }
 
-    public static func rootFolderPredicate(_ isInRootFolder: Bool) -> NSPredicate {
+    @objc public static func rootFolderPredicate(_ isInRootFolder: Bool) -> NSPredicate {
         return NSPredicate(format:"%K == %@", "isInRootFolder", isInRootFolder as CVarArg)
     }
     
@@ -142,17 +142,17 @@ extension FileNode {
 }
 
 open class FileCollectionTableViewDataSource<VM: TableViewCellViewModel>: CollectionTableViewDataSource<FetchedCollection<FileNode>, VM> {
-    var didDeleteItemAtIndexPath: ((IndexPath)->Void)? = nil
+    @objc var didDeleteItemAtIndexPath: ((IndexPath)->Void)? = nil
     
     override init(collection: FetchedCollection<FileNode>, viewModelFactory: @escaping (FileNode) -> VM) {
         super.init(collection: collection, viewModelFactory: viewModelFactory)
     }
     
-    open func tableView(_ tableView: UITableView, canEditRowAtIndexPath indexPath: IndexPath) -> Bool {
+    @objc open func tableView(_ tableView: UITableView, canEditRowAtIndexPath indexPath: IndexPath) -> Bool {
         return (collection[indexPath].contextID.context == .user)
    }
     
-    open func tableView(_ tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: IndexPath) {
+    @objc open func tableView(_ tableView: UITableView, commitEditingStyle editingStyle: UITableViewCell.EditingStyle, forRowAtIndexPath indexPath: IndexPath) {
         if editingStyle == .delete {
             didDeleteItemAtIndexPath?(indexPath)
         }

@@ -18,13 +18,13 @@ import Foundation
 import StoreKit
 
 public class AppStoreReview: NSObject {
-    static let lastRequestDateKey = "InstLastReviewRequestKey"
-    static let viewAssignmentDateKey = "InstViewAssignmentDateKey"
-    static let viewAssignmentCountKey = "InstViewAssignmentCountKey"
-    static let launchCountKey = "InstLaunchCount"
-    static let fakeRequestKey = "InstFakeReviewRequestKey"
+    @objc static let lastRequestDateKey = "InstLastReviewRequestKey"
+    @objc static let viewAssignmentDateKey = "InstViewAssignmentDateKey"
+    @objc static let viewAssignmentCountKey = "InstViewAssignmentCountKey"
+    @objc static let launchCountKey = "InstLaunchCount"
+    @objc static let fakeRequestKey = "InstFakeReviewRequestKey"
 
-    class func immediatelyRequestReview () {
+    @objc class func immediatelyRequestReview () {
         if #available(iOS 10.3, *) {
             if UserDefaults.standard.bool(forKey: fakeRequestKey) {
                 let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
@@ -44,7 +44,7 @@ public class AppStoreReview: NSObject {
         }
     }
 
-    class func shouldRequestReview () -> Bool {
+    @objc class func shouldRequestReview () -> Bool {
         let date = UserDefaults.standard.value(forKey: lastRequestDateKey) as? Date ?? Date.distantPast
         let calendar = Calendar.current
         let comps = calendar.dateComponents([Calendar.Component.day], from: date, to: Date())
@@ -54,7 +54,7 @@ public class AppStoreReview: NSObject {
         return true
     }
 
-    public class func handleLaunch () {
+    @objc public class func handleLaunch () {
         let count = UserDefaults.standard.integer(forKey: launchCountKey) + 1
         UserDefaults.standard.set(count, forKey: launchCountKey)
         if count >= 10 && shouldRequestReview() {
@@ -91,7 +91,7 @@ public class AppStoreReview: NSObject {
             immediatelyRequestReview()
         }
     }
-
+    
     @objc
     public class func getState () -> Dictionary<String, Int> {
         func getTime (forKey: String) -> Int {
@@ -125,5 +125,6 @@ public class AppStoreReview: NSObject {
             default:
                 break
         }
+        UserDefaults.standard.synchronize()
     }
 }

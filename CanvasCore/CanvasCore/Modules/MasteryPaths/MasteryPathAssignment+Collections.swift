@@ -20,7 +20,7 @@ import CoreData
 
 
 extension MasteryPathAssignment {
-    public static func predicate(forAssignmentsInSet assignmentSetID: String) -> NSPredicate {
+    @objc public static func predicate(forAssignmentsInSet assignmentSetID: String) -> NSPredicate {
         return NSPredicate(format: "%K == %@", "assignmentSetID", assignmentSetID)
     }
 

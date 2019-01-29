@@ -620,21 +620,25 @@ exports[`renders 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -1547,21 +1551,25 @@ exports[`renders as a designer 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -2399,21 +2407,25 @@ exports[`renders loading 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -3251,21 +3263,25 @@ exports[`renders with no submission types 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -4103,21 +4119,25 @@ exports[`renders with not_graded submission type 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>
@@ -4953,21 +4973,25 @@ exports[`renders without description 1`] = `
             >
               <View
                 style={
-                  Object {
-                    "alignSelf": "center",
-                    "backgroundColor": "transparent",
-                    "borderColor": "#c7c7cc",
-                    "borderRightWidth": 2,
-                    "borderTopWidth": 2,
-                    "height": 10,
-                    "marginLeft": 7,
-                    "transform": Array [
-                      Object {
-                        "rotate": "45deg",
-                      },
-                    ],
-                    "width": 10,
-                  }
+                  Array [
+                    Object {
+                      "alignSelf": "center",
+                      "backgroundColor": "transparent",
+                      "borderColor": "#c7c7cc",
+                      "borderRightWidth": 2,
+                      "borderTopWidth": 2,
+                      "height": 10,
+                      "marginLeft": 7,
+                      "width": 10,
+                    },
+                    Object {
+                      "transform": Array [
+                        Object {
+                          "rotate": "45deg",
+                        },
+                      ],
+                    },
+                  ]
                 }
               />
             </View>

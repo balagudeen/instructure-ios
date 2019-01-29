@@ -32,19 +32,19 @@ open class CalendarDayPageViewController: UIViewController, UIPageViewController
     fileprivate var pageViewController : UIPageViewController!
     fileprivate var session : Session!
     
-    internal var date: Date!
+    @objc internal var date: Date!
     fileprivate var delegate: CalendarDayPageViewControllerDelegate? = nil
     fileprivate let calendar = Calendar.current
     
-    var dateFormatter = DateFormatter()
-    var calendarEvents = [CalendarEvent]()
-    var transitionDay: Date?
+    @objc var dateFormatter = DateFormatter()
+    @objc var calendarEvents = [CalendarEvent]()
+    @objc var transitionDay: Date?
     
     // ---------------------------------------------
     // MARK: - External Closures
     // ---------------------------------------------
-    open var colorForContextID: ColorForContextID!
-    open var routeToURL: RouteToURL!
+    @objc open var colorForContextID: ColorForContextID!
+    @objc open var routeToURL: RouteToURL!
     
     // ---------------------------------------------
     // MARK: - Lifecycle
@@ -74,9 +74,9 @@ open class CalendarDayPageViewController: UIViewController, UIPageViewController
         pageViewController.setViewControllers(viewControllers, direction: .forward, animated: false, completion: nil)
         pageViewController.view.frame = view.bounds
         
-        addChildViewController(pageViewController)
+        addChild(pageViewController)
         view.addSubview(pageViewController.view)
-        pageViewController.didMove(toParentViewController: self)
+        pageViewController.didMove(toParent: self)
     }
     
     open override func didReceiveMemoryWarning() {
@@ -86,23 +86,23 @@ open class CalendarDayPageViewController: UIViewController, UIPageViewController
     // ---------------------------------------------
     // MARK: - Transition Methods
     // ---------------------------------------------
-    func transitionToNextDay() {
+    @objc func transitionToNextDay() {
         transitionToDayOffset(1)
     }
     
-    func transitionToPreviousDay() {
+    @objc func transitionToPreviousDay() {
         transitionToDayOffset(-1)
     }
     
-    func transitionToNextWeek() {
+    @objc func transitionToNextWeek() {
         transitionToDayOffset(7)
     }
     
-    func transitionToPrevWeek() {
+    @objc func transitionToPrevWeek() {
         transitionToDayOffset(-7)
     }
     
-    func transitionToToday() {
+    @objc func transitionToToday() {
         transitionToDay(Date())
     }
     
@@ -110,14 +110,14 @@ open class CalendarDayPageViewController: UIViewController, UIPageViewController
         transitionToDay(dateMovedByDays(daysOffset))
     }
     
-    func transitionToDay(_ newDay: Date) {
+    @objc func transitionToDay(_ newDay: Date) {
         let compareDates = newDay.compare(date)
         if compareDates == .orderedSame {
             // Dates are equal, no change is needed
             return
         }
         
-        var transitionDirection: UIPageViewControllerNavigationDirection = .forward
+        var transitionDirection: UIPageViewController.NavigationDirection = .forward
         if compareDates == .orderedAscending {
             transitionDirection = .reverse
         } else {
@@ -175,11 +175,11 @@ open class CalendarDayPageViewController: UIViewController, UIPageViewController
     // ---------------------------------------------
     // MARK: - View Controller Factory Method
     // ---------------------------------------------
-    open func viewControllerForDay(_ day: Date) -> CalendarDayListViewController {
+    @objc open func viewControllerForDay(_ day: Date) -> CalendarDayListViewController {
         return CalendarDayListViewController.new(session, date: day, routeToURL: routeToURL, colorForContextID: colorForContextID)
     }
     
-    func dateMovedByDays(_ daysToMove: Int) -> Date {
+    @objc func dateMovedByDays(_ daysToMove: Int) -> Date {
         var components = DateComponents()
         components.day = daysToMove
         return (calendar as NSCalendar).date(byAdding: components, to:date, options: [])!

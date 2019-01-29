@@ -18,10 +18,6 @@
 
 import UIKit
 import Cartography
-
-
-
-
 import Result
 
 open class QuizIntroViewController: UIViewController, PageViewEventViewControllerLoggingProtocol {
@@ -37,16 +33,20 @@ open class QuizIntroViewController: UIViewController, PageViewEventViewControlle
     var takeabilityController: QuizTakeabilityController? {
         didSet {
             self.takeabilityController?.takeabilityUpdated = { [weak self] _ in
-                self?.takeabilityUpdated(); return
+                DispatchQueue.main.async {
+                    self?.takeabilityUpdated()
+                }
             }
         }
     }
-    var takeabilityTimer: Timer?
+    @objc var takeabilityTimer: Timer?
     
     fileprivate var pages: [UIViewController] = []
     fileprivate let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     fileprivate let footerView: QuizIntroFooterView = QuizIntroFooterView()
+
+    fileprivate var didShowOfflineAlert = false
     
     init(quizController: QuizController) {
         self.quizController = quizController
@@ -69,7 +69,7 @@ open class QuizIntroViewController: UIViewController, PageViewEventViewControlle
             self?.quizUpdated()
         }
         
-        NotificationCenter.default.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self] _ in
+        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { [weak self] _ in
             self?.takeabilityController?.refreshTakeability()
         }
         
@@ -98,6 +98,7 @@ open class QuizIntroViewController: UIViewController, PageViewEventViewControlle
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        didShowOfflineAlert = false
         self.quizController.refreshQuiz()
         startTrackingTimeOnViewController()
     }
@@ -128,9 +129,9 @@ open class QuizIntroViewController: UIViewController, PageViewEventViewControlle
         pageViewController.dataSource = self
         pageViewController.view.backgroundColor = UIColor.white
         
-        addChildViewController(pageViewController)
+        addChild(pageViewController)
         view.addSubview(pageViewController.view)
-        pageViewController.didMove(toParentViewController: self)
+        pageViewController.didMove(toParent: self)
 
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
         constrain(view, pageViewController.view) { view, pageView in
@@ -199,6 +200,7 @@ open class QuizIntroViewController: UIViewController, PageViewEventViewControlle
         
         let detailsPage = pages[0] as! QuizDetailsViewController
         detailsPage.quiz = quizController.quiz
+        detailsPage.submission = quizController.submission
         
         if quizController.quiz != nil {
             if quizController.quiz!.oneQuestionAtATime && quizController.quiz!.cantGoBack {
@@ -206,8 +208,9 @@ open class QuizIntroViewController: UIViewController, PageViewEventViewControlle
             }
             switch quizController.quiz!.timeLimit {
             case .minutes(let minutes):
+                let extraTime = quizController.submission?.extraTime ?? 0
                 let page = buildTimedQuizPage()
-                page.minuteLimit = minutes
+                page.minuteLimit = minutes + extraTime
                 pages.append(page)
             default: break
             }
@@ -225,12 +228,23 @@ open class QuizIntroViewController: UIViewController, PageViewEventViewControlle
         if let takeabilityController = self.takeabilityController {
             footerView.takeButton.isEnabled = true
             footerView.takeabilityUpdated(takeabilityController.takeability)
+
+            // Alert if offline
+            if case .notTakeable(.offline) = takeabilityController.takeability, !didShowOfflineAlert {
+                didShowOfflineAlert = true
+                let title = NSLocalizedString("Internet Connection Offline", comment: "")
+                let message = NSLocalizedString("Answers will not be submitted while offline.", comment: "")
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                let dismiss = UIAlertAction(title: NSLocalizedString("Dismiss", comment: ""), style: .default, handler: nil)
+                alert.addAction(dismiss)
+                topMostViewController()?.present(alert, animated: true, completion: nil)
+            }
         }
     }
     
     // MARK: Actions
     
-    func takeTheQuiz(_ button: UIButton?) {
+    @objc func takeTheQuiz(_ button: UIButton?) {
         CanvasAnalytics.logEvent("quiz_taken")
         if let takeabilityController = self.takeabilityController {
             if takeabilityController.takeableNatively() {
@@ -245,7 +259,21 @@ open class QuizIntroViewController: UIViewController, PageViewEventViewControlle
                 switch takeabilityController.takeability {
                 case .viewResults(let url):
                     if let quiz = quizController.quiz, !quiz.requiresLockdownBrowserForResults {
-                        UIApplication.shared.open(url)
+                        let takeability = takeabilityController.takeability
+                        footerView.takeabilityUpdated(.notTakeable(reason: .undecided))
+                        takeabilityController.service.session.getAuthenticatedURL(forURL: url) { [weak self] result in
+                            DispatchQueue.main.async {
+                                self?.footerView.takeabilityUpdated(takeability)
+                                switch result {
+                                case .success(let url):
+                                    UIApplication.shared.open(url)
+                                case .failure(let error):
+                                    let title = NSLocalizedString("Error", bundle: .core, comment: "")
+                                    let ok = NSLocalizedString("OK", bundle: .core, comment: "")
+                                    self?.showSimpleAlert(title, message: error.localizedDescription, actionText: ok)
+                                }
+                            }
+                        }
                         return
                     } else {
                         message = NSLocalizedString("Lockdown Browser is required for viewing your results. Please open the quiz in Lockdown Browser to continue.", tableName: "Localizable", bundle: .core, value: "", comment: "Detail label for when a tool called Lockdown Browser is required to take the quiz")
@@ -262,6 +290,8 @@ open class QuizIntroViewController: UIViewController, PageViewEventViewControlle
                         message = NSLocalizedString("This quiz is currently unavailable.", tableName: "Localizable", bundle: .core, value: "", comment: "Message when telling the user they can't take the quiz for some weird reason")
                     case .other:
                         message = NSLocalizedString("This quiz is locked.", tableName: "Localizable", bundle: .core, value: "", comment: "Message when telling the user they can't take the quiz because the quiz is locked") // not using the description for now - its HTML :(
+                    case .offline:
+                        message = NSLocalizedString("This quiz is not available offline.", tableName: "Localizable", bundle: .core, value: "", comment: "")
                     }
                 default:
                     break

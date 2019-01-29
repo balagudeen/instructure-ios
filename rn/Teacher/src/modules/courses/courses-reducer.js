@@ -21,6 +21,7 @@ import { handleActions } from 'redux-actions'
 import CourseListActions, { UPDATE_COURSE_DETAILS_SELECTED_TAB_SELECTED_ROW_ACTION } from './actions'
 import CourseSettingsActions from './settings/actions'
 import EnrollmentsActions from '../enrollments/actions'
+import PermissionsActions from '../permissions/actions'
 import handleAsync from '../../utils/handleAsync'
 import { parseErrorMessage } from '../../redux/middleware/error-handler'
 import groupCustomColors from '../../utils/group-custom-colors'
@@ -63,6 +64,7 @@ const courseContents: Reducer<CourseState, Action> = combineReducers({
 })
 const { refreshCourses, refreshCourse, updateCourseColor, getCourseEnabledFeatures, getCoursePermissions, updateCourseNickname } = CourseListActions
 const { updateCourse } = CourseSettingsActions
+const { updateContextPermissions } = PermissionsActions
 
 export const defaultState: { [courseID: string]: CourseState & CourseContentState } = {}
 
@@ -273,13 +275,51 @@ const coursesData: Reducer<CoursesState, any> = handleActions({
       }, { ...state })
     },
   }),
+  [EnrollmentsActions.acceptEnrollment.toString()]: handleAsync({
+    resolved: (state, { courseID, enrollmentID, result }) => {
+      if (!result.data.success) return state
+      const course = state[courseID] || courseContents(undefined, {})
+      return {
+        ...state,
+        [courseID]: {
+          ...course,
+          course: {
+            ...course.course,
+            enrollments: course.course.enrollments.map(enrollment => {
+              if (enrollment.enrollment_state !== 'invited') return enrollment
+              return { ...enrollment, enrollment_state: 'active' }
+            }),
+          },
+        },
+      }
+    },
+  }),
   [refreshCourse.toString()]: handleAsync({
     resolved: (state, { result, courseID }) => {
       return {
         ...state,
         [courseID]: {
           ...state[courseID],
+          course: {
+            ...(state[courseID] && state[courseID].course || {}),
+            ...result.data,
+          },
           permissions: { ...(state[courseID] && state[courseID].permissions || {}), ...result.data.permissions },
+        },
+      }
+    },
+  }),
+  [updateContextPermissions.toString()]: handleAsync({
+    resolved: (state, { result, contextName, contextID }) => {
+      if (contextName !== 'courses') {
+        return state
+      }
+
+      return {
+        ...state,
+        [contextID]: {
+          ...state[contextID],
+          permissions: result.data,
         },
       }
     },

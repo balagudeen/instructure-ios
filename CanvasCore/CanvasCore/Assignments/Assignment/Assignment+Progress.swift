@@ -68,7 +68,7 @@ extension Assignment {
         }
     }
     
-    static func beginObservingProgress(_ session: Session) {
+    @objc static func beginObservingProgress(_ session: Session) {
         guard let context = try? session.assignmentsManagedObjectContext() else { ❨╯°□°❩╯⌢"you couldn't even get the context?!" }
         let scope = session.refreshScope
         

@@ -20,7 +20,7 @@ import ReactiveSwift
 import CanvasCore
 
 extension Activity {
-    var icon: UIImage? {
+    @objc var icon: UIImage? {
         switch type {
         case .discussion:       return .icon(.discussion)
         case .announcement:     return .icon(.announcement)
@@ -67,13 +67,13 @@ private func colorfulActivity(session: Session) -> ((Activity) -> ColorfulViewMo
 }
 
 class ActivityStreamTableViewController: FetchedTableViewController<Activity> {
-    let route: (UIViewController, URL)->()
+    @objc let route: (UIViewController, URL)->()
 
     init(session: Session, context: ContextID = .currentUser, route: @escaping (UIViewController, URL)->()) throws {
         self.route = route
         super.init()
 
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50.0
 
         prepare(try Activity.collection(session: session, context: context), refresher: try Activity.refresher(session: session, context: context), viewModelFactory: colorfulActivity(session: session))

@@ -22,7 +22,6 @@ import {
   View,
   StyleSheet,
   ActionSheetIOS,
-  TouchableHighlight,
   TouchableOpacity,
 } from 'react-native'
 import { Text, BOLD_FONT } from '../../../common/text'
@@ -30,13 +29,11 @@ import { LinkButton, Button } from '../../../common/buttons'
 import colors from '../../../common/colors'
 import Images from '../../../images'
 import Avatar from '../../../common/components/Avatar'
-import CanvasWebView, { type Message } from '../../../common/components/CanvasWebView'
+import CanvasWebView from '../../../common/components/CanvasWebView'
 import i18n from 'format-message'
 import Navigator from '../../../routing/Navigator'
 import ThreadedLinesView from '../../../common/components/ThreadedLinesView'
 import { isTeacher } from '../../app'
-import canvas from '../../../canvas-api'
-import httpClient from '../../../canvas-api/httpClient'
 import isEqual from 'lodash/isEqual'
 import RichContent from '../../../common/components/RichContent'
 import { featureFlagEnabled } from '@common/feature-flags'
@@ -66,32 +63,21 @@ export type Props = {
   rateEntry: Function,
   isLastReply: boolean,
   isAnnouncement: boolean,
+  userCanReply: ?boolean,
 }
 
 type State = {
-  rating: ?number, // used to track rating changes
   useSimpleRenderer: boolean,
 }
 
 export default class Reply extends Component<Props, State> {
-  static defaultProps = {
-    rateEntry: canvas.rateEntry,
-    httpClient,
-  }
-
   webView: ?CanvasWebView
 
   state: State = {
-    rating: null,
     useSimpleRenderer: this.useSimpleRenderer(this.props.reply.message),
   }
 
   componentWillReceiveProps (nextProps: Props) {
-    if (this.props.rating !== nextProps.rating || this.props.reply.rating_sum !== nextProps.reply.rating_sum) {
-      // rating was refreshed so reset state's rating
-      this.setState({ rating: null })
-    }
-
     if (this.props.reply.message !== nextProps.reply.message) {
       this.setState({ useSimpleRenderer: this.useSimpleRenderer(nextProps.reply.message) })
     }
@@ -108,7 +94,8 @@ export default class Reply extends Component<Props, State> {
       this.props.isRootReply !== newProps.isRootReply ||
       this.props.discussionLockedForUser !== newProps.discussionLockedForUser ||
       this.props.myPath.length !== newProps.myPath.length ||
-      this.state.rating !== newState.rating
+      this.props.userCanReply !== newProps.userCanReply ||
+      this.props.rating !== newProps.rating
     )
   }
 
@@ -189,24 +176,22 @@ export default class Reply extends Component<Props, State> {
               ? <RichContent html={message} navigator={this.props.navigator} />
               : <CanvasWebView
                 automaticallySetHeight
-                style={{ flex: 1 }}
+                style={{ flex: 1, margin: -global.style.defaultPadding }}
                 html={message}
                 navigator={this.props.navigator}
                 ref={(ref) => { this.webView = ref }}
-                onFinishedLoading={this.onLoad}
-                onMessage={this.onMessage}
                 heightCacheKey={reply.id}
               />
             }
             {reply.attachment &&
-              <TouchableHighlight testID={`discussion-reply.${reply.id}.attachment`} onPress={this.showAttachment}>
+              <TouchableOpacity testID={`discussion-reply.${reply.id}.attachment`} onPress={this.showAttachment}>
                 <View style={style.attachment}>
-                  <Image source={Images.attachment} style={style.attachmentIcon} />
+                  <Image source={Images.paperclip} style={style.attachmentIcon} />
                   <Text style={style.attachmentText}>
                     {reply.attachment.display_name}
                   </Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
             }
 
             {reply.deleted && <View style={{ marginTop: global.style.defaultPadding }}/>}
@@ -217,37 +202,6 @@ export default class Reply extends Component<Props, State> {
         </View>
       </View>
     )
-  }
-
-  onLoad = () => {
-    // Get unverified images so that we can fix the urls
-    this.webView && this.webView.evaluateJavaScript(`;(() => {
-      let imageFiles = Array.from(document.querySelectorAll('img[data-api-returntype="File"]'))
-      let unverified = imageFiles.filter(img => !(/verifier=/.test(img.src))).map(img => img.dataset.apiEndpoint)
-      window.webkit.messageHandlers.canvas.postMessage(JSON.stringify({ type: 'BROKEN_IMAGES', data: unverified }))
-    })()`)
-  }
-
-  onMessage = (message: Message) => {
-    const body = JSON.parse(message.body)
-    if (body && body.type === 'BROKEN_IMAGES') {
-      this.fixBrokenImages(body.data)
-    }
-  }
-
-  // Canvas does not add verifier tokens to images in cached replies :(
-  fixBrokenImages = (urls: Array<string>) => {
-    urls.forEach(async (url) => {
-      try {
-        const { data } = await httpClient.get(url)
-        if (data && data.url && this.webView) {
-          this.webView.evaluateJavaScript(`;(() => {
-            let image = document.querySelector('img[data-api-endpoint="${url}"]')
-            if (image) image.src = '${data.url}'
-          })()`)
-        }
-      } catch (error) {}
-    })
   }
 
   _renderMoreRepliesButton = (depth: number, reply: DiscussionReply, maxReplyNodeDepth: number) => {
@@ -265,7 +219,7 @@ export default class Reply extends Component<Props, State> {
   }
 
   _renderButtons = () => {
-    const { canRate, showRating, discussionLockedForUser } = this.props
+    const { canRate, showRating, discussionLockedForUser, userCanReply } = this.props
     if (discussionLockedForUser && !showRating) return
 
     const buttonTextStyle = {
@@ -279,7 +233,7 @@ export default class Reply extends Component<Props, State> {
     }
     return (
       <View style={containerStyles}>
-        { !discussionLockedForUser &&
+        { !discussionLockedForUser && userCanReply &&
           <View style={style.footerActionsContainer}>
             <LinkButton style={style.footer} textStyle={buttonTextStyle} onPress={this._actionReply} testID='discussion.reply-btn'>
               {i18n('Reply')}
@@ -296,7 +250,7 @@ export default class Reply extends Component<Props, State> {
         }
         { showRating &&
           <View style={style.footerRatingContainer}>
-            { this.ratingCount() > 0 &&
+            { this.props.reply.rating_sum != null && this.props.reply.rating_sum > 0 &&
               <Text
                 style={[
                   buttonTextStyle,
@@ -328,37 +282,11 @@ export default class Reply extends Component<Props, State> {
   }
 
   hasRated (): boolean {
-    if (this.state.rating == null) {
-      // User hasn't rated since refresh
-      return Boolean(this.props.rating && this.props.rating > 0)
-    }
-
-    // User has tapped to rate
-    return this.state.rating > 0
-  }
-
-  ratingCount (): number {
-    let count = this.props.reply.rating_sum || 0
-
-    if (this.state.rating != null) {
-      // User has tapped to rate so we have to do some fancy footwork
-      // to calculate the new rating count to avoid looping over every entry.
-
-      if (!this.props.rating) {
-        // This ones easy. We hadn't rated yet so we just add the local changes.
-        count += this.state.rating
-      } else {
-        // We had rated before the local changes so we subtract the old ratings
-        // and add back the changes.
-        count = count - this.props.rating + this.state.rating
-      }
-    }
-
-    return count
+    return Boolean(this.props.rating && this.props.rating > 0)
   }
 
   formattedRatingCount (): string {
-    const count = this.ratingCount()
+    const count = this.props.reply.rating_sum || 0
 
     if (!this.props.canRate) {
       // If the user can't rate we show the rating count with the word 'like'
@@ -414,16 +342,10 @@ export default class Reply extends Component<Props, State> {
     })
   }
 
-  _actionRate = async () => {
+  _actionRate = () => {
     const rating = this.hasRated() ? 0 : 1
-    this.setState({ rating })
     const { context, contextID, discussionID } = this.props
-    try {
-      await this.props.rateEntry(context, contextID, discussionID, this.props.reply.id, rating)
-    } catch (e) {
-      const reverted = rating === 0 ? 1 : 0
-      this.setState({ rating: reverted })
-    }
+    this.props.rateEntry(context, contextID, discussionID, this.props.reply.id, rating, this.props.myPath)
   }
 
   _canEdit = () => {
@@ -543,11 +465,13 @@ const style = StyleSheet.create({
   },
   attachmentIcon: {
     tintColor: colors.link,
+    height: 14,
+    width: 14,
   },
   attachmentText: {
     color: colors.link,
     fontFamily: BOLD_FONT,
-    marginLeft: 6,
+    marginLeft: 4,
     fontSize: 14,
   },
 })

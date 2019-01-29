@@ -30,11 +30,11 @@ class QuestionDrawerCell: UITableViewCell {
     @IBOutlet var statusIconView: UIImageView!
     @IBOutlet var questionTextLabel: UILabel!
     
-    class var ReuseID: String {
+    @objc class var ReuseID: String {
         return "QuestionDrawerCell"
     }
     
-    class var Nib: UINib {
+    @objc class var Nib: UINib {
         return UINib(nibName: "QuestionDrawerCell", bundle: Bundle(for: self.classForCoder()))
     }
     

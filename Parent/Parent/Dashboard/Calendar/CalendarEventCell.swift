@@ -20,15 +20,15 @@ import UIKit
 
 class CalendarEventCell: UITableViewCell {
 
-    static let iconImageDiameter: CGFloat = 36.0
-    static let iconSubtrator: CGFloat = 15.0
+    @objc static let iconImageDiameter: CGFloat = 36.0
+    @objc static let iconSubtrator: CGFloat = 15.0
     
     @IBOutlet weak var typeImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var courseNameLabel: UILabel!
     @IBOutlet weak var statusLabel: TokenLabelView!
 
-    var highlightColor = UIColor.white
+    @objc var highlightColor = UIColor.white
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -25,7 +25,7 @@ import UserNotifications
 class SettingsViewController: UIViewController, PageViewEventViewControllerLoggingProtocol {
     @IBOutlet weak var tableView: UITableView!
     
-    var canvasAPI: CKCanvasAPI?
+    @objc var canvasAPI: CKCanvasAPI?
     
     fileprivate var dataSource: [SettingsRow] = []
     
@@ -33,7 +33,7 @@ class SettingsViewController: UIViewController, PageViewEventViewControllerLoggi
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        tableView.rowHeight  = UITableViewAutomaticDimension
+        tableView.rowHeight  = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
         
         dataSource = data()
@@ -42,7 +42,7 @@ class SettingsViewController: UIViewController, PageViewEventViewControllerLoggi
         self.modalPresentationStyle = .formSheet
     }
     
-    func done() {
+    @objc func done() {
         presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
@@ -152,7 +152,7 @@ extension SettingsViewController {
     fileprivate static let viewControllerName = "SettingsViewController"
     fileprivate static let tableViewCellName = "SettingsTableViewCell"
     
-    class func controller(_ canvasAPI: CKCanvasAPI) -> SettingsViewController {
+    @objc class func controller(_ canvasAPI: CKCanvasAPI) -> SettingsViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle(for: SettingsViewController.self))
         let viewController = storyboard.instantiateViewController(withIdentifier: viewControllerName) as! SettingsViewController
         viewController.canvasAPI = canvasAPI

@@ -21,7 +21,7 @@ extension SignalProtocol {
     ///
     /// - returns: A signal that emits an array containing all `next` values.
     public func accumulate() -> Signal<[Value], Error> {
-        return scan([]) { accum, action in
+        return signal.scan([]) { accum, action in
             accum + [action]
         }
     }

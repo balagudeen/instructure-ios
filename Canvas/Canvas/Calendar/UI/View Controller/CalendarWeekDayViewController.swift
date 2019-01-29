@@ -28,17 +28,17 @@ class CalendarWeekDayViewController: UIViewController, CalendarWeekViewDelegate 
     // ---------------------------------------------
     // MARK: - Private Variables
     // ---------------------------------------------
-    var calendar: Calendar
-    var day: Date
+    @objc var calendar: Calendar
+    @objc var day: Date
     var delegate: CalendarWeekDayViewControllerDelegate?
     
     // Date Formatters
-    var dateFormatter = DateFormatter()
+    @objc var dateFormatter = DateFormatter()
     
     // Data Structure
-    var calendarEvents = [CalendarEvent]()
+    @objc var calendarEvents = [CalendarEvent]()
     
-    var weekView: CalendarWeekView!
+    @objc var weekView: CalendarWeekView!
     
     // ---------------------------------------------
     // MARK: - Lifecycle
@@ -76,7 +76,7 @@ class CalendarWeekDayViewController: UIViewController, CalendarWeekViewDelegate 
         self.weekView.setSelectedDay(nil, animated: true)
     }
     
-    func initWeekView() {
+    @objc func initWeekView() {
         weekView = CalendarWeekView(frame: CGRect.zero)
         weekView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(weekView)
@@ -84,30 +84,30 @@ class CalendarWeekDayViewController: UIViewController, CalendarWeekViewDelegate 
         weekView.delegate = self
     }
     
-    func layoutSubviews() {
-        let weekViewVerticalContraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[topLayoutGuide]-topPadding-[weekView]-bottomPadding-|", options: NSLayoutFormatOptions(), metrics: ["topPadding": 0, "bottomPadding": 0], views: ["topLayoutGuide": topLayoutGuide, "weekView": weekView])
-        let weekViewHorizontalContraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-leftPadding-[weekView]-rightPadding-|", options: NSLayoutFormatOptions(), metrics: ["rightPadding": 0, "leftPadding": 0], views: ["weekView": weekView])
+    @objc func layoutSubviews() {
+        let weekViewVerticalContraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[topLayoutGuide]-topPadding-[weekView]-bottomPadding-|", options: NSLayoutConstraint.FormatOptions(), metrics: ["topPadding": 0, "bottomPadding": 0], views: ["topLayoutGuide": topLayoutGuide, "weekView": weekView])
+        let weekViewHorizontalContraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-leftPadding-[weekView]-rightPadding-|", options: NSLayoutConstraint.FormatOptions(), metrics: ["rightPadding": 0, "leftPadding": 0], views: ["weekView": weekView])
         view.addConstraints(weekViewVerticalContraints)
         view.addConstraints(weekViewHorizontalContraints)
     }
     
-    func setSelectedWeekdayIndex(_ index: Int, animated: Bool) {
+    @objc func setSelectedWeekdayIndex(_ index: Int, animated: Bool) {
         self.weekView.setSelectedWeekdayIndex(index, animated: animated)
     }
     
-    func setDay(_ day: Date, animated: Bool) {
+    @objc func setDay(_ day: Date, animated: Bool) {
         self.day = day
         self.weekView.setInitialDay(day, animated: animated)
         self.weekView.setSelectedDay(day, animated: animated)
     }
     
-    func dateIsInWeek(_ date: Date) -> Bool {
+    @objc func dateIsInWeek(_ date: Date) -> Bool {
         let componentsOfDate = (calendar as NSCalendar).components([.year, .weekOfYear], from: date)
         let componentsOfWeek = (calendar as NSCalendar).components([.year, .weekOfYear], from: day)
         return componentsOfDate.weekOfYear == componentsOfWeek.weekOfYear && componentsOfDate.year == componentsOfWeek.year
     }
     
-    func weekView(_ weekView: CalendarWeekView, selectedDate day: Date) {
+    @objc func weekView(_ weekView: CalendarWeekView, selectedDate day: Date) {
         if let delegate = delegate {
             delegate.weekdayViewController(self, selectedDate: day)
         }

@@ -897,6 +897,9 @@ If you believe that a quiz contains unsupported content, please take it on deskt
 /* Open file in another application */
 "Open in..." = "Open in...";
 
+/* Link to Open Source Components */
+"Open Source Components" = "Open Source Components";
+
 /* No comment provided by engineer. */
 "Other" = "Other";
 

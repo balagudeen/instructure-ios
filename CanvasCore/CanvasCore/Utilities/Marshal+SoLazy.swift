@@ -62,12 +62,12 @@ public func expandTildaForCrossShardID(_ id: String) -> String {
     return "\(shardID * shardFactor + resourceID)"
 }
 
-extension Dictionary where Key: KeyType {
-    public func stringID(_ key: Key) throws -> String {
-        return try convertIDString(key)(any: try any(for: key))
+extension MarshaledObject {
+    public func stringID(_ key: KeyType) throws -> String {
+        return try convertIDString(key)(try any(for: key))
     }
 
-    public func stringIDs(_ key: Key) throws -> [String] {
+    public func stringIDs(_ key: KeyType) throws -> [String] {
         let a = try any(for: key) as? [AnyObject]
         guard let ids = try a.flatMap({ try $0.map(convertIDString(key)) }) else {
             throw idTypeMismatchError(key, a as Any)
@@ -75,7 +75,7 @@ extension Dictionary where Key: KeyType {
         return ids
     }
 
-    public func stringID(_ key: Key) throws -> String? {
+    public func stringID(_ key: KeyType) throws -> String? {
         do {
             let id: String = try stringID(key)
             return id
@@ -86,7 +86,7 @@ extension Dictionary where Key: KeyType {
         }
     }
 
-    fileprivate func convertIDString(_ key: Key) -> (_ any: Any) throws -> String {
+    fileprivate func convertIDString(_ key: KeyType) -> (_ any: Any) throws -> String {
         return { anyValue in
             guard let id = ((try? Int64.value(from: anyValue)).map({ "\($0)" }) ?? (try? String.value(from: anyValue))).map(expandTildaForCrossShardID) else {
                 throw idTypeMismatchError(key, anyValue)

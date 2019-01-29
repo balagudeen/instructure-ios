@@ -35,7 +35,7 @@ extension Assignment {
     /// - parameter contextID:      The id for the context being used
     /// - parameter assignmentID:   The assignment id this submission URL is being created for
     /// - parameter arcLTIToolID:   The id of the lti tool to use
-    public class func arcSubmissionLTILaunchURL(session: Session, contextType: String, contextID: String, assignmentID: String, arcLTIToolID: String) -> URL? {
+    @objc public class func arcSubmissionLTILaunchURL(session: Session, contextType: String, contextID: String, assignmentID: String, arcLTIToolID: String) -> URL? {
         let context: ContextID
         switch contextType {
         case "course":

@@ -1,5 +1,23 @@
 /* Description for rubric criterion rating object */
-" Rating for %@, Score: %g" = "Note pour %1$@, Score : %2$g";
+" Rating for %@, Score: %g" = " Classement pour %1$@, score : %2$g";
+
+/* B- (83 out of 100 points */
+"%@ (%g out of %@)" = "%1$@ (%2$g sur %3$@)";
+
+/* something at something */
+"%@ at %@" = "%1$@ à %2$@";
+
+/* 88 out of 100 points */
+"%@ out of %@" = "%1$@ sur %2$@";
+
+/* {point range max} to > {point range min} pts */
+"%@ to > %@ pts" = "%1$@ à > %2$@ points";
+
+/* Word and ellipses */
+"%@..." = "%@...";
+
+/* 83% (83 out of 100 points */
+"%@%% (%g out of %@)" = "%1$@%% (%2$g de %3$@)";
 
 /* Gigabytes */
 "%0.2f GB" = "%0.2f Go";
@@ -10,26 +28,8 @@
 /* Megabytes */
 "%0.2f MB" = "%0.2f Mo";
 
-/* B- (83 out of 100 points */
-"%@ (%g out of %@)" = "%1$@ (%2$g sur %3$@ au total)";
-
-/* something at something */
-"%@ at %@" = "%1$@ à %2$@";
-
 /* 88 out of 100 points */
-"%@ out of %@" = "%1$@ sur %2$@ au total";
-
-/* {point range max} to > {point range min} pts */
-"%@ to > %@ pts" = "%1$@ à > %2$@ points";
-
-/* 83% (83 out of 100 points */
-"%@%% (%g out of %@)" = "%1$@ (%2$g sur %3$@ au total)";
-
-/* Word and ellipses */
-"%@..." = "%@...";
-
-/* 88 out of 100 points */
-"%g out of %@" = "%1$@ sur %2$@ au total";
+"%g out of %@" = "%1$g sur %2$@";
 
 /* As in, '15 bytes' */
 "%qu bytes" = "%qu octets";
@@ -41,7 +41,7 @@
 "Audio input hardware not available" = "Le matériel d'entrée audio n'est pas disponible";
 
 /* Assignment grade: Complete */
-"Complete" = "Terminer";
+"Complete" = "Terminé";
 
 /* A custom grade not specified by the rubric. */
 "Custom Grade" = "Note personnalisée";
@@ -49,11 +49,14 @@
 /* No comment provided by engineer. */
 "Done" = "Terminé";
 
+/* No comment provided by engineer. */
+"Excused" = "Exempté";
+
 /* The file extension for a submission is not acceptable */
 "File extension not allowed: %@" = "Extension de fichier non autorisée : %@";
 
 /* Comes before a list of file extensions allowed for an assinment submission */
-"File extension(s) permitted for this assignment: " = "Extensions de fichier permises pour cette tâche () :";
+"File extension(s) permitted for this assignment: " = "Extensions de fichier permises pour cette tâche : ";
 
 /* File upload failed. */
 "File upload failed." = "Le téléversement du fichier a échoué.";
@@ -64,11 +67,11 @@
 /* No comment provided by engineer. */
 "Me" = "Moi";
 
-/* No comment provided by engineer. */
-"Media Comment" = "Commentaire du média";
-
 /* The name for a video or audio response to something */
 "Media comment" = "Commentaire du média";
+
+/* No comment provided by engineer. */
+"Media Comment" = "Commentaire du média";
 
 /* A slider to choose between media types */
 "Media type selector. %@" = "Sélecteur de type de média. %@";
@@ -80,13 +83,22 @@
 "Not graded" = "Non noté";
 
 /* not graded with points possible */
-"Not graded (0 out of %@)" = "Non noté (0 sur %@ au total)";
+"Not graded (0 out of %@)" = "Non noté (0 sur %@)";
 
 /* No comment provided by engineer. */
 "Note: Media files are not immediately available for playback while they are processed on the server." = "Remarque : Les fichiers de média sont seulement rendus disponibles à la lecture qu'après avoir été traités sur le serveur.";
 
 /* Short name for observer enrollment */
 "Observer" = "Observateur";
+
+/* Accessibility label for out or grading style */
+"out of" = "sur";
+
+/* The assignment is out of 100 points */
+"out of %@" = "sur %@";
+
+/* No comment provided by engineer. */
+"out of %@ points" = "de %@ points";
 
 /* A button that plays */
 "Play" = "Lecture";
@@ -110,7 +122,7 @@
 "Starts recording a media comment" = "Commencer l'enregistrement d'un commentaire de média";
 
 /* A button that stops */
-"Stop" = "Arrêter";
+"Stop" = "Arrêt";
 
 /* Hint about the play button */
 "Stops playing your recording" = "Arrête la lecture de votre enregistrement";
@@ -122,7 +134,7 @@
 "Student" = "Étudiant";
 
 /* Hint about media input selection */
-"Switches media input between audio and video. Currently set to %@" = "Changer l'entrée de média entre audio et vidéo. Actuellement réglée sur %@";
+"Switches media input between audio and video. Currently set to %@" = "Bascule l'entrée de média entre audio et vidéo. Actuellement réglé à %@";
 
 /* No comment provided by engineer. */
 "Switches to media comment mode" = "Bascule sur le mode de commentaire de média";
@@ -134,7 +146,7 @@
 "TA" = "Instructeur-assistant";
 
 /* Short name for teacher enrollment */
-"Teacher" = "Instructeur";
+"Teacher" = "Enseignant";
 
 /* No comment provided by engineer. */
 "Text Comment" = "Commentaire de texte";
@@ -145,6 +157,9 @@
 /* Error description when a user tries to upload a file that's too big */
 "The file you are trying to uploading is %@, but the maximum size is %@." = "Le fichier que vous tentez d'envoyer fait %1$@, mais la taille maximum est de %2$@.";
 
+/* When we don't know the name of a file, we display this */
+"unknown" = "inconnu";
+
 /* Media type is video */
 "Video" = "Vidéo";
 
@@ -153,16 +168,4 @@
 
 /* No comment provided by engineer. */
 "Warning" = "Avertissement";
-
-/* Accessibility label for out or grading style */
-"out of" = "sur";
-
-/* The assignment is out of 100 points */
-"out of %@" = "sur %@ au total";
-
-/* No comment provided by engineer. */
-"out of %@ points" = "sur %@ points au total";
-
-/* When we don't know the name of a file, we display this */
-"unknown" = "inconnu";
 

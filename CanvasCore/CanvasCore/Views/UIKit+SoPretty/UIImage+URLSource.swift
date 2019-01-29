@@ -19,7 +19,7 @@
 import Foundation
 
 extension UIImageView {
-    public func downloadedFrom(_ url: URL, contentMode mode: UIViewContentMode) {
+    @objc public func downloadedFrom(_ url: URL, contentMode mode: UIView.ContentMode) {
         contentMode = mode
         URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
             guard
