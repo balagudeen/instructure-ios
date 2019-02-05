@@ -75,7 +75,7 @@
     "url-parse": "^1.4.3",
     "uuid": "^3.1.0",
     "valid-url": "1.0.9",
-    "snyk": "^1.117.1"
+    "snyk": "^1.124.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
